@@ -9,9 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var model = Model()
-    let withHeaders = false
-    let observationLabeled = false
+    let model = Model(withHeaders: false, observationLabeled: false)
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.observations.count
@@ -33,12 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let k = FilesService.createModelFromFile(withHeaders: withHeaders, observationLabeled: observationLabeled)
-        model = k
-        print("SSR= \(k.SSR)")
-        print("Se= \(k.se)")
-        print("R^2= \(k.squareR)")
-        print("Fi^2= \(k.squereFi)")
+        let k = KMNK(withHeaders: false, observationLabeled: false)
+        print("\(k.SST) = \(k.SSR) + \(k.SSE)")
     }
     
 

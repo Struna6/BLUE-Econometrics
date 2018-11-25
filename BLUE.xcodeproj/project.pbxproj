@@ -11,7 +11,6 @@
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
 		F925853721A037C600920E33 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F925853621A037C500920E33 /* test1.txt */; };
-		F925853921A0380B00920E33 /* FilesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853821A0380B00920E33 /* FilesService.swift */; };
 		F99DF53B21A07AAE00C81AC5 /* KMNK.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99DF53A21A07AAE00C81AC5 /* KMNK.swift */; };
 		F9AA8E512199B7A200562A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AA8E502199B7A200562A1F /* AppDelegate.swift */; };
 		F9AA8E532199B7A200562A1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AA8E522199B7A200562A1F /* ViewController.swift */; };
@@ -28,7 +27,6 @@
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F925853621A037C500920E33 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test1.txt; path = ../../../../Users/karol/Desktop/test1.txt; sourceTree = "<group>"; };
-		F925853821A0380B00920E33 /* FilesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesService.swift; sourceTree = "<group>"; };
 		F99DF53A21A07AAE00C81AC5 /* KMNK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMNK.swift; sourceTree = "<group>"; };
 		F9AA8E4D2199B7A200562A1F /* BLUE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLUE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA8E502199B7A200562A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 			children = (
 				F925853021A02A1600920E33 /* Observation.swift */,
 				F925853221A02B4A00920E33 /* Model.swift */,
-				F925853821A0380B00920E33 /* FilesService.swift */,
 				F99DF53A21A07AAE00C81AC5 /* KMNK.swift */,
 			);
 			path = Model;
@@ -252,7 +249,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
-				F925853921A0380B00920E33 /* FilesService.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
 				F9AA8E592199B7A200562A1F /* BLUE.xcdatamodeld in Sources */,
 				F9AA8E532199B7A200562A1F /* ViewController.swift in Sources */,

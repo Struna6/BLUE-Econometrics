@@ -13,13 +13,49 @@ import Surge
 
 class KMNK : Model{
     
-    var error = [Double]()
+    //SR = ei^2
+    var SR = [Double]()
+    
+    // Regression equation
+    var equation = [Double]()
+    
+    // y^
+    var calculatedY = [Double]()
+    
+    //SSR = sum(ei^2)
     var SSR : Double{
         get{
-            calculateSSR()
-            return sum(error)
+            for i in 0..<Ytmp.count{
+                SR.append(pow((Ytmp[i]-calculatedY[i]), 2.0))
+            }
+            return sum(SR)
         }
     }
+    
+    //SSE = Explained Sum of Squares = sum(y^-y|)^2
+    var SSE : Double{
+        get{
+            var tmp = [Double]()
+            let meanY = mean(Ytmp)
+            for i in 0..<Ytmp.count{
+                tmp.append(pow((calculatedY[i]-meanY),2.0))
+            }
+            return sum(tmp)
+        }
+    }
+    
+    //SST = Total Sum of Squares (SST) =sum(y-y|)^2
+    var SST : Double{
+        get{
+            var tmp = [Double]()
+            let meanY = mean(Ytmp)
+            for i in 0..<Ytmp.count{
+                tmp.append(pow((Ytmp[i]-meanY),2.0))
+            }
+            return sum(tmp)
+        }
+    }
+    
     var se : Double{
         get{
             return sqrt(1.0/((Double(super.n)-Double(super.k)-1.0))*self.SSR)
@@ -27,14 +63,7 @@ class KMNK : Model{
     }
     var squareR : Double{
         get{
-            let meanY = mean(Ytmp)
-            var arrayUp = [Double]()
-            var arrayDown = [Double]()
-            for i in 0..<n{
-                arrayUp.append(pow(calculatedY[i]-meanY, 2.0))
-                arrayDown.append(pow(Ytmp[i]-meanY, 2.0))
-                }
-            return sum(arrayUp)/sum(arrayDown)
+            return self.SSE/self.SST
             }
     }
     var squereFi : Double{
@@ -42,11 +71,19 @@ class KMNK : Model{
             return 1-squareR
         }
     }
-    var equation = [Double]()
-    var calculatedY = [Double]()
+    var MAE : Double{
+        get{
+            var tmp = [Double]()
+            for i in 0..<Ytmp.count{
+                tmp.append(abs(Ytmp[i]-calculatedY[i]))
+            }
+            return mean(tmp)
+        }
+    }
     
-    override init(header: [String]?, k: Int, n: Int, observations: [Observation], withHeaders: Bool, observationLabeled: Bool) {
-        super.init(header: header, k: k, n: n, observations: observations, withHeaders: withHeaders, observationLabeled: observationLabeled)
+    
+    override init(withHeaders: Bool, observationLabeled: Bool) {
+        super.init(withHeaders: withHeaders, observationLabeled: observationLabeled)
         calculateRegression()
         calculateY()
     }
@@ -72,9 +109,7 @@ class KMNK : Model{
     }
     
     private func calculateSSR(){
-        for i in 0..<Ytmp.count{
-            error.append(pow((Ytmp[i]-calculatedY[i]), 2.0))
-        }
+        
     }
 }
 
