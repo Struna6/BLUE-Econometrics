@@ -20,13 +20,13 @@ class KMNK : Model{
     var equation = [Double]()
     
     // y^
-    var calculatedY = [Double]()
+    var estimatedY = [Double]()
     
     //SSR = sum(ei^2)
     var SSR : Double{
         get{
             for i in 0..<Ytmp.count{
-                SR.append(pow((Ytmp[i]-calculatedY[i]), 2.0))
+                SR.append(pow((Ytmp[i]-estimatedY[i]), 2.0))
             }
             return sum(SR)
         }
@@ -38,7 +38,7 @@ class KMNK : Model{
             var tmp = [Double]()
             let meanY = mean(Ytmp)
             for i in 0..<Ytmp.count{
-                tmp.append(pow((calculatedY[i]-meanY),2.0))
+                tmp.append(pow((estimatedY[i]-meanY),2.0))
             }
             return sum(tmp)
         }
@@ -75,17 +75,16 @@ class KMNK : Model{
         get{
             var tmp = [Double]()
             for i in 0..<Ytmp.count{
-                tmp.append(abs(Ytmp[i]-calculatedY[i]))
+                tmp.append(abs(Ytmp[i]-estimatedY[i]))
             }
             return mean(tmp)
         }
     }
     
-    
-    override init(withHeaders: Bool, observationLabeled: Bool) {
-        super.init(withHeaders: withHeaders, observationLabeled: observationLabeled)
+    override init(withHeaders: Bool, observationLabeled: Bool, path: String) {
+        super.init(withHeaders: withHeaders, observationLabeled: observationLabeled, path: path)
         calculateRegression()
-        calculateY()
+        calculateEstimatedY()
     }
     
     private func calculateRegression(){
@@ -97,20 +96,35 @@ class KMNK : Model{
         })
     }
     
-    private func calculateY(){
+    private func calculateEstimatedY(){
         let X = Matrix<Double>(prepare().X)
         var tmpY = Array(repeating: Array(repeating: 0.0, count: 1), count: 1)
         tmpY[0]=equation
         let Y = Matrix<Double>(tmpY)
         let result = mul(X, y: transpose(Y))
         result.forEach({ (slice) in
-            calculatedY.append(Array(slice)[0])
+            estimatedY.append(Array(slice)[0])
         })
     }
     
-    private func calculateSSR(){
-        
+    static func calculateYFromX(X : [Double], Y: [Double]) -> [Double]{
+        var calculatedResult = [Double]()
+        var tmpX = [[Double]]()
+        for i in 0..<X.count{
+            let tmpRow = [1.0, X[i]]
+            tmpX.append(tmpRow)
+        }
+        let X = Matrix<Double>(tmpX)
+        var tmpY = [[Double]]()
+        tmpY.append(Y)
+        let Y = Matrix<Double>(tmpY)
+        let result = mul(X, y: transpose(Y))
+        result.forEach({ (slice) in
+            calculatedResult.append(Array(slice)[0])
+        })
+        return calculatedResult
     }
+    
 }
 
 

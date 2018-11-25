@@ -9,20 +9,60 @@
 import Foundation
 
 class Model{
-    var header : [String]?
-    var k, n : Int
+    
+    private func createModelFromFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?, k : Int, n : Int, observations : [Observation]){
+        let path = Bundle.main.path(forResource: "test1", ofType: "txt")
+        var text = ""
+        do {
+            text = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
+        } catch  {
+            print("error getting data")
+        }
+        var seperatedObservations = [String]()
+        var seperatedValuesStr = [String]()
+        var seperatedValues = [Double]()
+        var i = 0
+        var observations = [Observation]()
+        var headers = [String]()
+        let end = text.index(text.endIndex, offsetBy: -1)
+        text = String(text[..<end])
+        seperatedObservations = text.components(separatedBy: ";")
+        
+        seperatedObservations.forEach { (obs) in
+            seperatedValuesStr = obs.components(separatedBy: ",")
+            var observation = Observation()
+            if withHeaders && i==0{
+                headers = seperatedValuesStr
+            }
+            else{
+                seperatedValues = seperatedValuesStr.compactMap{Double($0)}
+                if observationLabeled && (i != 0){
+                    observation.label = seperatedValuesStr[0]
+                    seperatedValues.removeFirst()
+                }
+                observation.observationArray = seperatedValues
+                observations.append(observation)
+            }
+            i=i+1
+        }
+        return (headers, seperatedValues.count - 1, i, observations)
+    }
+    
+    var header = [String]()
+    var k = 0, n = 0
     var observations = [Observation]()
-    let withHeaders : Bool
-    let observationLabeled : Bool
+    var withHeaders = false
+    var observationLabeled = false
     var Ytmp = [Double]()
     var Xtmp = [Double]()
     private var i = 0
     
-    init(header: [String]?, k : Int, n : Int, observations : [Observation], withHeaders : Bool, observationLabeled : Bool){
-        self.header = header
-        self.k = k-1
-        self.n = n
-        self.observations = observations
+    init(withHeaders : Bool, observationLabeled : Bool, path : String){
+        let result = self.createModelFromFile(withHeaders: withHeaders, observationLabeled: observationLabeled, path: path)
+        self.header = result.header!
+        self.k = result.k
+        self.n = result.n
+        self.observations = result.observations
         self.withHeaders = withHeaders
         self.observationLabeled = observationLabeled
         self.observations.forEach({ (obs) in
@@ -35,13 +75,6 @@ class Model{
             })
             i = 0
         })
-    }
-    
-    init(){
-        k = 0
-        n = 0
-        withHeaders = false
-        observationLabeled = false
     }
     
     func prepare() -> (X: [[Double]],Y: [[Double]]){
