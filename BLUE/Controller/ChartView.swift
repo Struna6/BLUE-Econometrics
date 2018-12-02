@@ -8,25 +8,29 @@
 
 import UIKit
 import Charts
+import Surge
 
 class ChartView: UIViewController{
     @IBOutlet weak var chartView: CombinedChartView!
     
     //do more for options like dictionary with X,Y arrays
+    //line
     var X = [Double]()
     var Y = [Double]()
+    //scatter
     var estimatedX = [Double]()
     var estimatedY = [Double]()
+    @IBOutlet weak var chartTypePicker: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lineChartUpdate()
+        combinedLinAndScateerUpdate()
         
     }
-    func lineChartUpdate(){
+    func combinedLinAndScateerUpdate(){
         var lineEntries = [ChartDataEntry]()
         //make selector of X to choose
-        for i in 0..<Y.count{
+        for i in 0..<estimatedY.count{
             let tmp = ChartDataEntry(x: estimatedX[i], y: estimatedY[i])
             lineEntries.append(tmp)
         }
@@ -54,7 +58,22 @@ class ChartView: UIViewController{
         combinedData.scatterData = scatterData
         
         chartView.data = combinedData
+        chartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
         chartView.notifyDataSetChanged()
     }
 
+}
+
+extension ChartView : UIPickerViewDelegate{
+    
+}
+
+extension ChartView : UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 10
+    }
 }
