@@ -8,4 +8,5 @@ target 'BLUE' do
   # Pods for BLUE
     pod 'Surge', '~> 2.0.0'
     pod 'Charts'
+    pod 'SpreadsheetView'
 end

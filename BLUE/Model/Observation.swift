@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Observation {
+struct Observation : Codable {
     var label : String?
     var observationArray = [Double]()
     

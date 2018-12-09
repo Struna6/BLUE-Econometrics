@@ -2,21 +2,25 @@ PODS:
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
+  - SpreadsheetView (0.8.4)
   - Surge (2.0.0)
 
 DEPENDENCIES:
   - Charts
+  - SpreadsheetView
   - Surge (~> 2.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Charts
+    - SpreadsheetView
     - Surge
 
 SPEC CHECKSUMS:
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  SpreadsheetView: 17c55b6dc82099993cc2ceb818248d19f3220998
   Surge: 1f0286bc5f0fe4283f3455479895bf85c7ef7760
 
-PODFILE CHECKSUM: 534dd638895433281fc1eff739bfe7cf5e908baa
+PODFILE CHECKSUM: 3be9d4b563f703782b3f62ccfec329a8698fc217
 
 COCOAPODS: 1.5.3

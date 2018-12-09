@@ -10,19 +10,6 @@ import Foundation
 import Accelerate
 import Surge
 
-protocol ChoosableColumns {
-    func addY(label : String) -> [[Double]]
-    func addX(label : String) -> [[Double]]
-}
-extension ChoosableColumns where Self==Model{
-    func addY(label : String) -> [[Double]]{
-        //let colNum = headers.firstIndex(of: label)
-        return[[0.0]]
-    }
-    func addX(label : String) -> [[Double]]{
-        return[[0.0]]
-    }
-}
 
 protocol ImportableFromTextFile{
     func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation])
@@ -79,17 +66,16 @@ protocol OLSCalculable{
     var squereFi : Double {get}
     var MAE : Double {get}
     func getOLSRegressionEquation() -> [Double]
-    
 }
 extension OLSCalculable where Self==Model{
-    var  estimatedY: [Double]{
+    var estimatedY: [Double]{
         get{
             var returnTmp = [Double]()
             let X = Matrix<Double>(chosenX)
             var tmpY = [[Double]]()
             tmpY.append(getOLSRegressionEquation())
             let Y = Matrix<Double>(tmpY)
-            let result = mul(X, y: transpose(Y))
+            let result = mul(X, y: Surge.transpose(Y))
             result.forEach({ (slice) in
                     returnTmp.append(Array(slice)[0])
             })
@@ -99,8 +85,8 @@ extension OLSCalculable where Self==Model{
     var SR : [Double]{
         get{
             var tmp = [Double]()
-            for i in 0..<chosenY[0].count{
-                tmp.append(pow((chosenY[0][i]-estimatedY[i]), 2.0))
+            for i in 0..<flatY.count{
+                tmp.append(pow((flatY[i]-estimatedY[i]), 2.0))
             }
             return tmp
         }
@@ -113,8 +99,8 @@ extension OLSCalculable where Self==Model{
     var SSE : Double{
         get{
             var tmp = [Double]()
-            let meanY = mean(chosenY[0])
-            for i in 0..<chosenY[0].count{
+            let meanY = mean(flatY)
+            for i in 0..<flatY.count{
                 tmp.append(pow((estimatedY[i]-meanY),2.0))
             }
             return sum(tmp)
@@ -123,9 +109,9 @@ extension OLSCalculable where Self==Model{
     var SST : Double{
         get{
             var tmp = [Double]()
-            let meanY = mean(chosenY[0])
-            for i in 0..<chosenY[0].count{
-                tmp.append(pow((chosenY[0][i]-meanY),2.0))
+            let meanY = mean(flatY)
+            for i in 0..<flatY.count{
+                tmp.append(pow((flatY[i]-meanY),2.0))
             }
             return sum(tmp)
         }
@@ -148,8 +134,8 @@ extension OLSCalculable where Self==Model{
     var MAE : Double{
         get{
             var tmp = [Double]()
-            for i in 0..<chosenY[0].count{
-                tmp.append(abs(chosenY[0][i]-estimatedY[i]))
+            for i in 0..<flatY.count{
+                tmp.append(abs(flatY[i]-estimatedY[i]))
             }
             return mean(tmp)
         }
@@ -158,7 +144,7 @@ extension OLSCalculable where Self==Model{
         var equation = [Double]()
         let X = Matrix<Double>(chosenX)
         let Y = Matrix<Double>(chosenY)
-        let result = (mul((inv(mul(transpose(X), y: X))), y: mul(transpose(X), y: Y)))
+        let result = (mul((inv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
             result.forEach({ (slice) in
             equation.append(Array(slice)[0])
         })
@@ -166,35 +152,5 @@ extension OLSCalculable where Self==Model{
     }
 }
 
-struct Model : OLSCalculable, ImportableFromTextFile, ChoosableColumns{
-    var allObservations = [Observation]()
-    var chosenX = [[Double]](){
-        didSet{
-            k = chosenX[0].count - 1
-        }
-    }
-    var chosenY = [[Double]]()
-    var flatY = [Double]()
 
-    var withHeaders : Bool
-    var observationLabeled : Bool
-    var headers = [String]()
-    var n : Int = 0
-    var k : Int = 0
-    var path : String 
-    
-    init(withHeaders : Bool, observationLabeled : Bool, path : String){
-        self.withHeaders = withHeaders
-        self.observationLabeled = observationLabeled
-        self.path = Bundle.main.path(forResource: "test1", ofType: "txt")!
-        let result = importFromTextFile(withHeaders: withHeaders, observationLabeled: observationLabeled, path: self.path)
-        self.allObservations = result.observations
-        self.n = result.n
-        self.headers = result.header!
-        if !withHeaders{
-            for i in 0..<allObservations[0].observationArray.count{
-                headers.append(String(UnicodeScalar(i+65)!))
-            }
-        }
-    }
-}
+
