@@ -191,10 +191,8 @@ class ViewController: UIViewController, Transposable, Storage{
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        var filePath = urls[0].absoluteString
-        let start = filePath.index(filePath.startIndex, offsetBy: 7)
-        filePath = String(filePath[start..<filePath.endIndex])
-        self.newPath = filePath
+        self.newPath = (urls.first?.path)!
+        
         //ADD ALERT YES?NO
     }
 }

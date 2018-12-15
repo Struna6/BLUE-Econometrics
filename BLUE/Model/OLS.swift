@@ -22,7 +22,7 @@ extension ImportableFromTextFile where Self==Model{
             text = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
         } catch  {
             print("error getting data " + path)
-            exit(1)
+            fatalError(error.localizedDescription)
         }
         var seperatedObservations = [String]()
         var seperatedValuesStr = [String]()
