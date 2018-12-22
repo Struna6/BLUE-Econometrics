@@ -35,10 +35,16 @@ extension Transposable{
 
 class ViewController: UIViewController, Transposable, Storage{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
+    @IBOutlet weak var topTableView: UITableView!
     
     let topTableSections = ["Critical","Warning","Normal"]
-    let parametersDictionary = ["R\u{00B2}":[0.5,0.75],"Regression":[1,1]]
-    let parametersResults = [ModelParameters]()
+    let parametersDictionary = ["R\u{00B2}":[0.5,0.75]]
+    var parametersResults : [ModelParameters]{
+        get{
+            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR)
+            ]
+        }
+    }
     var model = Model()
     // MARK: Buttons
     @IBOutlet weak var doneButton: UIButton!
@@ -74,6 +80,7 @@ class ViewController: UIViewController, Transposable, Storage{
         if !newModel{
             loadSavedModel()
         }else{
+            topTableView.isHidden = true
         }
     }
     
@@ -148,6 +155,7 @@ class ViewController: UIViewController, Transposable, Storage{
             model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
+            topTableView.isHidden = false
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {

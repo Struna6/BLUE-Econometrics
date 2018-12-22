@@ -18,6 +18,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-BL-yPz">
+                                <rect key="frame" x="209" y="137" width="350" height="750"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="5F1-WL-yMd"/>
+                                    <constraint firstAttribute="height" constant="750" id="ugr-Ey-2ga"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="aRS-kX-jjG">
+                                        <rect key="frame" x="0.0" y="28" width="350" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aRS-kX-jjG" id="fh0-75-51K">
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6U-Nq-OA7">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -31,6 +49,10 @@
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3wp-hZ-hdK"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YAn-8f-btN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Summary" id="6pl-rR-9Rg">
@@ -70,6 +92,7 @@
                         <outlet property="chooseXYView" destination="ulz-n8-5eh" id="fTr-3q-FD9"/>
                         <outlet property="chooseYTableView" destination="Xe9-kx-zCB" id="tqW-wX-kbL"/>
                         <outlet property="doneButton" destination="kqW-Ne-uvD" id="eFw-iZ-DL8"/>
+                        <outlet property="topTableView" destination="Oir-BL-yPz" id="zde-5f-PFr"/>
                         <outlet property="visualViewToBlur" destination="H6U-Nq-OA7" id="hh4-Ri-LY6"/>
                     </connections>
                 </viewController>

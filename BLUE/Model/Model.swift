@@ -53,13 +53,13 @@ struct ModelParameters{
     var category : ModelParametersCategory
     let value : Double
     
-    init(name : String, criticalFloor : Double, warning : Double, value : Double){
+    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double){
         self.name = name
         self.value = value
-        if value < criticalFloor {
+        if value <= criticalFloor {
             self.category = .Critical
         }
-        else if value < warning {
+        else if value <= warningFloor {
             self.category = .Warning
         }
         else{
