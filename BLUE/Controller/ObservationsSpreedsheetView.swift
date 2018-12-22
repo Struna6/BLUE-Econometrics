@@ -12,13 +12,11 @@ import SpreadsheetView
 class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
     var col: Int{
         get{
-            print(observations[0].observationArray.count)
             return observations[0].observationArray.count
         }
     }
     var row : Int{
         get{
-            print(observations.count)
             return observations.count
         }
     }

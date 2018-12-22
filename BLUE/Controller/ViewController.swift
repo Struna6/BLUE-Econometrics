@@ -35,19 +35,19 @@ extension Transposable{
 
 class ViewController: UIViewController, Transposable, Storage{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
+    
+    let topTableSections = ["Critical","Warning","Normal"]
+    let parametersDictionary = ["R\u{00B2}":[0.5,0.75],"Regression":[1,1]]
+    let parametersResults = [ModelParameters]()
     var model = Model()
     // MARK: Buttons
     @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var calculateButton: UIButton!
-    @IBOutlet weak var observationsButton: UIButton!
-    @IBOutlet weak var plotButton: UIButton!
+
     // MARK: Views
     @IBOutlet weak var visualViewToBlur: UIVisualEffectView!
     @IBOutlet var chooseXYView: UIView!
     @IBOutlet weak var chooseYTableView: UITableView!
     @IBOutlet weak var chooseXTableView: UITableView!
-    // MARK: Labels
-    @IBOutlet weak var textLabel: UILabel!
     
     var newModel = true
     var chosenY = String()
@@ -58,9 +58,6 @@ class ViewController: UIViewController, Transposable, Storage{
             model = Model(withHeaders: false, observationLabeled: false, path: newPath)
             chooseYTableView.reloadData()
             chooseXTableView.reloadData()
-            calculateButton.isEnabled = false
-            plotButton.isEnabled = false
-            observationsButton.isEnabled = false
             chosenY.removeAll()
             chosenX.removeAll()
         }
@@ -68,8 +65,6 @@ class ViewController: UIViewController, Transposable, Storage{
     // MARK: Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        textLabel.textAlignment = .center
-        textLabel.text = "Statictical parameters to be calculated"
         chooseXTableView.delegate = self
         chooseXTableView.dataSource = self
         chooseYTableView.delegate = self
@@ -79,9 +74,6 @@ class ViewController: UIViewController, Transposable, Storage{
         if !newModel{
             loadSavedModel()
         }else{
-            calculateButton.isEnabled = false
-            plotButton.isEnabled = false
-            observationsButton.isEnabled = false
         }
     }
     
@@ -120,11 +112,6 @@ class ViewController: UIViewController, Transposable, Storage{
        present(documentPicker, animated: true, completion:  nil)
     }
     
-    // MARK: Calulation of param
-    @IBAction func calculateButtonPressed(_ sender: UIButton){
-        textLabel.text = ("Regressor: \(chosenY)\nRegressand: \(chosenX)\n\n\n\n\(model.n)\nk :\(model.k)\nEquation: \(model.getOLSRegressionEquation())\nSSR: \(model.SSR)\nSe: \(model.se)\nR^2: \(model.squareR)\nFi^2: \(model.squereFi)")
-    }
-    
     // MARK: Window pop up for chosing X and Y
     @IBAction func choosingXYDone(_ sender: UIButton) {
         UIView.animate(withDuration: 0.4, animations: {
@@ -161,9 +148,6 @@ class ViewController: UIViewController, Transposable, Storage{
             model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
-            self.calculateButton.isEnabled = true
-            self.plotButton.isEnabled = true
-            observationsButton.isEnabled = true
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
@@ -181,9 +165,6 @@ class ViewController: UIViewController, Transposable, Storage{
     func loadSavedModel(){
         self.chosenY = model.chosenYHeader
         self.chosenX = model.chosenXHeader
-        plotButton.isEnabled = true
-        doneButton.isEnabled = true
-        calculateButton.isEnabled = true
     }
 }
     // MARK: File Browser Window

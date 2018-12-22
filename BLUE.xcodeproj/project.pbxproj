@@ -22,6 +22,7 @@
 		F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5C2199B7A400562A1F /* LaunchScreen.storyboard */; };
 		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
+		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +92,8 @@
 		F99DF53821A068F300C81AC5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F9AA8E502199B7A200562A1F /* AppDelegate.swift */,
 				F9AA8E522199B7A200562A1F /* ViewController.swift */,
+				F9AA8E502199B7A200562A1F /* AppDelegate.swift */,
 				F916DB7521AAD28300E73E4E /* ChartView.swift */,
 				F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */,
 				F941DD5421BD37F500CD93BF /* FirstViewController.swift */,
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				F97E417021BC19E400883010 /* Main.storyboard */,
+				F9FC2E7A21CED9D900A64599 /* Summary.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9AA8E5B2199B7A400562A1F /* Assets.xcassets in Resources */,
+				F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

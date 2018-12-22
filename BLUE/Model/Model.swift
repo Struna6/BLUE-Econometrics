@@ -42,3 +42,28 @@ struct Model : OLSCalculable, ImportableFromTextFile, Transposable, Codable{
     }
 }
 
+enum ModelParametersCategory : String{
+    case Critical = "Critical"
+    case Warning = "Warning"
+    case Normal = "Normal"
+}
+
+struct ModelParameters{
+    let name : String
+    var category : ModelParametersCategory
+    let value : Double
+    
+    init(name : String, criticalFloor : Double, warning : Double, value : Double){
+        self.name = name
+        self.value = value
+        if value < criticalFloor {
+            self.category = .Critical
+        }
+        else if value < warning {
+            self.category = .Warning
+        }
+        else{
+            self.category = .Normal
+        }
+    }
+}
