@@ -54,9 +54,6 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <connections>
-                                    <segue destination="fTl-ux-ahd" kind="show" identifier="toChart" id="APz-5p-2WP"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sac-xw-d2B">
                                 <rect key="frame" x="284" y="724" width="200" height="50"/>
@@ -77,7 +74,6 @@
                                 </state>
                                 <connections>
                                     <action selector="calculateButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4PS-Ru-yHP"/>
-                                    <segue destination="Z3e-Hd-hZE" kind="show" identifier="toObservationsSpreadSheet" id="7cc-pv-UVc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hks-lh-5K5">
@@ -249,6 +245,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Menu" id="07J-4y-ygd"/>
+                    <connections>
+                        <segue destination="Z3e-Hd-hZE" kind="show" identifier="toObservations" id="j8P-SJ-Boh"/>
+                        <segue destination="fTl-ux-ahd" kind="show" identifier="toCharts" id="GWp-5E-kCR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -296,7 +296,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2a-4d-uLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137" y="870"/>
+            <point key="canvasLocation" x="2759" y="885"/>
         </scene>
         <!--First View Controller-->
         <scene sceneID="KjE-0F-gz8">
@@ -436,7 +436,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XqP-XB-jM5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2396.875" y="132.421875"/>
+            <point key="canvasLocation" x="2759" y="1593"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

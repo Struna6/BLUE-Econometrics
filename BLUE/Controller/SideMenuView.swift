@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Darwin
 
 class SideMenuView: UITableViewController{
     
@@ -14,6 +15,7 @@ class SideMenuView: UITableViewController{
     var identities = ["toObservations","toPlots"]
     let sections = ["Observations", "Plots"]
     let options = ["Observations":["All","Selected"], "Plots":["X-Y plot"]]
+    var allObservations = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,14 +44,50 @@ class SideMenuView: UITableViewController{
         switch num {
             //All observations
         case 00:
-            <#code#>
+            performSegue(withIdentifier: "toObservations", sender: self)
             //Selected observations
         case 01:
-            <#code#>
+            self.allObservations = false
+            performSegue(withIdentifier: "toObservations", sender: self)
             //
         case 10:
-            <#code#>
+            performSegue(withIdentifier: "toCharts", sender: self)
         default: break
+        }
+    }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCharts"{
+            let target = segue.destination as! ChartView
+            target.scatterY = model.flatY
+            target.scatterX = model.chosenX
+            target.equation = model.getOLSRegressionEquation()
+        }
+        else if segue.identifier == "toObservations"{
+            let target = segue.destination as! ObservationsSpreedsheetView
+            if allObservations{
+                target.observations = model.allObservations
+            }else{
+                var tmp = [Observation]()
+                model.allObservations.forEach { (obs) in
+                    var tab = [Double]()
+                    for i in 0..<model.chosenXHeader.count{
+                        for j in 0..<model.headers.count{
+                            if model.chosenXHeader[i] == model.headers[j]{
+                                tab.append(obs.observationArray[j])
+                            }
+                        }
+                    }
+                    var tmpObs = Observation()
+                    tmpObs.label = obs.label
+                    tmpObs.observationArray = tab
+                    tmp.append(tmpObs)
+                }
+                print(tmp)
+                target.observations = tmp
+            }
+            target.headers = model.headers
         }
     }
 }

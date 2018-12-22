@@ -10,8 +10,18 @@ import UIKit
 import SpreadsheetView
 
 class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
-    var col = 0
-    var row = 0
+    var col: Int{
+        get{
+            print(observations[0].observationArray.count)
+            return observations[0].observationArray.count
+        }
+    }
+    var row : Int{
+        get{
+            print(observations.count)
+            return observations.count
+        }
+    }
     var observationsLabeled = false
     var observations = [Observation]()
     var headers = [String]()

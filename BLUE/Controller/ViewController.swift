@@ -101,26 +101,15 @@ class ViewController: UIViewController, Transposable, Storage{
     }
     // MARK: Prepare of segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toChart"{
-            let target = segue.destination as! ChartView
-            target.scatterY = model.flatY
-            target.scatterX = model.chosenX
-            target.equation = model.getOLSRegressionEquation()
-        }
-        else if segue.identifier == "toObservationsSpreadSheet"{
-            let target = segue.destination as! ObservationsSpreedsheetView
-            target.row = model.allObservations.count
-            target.col = model.k+1
-            target.observations = model.allObservations
-            target.headers = model.headers
-        }
-        else if segue.identifier == "toSideMenu"{
+        if segue.identifier == "toSideMenu"{
             let target = segue.destination as! UISideMenuNavigationController
             target.sideMenuManager.menuPresentMode = .menuDissolveIn
             target.sideMenuManager.menuPushStyle = .popWhenPossible
             target.sideMenuManager.menuWidth = 400
             target.sideMenuManager.menuAnimationFadeStrength = 0.4
             target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.extraLight
+            let targetVC = target.topViewController as! SideMenuView
+            targetVC.model = model
         }
     }
     
