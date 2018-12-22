@@ -38,7 +38,6 @@ class ViewController: UIViewController, Transposable, Storage{
     @IBOutlet weak var topTableView: UITableView!
     
     let topTableSections = ["Critical","Warning","Normal"]
-    let parametersDictionary = ["R\u{00B2}":[0.5,0.75]]
     var parametersResults : [ModelParameters]{
         get{
             return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR)
@@ -77,10 +76,11 @@ class ViewController: UIViewController, Transposable, Storage{
         chooseYTableView.dataSource = self
         chooseXYView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
+        if model.squareR.isNaN{
+            topTableView.isHidden = true
+        }
         if !newModel{
             loadSavedModel()
-        }else{
-            topTableView.isHidden = true
         }
     }
     
@@ -155,6 +155,7 @@ class ViewController: UIViewController, Transposable, Storage{
             model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
+            topTableView.reloadData()
             topTableView.isHidden = false
         }
     }
@@ -187,11 +188,46 @@ extension ViewController : UIDocumentPickerDelegate{
     // MARK: Pop up windows for choosing X Y tables
 extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if tableView == topTableView{
+            return self.topTableSections.count
+        }else{
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tableView == topTableView{
+            return topTableSections[section]
+        }
+        else{
+            return nil
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.headers.count
+        if tableView == topTableView{
+            var tmp = self.parametersResults
+            tmp = tmp.filter{$0.category.rawValue == topTableSections[section]}
+            return tmp.count
+        }else{
+            return model.headers.count
+        }
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
+        if tableView == topTableView{
+            cell.textLabel?.text = parametersResults[indexPath.row].name + " = " + String(format:"%.4f",Double(parametersResults[indexPath.row].value))
+            switch parametersResults[indexPath.row].category{
+                case .Critical:
+                    cell.imageView?.image = UIImage.init(named: "critical")
+                    cell.textLabel?.textColor = UIColor.init(named: "red")
+                case .Warning:
+                    cell.imageView?.image = UIImage.init(named: "warning")
+                default: break
+            }
+        }else{
         let text = model.headers[indexPath.row]
         cell.textLabel?.text = text
         cell.textLabel?.textAlignment = NSTextAlignment.center
@@ -204,6 +240,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
             }
         else{
             cell.accessoryType = UITableViewCell.AccessoryType.none
+        }
         }
         }
         return cell
