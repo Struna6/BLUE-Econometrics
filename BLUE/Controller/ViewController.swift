@@ -9,6 +9,7 @@
 import UIKit
 import Surge
 import MobileCoreServices
+import SideMenu
 
 // MARK: Protocol for Transponating Arrays
 
@@ -112,6 +113,14 @@ class ViewController: UIViewController, Transposable, Storage{
             target.col = model.k+1
             target.observations = model.allObservations
             target.headers = model.headers
+        }
+        else if segue.identifier == "toSideMenu"{
+            let target = segue.destination as! UISideMenuNavigationController
+            target.sideMenuManager.menuPresentMode = .menuDissolveIn
+            target.sideMenuManager.menuPushStyle = .popWhenPossible
+            target.sideMenuManager.menuWidth = 400
+            target.sideMenuManager.menuAnimationFadeStrength = 0.4
+            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.extraLight
         }
     }
     

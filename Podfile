@@ -9,4 +9,5 @@ target 'BLUE' do
     pod 'Surge', '~> 2.0.0'
     pod 'Charts'
     pod 'SpreadsheetView'
+    pod 'SideMenu'
 end

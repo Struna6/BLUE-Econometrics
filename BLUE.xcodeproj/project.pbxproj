@@ -21,6 +21,7 @@
 		F9AA8E5B2199B7A400562A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5A2199B7A400562A1F /* Assets.xcassets */; };
 		F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5C2199B7A400562A1F /* LaunchScreen.storyboard */; };
 		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
+		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		F9AA8E5F2199B7A400562A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
+		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				F916DB7521AAD28300E73E4E /* ChartView.swift */,
 				F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */,
 				F941DD5421BD37F500CD93BF /* FirstViewController.swift */,
+				F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BLUE/Pods-BLUE-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework",
 				"${BUILT_PRODUCTS_DIR}/Surge/Surge.framework",
 			);
@@ -253,6 +257,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpreadsheetView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Surge.framework",
 			);
@@ -270,6 +275,7 @@
 			files = (
 				F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */,
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
+				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
 				F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */,
 				F9AA8E532199B7A200562A1F /* ViewController.swift in Sources */,
