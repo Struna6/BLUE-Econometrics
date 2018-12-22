@@ -276,7 +276,7 @@
         <!--Observations Spreedsheet View-->
         <scene sceneID="j6l-dC-mwp">
             <objects>
-                <viewController id="Z3e-Hd-hZE" customClass="ObservationsSpreedsheetView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toObservations" id="Z3e-Hd-hZE" customClass="ObservationsSpreedsheetView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2pU-2e-zAc">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -376,7 +376,7 @@
         <!--Chart View-->
         <scene sceneID="bUU-0n-F9U">
             <objects>
-                <viewController id="fTl-ux-ahd" customClass="ChartView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toPlots" id="fTl-ux-ahd" customClass="ChartView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KSd-Jv-9I4">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
