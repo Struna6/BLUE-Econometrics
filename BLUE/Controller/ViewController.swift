@@ -10,6 +10,7 @@ import UIKit
 import Surge
 import MobileCoreServices
 import SideMenu
+import WebKit
 
 // MARK: Protocol for Transponating Arrays
 
@@ -40,7 +41,7 @@ class ViewController: UIViewController, Transposable, Storage{
     let topTableSections = ["Critical","Warning","Normal"]
     var parametersResults : [ModelParameters]{
         get{
-            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR)
+            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, webLink: "https://en.wikipedia.org/wiki/Coefficient_of_determination")
             ]
         }
     }
@@ -247,24 +248,29 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        if cell?.accessoryType == UITableViewCell.AccessoryType.none{
-            cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+        if tableView == topTableView{
+         
+            
+            
         }else{
-            cell?.accessoryType = UITableViewCell.AccessoryType.none
-        }
-        if tableView == self.chooseYTableView{
-            self.chosenY = (cell?.textLabel?.text)!
-        }
-        if tableView == self.chooseXTableView{
-            let text = (cell?.textLabel?.text)!
-            if self.chosenX.contains(text){
-                chosenX.remove(at: chosenX.firstIndex(of: text)!)
+            let cell = tableView.cellForRow(at: indexPath)
+            if cell?.accessoryType == UITableViewCell.AccessoryType.none{
+                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
             }else{
-                chosenX.append(text)
+                cell?.accessoryType = UITableViewCell.AccessoryType.none
+            }
+            if tableView == self.chooseYTableView{
+                self.chosenY = (cell?.textLabel?.text)!
+            }
+            if tableView == self.chooseXTableView{
+                let text = (cell?.textLabel?.text)!
+                if self.chosenX.contains(text){
+                    self.chosenX.remove(at: chosenX.firstIndex(of: text)!)
+                }else{
+                    self.chosenX.append(text)
+                }
             }
         }
     }
-    
 }
 

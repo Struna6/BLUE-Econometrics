@@ -52,8 +52,10 @@ struct ModelParameters{
     let name : String
     var category : ModelParametersCategory
     let value : Double
+    let webLink : String
     
-    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double){
+    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double, webLink : String){
+        self.webLink = webLink
         self.name = name
         self.value = value
         if value <= criticalFloor {
