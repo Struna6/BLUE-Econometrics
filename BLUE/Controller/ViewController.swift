@@ -10,7 +10,7 @@ import UIKit
 import Surge
 import MobileCoreServices
 import SideMenu
-import WebKit
+import AVKit
 
 // MARK: Protocol for Transponating Arrays
 
@@ -39,13 +39,13 @@ class ViewController: UIViewController, Transposable, Storage{
     @IBOutlet weak var topTableView: UITableView!
     
     let topTableSections = ["Critical","Warning","Normal"]
+    var model = Model()
     var parametersResults : [ModelParameters]{
         get{
-            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, webLink: "https://en.wikipedia.org/wiki/Coefficient_of_determination")
+            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")
             ]
         }
     }
-    var model = Model()
     // MARK: Buttons
     @IBOutlet weak var doneButton: UIButton!
 
@@ -54,6 +54,12 @@ class ViewController: UIViewController, Transposable, Storage{
     @IBOutlet var chooseXYView: UIView!
     @IBOutlet weak var chooseYTableView: UITableView!
     @IBOutlet weak var chooseXTableView: UITableView!
+    
+    // MARK: Parameters details view
+    @IBOutlet var parametersView: UIView!
+    @IBOutlet weak var parametersViewTitle: UILabel!
+    @IBOutlet weak var parametersViewImage: UIImageView!
+    @IBOutlet weak var parametersViewDetails: UILabel!
     
     var newModel = true
     var chosenY = String()
@@ -68,6 +74,9 @@ class ViewController: UIViewController, Transposable, Storage{
             chosenX.removeAll()
         }
     }
+    // MARK: Deinit that delete views in background
+    
+    
     // MARK: Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +85,7 @@ class ViewController: UIViewController, Transposable, Storage{
         chooseYTableView.delegate = self
         chooseYTableView.dataSource = self
         chooseXYView.layer.cornerRadius = 10
+        parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
         if model.squareR.isNaN{
             topTableView.isHidden = true
@@ -83,9 +93,14 @@ class ViewController: UIViewController, Transposable, Storage{
         if !newModel{
             loadSavedModel()
         }
+        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
+        parametersViewImage.addGestureRecognizer(tapOnImage)
+        self.topTableView.separatorColor = UIColor.clear;
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        dismissAllViews()
+        //MARK: Edit file name resticition/alerts
         let alertController = UIAlertController.init(title: "Model name", message: "Choose name for model saving", preferredStyle: .alert)
         var text = ""
         alertController.addTextField { (textField) in
@@ -99,9 +114,11 @@ class ViewController: UIViewController, Transposable, Storage{
         present(alertController,animated: true)
         
     }
+    
     // MARK: Prepare of segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSideMenu"{
+            dismissAllViews()
             let target = segue.destination as! UISideMenuNavigationController
             target.sideMenuManager.menuPresentMode = .menuDissolveIn
             target.sideMenuManager.menuPushStyle = .popWhenPossible
@@ -111,10 +128,14 @@ class ViewController: UIViewController, Transposable, Storage{
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
         }
+        if segue.identifier == "back"{
+            dismissAllViews()
+        }
     }
     
     // MARK: New import
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        dismissAllViews()
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
         documentPicker.delegate = self
        present(documentPicker, animated: true, completion:  nil)
@@ -125,6 +146,7 @@ class ViewController: UIViewController, Transposable, Storage{
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
+            self.topTableView.isHidden = false
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.chooseXYView.removeFromSuperview()
@@ -166,6 +188,7 @@ class ViewController: UIViewController, Transposable, Storage{
         chooseXYView.center = self.view.center
         chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
         UIView.animate(withDuration: 0.4) {
+            self.topTableView.isHidden = true
             self.visualViewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
             self.chooseXYView.alpha = 1
             self.chooseXYView.transform = CGAffineTransform.identity
@@ -249,9 +272,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == topTableView{
-         
-            
-            
+            loadParametersView(item: parametersResults[indexPath.row])
         }else{
             let cell = tableView.cellForRow(at: indexPath)
             if cell?.accessoryType == UITableViewCell.AccessoryType.none{
@@ -268,6 +289,66 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     self.chosenX.remove(at: chosenX.firstIndex(of: text)!)
                 }else{
                     self.chosenX.append(text)
+                }
+            }
+        }
+    }
+}
+
+//MARK: Functions for parameters view
+
+extension ViewController{
+    
+    func loadParametersView(item : ModelParameters){
+        parametersViewTitle.text = item.name
+        parametersViewDetails.text = item.description
+        parametersViewImage.image = UIImage(named: item.imageName)
+        self.view.addSubview(parametersView)
+        parametersView.alpha = 0
+        parametersView.center = self.view.center
+        parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+        UIView.animate(withDuration: 0.4) {
+            self.topTableView.isHidden = true
+            self.visualViewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            self.parametersView.alpha = 1
+            self.parametersView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    @IBAction func parametersViewBackButtonPressed(_ sender: Any) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+            self.parametersView.alpha = 0
+            self.topTableView.isHidden = false
+            self.visualViewToBlur.effect = nil
+        }) { (success) in
+            self.parametersView.removeFromSuperview()
+        }
+    }
+    
+    //MARK: Gesture Recognizer for Image- Play Video
+    @objc func imageTapped(){
+        if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
+            let video = AVPlayer(url: URL(fileURLWithPath: path))
+            let videoPlayer = AVPlayerViewController()
+            videoPlayer.player = video
+            present(videoPlayer, animated: true, completion: {
+                video.play()
+            })
+        }
+    }
+    
+    //MARK: Dismiss open windows
+    func dismissAllViews(){
+        self.view.subviews.forEach { (view) in
+            if view == chooseXYView || view == parametersView{
+                UIView.animate(withDuration: 0.4, animations: {
+                    view.transform = CGAffineTransform(translationX: 0.0, y: 300)
+                    view.alpha = 0
+                    self.topTableView.isHidden = false
+                    self.visualViewToBlur.effect = nil
+                }) { (success) in
+                    view.removeFromSuperview()
                 }
             }
         }

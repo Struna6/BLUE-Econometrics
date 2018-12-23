@@ -52,10 +52,14 @@ struct ModelParameters{
     let name : String
     var category : ModelParametersCategory
     let value : Double
-    let webLink : String
+    var description : String
+    var imageName : String
+    var videoName : String?
     
-    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double, webLink : String){
-        self.webLink = webLink
+    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double, description : String, imageName : String, videoName : String?){
+        self.description = description
+        self.imageName = imageName
+        (videoName?.isEmpty)! ? self.videoName = videoName : nil
         self.name = name
         self.value = value
         if value <= criticalFloor {
