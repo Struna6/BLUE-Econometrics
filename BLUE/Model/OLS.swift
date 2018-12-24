@@ -57,6 +57,7 @@ extension ImportableFromTextFile where Self==Model{
 
 protocol OLSCalculable{
     var estimatedY : [Double] {get}
+    var S : [Double] {get}
     var SR : [Double] {get}
     var SSR : Double {get}
     var SSE : Double {get}
@@ -80,6 +81,15 @@ extension OLSCalculable where Self==Model{
                     returnTmp.append(Array(slice)[0])
             })
             return returnTmp
+        }
+    }
+    var S : [Double]{
+        get{
+            var tmp = [Double]()
+            for i in 0..<flatY.count{
+                tmp.append(flatY[i]-estimatedY[i])
+            }
+            return tmp
         }
     }
     var SR : [Double]{

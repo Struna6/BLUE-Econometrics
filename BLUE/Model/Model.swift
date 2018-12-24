@@ -20,6 +20,19 @@ struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservati
     var withHeaders : Bool
     var observationLabeled : Bool
     var headers = [String]()
+    var labels : [String]?{
+        get{
+            if observationLabeled{
+                var tmp = [String]()
+                allObservations.forEach { (obs) in
+                    tmp.append(obs.label!)
+                }
+                return tmp
+            }else{
+                return nil
+            }
+        }
+    }
     var n : Int = 0
     var k : Int = 0
     

@@ -38,6 +38,7 @@
                         <segue destination="Z3e-Hd-hZE" kind="show" identifier="toObservations" id="j8P-SJ-Boh"/>
                         <segue destination="fTl-ux-ahd" kind="show" identifier="toCharts" id="GWp-5E-kCR"/>
                         <segue destination="GG5-5I-TfG" kind="show" identifier="toCandleChart" id="Gxu-HM-4VB"/>
+                        <segue destination="WGO-3D-cXx" kind="show" identifier="toRestsChart" id="2c9-hE-3a7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -87,6 +88,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2a-4d-uLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2759" y="885"/>
+        </scene>
+        <!--Rests Charts View Controller-->
+        <scene sceneID="igc-y7-5it">
+            <objects>
+                <viewController id="WGO-3D-cXx" customClass="restsChartsViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DwJ-v2-Tgy">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar chart of rests of the estimation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpk-hz-BN4">
+                                <rect key="frame" x="149" y="124" width="470" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="470" id="Qnm-qu-8hf"/>
+                                    <constraint firstAttribute="height" constant="30" id="Wet-fD-pJh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pn-X6-fKM" userLabel="Chart View" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="34" y="174" width="700" height="450"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="700" id="8B5-Ye-Grh"/>
+                                    <constraint firstAttribute="height" constant="450" id="UDX-Kf-J0D"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="top" secondItem="mpk-hz-BN4" secondAttribute="bottom" constant="20" id="22D-t6-wxD"/>
+                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="centerX" secondItem="DwJ-v2-Tgy" secondAttribute="centerX" id="aIX-dU-qJx"/>
+                            <constraint firstItem="mpk-hz-BN4" firstAttribute="centerX" secondItem="DwJ-v2-Tgy" secondAttribute="centerX" id="jT4-zc-mBL"/>
+                            <constraint firstItem="mpk-hz-BN4" firstAttribute="top" secondItem="s7f-Xx-7A2" secondAttribute="top" constant="54" id="prM-cW-zcb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="s7f-Xx-7A2"/>
+                    </view>
+                    <connections>
+                        <outlet property="viewBarChart" destination="8Pn-X6-fKM" id="r1i-it-3nk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9FV-CH-stl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1382" y="1596"/>
         </scene>
         <!--Candle Chart View Controller-->
         <scene sceneID="nJ5-7T-5hi">

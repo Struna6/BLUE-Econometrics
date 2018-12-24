@@ -14,7 +14,7 @@ class SideMenuView: UITableViewController{
     var model = Model()
     var identities = ["toObservations","toPlots"]
     let sections = ["Observations", "Plots"]
-    let options = ["Observations":["All","Selected"], "Plots":["X-Y plot","Candle Chart"]]
+    let options = ["Observations":["All","Selected"], "Plots":["X-Y plot","Candle Chart","Rests Chart"]]
     var allObservations = true
     
     override func viewDidLoad() {
@@ -60,6 +60,8 @@ class SideMenuView: UITableViewController{
             performSegue(withIdentifier: "toCharts", sender: self)
         case 11:
             performSegue(withIdentifier: "toCandleChart", sender: self)
+        case 12:
+            performSegue(withIdentifier: "toRestsChart", sender: self)
         default: break
         }
     }
@@ -101,6 +103,11 @@ class SideMenuView: UITableViewController{
             let target = segue.destination as! CandleChartViewController
             target.headers = model.headers
             target.observations = model.allObservations
+        }
+        else if segue.identifier == "toRestsChart"{
+            let target = segue.destination as! restsChartsViewController
+            target.e = model.S
+            target.labels = model.labels
         }
     }
 }
