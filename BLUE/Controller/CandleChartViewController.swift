@@ -10,7 +10,7 @@ import UIKit
 import Charts
 import Surge
 
-class CandleChartViewController: UIViewController {
+class CandleChartViewController: UIViewController,QuantileCalculable {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var chartView: CandleStickChartView!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -40,11 +40,11 @@ class CandleChartViewController: UIViewController {
         chartView.xAxis.drawGridLinesEnabled = false
         chartView.xAxis.drawAxisLineEnabled = false
         
-        let me = quantile(n: 0.5, numbers)
+        //let me = quantile(n: 0.5, numbers)
         let high = quantile(n: 0.75, numbers)
         let low = quantile(n: 0.25, numbers)
         let topEnd = high + (1.5*(high-low))
-        let bottomEnd = high - (1.5*(high-low))
+        let bottomEnd = low - (1.5*(high-low))
         let maxValue = [max(numbers),topEnd]
         let minValue = [min(numbers),bottomEnd]
         chartView.leftAxis.axisMaximum = max(maxValue)+5
@@ -61,24 +61,11 @@ class CandleChartViewController: UIViewController {
         let data = CandleChartData(dataSet: dataEntriesSet)
         chartView.data = data
         chartView.notifyDataSetChanged()
-        chartView.leftAxis.addLimitLine(ChartLimitLine(limit: me, label: "Q2"))
+        //chartView.leftAxis.addLimitLine(ChartLimitLine(limit: me, label: "Q2"))
+        chartView.leftAxis.removeAllLimitLines()
         chartView.leftAxis.addLimitLine(ChartLimitLine(limit: topEnd))
         chartView.leftAxis.addLimitLine(ChartLimitLine(limit: bottomEnd))
         topLabel.text = "Candle chart of variable: " + headers[chosenVariable]
-        
-        scatterNums = [Double]()
-        observations.forEach { (obs) in
-            numbers.append(obs.observationArray[chosenVariable])
-        }
-        
-    }
-    
-    private func quantile(n: Double, _ numbers: [Double]) -> Double{
-        var nums = numbers
-        nums.sort(by: {$0 < $1})
-        let n1 = floor(Double(numbers.count)*n)
-        let n2 = ceil(Double(numbers.count)*n)
-        return (n1+n2) / 2
     }
 }
 

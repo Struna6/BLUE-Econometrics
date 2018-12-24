@@ -39,20 +39,18 @@
                                 </vibrancyEffect>
                             </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-BL-yPz">
-                                <rect key="frame" x="209" y="242" width="350" height="645"/>
+                                <rect key="frame" x="134" y="242" width="500" height="650"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="350" id="5F1-WL-yMd"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="348" id="lrI-Py-M10"/>
-                                    <constraint firstAttribute="height" constant="645" id="ugr-Ey-2ga"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="645" id="xqt-Tu-aXr"/>
+                                    <constraint firstAttribute="width" constant="500" id="L5d-lC-2Nd"/>
+                                    <constraint firstAttribute="height" constant="650" id="fYl-V7-XxP"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="aRS-kX-jjG">
-                                        <rect key="frame" x="0.0" y="28" width="350" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="500" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aRS-kX-jjG" id="fh0-75-51K">
-                                            <rect key="frame" x="0.0" y="0.0" width="350" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -65,13 +63,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="52.5" id="3wp-hZ-hdK"/>
                             <constraint firstItem="hec-yE-haM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="7pB-nt-gct"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="top" secondItem="hec-yE-haM" secondAttribute="bottom" constant="38" id="IXp-2v-aSg"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MaZ-v6-k0g"/>
                             <constraint firstItem="hec-yE-haM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pi1-yP-fMx"/>
-                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YAn-8f-btN"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YF6-Fe-0T0"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="centerX" secondItem="hec-yE-haM" secondAttribute="centerX" id="dzR-R1-eFA"/>
-                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="paY-Nd-zZs"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tCj-Z6-1vK"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ukf-ek-hNr"/>
                         </constraints>
@@ -132,10 +129,11 @@
                             <rect key="frame" x="63" y="90" width="474" height="318"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1G-De-fY2">
-                            <rect key="frame" x="254.5" y="41" width="91" height="35"/>
+                            <rect key="frame" x="62.5" y="41" width="475" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="91" id="Qji-5d-NsJ"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="cas-aq-s5h"/>
                                 <constraint firstAttribute="height" constant="35" id="d0J-LQ-6lP"/>
+                                <constraint firstAttribute="width" constant="475" id="xzW-wo-6St"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                             <nil key="textColor"/>

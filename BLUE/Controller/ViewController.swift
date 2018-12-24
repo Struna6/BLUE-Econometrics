@@ -14,25 +14,6 @@ import AVKit
 
 // MARK: Protocol for Transponating Arrays
 
-protocol Transposable{
-    func transposeArray(array : [[Double]], rows : Int, cols : Int) -> [[Double]]
-}
-extension Transposable{
-    func transposeArray(array : [[Double]], rows : Int, cols : Int) -> [[Double]]{
-        var tmpX2 = Array(repeating: Array(repeating: 0.0, count: rows), count: cols)
-        var i = 0
-        var j = 0
-        array.forEach { (row) in
-            j = 0
-            row.forEach({ (item) in
-                tmpX2[j][i] = item
-                j = j + 1
-            })
-            i = i + 1
-        }
-        return tmpX2
-    }
-}
 
 class ViewController: UIViewController, Transposable, Storage{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
@@ -43,8 +24,34 @@ class ViewController: UIViewController, Transposable, Storage{
     var model = Model()
     var parametersResults : [ModelParameters]{
         get{
-            return [ModelParameters(name: "R\u{00B2}", criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")
+            return [
+                ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo"),
+                ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.1, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo")
             ]
+        }
+    }
+    var criticalParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({$0.category.rawValue == "Critical"})
+        }
+    }
+    var warningParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({$0.category.rawValue == "Warning"})
+        }
+    }
+    var normalParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({$0.category.rawValue == "Normal"})
+        }
+    }
+    var parametersCategorized : [[ModelParameters]]{
+        get{
+            var tmp = [[ModelParameters]]()
+            tmp.append(criticalParameters)
+            tmp.append(warningParameters)
+            tmp.append(normalParameters)
+            return tmp
         }
     }
     // MARK: Buttons
@@ -276,9 +283,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == topTableView{
-            var tmp = self.parametersResults
-            tmp = tmp.filter{$0.category.rawValue == topTableSections[section]}
-            return tmp.count
+            return parametersCategorized[section].count
         }else{
             return model.headers.count
         }
@@ -287,22 +292,24 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         if tableView == topTableView{
-            cell.textLabel?.text = parametersResults[indexPath.row].name + " = " + String(format:"%.4f",Double(parametersResults[indexPath.row].value))
-            switch parametersResults[indexPath.row].category{
-                case .Critical:
+            
+            let par = parametersCategorized[indexPath.section][indexPath.row]
+            cell.textLabel?.text = par.name + " = " + String(format:"%.4f",Double(par.value))
+            
+            switch indexPath.section{
+                case 0:
                     cell.imageView?.image = UIImage.init(named: "critical")
                     cell.textLabel?.textColor = UIColor.init(named: "red")
-                case .Warning:
+                case 1:
                     cell.imageView?.image = UIImage.init(named: "warning")
-                case .Normal:
+                case 2:
                     cell.imageView?.image = UIImage.init(named: "ok")
-                default: break
+                default:break
             }
         }else{
         let text = model.headers[indexPath.row]
         cell.textLabel?.text = text
         cell.textLabel?.textAlignment = NSTextAlignment.center
-
         if !newModel{
             if tableView == self.chooseXTableView && chosenX.contains(text){
                 cell.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -319,7 +326,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == topTableView{
-            loadParametersView(item: parametersResults[indexPath.row])
+            loadParametersView(item: parametersCategorized[indexPath.section][indexPath.row])
         }else{
             let cell = tableView.cellForRow(at: indexPath)
             if cell?.accessoryType == UITableViewCell.AccessoryType.none{

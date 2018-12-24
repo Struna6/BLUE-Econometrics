@@ -1,7 +1,7 @@
 
 
 
-struct Model : OLSCalculable, ImportableFromTextFile, Transposable, Codable{
+struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, Codable{
     var allObservations = [Observation]()
     var chosenX = [[Double]](){
         didSet{
@@ -55,21 +55,37 @@ struct ModelParameters{
     var description : String
     var imageName : String
     var videoName : String?
+    var isLess : Bool
     
-    init(name : String, criticalFloor : Double, warningFloor : Double, value : Double, description : String, imageName : String, videoName : String?){
+    init(name : String, isLess : Bool,  criticalFloor : Double, warningFloor : Double, value : Double, description : String, imageName : String, videoName : String?){
         self.description = description
         self.imageName = imageName
         (videoName?.isEmpty)! ? self.videoName = videoName : nil
         self.name = name
         self.value = value
-        if value <= criticalFloor {
-            self.category = .Critical
+        self.isLess = isLess
+
+        if isLess{
+            if value <= criticalFloor {
+                self.category = .Critical
+            }
+            else if value <= warningFloor {
+                self.category = .Warning
+            }
+            else{
+                self.category = .Normal
+            }
+        }else{
+            if value >= criticalFloor {
+                self.category = .Critical
+            }
+            else if value >= warningFloor {
+                self.category = .Warning
+            }
+            else{
+                self.category = .Normal
+            }
         }
-        else if value <= warningFloor {
-            self.category = .Warning
-        }
-        else{
-            self.category = .Normal
-        }
+       
     }
 }
