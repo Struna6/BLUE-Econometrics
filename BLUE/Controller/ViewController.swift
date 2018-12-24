@@ -38,6 +38,7 @@ class ViewController: UIViewController, Transposable, Storage{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     @IBOutlet weak var topTableView: UITableView!
     
+    @IBOutlet weak var topLabel: UILabel!
     let topTableSections = ["Critical","Warning","Normal"]
     var model = Model()
     var parametersResults : [ModelParameters]{
@@ -70,6 +71,9 @@ class ViewController: UIViewController, Transposable, Storage{
             model = Model(withHeaders: false, observationLabeled: false, path: newPath)
             chooseYTableView.reloadData()
             chooseXTableView.reloadData()
+            topTableView.reloadData()
+            topTableView.isHidden = true
+            topLabel.isHidden = true
             chosenY.removeAll()
             chosenX.removeAll()
         }
@@ -89,6 +93,27 @@ class ViewController: UIViewController, Transposable, Storage{
         visualViewToBlur.effect = nil
         if model.squareR.isNaN{
             topTableView.isHidden = true
+            topLabel.isHidden = true
+        }
+        else{
+            var tmpXText = String()
+            model.chosenXHeader.forEach { (str) in
+                tmpXText = tmpXText + " " + str
+            }
+            var tmpEq = String()
+            for i in 0..<model.getOLSRegressionEquation().count{
+                if i==0{
+                    tmpEq = tmpEq + String(format:"%.2f",model.getOLSRegressionEquation()[0])
+                }else{
+                    let num = model.getOLSRegressionEquation()[i]
+                    if num>=0{
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                    }else{
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                    }
+                }
+            }
+            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressors:  \(tmpXText)\nEquation: \(tmpEq)"
         }
         if !newModel{
             loadSavedModel()
@@ -96,6 +121,7 @@ class ViewController: UIViewController, Transposable, Storage{
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
         parametersViewImage.addGestureRecognizer(tapOnImage)
         self.topTableView.separatorColor = UIColor.clear;
+        
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
@@ -180,6 +206,25 @@ class ViewController: UIViewController, Transposable, Storage{
             model.chosenYHeader = self.chosenY
             topTableView.reloadData()
             topTableView.isHidden = false
+            var tmpXText = String()
+            model.chosenXHeader.forEach { (str) in
+                tmpXText = tmpXText + " " + str
+            }
+            var tmpEq = String()
+            for i in 0..<model.getOLSRegressionEquation().count{
+                if i==0{
+                    tmpEq = tmpEq + String(format:"%.4f",model.getOLSRegressionEquation()[0])
+                }else{
+                    let num = model.getOLSRegressionEquation()[i]
+                    if num>=0{
+                        tmpEq = tmpEq + " + " + String(format:"%.4f",num) + model.chosenXHeader[i-1]
+                    }else{
+                        tmpEq = tmpEq + " " + String(format:"%.4f",num) + model.chosenXHeader[i-1]
+                    }
+                }
+            }
+            topLabel.isHidden = false
+            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
@@ -249,6 +294,8 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     cell.textLabel?.textColor = UIColor.init(named: "red")
                 case .Warning:
                     cell.imageView?.image = UIImage.init(named: "warning")
+                case .Normal:
+                    cell.imageView?.image = UIImage.init(named: "ok")
                 default: break
             }
         }else{

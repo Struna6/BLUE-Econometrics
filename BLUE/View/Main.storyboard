@@ -37,6 +37,7 @@
                     <connections>
                         <segue destination="Z3e-Hd-hZE" kind="show" identifier="toObservations" id="j8P-SJ-Boh"/>
                         <segue destination="fTl-ux-ahd" kind="show" identifier="toCharts" id="GWp-5E-kCR"/>
+                        <segue destination="GG5-5I-TfG" kind="show" identifier="toCandleChart" id="Gxu-HM-4VB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -87,6 +88,67 @@
             </objects>
             <point key="canvasLocation" x="2759" y="885"/>
         </scene>
+        <!--Candle Chart View Controller-->
+        <scene sceneID="nJ5-7T-5hi">
+            <objects>
+                <viewController id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eGH-P6-x7e">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Candle chart of" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAl-tz-Tix">
+                                <rect key="frame" x="149" y="115" width="470" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="RZY-n2-XQs"/>
+                                    <constraint firstAttribute="width" constant="470" id="Uok-kZ-xpZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJS-aR-HwO" userLabel="Chart View" customClass="CandleStickChartView" customModule="Charts">
+                                <rect key="frame" x="34" y="175" width="700" height="450"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="700" id="8EZ-K3-b47"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="450" id="fdq-P7-iPQ"/>
+                                    <constraint firstAttribute="width" constant="700" id="nVr-Wl-yjO"/>
+                                    <constraint firstAttribute="height" constant="450" id="oou-tO-4dX"/>
+                                </constraints>
+                            </view>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Tz-gY-fx6">
+                                <rect key="frame" x="217" y="694" width="334" height="231"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="334" id="AGQ-OD-wpL"/>
+                                    <constraint firstAttribute="height" constant="231" id="ayY-7Y-YAg"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="GG5-5I-TfG" id="ugn-gx-v3K"/>
+                                    <outlet property="delegate" destination="GG5-5I-TfG" id="p0G-Kc-zun"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TAl-tz-Tix" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="JUo-mR-gfe"/>
+                            <constraint firstItem="SJS-aR-HwO" firstAttribute="top" secondItem="TAl-tz-Tix" secondAttribute="bottom" constant="30" id="SzG-dn-clu"/>
+                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="ZZJ-Ci-hJp"/>
+                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="top" secondItem="SJS-aR-HwO" secondAttribute="bottom" constant="69" id="awt-z4-X5I"/>
+                            <constraint firstItem="SJS-aR-HwO" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="bfB-mR-iUf"/>
+                            <constraint firstItem="TAl-tz-Tix" firstAttribute="top" secondItem="MID-tb-zOV" secondAttribute="top" constant="45" id="eV9-tN-bcx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MID-tb-zOV"/>
+                    </view>
+                    <connections>
+                        <outlet property="chartView" destination="SJS-aR-HwO" id="JZB-wb-4dV"/>
+                        <outlet property="pickerView" destination="3Tz-gY-fx6" id="uR5-d4-dxZ"/>
+                        <outlet property="topLabel" destination="TAl-tz-Tix" id="YHS-92-aor"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q1h-1J-lOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2060.9375" y="1595.5078125"/>
+        </scene>
         <!--Chart View-->
         <scene sceneID="bUU-0n-F9U">
             <objects>
@@ -121,20 +183,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxT-j1-QQe">
-                                <rect key="frame" x="0.0" y="718" width="768" height="216"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="zjs-mh-CMc"/>
-                                </constraints>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AWt-0Y-OZH" firstAttribute="top" secondItem="6o5-fX-0rS" secondAttribute="bottom" constant="43" id="2mw-Hs-DIk"/>
-                            <constraint firstItem="fxT-j1-QQe" firstAttribute="trailing" secondItem="ctj-2A-WXt" secondAttribute="trailing" id="AKC-8S-9Dz"/>
                             <constraint firstItem="AWt-0Y-OZH" firstAttribute="centerX" secondItem="KSd-Jv-9I4" secondAttribute="centerX" id="Gtd-gD-TVr"/>
-                            <constraint firstItem="fxT-j1-QQe" firstAttribute="leading" secondItem="ctj-2A-WXt" secondAttribute="leading" id="QCL-Sc-yfr"/>
-                            <constraint firstItem="ctj-2A-WXt" firstAttribute="bottom" secondItem="fxT-j1-QQe" secondAttribute="bottom" constant="90" id="RdZ-k4-LKN"/>
                             <constraint firstItem="E90-RM-lWM" firstAttribute="bottom" secondItem="ctj-2A-WXt" secondAttribute="top" id="WY8-Pi-WXi"/>
                             <constraint firstItem="E90-RM-lWM" firstAttribute="centerX" secondItem="6o5-fX-0rS" secondAttribute="centerX" id="bGd-ia-mM2"/>
                             <constraint firstItem="6o5-fX-0rS" firstAttribute="top" secondItem="E90-RM-lWM" secondAttribute="bottom" constant="47" id="gXe-t2-P3d"/>
@@ -144,13 +197,12 @@
                         <viewLayoutGuide key="safeArea" id="ctj-2A-WXt"/>
                     </view>
                     <connections>
-                        <outlet property="chartTypePicker" destination="fxT-j1-QQe" id="Rbj-TQ-3ZY"/>
                         <outlet property="chartView" destination="AWt-0Y-OZH" id="D9g-1o-EZd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XqP-XB-jM5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2759" y="1593"/>
+            <point key="canvasLocation" x="2773" y="1596"/>
         </scene>
     </scenes>
 </document>

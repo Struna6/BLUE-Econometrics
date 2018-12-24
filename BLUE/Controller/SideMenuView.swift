@@ -14,7 +14,7 @@ class SideMenuView: UITableViewController{
     var model = Model()
     var identities = ["toObservations","toPlots"]
     let sections = ["Observations", "Plots"]
-    let options = ["Observations":["All","Selected"], "Plots":["X-Y plot"]]
+    let options = ["Observations":["All","Selected"], "Plots":["X-Y plot","Candle Chart"]]
     var allObservations = true
     
     override func viewDidLoad() {
@@ -36,6 +36,12 @@ class SideMenuView: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         cell.textLabel?.text = options[sections[indexPath.section]]![indexPath.row]
+        
+        if options[sections[indexPath.section]]![indexPath.row] == "X-Y plot" && model.chosenXHeader.count > 1{
+            cell.textLabel?.textColor = UIColor.red
+            cell.isUserInteractionEnabled = false
+        }
+        
         return cell
     }
     
@@ -52,6 +58,8 @@ class SideMenuView: UITableViewController{
             //
         case 10:
             performSegue(withIdentifier: "toCharts", sender: self)
+        case 11:
+            performSegue(withIdentifier: "toCandleChart", sender: self)
         default: break
         }
     }
@@ -88,6 +96,11 @@ class SideMenuView: UITableViewController{
                 target.observations = tmp
             }
             target.headers = model.headers
+        }
+        else if segue.identifier == "toCandleChart"{
+            let target = segue.destination as! CandleChartViewController
+            target.headers = model.headers
+            target.observations = model.allObservations
         }
     }
 }

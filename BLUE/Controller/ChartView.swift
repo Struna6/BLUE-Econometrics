@@ -10,18 +10,21 @@ import UIKit
 import Charts
 import Surge
 
+//MARK: For Combined Chart
+
 class ChartView: UIViewController{
     @IBOutlet weak var chartView: CombinedChartView!
     
-    //do more for options like dictionary with X,Y arrays
-    // MARK: Scatter
+    //MARK: Scatter
     var scatterX : [[Double]]?
     var scatterY : [Double]?
-    // MARK: Line
+    //MARK: Line
     private var lineX = [Double]()
     private var lineY : [Double]?
-    // MARK: To be set too
+    //MARK: To be set too
     var equation = [Double]()
+    //MARK: For candleChart
+    var observations = [Observation]()
     
     private var chosenX = 0
     private var max : Int {
@@ -42,15 +45,9 @@ class ChartView: UIViewController{
             return Int(Surge.min(Xcol))
         }
     }
-    
-    private var chartOptions = [String](repeating: "option", count: 5)
-    @IBOutlet weak var chartTypePicker: UIPickerView!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        chartTypePicker.delegate = self
-        chartTypePicker.dataSource = self
         lineX.removeAll()
         combinedLinAndScateerUpdate()
     }
@@ -67,6 +64,8 @@ class ChartView: UIViewController{
             tmp.append(el)
             tmpX.append(tmp)
         }
+        print(tmpX)
+        print(equation)
         let X = Matrix<Double>(tmpX)
         let Y = Matrix<Double>([equation])
         let result = mul(X, y: Surge.transpose(Y))
@@ -112,20 +111,6 @@ class ChartView: UIViewController{
         chartView.xAxis.axisMaximum = Double(max) + 2.0
         chartView.notifyDataSetChanged()
     }
-
 }
 
-extension ChartView : UIPickerViewDelegate, UIPickerViewDataSource{
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return chartOptions[row]
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return chartOptions.count
-    }
-}
+

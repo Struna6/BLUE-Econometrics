@@ -18,10 +18,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6U-Nq-OA7">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hec-yE-haM">
+                                <rect key="frame" x="134" y="90" width="500" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="114" id="GgI-VE-ThT"/>
+                                    <constraint firstAttribute="width" constant="500" id="Xsl-10-6LO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6U-Nq-OA7">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="UWr-d4-8qD">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UWr-d4-8qD">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
@@ -30,11 +39,13 @@
                                 </vibrancyEffect>
                             </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-BL-yPz">
-                                <rect key="frame" x="209" y="137" width="350" height="750"/>
+                                <rect key="frame" x="209" y="242" width="350" height="645"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="350" id="5F1-WL-yMd"/>
-                                    <constraint firstAttribute="height" constant="750" id="ugr-Ey-2ga"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="348" id="lrI-Py-M10"/>
+                                    <constraint firstAttribute="height" constant="645" id="ugr-Ey-2ga"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="645" id="xqt-Tu-aXr"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="aRS-kX-jjG">
@@ -54,8 +65,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3wp-hZ-hdK"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="52.5" id="3wp-hZ-hdK"/>
+                            <constraint firstItem="hec-yE-haM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="7pB-nt-gct"/>
+                            <constraint firstItem="hec-yE-haM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pi1-yP-fMx"/>
                             <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YAn-8f-btN"/>
+                            <constraint firstItem="H6U-Nq-OA7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YF6-Fe-0T0"/>
+                            <constraint firstItem="H6U-Nq-OA7" firstAttribute="centerX" secondItem="hec-yE-haM" secondAttribute="centerX" id="dzR-R1-eFA"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="paY-Nd-zZs"/>
+                            <constraint firstItem="H6U-Nq-OA7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tCj-Z6-1vK"/>
+                            <constraint firstItem="H6U-Nq-OA7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ukf-ek-hNr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -100,6 +118,7 @@
                         <outlet property="parametersViewDetails" destination="KEZ-jL-nt1" id="lXA-ib-xWW"/>
                         <outlet property="parametersViewImage" destination="9DF-cO-fCP" id="kj1-Tc-YQI"/>
                         <outlet property="parametersViewTitle" destination="m1G-De-fY2" id="L7X-9v-KOw"/>
+                        <outlet property="topLabel" destination="hec-yE-haM" id="0Zx-E9-BuB"/>
                         <outlet property="topTableView" destination="Oir-BL-yPz" id="zde-5f-PFr"/>
                         <outlet property="visualViewToBlur" destination="H6U-Nq-OA7" id="hh4-Ri-LY6"/>
                     </connections>
