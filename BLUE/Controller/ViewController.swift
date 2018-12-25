@@ -129,7 +129,7 @@ class ViewController: UIViewController, Transposable, Storage{
                     }
                 }
             }
-            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressors:  \(tmpXText)\nEquation: \(tmpEq)"
+            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
         }
         if !newModel{
             loadSavedModel()
@@ -241,7 +241,7 @@ class ViewController: UIViewController, Transposable, Storage{
                 }
             }
             topLabel.isHidden = false
-            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
+            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {

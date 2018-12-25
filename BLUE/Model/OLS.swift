@@ -12,46 +12,87 @@ import Surge
 import CSV
 
 protocol ImportableFromTextFile{
-    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation])
+    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool)
 }
 extension ImportableFromTextFile where Self==Model{
-    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?, n : Int, observations : [Observation]){
+    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool){
         //let path = Bundle.main.path(forResource: "test1", ofType: "txt")
         var text = ""
         do {
-            text = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
+            text = try String(contentsOfFile: path, encoding: String.Encoding.macOSRoman)
         } catch  {
             print("error getting data " + path)
             fatalError(error.localizedDescription)
         }
-        var seperatedObservations = [String]()
-        var seperatedValuesStr = [String]()
-        var seperatedValues = [Double]()
-        var i = 0
-        var observations = [Observation]()
+        var labeled = false
+        var headered = false
         var headers = [String]()
-        let end = text.index(text.endIndex, offsetBy: -1)
-        text = String(text[..<end])
-        seperatedObservations = text.components(separatedBy: ";")
-
-        seperatedObservations.forEach { (obs) in
-            seperatedValuesStr = obs.components(separatedBy: ",")
-            var observation = Observation()
-            if withHeaders && i==0{
-                headers = seperatedValuesStr
-            }
-            else{
-                seperatedValues = seperatedValuesStr.compactMap{Double($0)}
-                if observationLabeled && (i != 0){
-                    observation.label = seperatedValuesStr[0]
-                    seperatedValues.removeFirst()
-                }
-                observation.observationArray = seperatedValues
-                observations.append(observation)
-            }
-            i=i+1
+        var observations = [Observation]()
+        
+        var result = [[String]]()
+        let rows = text.components(separatedBy: ";")
+        rows.forEach { (row) in
+            let tmpRow = row
+            let columns = tmpRow.components(separatedBy: ",")
+            result.append(columns)
         }
-        return (headers, i, observations)
+        let firstRow = result[0]
+        if firstRow.count < 2{
+            fatalError("Minimim column number: 2")
+        }
+        if firstRow[0] == ""{
+            //[0,0] is blank
+            labeled = true
+            headered = true
+        }
+        else if let _ = Double(firstRow[0]){
+            //[0,0] is number
+            headered = false
+            labeled = false
+        }else{
+            //[0,0] is string
+            if let _ = Double(firstRow[1]){
+                //[0,1] is number
+                labeled = true
+                headered = false
+            }else{
+                headered = true
+                labeled = false
+            }
+        }
+        var k = 0
+        result.forEach { (row) in
+            var tmpRow = row
+            var tmp = Observation()
+            if k==0 && headered{
+                headers = row
+                if headered && labeled{
+                    headers.remove(at: 0)
+                }
+                tmpRow.removeAll()
+            }
+            if labeled && k != 0{
+                tmp.label = tmpRow.first!
+                tmpRow.remove(at: 0)
+            }
+            var tmpDouble = [Double]()
+            tmpRow.forEach { (i) in
+                var tmpI = i
+                if tmpI.contains("\n"){
+                    tmpI.remove(at: tmpI.firstIndex(of: "\n")!)
+                }
+                if tmpI.contains(","){
+                    tmpI = String(tmpI.map{$0 == "," ? "." : $0})
+                }
+                tmpDouble.append(Double(tmpI)!)
+            }
+            if tmpDouble.count > 0{
+                tmp.observationArray = tmpDouble
+                observations.append(tmp)
+            }
+            k = k + 1
+        }
+        return(headers,observations.count,observations,labeled,headered)
     }
 }
 
@@ -62,7 +103,7 @@ extension CSVImportable where Self==Model{
     func loadDataFromCSV(path: String) -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation]){
         var text = ""
         do {
-            text = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
+            text = try String(contentsOfFile: path, encoding: String.Encoding.isoLatin1)
         } catch  {
             print("error getting data " + path)
             fatalError(error.localizedDescription)
@@ -115,13 +156,17 @@ extension CSVImportable where Self==Model{
                 }
                 tmpRow.removeAll()
             }
-            if labeled{
+            if labeled && k != 0{
                 tmp.label = tmpRow.first!
                 tmpRow.remove(at: 0)
             }
             var tmpDouble = [Double]()
             tmpRow.forEach { (i) in
-                tmpDouble.append(Double(i)!)
+                var tmpI = i
+                if tmpI.contains(","){
+                    tmpI = String(tmpI.map{$0 == "," ? "." : $0})
+                }
+                tmpDouble.append(Double(tmpI)!)
             }
             if tmpDouble.count > 0{
                 tmp.observationArray = tmpDouble

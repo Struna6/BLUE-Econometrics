@@ -98,6 +98,7 @@ class SideMenuView: UITableViewController{
                 target.observations = tmp
             }
             target.headers = model.headers
+            target.observationsLabeled = model.observationLabeled
         }
         else if segue.identifier == "toCandleChart"{
             let target = segue.destination as! CandleChartViewController

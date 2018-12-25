@@ -25,15 +25,24 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var headers = [String]()
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow column: Int) -> CGFloat {
+        let sample = CGFloat(spreedsheet.frame.height) / CGFloat(row + 1) - 5
+        if sample < CGFloat(spreedsheet.frame.height) / 30{
+            return CGFloat(spreedsheet.frame.height) / 30
+        }
         return CGFloat(spreedsheet.frame.height) / CGFloat(row + 1) - 5
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        return CGFloat(spreedsheet.frame.width) / CGFloat(col) - 5
+        let colTmp = observationsLabeled ? col+1 : col
+        let sample = CGFloat(spreedsheet.frame.width) / CGFloat(colTmp) - 5
+        if sample < CGFloat(spreedsheet.frame.width) / 4{
+            return CGFloat(spreedsheet.frame.width) / 4
+        }
+        return CGFloat(spreedsheet.frame.width) / CGFloat(colTmp) - 5
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return col
+        return observationsLabeled ? col+1 : col
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -49,13 +58,34 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
+        if indexPath.column == 0 && observationsLabeled{
+            let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
+            if indexPath.row != 0{
+                cell.label.text = observations[indexPath.row-1].label
+            }
+            return cell
+        }
         if indexPath.row == 0 {
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
+            if observationsLabeled && indexPath.column == 0{
+                return cell
+            }
+            if observationsLabeled{
+                cell.label.text = String(headers[indexPath.column-1])
+                return cell
+            }
             cell.label.text = String(headers[indexPath.column])
             return cell
         }
         else{
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
+            if observationsLabeled && indexPath.column == 0{
+                return cell
+            }
+            if observationsLabeled{
+                cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column-1])
+                return cell
+            }
             cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column])
             return cell
         }

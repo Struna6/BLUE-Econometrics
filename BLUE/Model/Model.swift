@@ -17,8 +17,8 @@ struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservati
     var chosenYHeader = ""
     var flatY = [Double]()
     
-    var withHeaders : Bool
-    var observationLabeled : Bool
+    var withHeaders = false
+    var observationLabeled = false
     var headers = [String]()
     var labels : [String]?{
         get{
@@ -33,16 +33,16 @@ struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservati
             }
         }
     }
-    var n : Int = 0
-    var k : Int = 0
+    var n = 0
+    var k = 0
     
     init(withHeaders : Bool, observationLabeled : Bool, path : String){
-        self.withHeaders = withHeaders
-        self.observationLabeled = observationLabeled
         let result = importFromTextFile(withHeaders: withHeaders, observationLabeled: observationLabeled, path: path)
         self.allObservations = result.observations
         self.n = result.n
-        self.headers = result.header!
+        self.withHeaders = result.headered
+        self.observationLabeled = result.labeled
+        self.k = result.observations[0].observationArray.count
         if !withHeaders{
             for i in 0..<allObservations[0].observationArray.count{
                 headers.append(String(UnicodeScalar(i+65)!))
