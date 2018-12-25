@@ -1,7 +1,7 @@
 
 
 
-struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, Codable{
+struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, CSVImportable, Codable{
     var allObservations = [Observation]()
     var chosenX = [[Double]](){
         didSet{
@@ -48,6 +48,17 @@ struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservati
                 headers.append(String(UnicodeScalar(i+65)!))
             }
         }
+    }
+    init(path : String){
+        self.withHeaders = false
+        self.observationLabeled = false
+        let result = loadDataFromCSV(path: path)
+        self.allObservations = result.observations
+        self.withHeaders = result.headered
+        self.observationLabeled = result.labeled
+        self.headers = result.headers
+        self.n = allObservations.count
+        self.k = allObservations[0].observationArray.count
     }
     init(){
         withHeaders = false

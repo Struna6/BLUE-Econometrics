@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 import Surge
-
+import CSV
 
 protocol ImportableFromTextFile{
     func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation])
@@ -52,6 +52,84 @@ extension ImportableFromTextFile where Self==Model{
             i=i+1
         }
         return (headers, i, observations)
+    }
+}
+
+protocol CSVImportable{
+    func loadDataFromCSV(path: String) -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation])
+}
+extension CSVImportable where Self==Model{
+    func loadDataFromCSV(path: String) -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation]){
+        var text = ""
+        do {
+            text = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
+        } catch  {
+            print("error getting data " + path)
+            fatalError(error.localizedDescription)
+        }
+        var labeled = false
+        var headered = false
+        var headers = [String]()
+        var observations = [Observation]()
+        
+        var result = [[String]]()
+        let rows = text.components(separatedBy: "\n")
+        rows.forEach { (row) in
+            var tmpRow = row
+            tmpRow.removeLast()
+            let columns = tmpRow.components(separatedBy: ";")
+            result.append(columns)
+        }
+        let firstRow = result[0]
+        if firstRow.count < 2{
+            fatalError("Minimim column number: 2")
+        }
+        if firstRow[0] == ""{
+            //[0,0] is blank
+            labeled = true
+            headered = true
+        }
+        else if let _ = Double(firstRow[0]){
+                //[0,0] is number
+                headered = false
+                labeled = false
+            }else{
+                //[0,0] is string
+                if let _ = Double(firstRow[1]){
+                    //[0,1] is number
+                    labeled = true
+                    headered = false
+                }else{
+                    headered = true
+                    labeled = false
+                }
+        }
+        var k = 0
+        result.forEach { (row) in
+            var tmpRow = row
+            var tmp = Observation()
+            if k==0 && headered{
+                headers = row
+                if headered && labeled{
+                    headers.remove(at: 0)
+                }
+                tmpRow.removeAll()
+            }
+            if labeled{
+                tmp.label = tmpRow.first!
+                tmpRow.remove(at: 0)
+            }
+            var tmpDouble = [Double]()
+            tmpRow.forEach { (i) in
+                tmpDouble.append(Double(i)!)
+            }
+            if tmpDouble.count > 0{
+                tmp.observationArray = tmpDouble
+                observations.append(tmp)
+            }
+            k = k + 1
+        }
+        return (labeled,headered,headers,observations)
     }
 }
 

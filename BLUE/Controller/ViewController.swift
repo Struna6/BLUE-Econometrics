@@ -24,10 +24,14 @@ class ViewController: UIViewController, Transposable, Storage{
     var model = Model()
     var parametersResults : [ModelParameters]{
         get{
-            return [
+            if model.squareR.isNaN{
+                return []
+            }else{
+                return [
                 ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo"),
                 ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.1, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo")
-            ]
+                ]
+            }
         }
     }
     var criticalParameters : [ModelParameters]{
@@ -75,7 +79,11 @@ class ViewController: UIViewController, Transposable, Storage{
     // MARK: Getter that updates everything after loading new data
     var newPath = ""{
         didSet{
-            model = Model(withHeaders: false, observationLabeled: false, path: newPath)
+            if newPath.contains(".csv"){
+                model = Model(path: newPath)
+            }else{
+                model = Model(withHeaders: false, observationLabeled: false, path: newPath)
+            }
             chooseYTableView.reloadData()
             chooseXTableView.reloadData()
             topTableView.reloadData()
@@ -254,9 +262,8 @@ class ViewController: UIViewController, Transposable, Storage{
 }
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
         self.newPath = (urls.first?.path)!
-        
         //ADD ALERT YES?NO
     }
 }
