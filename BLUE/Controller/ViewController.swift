@@ -84,6 +84,7 @@ class ViewController: UIViewController, Transposable, Storage{
             }else{
                 model = Model(withHeaders: false, observationLabeled: false, path: newPath)
             }
+            let _ = parametersResults
             chooseYTableView.reloadData()
             chooseXTableView.reloadData()
             topTableView.reloadData()
