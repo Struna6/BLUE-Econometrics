@@ -220,6 +220,7 @@ class ViewController: UIViewController, Transposable, Storage{
             model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
+            let _ = parametersResults
             topTableView.reloadData()
             topTableView.isHidden = false
             var tmpXText = String()
