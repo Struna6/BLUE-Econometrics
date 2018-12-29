@@ -70,6 +70,7 @@ enum ModelParametersCategory : String{
     case Critical = "Critical"
     case Warning = "Warning"
     case Normal = "Normal"
+    case NAN = "Nan"
 }
 
 struct ModelParameters{
@@ -88,8 +89,10 @@ struct ModelParameters{
         self.name = name
         self.value = value
         self.isLess = isLess
-
-        if isLess{
+        
+        if value.isNaN{
+            self.category = .NAN
+        }else if isLess{
             if value <= criticalFloor {
                 self.category = .Critical
             }

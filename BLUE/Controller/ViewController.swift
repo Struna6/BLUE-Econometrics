@@ -21,7 +21,7 @@ class ViewController: UIViewController, Transposable, Storage{
     @IBOutlet weak var topTableView: UITableView!
     
     @IBOutlet weak var topLabel: UILabel!
-    let topTableSections = ["Critical","Warning","Normal"]
+    let topTableSections = ["Critical","Warning","Normal","Uncalculable"]
     var model = Model()
     var parametersResults : [ModelParameters]{
         get{
@@ -33,11 +33,13 @@ class ViewController: UIViewController, Transposable, Storage{
                 ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo"),
                 ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.05, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo"),
                 ModelParameters(name: "Test F significance", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "sampleVideo"),
-                ModelParameters(name: "RESET test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.RESET(modelBase: model), description: "In statistics, the Ramsey Regression Equation Specification Error Test (RESET) test is a general specification test for the linear regression model. More specifically, it tests whether non-linear combinations of the fitted values help explain the response variable. The intuition behind the test is that if non-linear combinations of the explanatory variables have any power in explaining the response variable, the model is misspecified in the sense that the data generating process might be better approximated by a polynomial or another non-linear functional form.", imageName: "F", videoName: "sampleVideo")
+                ModelParameters(name: "RESET test of stability of model", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.RESET(modelBase: model), description: "In statistics, the Ramsey Regression Equation Specification Error Test (RESET) test is a general specification test for the linear regression model. More specifically, it tests whether non-linear combinations of the fitted values help explain the response variable. The intuition behind the test is that if non-linear combinations of the explanatory variables have any power in explaining the response variable, the model is misspecified in the sense that the data generating process might be better approximated by a polynomial or another non-linear functional form.", imageName: "F", videoName: "sampleVideo"),
+                ModelParameters(name: "Jarque-Berry test of normality", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.JBtest, description: "The Jarque-Bera Test,a type of Lagrange multiplier test, is a test for normality. Normality is one of the assumptions for many statistical tests, like the t test or F test; the Jarque-Bera test is usually run before one of these tests to confirm normality. ", imageName: "CHI", videoName: "sampleVideo")
+//                ,ModelParameters(name: "Lagrange test of autocorrelation", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.LMAutoCorrelation(modelBase: model), description: "Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them. The analysis of autocorrelation is a mathematical tool for finding repeating patterns, such as the presence of a periodic signal obscured by noise, or identifying the missing fundamental frequency in a signal implied by its harmonic frequencies. It is often used in signal processing for analyzing functions or series of values, such as time domain signals.", imageName: "CHI", videoName: "sampleVideo")
                 ]
-                tmp.append(ModelParameters(name: "Test t for free variable", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[0], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo"))
+                tmp.append(ModelParameters(name: "Test t for free variable", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[0], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo"))
                 for i in 0..<model.k{
-                    let tmpElement = ModelParameters(name: "Test t for \(model.chosenXHeader[i]) variable", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[i+1], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo")
+                    let tmpElement = ModelParameters(name: "Test t for \(model.chosenXHeader[i]) variable", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[i+1], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo")
                     tmp.append(tmpElement)
                 }
                 return tmp
@@ -59,12 +61,19 @@ class ViewController: UIViewController, Transposable, Storage{
             return self.parametersResults.filter({$0.category.rawValue == "Normal"})
         }
     }
+    var nanParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({$0.category.rawValue == "Nan"})
+        }
+    }
+    
     var parametersCategorized : [[ModelParameters]]{
         get{
             var tmp = [[ModelParameters]]()
             tmp.append(criticalParameters)
             tmp.append(warningParameters)
             tmp.append(normalParameters)
+            tmp.append(nanParameters)
             return tmp
         }
     }
@@ -312,7 +321,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
         if tableView == topTableView{
             
             let par = parametersCategorized[indexPath.section][indexPath.row]
-            cell.textLabel?.text = par.name + " = " + String(format:"%.4f",Double(par.value))
+            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
             
             switch indexPath.section{
                 case 0:
@@ -321,6 +330,10 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     cell.imageView?.image = UIImage.init(named: "warning")
                 case 2:
                     cell.imageView?.image = UIImage.init(named: "ok")
+                case 3:
+                    cell.textLabel?.text = par.name
+                    cell.textLabel?.textColor = UIColor.red
+                    cell.imageView?.image = UIImage.init(named: "nan")
                 default:break
             }
         }else{

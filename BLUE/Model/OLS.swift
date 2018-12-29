@@ -207,6 +207,7 @@ extension OLSCalculable where Self==Model{
             return returnTmp
         }
     }
+    //ei
     var S : [Double]{
         get{
             var tmp = [Double]()
@@ -216,6 +217,7 @@ extension OLSCalculable where Self==Model{
             return tmp
         }
     }
+    //ei^2
     var SR : [Double]{
         get{
             var tmp = [Double]()
@@ -303,6 +305,7 @@ extension OLSCalculable where Self==Model{
 protocol OLSTestable: OLSCalculable, Statisticable{
     var parametersF : Double{get}
     var parametersT : [Double]{get}
+    var JBtest : Double {get}
 }
 
 extension OLSTestable where Self==Model{
@@ -322,6 +325,23 @@ extension OLSTestable where Self==Model{
                 tmp.append(tStudentCDF(t: SEB[i]-getOLSRegressionEquation()[i], dof: Double(n-k-1)))
             }
             return tmp
+        }
+    }
+    var JBtest : Double{
+        get{
+            let se = sqrt(1 / Double(n) * sum(SR))
+            var tmp3 = [Double]()
+            for i in 0..<flatY.count{
+                tmp3.append(pow((flatY[i]-estimatedY[i]), 3.0))
+            }
+            var tmp4 = [Double]()
+            for i in 0..<flatY.count{
+                tmp4.append(pow((flatY[i]-estimatedY[i]), 4.0))
+            }
+            let beta1 = 1 / Double(n) * sum(tmp3) / pow(se, 3.0)
+            let beta2 = 1 / Double(n) * sum(tmp4) / pow(se, 4.0)
+            let x = Double(n) * ((beta1 / 6) + (pow(beta2 - 3, 2.0) / 24))
+            return chiCDF(x: x, k: 2)
         }
     }
 }
@@ -368,8 +388,24 @@ struct OLSTestsAdvanced : Statisticable{
         }
         return fSnedecorCDF(F: top/bottom, d1: d1, d2: d2)
     }
+    mutating func LMAutoCorrelation(modelBase : Model) -> Double{
+        model1 = modelBase
+        model2 = model1
+        model2.chosenY.removeAll()
+        print(model2.chosenX)
+        print(model2.chosenY)
+        model2.chosenY.append(model1.estimatedY)
+        model2.chosenX.remove(at: 0)
+        model2.n = model2.n - 1
+        model2.k = model2.k + 1
+    
+        for i in 0..<model2.chosenX.count{
+            model2.chosenX[i].append(model1.estimatedY[i])
+        }
+        print(model2.chosenX)
+        print(model2.chosenY)
+        let R = model2.squareR
+        return chiCDF(x: Double(model1.n - 1) * R, k: 1)
+    }
 }
-
-
-
 
