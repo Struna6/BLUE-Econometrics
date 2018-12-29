@@ -236,7 +236,7 @@ extension OLSCalculable where Self==Model{
         get{
             var tmp = [Double]()
             let meanY = mean(flatY)
-            for i in 0..<flatY.count{
+            for i in 0..<n{
                 tmp.append(pow((estimatedY[i]-meanY),2.0))
             }
             return sum(tmp)
@@ -391,10 +391,16 @@ struct OLSTestsAdvanced : Statisticable{
     mutating func LMAutoCorrelation(modelBase : Model) -> Double{
         model1 = modelBase
         model2 = model1
-        model2.chosenY.removeAll()
-        print(model2.chosenX)
         print(model2.chosenY)
-        model2.chosenY.append(model1.estimatedY)
+        model2.chosenY.removeAll()
+        var i = 0
+        model1.estimatedY.forEach { (row) in
+            if i != 0{
+                let tmp = [row]
+                model2.chosenY.append(tmp)
+            }
+            i = i + 1
+        }
         model2.chosenX.remove(at: 0)
         model2.n = model2.n - 1
         model2.k = model2.k + 1
@@ -402,8 +408,6 @@ struct OLSTestsAdvanced : Statisticable{
         for i in 0..<model2.chosenX.count{
             model2.chosenX[i].append(model1.estimatedY[i])
         }
-        print(model2.chosenX)
-        print(model2.chosenY)
         let R = model2.squareR
         return chiCDF(x: Double(model1.n - 1) * R, k: 1)
     }
