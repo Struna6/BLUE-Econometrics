@@ -17,6 +17,7 @@ import AVKit
 
 class ViewController: UIViewController, Transposable, Storage{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
+    
     @IBOutlet weak var topTableView: UITableView!
     
     @IBOutlet weak var topLabel: UILabel!
@@ -27,10 +28,17 @@ class ViewController: UIViewController, Transposable, Storage{
             if model.squareR.isNaN{
                 return []
             }else{
-                return [
+                var tmp = [
                 ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo"),
-                ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.1, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo")
+                ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.05, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo"),
+                ModelParameters(name: "Test F significance", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "sampleVideo")
                 ]
+                tmp.append(ModelParameters(name: "Test t for free variable", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[0], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo"))
+                for i in 0..<model.k{
+                    let tmpElement = ModelParameters(name: "Test t for \(model.chosenXHeader[i]) variable", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[i+1], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo")
+                    tmp.append(tmpElement)
+                }
+                return tmp
             }
         }
     }
@@ -95,7 +103,6 @@ class ViewController: UIViewController, Transposable, Storage{
         }
     }
     // MARK: Deinit that delete views in background
-    
     
     // MARK: Init
     override func viewDidLoad() {
@@ -308,7 +315,6 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
             switch indexPath.section{
                 case 0:
                     cell.imageView?.image = UIImage.init(named: "critical")
-                    cell.textLabel?.textColor = UIColor.init(named: "red")
                 case 1:
                     cell.imageView?.image = UIImage.init(named: "warning")
                 case 2:

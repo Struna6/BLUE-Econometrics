@@ -1,7 +1,7 @@
 
 
 
-struct Model : OLSCalculable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, CSVImportable, Codable{
+struct Model : OLSTestable, OLSCalculable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, CSVImportable, Codable{
     var allObservations = [Observation]()
     var chosenX = [[Double]](){
         didSet{

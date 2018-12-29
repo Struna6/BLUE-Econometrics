@@ -189,6 +189,7 @@ protocol OLSCalculable{
     var squareR : Double {get}
     var squereFi : Double {get}
     var MAE : Double {get}
+    var SEB : [Double] {get}
     func getOLSRegressionEquation() -> [Double]
 }
 extension OLSCalculable where Self==Model{
@@ -273,6 +274,20 @@ extension OLSCalculable where Self==Model{
             return mean(tmp)
         }
     }
+    var SEB : [Double] {
+        get{
+            let X = Matrix<Double>(chosenX)
+            let XT = transpose(X)
+            let matrix = mul((se*se), x: inv(mul(XT, y: X)))
+            var result = [Double]()
+            var i = 0
+            matrix.forEach { (row) in
+                result.append(Array(row)[i])
+                i = i + 1
+            }
+            return result
+        }
+    }
     func getOLSRegressionEquation() -> [Double]{
         var equation = [Double]()
         let X = Matrix<Double>(chosenX)
@@ -284,6 +299,35 @@ extension OLSCalculable where Self==Model{
         return equation
     }
 }
+
+protocol OLSTestable: OLSCalculable, Statisticable{
+    var parametersF : Double{get}
+    var parametersT : [Double]{get}
+}
+
+extension OLSTestable where Self==Model{
+    var parametersF : Double{
+        get{
+            let F1 = ((n-k-1)/k)
+            let F2 = (squareR/(1-squareR))
+            let F = Double(F1) * F2
+            let result = fSnedecorCDF(F: F, d1: Double(k), d2: Double(n-k-1))
+            return result.isInfinite ? 1 : result
+        }
+    }
+    var parametersT : [Double]{
+        get{
+            var tmp = [Double]()
+            for i in 0..<SEB.count{
+                tmp.append(tStudentCDF(t: SEB[i]-getOLSRegressionEquation()[i], dof: Double(n-k-1)))
+            }
+            return tmp
+        }
+    }
+}
+
+
+
 
 
 
