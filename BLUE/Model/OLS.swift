@@ -326,7 +326,49 @@ extension OLSTestable where Self==Model{
     }
 }
 
-
+struct OLSTestsAdvanced : Statisticable{
+    var model1 = Model()
+    var model2 = Model()
+    
+    mutating func RESET(modelBase : Model) -> Double{
+        model1 = modelBase
+        model2 = model1
+        var tmp2 = [Double]()
+        var tmp3 = [Double]()
+        model2.estimatedY.forEach { (el) in
+            tmp2.append(el*el)
+            tmp3.append(el*el*el)
+        }
+        var i = 0
+        tmp2.forEach { (el) in
+            model2.chosenX[i].append(el)
+            i = i + 1
+        }
+        i = 0
+        tmp3.forEach { (el) in
+            model2.chosenX[i].append(el)
+            i = i + 1
+        }
+        model2.k = model2.k + 2
+        
+        let R1 = model1.squareR
+        let R2 = model2.squareR
+        let k1 = model1.k
+        let k2 = model2.k
+        
+        let top = (R2-R1)/Double(k2-k1)
+        let bottom = (1-R2)/Double(model1.n-k2-1)
+        let d2 = Double(model1.n-k2-1)
+        let d1 = Double(k2-k1)
+        
+        print("F:\(top/bottom) d1: \(d1) d2: \(d2)")
+        
+        if d2 < 0{
+            return Double.nan
+        }
+        return fSnedecorCDF(F: top/bottom, d1: d1, d2: d2)
+    }
+}
 
 
 
