@@ -33,7 +33,6 @@ public struct Matrix<Scalar> where Scalar: FloatingPoint, Scalar: ExpressibleByF
     public init(rows: Int, columns: Int, repeatedValue: Scalar) {
         self.rows = rows
         self.columns = columns
-
         self.grid = [Scalar](repeating: repeatedValue, count: rows * columns)
     }
 

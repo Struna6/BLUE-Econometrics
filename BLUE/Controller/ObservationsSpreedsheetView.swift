@@ -12,7 +12,6 @@ import SpreadsheetView
 class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
     var col: Int{
         get{
-            print("true:\(observations[0].observationArray.count)")
             return observations[0].observationArray.count
         }
     }
@@ -51,11 +50,10 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         if sample < CGFloat(spreedsheet.frame.width) / 4{
             return CGFloat(spreedsheet.frame.width) / 4
         }
-        return CGFloat(spreedsheet.frame.width) / CGFloat(colTmp) - 5
+        return CGFloat(spreedsheet.frame.width) / CGFloat(colTmp) - 10
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        print(col)
         return observationsLabeled ? col+1 : col
     }
     
@@ -105,9 +103,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         }
     }
     
-    func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
-    }
-    
     @IBOutlet weak var spreedsheet: SpreadsheetView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,6 +117,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         optionsFunction = ["Logarithm", "Power of 2", "Squere root","Exponent"]
         choosenFunction = "Logarithm"
         choosenVariable = 0
+        viewToBlur.isHidden = true
     }
     
     @IBAction func addObsButtonPressed(_ sender: UIBarButtonItem) {
@@ -199,6 +195,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     
     func loadAddObservationsView(){
         self.view.addSubview(addObservationView)
+        viewToBlur.isHidden = false
         addObservationView.alpha = 0
         addObservationView.center = self.view.center
         addObservationView.transform = CGAffineTransform(translationX: 0.0, y: 300)
@@ -210,6 +207,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func closeAddObservationsView(){
+        viewToBlur.isHidden = true
         UIView.animate(withDuration: 0.4, animations: {
             self.addObservationView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.addObservationView.alpha = 0

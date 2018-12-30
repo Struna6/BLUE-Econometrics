@@ -91,6 +91,7 @@ extension ImportableFromTextFile where Self==Model{
                 observations.append(tmp)
             }
             k = k + 1
+            
         }
         return(headers,observations.count,observations,labeled,headered)
     }
@@ -173,7 +174,9 @@ extension CSVImportable where Self==Model{
                 observations.append(tmp)
             }
             k = k + 1
+            
         }
+
         return (labeled,headered,headers,observations)
     }
 }
@@ -200,6 +203,7 @@ extension OLSCalculable where Self==Model{
             var tmpY = [[Double]]()
             tmpY.append(getOLSRegressionEquation())
             let Y = Matrix<Double>(tmpY)
+
             let result = mul(X, y: Surge.transpose(Y))
             result.forEach({ (slice) in
                     returnTmp.append(Array(slice)[0])
@@ -295,7 +299,7 @@ extension OLSCalculable where Self==Model{
         let X = Matrix<Double>(chosenX)
         let Y = Matrix<Double>(chosenY)
         let result = (mul((inv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
-            result.forEach({ (slice) in
+        result.forEach({ (slice) in
             equation.append(Array(slice)[0])
         })
         return equation
@@ -401,6 +405,7 @@ struct OLSTestsAdvanced : Statisticable{
         model2.chosenX.remove(at: 0)
         model2.n = model2.n - 1
         model2.k = model2.k + 1
+        model2.flatY = model1.estimatedY
     
         for i in 0..<model2.chosenX.count{
             model2.chosenX[i].append(model1.estimatedY[i])
