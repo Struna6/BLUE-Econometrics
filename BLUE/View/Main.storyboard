@@ -64,7 +64,7 @@
             </objects>
             <point key="canvasLocation" x="1284" y="885"/>
         </scene>
-        <!--Observations Spreedsheet View-->
+        <!--Observations-->
         <scene sceneID="j6l-dC-mwp">
             <objects>
                 <viewController storyboardIdentifier="toObservations" id="Z3e-Hd-hZE" customClass="ObservationsSpreedsheetView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,19 +77,142 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-wx-XXh">
+                                <rect key="frame" x="-9" y="0.0" width="785" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="b02-K6-OdX">
+                                    <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vT8-CB-Ntc">
+                                            <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="tYJ-fB-0xa">
+                                                <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="light"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="7qo-1E-2zg"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Observations" id="yMl-fS-EgH">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ljE-hT-D5D">
+                            <connections>
+                                <action selector="addObsButtonPressed:" destination="Z3e-Hd-hZE" id="eSN-62-H6U"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addObservationView" destination="DRX-5x-d6O" id="OTC-SZ-d6N"/>
+                        <outlet property="basedOnChoose" destination="8x2-ZC-Z7V" id="Bvf-Vi-flS"/>
+                        <outlet property="functionChoose" destination="jJd-aE-7M5" id="N9p-fF-hNO"/>
                         <outlet property="spreedsheet" destination="L8R-yz-JXc" id="FEM-5K-xH0"/>
+                        <outlet property="viewToBlur" destination="B9R-wx-XXh" id="b5d-VY-UUf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2a-4d-uLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="DRX-5x-d6O">
+                    <rect key="frame" x="0.0" y="0.0" width="483" height="508"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add variable" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOQ-0q-Q5m">
+                            <rect key="frame" x="178" y="35" width="127" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="127" id="OFe-HI-aUY"/>
+                                <constraint firstAttribute="height" constant="23" id="t8j-WO-oSq"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Based on:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZ3-Rv-req">
+                            <rect key="frame" x="47" y="87" width="76" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="76" id="GGT-zf-AXE"/>
+                                <constraint firstAttribute="height" constant="21" id="bph-6n-3vb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Function:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDN-wR-HwX">
+                            <rect key="frame" x="46" y="252" width="72" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="7IY-iK-l4o"/>
+                                <constraint firstAttribute="width" constant="72" id="sVK-XP-j6i"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJd-aE-7M5">
+                            <rect key="frame" x="64" y="295" width="355" height="109"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="355" id="3BY-ds-c6v"/>
+                                <constraint firstAttribute="height" constant="109" id="tUd-p3-zI7"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="dataSource" destination="Z3e-Hd-hZE" id="KMf-BZ-fWV"/>
+                                <outlet property="delegate" destination="Z3e-Hd-hZE" id="Bo4-3f-dod"/>
+                            </connections>
+                        </pickerView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdd-3P-VsX">
+                            <rect key="frame" x="189" y="450" width="105" height="35"/>
+                            <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="2My-Ey-nG9"/>
+                                <constraint firstAttribute="width" constant="105" id="Dxy-Ra-ZKf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                            <state key="normal" title="Accept">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="acceptButtonPressed:" destination="Z3e-Hd-hZE" eventType="touchUpInside" id="BE0-FE-pql"/>
+                            </connections>
+                        </button>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8x2-ZC-Z7V">
+                            <rect key="frame" x="64" y="130" width="355" height="109"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="355" id="WKJ-UG-vmW"/>
+                                <constraint firstAttribute="height" constant="109" id="l3r-Oy-wsS"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="dataSource" destination="Z3e-Hd-hZE" id="xHO-72-yF8"/>
+                                <outlet property="delegate" destination="Z3e-Hd-hZE" id="ard-SA-1K2"/>
+                            </connections>
+                        </pickerView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="FOQ-0q-Q5m" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="KNU-QV-446"/>
+                        <constraint firstItem="8x2-ZC-Z7V" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="ORN-5O-OxW"/>
+                        <constraint firstItem="yDN-wR-HwX" firstAttribute="leading" secondItem="sgb-VU-0U4" secondAttribute="leading" constant="46" id="eHc-QY-FFL"/>
+                        <constraint firstItem="FOQ-0q-Q5m" firstAttribute="top" secondItem="sgb-VU-0U4" secondAttribute="top" constant="15" id="eeX-a6-3Fs"/>
+                        <constraint firstItem="vdd-3P-VsX" firstAttribute="top" secondItem="jJd-aE-7M5" secondAttribute="bottom" constant="46" id="evc-qH-cN6"/>
+                        <constraint firstItem="pZ3-Rv-req" firstAttribute="leading" secondItem="sgb-VU-0U4" secondAttribute="leading" constant="47" id="fUL-FW-Ytq"/>
+                        <constraint firstItem="yDN-wR-HwX" firstAttribute="top" secondItem="8x2-ZC-Z7V" secondAttribute="bottom" constant="13" id="lIA-W8-o5C"/>
+                        <constraint firstItem="jJd-aE-7M5" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="lnP-l2-6tg"/>
+                        <constraint firstItem="jJd-aE-7M5" firstAttribute="top" secondItem="yDN-wR-HwX" secondAttribute="bottom" constant="22" id="q2F-ux-m42"/>
+                        <constraint firstItem="vdd-3P-VsX" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="qfG-Nj-cOJ"/>
+                        <constraint firstItem="yDN-wR-HwX" firstAttribute="top" secondItem="pZ3-Rv-req" secondAttribute="bottom" constant="144" id="vqx-Tg-rc7"/>
+                        <constraint firstItem="pZ3-Rv-req" firstAttribute="top" secondItem="sgb-VU-0U4" secondAttribute="top" constant="67" id="xux-Wv-zCc"/>
+                        <constraint firstItem="8x2-ZC-Z7V" firstAttribute="top" secondItem="pZ3-Rv-req" secondAttribute="bottom" constant="22" id="zSO-Ef-alX"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="sgb-VU-0U4"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="2759" y="885"/>
+            <point key="canvasLocation" x="2758.59375" y="884.765625"/>
         </scene>
-        <!--Rests Charts View Controller-->
+        <!--Chart-->
         <scene sceneID="igc-y7-5it">
             <objects>
                 <viewController id="WGO-3D-cXx" customClass="restsChartsViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
@@ -125,6 +248,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="s7f-Xx-7A2"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Chart" id="ktu-3j-5zH"/>
                     <connections>
                         <outlet property="viewBarChart" destination="8Pn-X6-fKM" id="r1i-it-3nk"/>
                     </connections>
@@ -133,7 +257,7 @@
             </objects>
             <point key="canvasLocation" x="1382" y="1596"/>
         </scene>
-        <!--Candle Chart View Controller-->
+        <!--Chart-->
         <scene sceneID="nJ5-7T-5hi">
             <objects>
                 <viewController id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
@@ -184,6 +308,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MID-tb-zOV"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Chart" id="U63-eZ-IXI"/>
                     <connections>
                         <outlet property="chartView" destination="SJS-aR-HwO" id="JZB-wb-4dV"/>
                         <outlet property="pickerView" destination="3Tz-gY-fx6" id="uR5-d4-dxZ"/>
@@ -205,9 +330,7 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E90-RM-lWM">
                                 <rect key="frame" x="0.0" y="20" width="768" height="50"/>
                                 <items>
-                                    <navigationItem id="jrs-qR-RT0">
-                                        <nil key="title"/>
-                                    </navigationItem>
+                                    <navigationItem title="Chart" id="8n4-3A-Klq"/>
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWt-0Y-OZH" customClass="CombinedChartView" customModule="Charts">

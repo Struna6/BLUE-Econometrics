@@ -15,11 +15,9 @@ import AVKit
 // MARK: Protocol for Transponating Arrays
 
 
-class ViewController: UIViewController, Transposable, Storage{
+class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
-    
     @IBOutlet weak var topTableView: UITableView!
-    
     @IBOutlet weak var topLabel: UILabel!
     let topTableSections = ["Critical","Warning","Normal","Uncalculable"]
     var model = Model()
@@ -187,6 +185,8 @@ class ViewController: UIViewController, Transposable, Storage{
             target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.extraLight
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
+            targetVC.sendBackSpreedVCDelegate = self
+            
         }
         if segue.identifier == "back"{
             dismissAllViews()

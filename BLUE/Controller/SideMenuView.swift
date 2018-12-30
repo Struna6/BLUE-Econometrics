@@ -16,6 +16,7 @@ class SideMenuView: UITableViewController{
     let sections = ["Observations", "Plots"]
     let options = ["Observations":["All","Selected"], "Plots":["X-Y plot","Candle Chart","Rests Chart"]]
     var allObservations = true
+    var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,7 @@ class SideMenuView: UITableViewController{
         }
         else if segue.identifier == "toObservations"{
             let target = segue.destination as! ObservationsSpreedsheetView
+            sendBackSpreedVCDelegate?.send(view: target)
             if allObservations{
                 target.observations = model.allObservations
             }else{
@@ -110,5 +112,14 @@ class SideMenuView: UITableViewController{
             target.e = model.S
             target.labels = model.labels
         }
+    }
+}
+
+protocol SendBackSpreedSheetView{
+    func send(view : ObservationsSpreedsheetView)
+}
+extension SendBackSpreedSheetView where Self : ViewController {
+    func send(view : ObservationsSpreedsheetView){
+        view.backUpdateObservationsDelegate = self
     }
 }

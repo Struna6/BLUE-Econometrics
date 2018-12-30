@@ -381,8 +381,6 @@ struct OLSTestsAdvanced : Statisticable{
         let d2 = Double(model1.n-k2-1)
         let d1 = Double(k2-k1)
         
-        print("F:\(top/bottom) d1: \(d1) d2: \(d2)")
-        
         if d2 < 0{
             return Double.nan
         }
@@ -391,7 +389,6 @@ struct OLSTestsAdvanced : Statisticable{
     mutating func LMAutoCorrelation(modelBase : Model) -> Double{
         model1 = modelBase
         model2 = model1
-        print(model2.chosenY)
         model2.chosenY.removeAll()
         var i = 0
         model1.estimatedY.forEach { (row) in
