@@ -104,11 +104,18 @@
                         <viewLayoutGuide key="safeArea" id="7qo-1E-2zg"/>
                     </view>
                     <navigationItem key="navigationItem" title="Observations" id="yMl-fS-EgH">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ljE-hT-D5D">
-                            <connections>
-                                <action selector="addObsButtonPressed:" destination="Z3e-Hd-hZE" id="eSN-62-H6U"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="ljE-hT-D5D">
+                                <connections>
+                                    <action selector="addObsButtonPressed:" destination="Z3e-Hd-hZE" id="eSN-62-H6U"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="ej2-ZZ-wsS">
+                                <connections>
+                                    <action selector="editModeOnPressed:" destination="Z3e-Hd-hZE" id="dd5-he-0D9"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="addObservationView" destination="DRX-5x-d6O" id="OTC-SZ-d6N"/>

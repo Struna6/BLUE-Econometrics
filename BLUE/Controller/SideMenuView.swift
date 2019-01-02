@@ -14,9 +14,10 @@ class SideMenuView: UITableViewController{
     var model = Model()
     var identities = ["toObservations","toPlots"]
     let sections = ["Observations", "Plots"]
-    let options = ["Observations":["All","Selected"], "Plots":["X-Y plot","Candle Chart","Rests Chart"]]
+    let options = ["Observations":["All","Selected","Add Variable"], "Plots":["X-Y plot","Candle Chart","Rests Chart"]]
     var allObservations = true
     var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
+    var isGoToAddVariable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,9 @@ class SideMenuView: UITableViewController{
             self.allObservations = false
             performSegue(withIdentifier: "toObservations", sender: self)
             //
+        case 02:
+            isGoToAddVariable = true
+            performSegue(withIdentifier: "toObservations", sender: self)
         case 10:
             performSegue(withIdentifier: "toCharts", sender: self)
         case 11:
@@ -101,6 +105,9 @@ class SideMenuView: UITableViewController{
             }
             target.headers = model.headers
             target.observationsLabeled = model.observationLabeled
+            if isGoToAddVariable{
+                target.isAddVariableOpenedOnStart = true
+            }
         }
         else if segue.identifier == "toCandleChart"{
             let target = segue.destination as! CandleChartViewController

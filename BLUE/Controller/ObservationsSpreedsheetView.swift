@@ -28,6 +28,24 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var choosenFunction = String()
     var choosenVariable = Int()
     var backUpdateObservationsDelegate : BackUpdatedObservations?
+    var isAddVariableOpenedOnStart = false
+    var editModeActive = false{
+        didSet{
+            var text : String
+            if editModeActive{
+                text = "activated"
+            }else{
+                text = "deactivated"
+            }
+            let alert = UIAlertController.init(title: "Edit mode " + text , message: "", preferredStyle: .alert)
+            let action = UIAlertAction.init(title: "OK", style: .default) { (_) in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(action)
+            present(alert,animated: true)
+            dismiss(animated: true, completion: nil)
+        }
+    }
     
     @IBOutlet weak var basedOnChoose: UIPickerView!
     
@@ -118,6 +136,9 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         choosenFunction = "Logarithm"
         choosenVariable = 0
         viewToBlur.isHidden = true
+        if isAddVariableOpenedOnStart{
+            loadAddObservationsView()
+        }
     }
     
     @IBAction func addObsButtonPressed(_ sender: UIBarButtonItem) {
@@ -150,6 +171,23 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         }
         spreedsheet.reloadData()
         backUpdateObservationsDelegate?.updatedObservations(observations: observations, headers: headers)
+    }
+    
+    @IBAction func editModeOnPressed(_ sender: Any) {
+        editModeActive = editModeActive ? false : true
+//        let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
+//        let headerOption = UIAlertAction(title: "Edit Headers", style: .default, handler: nil)
+//        let labelOption = UIAlertAction(title: "Edit Labels", style: .default, handler: nil)
+//        let valuesOption = UIAlertAction(title: "Edit Values", style: .default, handler: nil)
+//        let headerOptionDel = UIAlertAction(title: "Delete Variables", style: .destructive, handler: nil)
+//        let valuesOptionDel = UIAlertAction(title: "Delete Observations", style: .destructive, handler: nil)
+//        alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
+//        alert.addAction(headerOption)
+//        alert.addAction(labelOption)
+//        alert.addAction(valuesOption)
+//        alert.addAction(headerOptionDel)
+//        alert.addAction(valuesOptionDel)
+//        present(alert,animated: true)
     }
     
 }
@@ -262,8 +300,17 @@ extension BackUpdatedObservations where Self : ViewController{
     }
 }
 
+//MARK: Edit Observations Controll
 
 
+extension ObservationsSpreedsheetView{
+    
+    
+    
+}
+
+
+//MARK: Cells
 
 class TextCell: Cell {
     let label = UILabel()
