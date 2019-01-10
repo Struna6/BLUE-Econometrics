@@ -318,7 +318,7 @@ extension OLSTestable where Self==Model{
             let F1 = ((n-k-1)/k)
             let F2 = (squareR/(1-squareR))
             let F = Double(F1) * F2
-            let result = fSnedecorCDF(F: F, d1: Double(k), d2: Double(n-k-1))
+            let result = FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
             return result.isInfinite ? 1 : result
         }
     }
@@ -326,7 +326,7 @@ extension OLSTestable where Self==Model{
         get{
             var tmp = [Double]()
             for i in 0..<SEB.count{
-                tmp.append(tStudentCDF(t: SEB[i]-getOLSRegressionEquation()[i], dof: Double(n-k-1)))
+                tmp.append(TStudentCDF(t: SEB[i]-getOLSRegressionEquation()[i], v: Double(n-k-1)))
             }
             return tmp
         }
@@ -388,7 +388,7 @@ struct OLSTestsAdvanced : Statisticable{
         if d2 < 0{
             return Double.nan
         }
-        return fSnedecorCDF(F: top/bottom, d1: d1, d2: d2)
+        return FSnedeccorCDF(f: top/bottom, d1: d1, d2: d2)
     }
     mutating func LMAutoCorrelation(modelBase : Model) -> Double{
         model1 = modelBase

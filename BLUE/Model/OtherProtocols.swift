@@ -68,34 +68,19 @@ extension oddObservationQuantileSpotter where Self==Model {
 }
 
 protocol Statisticable{
-    func chiPValue(dof : Int, cv : Double) -> Double
     func incompleteGammaF(s : Double, z : Double) -> Double
-    func beta(a : Double, b: Double, x: Double) -> Double
-    func tStudentCDF(t : Double, dof v : Double) -> Double
-    func fSnedecorCDF(F : Double, d1 : Double, d2 : Double) -> Double
+    func chiCDF(x : Double, k : Double) -> Double
+    func betaValue(x : Double, a : Double, b : Double) -> Double
+    func betaIncomplete(x : Double, a : Double, b : Double) -> Double
+    func betaComplete(a : Double, b : Double) -> Double
+    func betaRegularizedIncomplete(x : Double, a : Double, b : Double) -> Double
+    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double
+    func TStudentCDF(t : Double, v : Double) -> Double
+    func normalValue(x: Double) -> Double
+    func normalCDF(x: Double) -> Double
 }
 
 extension Statisticable{
-    //dof - degrees of freedom  cv - critical value
-    func chiPValue(dof : Int, cv : Double) -> Double{
-        if cv < 0 || dof < 1{
-            return 0.0
-        }
-        let k = Double(dof) * 0.5
-        let x = cv * 0.5
-        
-        if dof == 2{
-            return exp(-1.0 * x)
-        }
-        
-        var pValue = incompleteGammaF(s: k,z: x)
-        if pValue.isNaN || pValue.isInfinite || pValue < 1e-8{
-            return 1e-14
-        }
-        pValue = pValue / tgamma(k)
-        return (1.0 - pValue)
-    }
-
     func incompleteGammaF(s : Double, z : Double) -> Double{
         var s = s
         if z < 0.0{
@@ -120,74 +105,60 @@ extension Statisticable{
         }
         return sum * sc
     }
-
-    func beta(a : Double, b: Double, x: Double) -> Double{
-        
-        if x < 0.0 || x > 1.0{
-            return 0.0
-        }
-        
-        if x > (a+1.0)/(a+b+2.0) {
-            return 1.0-beta(a:b,b:a,x:1.0-x)
-        }
-        
-        let lbeta = lgamma(a)+lgamma(b)-lgamma(a+b)
-        let front = exp(log(x)*a+log(1.0-x)*b-lbeta)/a
-        var f = 1.0
-        var c = 1.0
-        var d = 0.0
-        
-        var m : Double
-        for i in 0..<200{
-            m = Double(i)/2
-            var numerator : Double
-            if i == 0 {
-                numerator = 1.0
-            } else if (i % 2 == 0) {
-                numerator = (m*(b-m)*x)/((a+2.0*m-1.0)*(a+2.0*m))
-            } else {
-                numerator = -((a+m)*(a+b+m)*x)/((a+2.0*m)*(a+2.0*m+1))
-            }
-            
-            d = 1.0 + numerator * d
-            if abs(d) < 1.0e-20{
-                d = 1.0e-20
-            }
-            d = 1.0 / d
-            c = 1.0 + numerator / c
-            if abs(c) < 1.0e-20{
-                c = 1.0e-20
-            }
-            let cd = c*d;
-            f = f * cd;
-            
-            if abs(1.0-cd) < 1.0e-8 {
-                return front * (f-1.0);
-            }
-        }
-        return 1.0/0.0
-    }
-
-    func tStudentCDF(t : Double, dof v : Double) -> Double{
-        if v == 1{
-            return (1/2) + ((1/Double.pi)*atan(t))
-        }
-        if v == 2{
-            return (1/2) + (t/(2*sqrt(2+(t*t))))
-        }
-        /*The cumulative distribution function (CDF) for Student's t distribution*/
-        let x = (t + sqrt(t * t + v)) / (2.0 * sqrt(t * t + v))
-        let prob = beta(a: v/2.0,b: v/2.0,x: x)
-        return prob
-    }
-
-    func fSnedecorCDF(F : Double, d1 : Double, d2 : Double) -> Double{
-        let x = (d1*F)/((d1*F)+d2)
-        return beta(a: d1/2, b: d2/2, x: x)
-    }
-
+    
     func chiCDF(x : Double, k : Double) -> Double{
         let upper = incompleteGammaF(s: k/2, z: x/2)
         return upper/tgamma(k/2)
+    }
+    
+    func betaValue(x : Double, a : Double, b : Double) -> Double{
+        return pow(x, (a - 1)) * pow((1 - x), (b - 1))
+    }
+    
+    func betaIncomplete(x : Double, a : Double, b : Double) -> Double{
+        let width = (x - 0) / 200
+        var result : Double = 0
+        var i : Double = 0
+        while i < x{
+            result = result + (betaValue(x: i, a: a, b: b) * width)
+            i = i + width
+        }
+        return result
+    }
+    
+    func betaComplete(a : Double, b : Double) -> Double{
+        return (tgamma(a)*tgamma(b))/tgamma(a+b)
+    }
+    
+    func betaRegularizedIncomplete(x : Double, a : Double, b : Double) -> Double{
+        return betaIncomplete(x: x, a: a, b: b)/betaComplete(a: a, b: b)
+    }
+    
+    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double{
+        let x = (d1*f)/((d1*f)+d2)
+        return betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
+    }
+    
+    func TStudentCDF(t : Double, v : Double) -> Double{
+        let x = v/((t*t) + v)
+        return 1 - 0.5*betaRegularizedIncomplete(x: x, a: v/2, b: 0.5)
+    }
+    
+    func normalValue(x: Double) -> Double{
+        return exp(-(x*x)/2)
+    }
+    
+    func normalCDF(x: Double) -> Double{
+        if x < -5{
+            return 0
+        }
+        let width = (x + 5) / 200
+        var result : Double = 0
+        var i : Double = -5
+        while i < x{
+            result = result + (normalValue(x: i)*width)
+            i = i + width
+        }
+        return result / (sqrt(2*Double.pi))
     }
 }

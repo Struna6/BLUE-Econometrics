@@ -174,20 +174,20 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     }
     
     @IBAction func editModeOnPressed(_ sender: Any) {
-        editModeActive = editModeActive ? false : true
-//        let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
-//        let headerOption = UIAlertAction(title: "Edit Headers", style: .default, handler: nil)
-//        let labelOption = UIAlertAction(title: "Edit Labels", style: .default, handler: nil)
-//        let valuesOption = UIAlertAction(title: "Edit Values", style: .default, handler: nil)
-//        let headerOptionDel = UIAlertAction(title: "Delete Variables", style: .destructive, handler: nil)
-//        let valuesOptionDel = UIAlertAction(title: "Delete Observations", style: .destructive, handler: nil)
-//        alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
-//        alert.addAction(headerOption)
-//        alert.addAction(labelOption)
-//        alert.addAction(valuesOption)
-//        alert.addAction(headerOptionDel)
-//        alert.addAction(valuesOptionDel)
-//        present(alert,animated: true)
+        //editModeActive = editModeActive ? false : true
+        let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
+        let headerOption = UIAlertAction(title: "Edit Headers", style: .default, handler: nil)
+        let labelOption = UIAlertAction(title: "Edit Labels", style: .default, handler: nil)
+        let valuesOption = UIAlertAction(title: "Edit Values", style: .default, handler: nil)
+        let headerOptionDel = UIAlertAction(title: "Delete Variables", style: .destructive, handler: nil)
+        let valuesOptionDel = UIAlertAction(title: "Delete Observations", style: .destructive, handler: nil)
+        alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
+        alert.addAction(headerOption)
+        alert.addAction(labelOption)
+        alert.addAction(valuesOption)
+        alert.addAction(headerOptionDel)
+        alert.addAction(valuesOptionDel)
+        present(alert,animated: true)
     }
     
 }
