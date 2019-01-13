@@ -361,8 +361,8 @@ extension BackUpdatedObservations where Self : ViewController{
         model.allObservations = observations
         model.headers = headers
         newModel = true
-        chosenX = []
-        chosenY = ""
+        chosenX.removeAll()
+        chosenY.removeAll()
         topTableView.reloadData()
         chooseXTableView.reloadData()
         chooseYTableView.reloadData()
