@@ -90,7 +90,14 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     @IBOutlet weak var parametersViewImage: UIImageView!
     @IBOutlet weak var parametersViewDetails: UILabel!
     
-    var newModel = true
+    var newModel = true{
+        didSet{
+            if newModel{
+                topLabel.isHidden = true
+                topTableView.isHidden = true
+            }
+        }
+    }
     var chosenY = String()
     var chosenX = [String]()
     // MARK: Getter that updates everything after loading new data
@@ -101,6 +108,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             }else{
                 model = Model(withHeaders: false, observationLabeled: false, path: newPath)
             }
+            newModel = true
             let _ = parametersResults
             chooseYTableView.reloadData()
             chooseXTableView.reloadData()
@@ -262,6 +270,9 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             newModel = false
             topTableView.reloadData()
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
+        }else{
+            topLabel.isHidden = true
+            topTableView.isHidden = true
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {

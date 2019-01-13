@@ -78,6 +78,7 @@ protocol Statisticable{
     func TStudentCDF(t : Double, v : Double) -> Double
     func normalValue(x: Double) -> Double
     func normalCDF(x: Double) -> Double
+    func normalInverseCDF(p : Double) -> Double
 }
 
 extension Statisticable{
@@ -160,5 +161,22 @@ extension Statisticable{
             i = i + width
         }
         return result / (sqrt(2*Double.pi))
+    }
+    
+    func normalInverseCDF(p : Double) -> Double{
+        if p < 0 || p > 1{
+            return Double.nan
+        }
+        let width : Double = 16 / 1000
+        var i : Double = -8
+        var result : Double = 0
+        let pTmp = p * sqrt(2*Double.pi)
+        while true{
+            result = result + (normalValue(x: i)*width)
+            if result >= pTmp{
+                return i
+            }
+            i = i + width
+        }
     }
 }

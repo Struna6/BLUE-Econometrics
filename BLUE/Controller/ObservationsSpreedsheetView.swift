@@ -29,23 +29,8 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var choosenVariable = Int()
     var backUpdateObservationsDelegate : BackUpdatedObservations?
     var isAddVariableOpenedOnStart = false
-    var editModeActive = false{
-        didSet{
-            var text : String
-            if editModeActive{
-                text = "activated"
-            }else{
-                text = "deactivated"
-            }
-            let alert = UIAlertController.init(title: "Edit mode " + text , message: "", preferredStyle: .alert)
-            let action = UIAlertAction.init(title: "OK", style: .default) { (_) in
-                alert.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(action)
-            present(alert,animated: true)
-            dismiss(animated: true, completion: nil)
-        }
-    }
+    var selectedRow : Int?
+    var selectedCol : Int?
     
     @IBOutlet weak var basedOnChoose: UIPickerView!
     
@@ -87,36 +72,74 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         return 1
     }
     
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
+        if selectedCol == indexPath.column && selectedRow == indexPath.row{
+            selectedCol = nil
+            selectedRow = nil
+        }else{
+            selectedCol = indexPath.column
+            selectedRow = indexPath.row
+        }
+        self.spreedsheet.reloadData()
+    }
+    
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         if indexPath.column == 0 && observationsLabeled{
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
             if indexPath.row != 0{
                 cell.label.text = observations[indexPath.row-1].label
             }
+            if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                cell.backgroundColor = UIColor.blue
+            }
             return cell
         }
         if indexPath.row == 0 {
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
             if observationsLabeled && indexPath.column == 0{
+                if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                    cell.backgroundColor = UIColor.blue
+                    cell.label.textColor = .white
+                }
                 return cell
             }
             if observationsLabeled{
                 cell.label.text = String(headers[indexPath.column-1])
+                if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                    cell.backgroundColor = UIColor.blue
+                    cell.label.textColor = .white
+                }
                 return cell
             }
             cell.label.text = String(headers[indexPath.column])
+            if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                cell.backgroundColor = UIColor.blue
+                cell.label.textColor = .white
+            }
             return cell
         }
         else{
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
             if observationsLabeled && indexPath.column == 0{
+                if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                    cell.backgroundColor = UIColor.blue
+                    cell.label.textColor = .white
+                }
                 return cell
             }
             if observationsLabeled{
                 cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column-1])
+                if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                    cell.backgroundColor = UIColor.blue
+                    cell.label.textColor = .white
+                }
                 return cell
             }
             cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column])
+            if selectedRow == indexPath.row && selectedCol == indexPath.column{
+                cell.backgroundColor = UIColor.blue
+                cell.label.textColor = .white
+            }
             return cell
         }
     }
@@ -176,20 +199,64 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBAction func editModeOnPressed(_ sender: Any) {
         //editModeActive = editModeActive ? false : true
         let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
-        let headerOption = UIAlertAction(title: "Edit Headers", style: .default, handler: nil)
-        let labelOption = UIAlertAction(title: "Edit Labels", style: .default, handler: nil)
-        let valuesOption = UIAlertAction(title: "Edit Values", style: .default, handler: nil)
-        let headerOptionDel = UIAlertAction(title: "Delete Variables", style: .destructive, handler: nil)
-        let valuesOptionDel = UIAlertAction(title: "Delete Observations", style: .destructive, handler: nil)
+        let headerOption = UIAlertAction(title: "Edit Header", style: .default, handler: {
+            action in
+            alert.removeFromParent()
+            let alertInput = UIAlertController(title: "Edit Header", message: "Enter new value", preferredStyle: .alert)
+            alertInput.addTextField(configurationHandler: nil)
+            
+            let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                if let newText = alertInput.textFields![0].text{
+                    if newText.count > 0{
+                        if self.observationsLabeled{
+                            self.headers[self.selectedCol!-1] = newText
+                        }else{
+                            self.headers[self.selectedCol!] = newText
+                        }
+                        self.spreedsheet.reloadData()
+                        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                    }
+                }
+            })
+            alertInput.addAction(alertInputOK)
+            self.present(alertInput,animated: true, completion: nil)
+        })
+        let labelOption = UIAlertAction(title: "Edit Label", style: .default, handler: nil)
+        let valuesOption = UIAlertAction(title: "Edit Value", style: .default, handler: nil)
+        let headerOptionDel = UIAlertAction(title: "Delete Column", style: .destructive, handler: nil)
+        let valuesOptionDel = UIAlertAction(title: "Delete Row", style: .destructive, handler: nil)
+        
         alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
-        alert.addAction(headerOption)
-        alert.addAction(labelOption)
-        alert.addAction(valuesOption)
-        alert.addAction(headerOptionDel)
-        alert.addAction(valuesOptionDel)
+        
+        if selectedRow != nil{
+            if observationsLabeled && selectedCol == 0 && selectedRow == 0{
+                
+            }
+            if observationsLabeled && selectedCol == 0 && selectedRow != 0{
+                alert.addAction(labelOption)
+                alert.addAction(valuesOptionDel)
+            }
+            if observationsLabeled && selectedCol != 0 && selectedRow == 0{
+                alert.addAction(headerOption)
+                alert.addAction(headerOptionDel)
+            }
+            if observationsLabeled && selectedCol != 0 && selectedRow != 0{
+                alert.addAction(valuesOption)
+                alert.addAction(headerOptionDel)
+                alert.addAction(valuesOptionDel)
+            }
+            if !observationsLabeled && selectedRow == 0{
+                alert.addAction(headerOption)
+                alert.addAction(headerOptionDel)
+            }
+            if !observationsLabeled && selectedRow != 0{
+                alert.addAction(valuesOption)
+                alert.addAction(headerOptionDel)
+                alert.addAction(valuesOptionDel)
+            }
+        }
         present(alert,animated: true)
     }
-    
 }
 
 //MARK: ADD Observations View
@@ -293,6 +360,9 @@ extension BackUpdatedObservations where Self : ViewController{
     func updatedObservations(observations: [Observation], headers: [String]){
         model.allObservations = observations
         model.headers = headers
+        newModel = true
+        chosenX = []
+        chosenY = ""
         topTableView.reloadData()
         chooseXTableView.reloadData()
         chooseYTableView.reloadData()
@@ -319,7 +389,7 @@ class TextCell: Cell {
         super.init(frame: frame)
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textAlignment = .center
         contentView.addSubview(label)
     }
@@ -336,7 +406,7 @@ class HeaderCell: Cell {
         backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textAlignment = .center
         label.textColor = .gray
         contentView.addSubview(label)
