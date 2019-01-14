@@ -31,6 +31,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var isAddVariableOpenedOnStart = false
     var selectedRow : Int?
     var selectedCol : Int?
+    let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
     
     @IBOutlet weak var basedOnChoose: UIPickerView!
     
@@ -198,10 +199,9 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     
     @IBAction func editModeOnPressed(_ sender: Any) {
         //editModeActive = editModeActive ? false : true
-        let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
         let headerOption = UIAlertAction(title: "Edit Header", style: .default, handler: {
             action in
-            alert.removeFromParent()
+            self.alert.removeFromParent()
             let alertInput = UIAlertController(title: "Edit Header", message: "Enter new value", preferredStyle: .alert)
             alertInput.addTextField(configurationHandler: nil)
             
@@ -256,6 +256,35 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             }
         }
         present(alert,animated: true)
+    }
+}
+
+//MARK: Edit options functions
+extension ObservationsSpreedsheetView{
+    func showPopOverInputWindow(name : String, toDo : @escaping () -> Void){
+        alert.removeFromParent()
+        let alertInput = UIAlertController(title: name, message: "Enter new value", preferredStyle: .alert)
+        alertInput.addTextField(configurationHandler: nil)
+        
+        let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+            if let newText = alertInput.textFields![0].text{
+                if newText.count > 0{
+                    toDo()
+                    if self.observationsLabeled{
+                        self.headers[self.selectedCol!-1] = newText
+                    }else{
+                        self.headers[self.selectedCol!] = newText
+                    }
+                    self.spreedsheet.reloadData()
+                    self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                }
+            }
+        })
+        alertInput.addAction(alertInputOK)
+        self.present(alertInput,animated: true, completion: nil)
+    }
+    func showPopOverAcceptWindow(name : String){
+        
     }
 }
 

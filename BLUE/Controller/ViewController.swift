@@ -332,7 +332,6 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         if tableView == topTableView{
-            
             let par = parametersCategorized[indexPath.section][indexPath.row]
             cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
             
@@ -350,19 +349,21 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                 default:break
             }
         }else{
-        let text = model.headers[indexPath.row]
-        cell.textLabel?.text = text
-        cell.textLabel?.textAlignment = NSTextAlignment.center
-        if !newModel{
-            if tableView == self.chooseXTableView && chosenX.contains(text){
-                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
-            }else if tableView == self.chooseYTableView && chosenY == text{
-                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            let text = model.headers[indexPath.row]
+            cell.textLabel?.text = text
+            cell.textLabel?.textAlignment = NSTextAlignment.center
+            if !newModel{
+                if tableView == self.chooseXTableView && chosenX.contains(text){
+                    cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else if tableView == self.chooseYTableView && chosenY == text{
+                    cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }
+                else{
+                cell.accessoryType = UITableViewCell.AccessoryType.none
+                }
+            }else{
+                cell.accessoryType = UITableViewCell.AccessoryType.none
             }
-        else{
-            cell.accessoryType = UITableViewCell.AccessoryType.none
-        }
-        }
         }
         return cell
     }
