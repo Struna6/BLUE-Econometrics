@@ -39,7 +39,7 @@ extension QuantileCalculable{
         var nums = numbers
         nums.sort(by: {$0 < $1})
         let n1 = Int(floor(Double(numbers.count)*n))
-        let n2 = Int(ceil(Double(numbers.count)*n))
+        let n2 = Int(floor(Double(numbers.count)*n))
         return (nums[n1]+nums[n2]) / 2
     }
 }

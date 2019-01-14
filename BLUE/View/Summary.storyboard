@@ -115,6 +115,7 @@
                         <outlet property="parametersViewDetails" destination="KEZ-jL-nt1" id="lXA-ib-xWW"/>
                         <outlet property="parametersViewImage" destination="9DF-cO-fCP" id="kj1-Tc-YQI"/>
                         <outlet property="parametersViewTitle" destination="m1G-De-fY2" id="L7X-9v-KOw"/>
+                        <outlet property="sideMenuButton" destination="edB-IO-cpY" id="M09-7M-HVq"/>
                         <outlet property="topLabel" destination="hec-yE-haM" id="0Zx-E9-BuB"/>
                         <outlet property="topTableView" destination="Oir-BL-yPz" id="zde-5f-PFr"/>
                         <outlet property="visualViewToBlur" destination="H6U-Nq-OA7" id="hh4-Ri-LY6"/>
@@ -261,10 +262,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mal-aC-C0l">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mal-aC-C0l">
                                 <rect key="frame" x="165" y="105" width="438" height="598"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="438" id="UEW-NY-BA7"/>
+                                    <constraint firstAttribute="height" constant="598" id="okM-50-aIO"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="Ifa-zR-0vX">
                                         <rect key="frame" x="0.0" y="28" width="438" height="44"/>
@@ -279,10 +283,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ic-CC-RdG">
-                                <rect key="frame" x="284" y="759" width="200" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ic-CC-RdG">
+                                <rect key="frame" x="284" y="759" width="200" height="49"/>
                                 <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="9ic-CC-RdG" secondAttribute="height" multiplier="200:49" id="9Va-cK-NLP"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                 <state key="normal" title="New">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -297,6 +303,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9ic-CC-RdG" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="Ywv-H0-3Dr"/>
+                            <constraint firstItem="9ic-CC-RdG" firstAttribute="top" secondItem="mal-aC-C0l" secondAttribute="bottom" constant="56" id="h4I-P7-JJ1"/>
+                            <constraint firstItem="mal-aC-C0l" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="jg7-C0-0kH"/>
+                            <constraint firstItem="mal-aC-C0l" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="85" id="xns-cE-fZx"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="muC-Ot-qcD"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

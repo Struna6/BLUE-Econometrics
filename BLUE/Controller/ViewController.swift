@@ -90,11 +90,14 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     @IBOutlet weak var parametersViewImage: UIImageView!
     @IBOutlet weak var parametersViewDetails: UILabel!
     
+    @IBOutlet weak var sideMenuButton: UIBarButtonItem!
     var newModel = true{
         didSet{
             if newModel{
                 topLabel.isHidden = true
                 topTableView.isHidden = true
+                model.n = model.allObservations.count
+                sideMenuButton.isEnabled = false
             }
         }
     }
@@ -157,6 +160,8 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }
         if !newModel{
             loadSavedModel()
+        }else{
+            sideMenuButton.isEnabled = false
         }
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
         parametersViewImage.addGestureRecognizer(tapOnImage)
@@ -194,7 +199,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
             targetVC.sendBackSpreedVCDelegate = self
-            
         }
         if segue.identifier == "back"{
             dismissAllViews()
@@ -230,7 +234,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                 tmpY.append([observation.observationArray[positionY!]])
             }
             model.chosenY = tmpY
-            
             var tmpX = [[Double]]()
             var tmpXrow = [Double]()
             var i = 0
@@ -254,6 +257,9 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                 tmpXText = tmpXText + " " + str
             }
             var tmpEq = String()
+            print(model.flatY)
+            print(model.chosenX)
+            print(model.chosenY)
             for i in 0..<model.getOLSRegressionEquation().count{
                 if i==0{
                     tmpEq = tmpEq + String(format:"%.4f",model.getOLSRegressionEquation()[0])
@@ -267,6 +273,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                 }
             }
             topLabel.isHidden = false
+            sideMenuButton.isEnabled = true
             newModel = false
             topTableView.reloadData()
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"

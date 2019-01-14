@@ -31,7 +31,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var isAddVariableOpenedOnStart = false
     var selectedRow : Int?
     var selectedCol : Int?
-    let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
     
     @IBOutlet weak var basedOnChoose: UIPickerView!
     
@@ -197,34 +196,60 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         backUpdateObservationsDelegate?.updatedObservations(observations: observations, headers: headers)
     }
     
+    
+    //ADD WARGNINGS THAT WRONG DATA
     @IBAction func editModeOnPressed(_ sender: Any) {
-        //editModeActive = editModeActive ? false : true
+        let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
         let headerOption = UIAlertAction(title: "Edit Header", style: .default, handler: {
             action in
-            self.alert.removeFromParent()
-            let alertInput = UIAlertController(title: "Edit Header", message: "Enter new value", preferredStyle: .alert)
-            alertInput.addTextField(configurationHandler: nil)
-            
-            let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-                if let newText = alertInput.textFields![0].text{
-                    if newText.count > 0{
-                        if self.observationsLabeled{
-                            self.headers[self.selectedCol!-1] = newText
-                        }else{
-                            self.headers[self.selectedCol!] = newText
-                        }
-                        self.spreedsheet.reloadData()
-                        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+            alert.removeFromParent()
+            self.showPopOverInputWindow(name: "Edit Header", toDo: {
+                newText in
+                if self.observationsLabeled{
+                    self.headers[self.selectedCol!-1] = newText
+                }else{
+                    self.headers[self.selectedCol!] = newText
+                }
+            })
+        })
+        let labelOption = UIAlertAction(title: "Edit Label", style: .default, handler: {
+            action in
+            alert.removeFromParent()
+            self.showPopOverInputWindow(name: "Edit Label", toDo: { (text) in
+                self.observations[self.selectedRow!-1].label = text
+            })
+        })
+        let valuesOption = UIAlertAction(title: "Edit Value", style: .default, handler: {
+            action in
+            alert.removeFromParent()
+            self.showPopOverInputWindow(name: "Edit Value", toDo: { (text) in
+                if let _ = Double(text){
+                    if self.observationsLabeled{
+                        self.observations[self.selectedRow!-1].observationArray[self.selectedCol!-1] = Double(text)!
+                    }else{
+                        self.observations[self.selectedRow!-1].observationArray[self.selectedCol!] = Double(text)!
                     }
                 }
             })
-            alertInput.addAction(alertInputOK)
-            self.present(alertInput,animated: true, completion: nil)
         })
-        let labelOption = UIAlertAction(title: "Edit Label", style: .default, handler: nil)
-        let valuesOption = UIAlertAction(title: "Edit Value", style: .default, handler: nil)
-        let headerOptionDel = UIAlertAction(title: "Delete Column", style: .destructive, handler: nil)
-        let valuesOptionDel = UIAlertAction(title: "Delete Row", style: .destructive, handler: nil)
+        let headerOptionDel = UIAlertAction(title: "Delete Column", style: .destructive, handler: {
+            action in
+            alert.removeFromParent()
+            self.showPopOverAcceptWindow(name: "Delete Column", toDo: {
+                let tmpCol = self.observationsLabeled ? self.selectedCol! + 1 : self.selectedCol
+                self.headers.remove(at: tmpCol!)
+                for i in 0..<self.observations.count{
+                    self.observations[i].observationArray.remove(at: tmpCol!)
+                }
+            })
+        })
+        let valuesOptionDel = UIAlertAction(title: "Delete Row", style: .destructive, handler: {
+            action in
+            alert.removeFromParent()
+            self.showPopOverAcceptWindow(name: "Delete Row", toDo: {
+                self.observations.remove(at: self.selectedRow!-1)
+            })
+        })
         
         alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
         
@@ -261,20 +286,15 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
 
 //MARK: Edit options functions
 extension ObservationsSpreedsheetView{
-    func showPopOverInputWindow(name : String, toDo : @escaping () -> Void){
-        alert.removeFromParent()
+    func showPopOverInputWindow(name : String, toDo : @escaping (String) -> Void){
         let alertInput = UIAlertController(title: name, message: "Enter new value", preferredStyle: .alert)
         alertInput.addTextField(configurationHandler: nil)
         
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
-                    toDo()
-                    if self.observationsLabeled{
-                        self.headers[self.selectedCol!-1] = newText
-                    }else{
-                        self.headers[self.selectedCol!] = newText
-                    }
+                    toDo(newText)
+                    print(self.observations)
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
                 }
@@ -283,8 +303,18 @@ extension ObservationsSpreedsheetView{
         alertInput.addAction(alertInputOK)
         self.present(alertInput,animated: true, completion: nil)
     }
-    func showPopOverAcceptWindow(name : String){
-        
+    func showPopOverAcceptWindow(name : String, toDo : @escaping () -> Void){
+        let alertInput = UIAlertController(title: name, message: "Are you sure", preferredStyle: .alert)
+        let alertInputOK = UIAlertAction(title: "Yes", style: .destructive, handler: { (UIAlertAction) in
+            toDo()
+            print(self.observations)
+            self.spreedsheet.reloadData()
+            self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+        })
+        let alertInputNo = UIAlertAction(title: "No", style: .default, handler: nil)
+        alertInput.addAction(alertInputOK)
+        alertInput.addAction(alertInputNo)
+        self.present(alertInput,animated: true, completion: nil)
     }
 }
 

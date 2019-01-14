@@ -6,6 +6,7 @@ struct Model : OLSTestable, OLSCalculable, ImportableFromTextFile, Transposable,
     var chosenX = [[Double]](){
         didSet{
             k = chosenX[0].count - 1
+            n = chosenX.count
         }
     }
     var chosenY = [[Double]](){
