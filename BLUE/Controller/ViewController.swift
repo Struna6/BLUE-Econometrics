@@ -15,7 +15,7 @@ import AVKit
 // MARK: Protocol for Transponating Arrays
 
 
-class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView{
+class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     @IBOutlet weak var topTableView: UITableView!
     @IBOutlet weak var topLabel: UILabel!
@@ -257,9 +257,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                 tmpXText = tmpXText + " " + str
             }
             var tmpEq = String()
-            print(model.flatY)
-            print(model.chosenX)
-            print(model.chosenY)
             for i in 0..<model.getOLSRegressionEquation().count{
                 if i==0{
                     tmpEq = tmpEq + String(format:"%.4f",model.getOLSRegressionEquation()[0])
@@ -275,7 +272,13 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             topLabel.isHidden = false
             sideMenuButton.isEnabled = true
             newModel = false
-            topTableView.reloadData()
+            
+            playLoadingAsync(tasksToDoAsync: {
+                let _ = self.parametersResults
+            }, tasksToMainBack: {
+                self.topTableView.reloadData()
+            })
+            
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
         }else{
             topLabel.isHidden = true
