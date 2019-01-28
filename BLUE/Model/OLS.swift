@@ -174,7 +174,6 @@ extension CSVImportable where Self==Model{
                 observations.append(tmp)
             }
             k = k + 1
-            
         }
 
         return (labeled,headered,headers,observations)
@@ -326,7 +325,7 @@ extension OLSTestable where Self==Model{
         get{
             var tmp = [Double]()
             for i in 0..<SEB.count{
-                tmp.append(TStudentCDF(t: SEB[i]-getOLSRegressionEquation()[i], v: Double(n-k-1)))
+                tmp.append(TStudentCDF(t: getOLSRegressionEquation()[i]/SEB[i], v: Double(n-k-1)))
             }
             return tmp
         }

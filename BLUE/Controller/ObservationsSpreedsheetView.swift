@@ -294,7 +294,6 @@ extension ObservationsSpreedsheetView{
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
                     toDo(newText)
-                    print(self.observations)
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
                 }
@@ -307,7 +306,6 @@ extension ObservationsSpreedsheetView{
         let alertInput = UIAlertController(title: name, message: "Are you sure", preferredStyle: .alert)
         let alertInputOK = UIAlertAction(title: "Yes", style: .destructive, handler: { (UIAlertAction) in
             toDo()
-            print(self.observations)
             self.spreedsheet.reloadData()
             self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
         })

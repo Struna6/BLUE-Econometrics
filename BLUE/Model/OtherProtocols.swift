@@ -191,13 +191,11 @@ extension PlayableLoadingScreen where Self : ViewController{
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void){
         let animationView = LOTAnimationView(name: "loading")
         animationView.loopAnimation = true
-        animationView.autoReverseAnimation = true
         animationView.sizeToFit()
         self.view.addSubview(animationView)
         animationView.frame = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 500, height: 500)
         animationView.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY)
         animationView.play()
-    
         Dispatch.DispatchQueue.global(qos: .background).async {
             tasksToDoAsync()
             DispatchQueue.main.async {

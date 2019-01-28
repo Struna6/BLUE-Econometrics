@@ -85,7 +85,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     @IBOutlet weak var chooseXTableView: UITableView!
     
     // MARK: Parameters details view
-    @IBOutlet var parametersView: UIView!
+    @IBOutlet weak var parametersView: UIView!
     @IBOutlet weak var parametersViewTitle: UILabel!
     @IBOutlet weak var parametersViewImage: UIImageView!
     @IBOutlet weak var parametersViewDetails: UILabel!
@@ -273,12 +273,19 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             sideMenuButton.isEnabled = true
             newModel = false
             
+            self.topTableView.isHidden = true
+            UIView.animate(withDuration: 0.4) {
+                self.visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
+            }
             playLoadingAsync(tasksToDoAsync: {
                 let _ = self.parametersResults
             }, tasksToMainBack: {
+                UIView.animate(withDuration: 0.4) {
+                    self.visualViewToBlur.backgroundColor = UIColor.clear
+                    self.topTableView.isHidden = false
+                }
                 self.topTableView.reloadData()
             })
-            
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
         }else{
             topLabel.isHidden = true
@@ -383,15 +390,22 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
             loadParametersView(item: parametersCategorized[indexPath.section][indexPath.row])
         }else{
             let cell = tableView.cellForRow(at: indexPath)
-            if cell?.accessoryType == UITableViewCell.AccessoryType.none{
-                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-            }else{
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
-            }
+            
             if tableView == self.chooseYTableView{
-                self.chosenY = (cell?.textLabel?.text)!
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none && chosenY.isEmpty{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    self.chosenY = (cell?.textLabel?.text)!
+                }else if cell?.accessoryType == UITableViewCell.AccessoryType.checkmark{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                    self.chosenY.removeAll()
+                }
             }
             if tableView == self.chooseXTableView{
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
                 let text = (cell?.textLabel?.text)!
                 if self.chosenX.contains(text){
                     self.chosenX.remove(at: chosenX.firstIndex(of: text)!)

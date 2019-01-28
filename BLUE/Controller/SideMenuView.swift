@@ -100,7 +100,6 @@ class SideMenuView: UITableViewController{
                     tmpObs.observationArray = tab
                     tmp.append(tmpObs)
                 }
-                print(tmp)
                 target.observations = tmp
             }
             target.headers = model.headers
