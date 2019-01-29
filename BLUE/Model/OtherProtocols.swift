@@ -109,6 +109,7 @@ extension Statisticable{
     }
     
     func chiCDF(x : Double, k : Double) -> Double{
+        print("calculating")
         let upper = incompleteGammaF(s: k/2, z: x/2)
         return upper/tgamma(k/2)
     }

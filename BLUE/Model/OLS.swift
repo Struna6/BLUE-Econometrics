@@ -311,21 +311,44 @@ protocol OLSTestable: OLSCalculable, Statisticable{
     var JBtest : Double {get}
 }
 
+private var fvalueLastCalculated : Double = 0
+private var fTestvalueLastCalculated : Double = 0
+private var tvalueLastCalculated : Double = 0
+private var tTestvalueLastCalculated : Double = 0
+private var chivalueLastCalculated : Double = 0
+private var chiTestvalueLastCalculated : Double = 0
+
 extension OLSTestable where Self==Model{
     var parametersF : Double{
         get{
             let F1 = ((n-k-1)/k)
             let F2 = (squareR/(1-squareR))
             let F = Double(F1) * F2
-            let result = FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
-            return result.isInfinite ? 1 : result
+            
+            if F == fvalueLastCalculated{
+                return fTestvalueLastCalculated
+            }else{
+                fvalueLastCalculated = F
+                let result = FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
+                fTestvalueLastCalculated = result
+                fvalueLastCalculated = F
+                return result
+            }
         }
     }
     var parametersT : [Double]{
         get{
             var tmp = [Double]()
             for i in 0..<SEB.count{
-                tmp.append(TStudentCDF(t: getOLSRegressionEquation()[i]/SEB[i], v: Double(n-k-1)))
+                let T = getOLSRegressionEquation()[i]/SEB[i]
+                if tvalueLastCalculated == T{
+                    tmp.append(tTestvalueLastCalculated)
+                }else{
+                    let calculatedT = TStudentCDF(t: T, v: Double(n-k-1))
+                    tvalueLastCalculated = T
+                    tTestvalueLastCalculated = calculatedT
+                    tmp.append(calculatedT)
+                }
             }
             return tmp
         }
@@ -344,10 +367,23 @@ extension OLSTestable where Self==Model{
             let beta1 = 1 / Double(n) * sum(tmp3) / pow(se, 3.0)
             let beta2 = 1 / Double(n) * sum(tmp4) / pow(se, 4.0)
             let x = Double(n) * ((beta1 / 6) + (pow(beta2 - 3, 2.0) / 24))
-            return chiCDF(x: x, k: 2)
+            
+            if x == chivalueLastCalculated{
+                return chiTestvalueLastCalculated
+            }else{
+                let chiResult = chiCDF(x: x, k: 2)
+                chivalueLastCalculated = x
+                chiTestvalueLastCalculated = chiResult
+                return chiResult
+            }
         }
     }
 }
+
+private var RESETvalueLast : Double = 0
+private var RESETtestValueLast : Double = 0
+private var LMvalueLast : Double = 0
+private var LMtestValueLast : Double = 0
 
 struct OLSTestsAdvanced : Statisticable{
     var model1 = Model()
@@ -387,7 +423,16 @@ struct OLSTestsAdvanced : Statisticable{
         if d2 < 0{
             return Double.nan
         }
-        return FSnedeccorCDF(f: top/bottom, d1: d1, d2: d2)
+        
+        let F = top/bottom
+        if F == RESETvalueLast{
+            return RESETtestValueLast
+        }else{
+            let result = FSnedeccorCDF(f: F, d1: d1, d2: d2)
+            RESETvalueLast = F
+            RESETtestValueLast = result
+            return result
+        }
     }
     mutating func LMAutoCorrelation(modelBase : Model) -> Double{
         model1 = modelBase
@@ -410,7 +455,16 @@ struct OLSTestsAdvanced : Statisticable{
             model2.chosenX[i].append(model1.estimatedY[i])
         }
         let R = model2.squareR
-        return chiCDF(x: Double(model1.n - 1) * R, k: 1)
+        
+        let chi = Double(model1.n - 1) * R
+        if chi == LMvalueLast{
+            return LMtestValueLast
+        }else{
+            let result = chiCDF(x: chi, k: 1)
+            LMvalueLast = chi
+            LMtestValueLast = result
+            return result
+        }
     }
 }
 
