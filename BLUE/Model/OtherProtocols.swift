@@ -109,11 +109,11 @@ extension Statisticable{
     }
     
     func chiCDF(x : Double, k : Double) -> Double{
-        print("calculating")
         let upper = incompleteGammaF(s: k/2, z: x/2)
-        return upper/tgamma(k/2)
+        let result = upper/tgamma(k/2)
+        return result > 1 ? 1 : result
     }
-    
+     
     func betaValue(x : Double, a : Double, b : Double) -> Double{
         return pow(x, (a - 1)) * pow((1 - x), (b - 1))
     }
@@ -139,12 +139,14 @@ extension Statisticable{
     
     func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double{
         let x = (d1*f)/((d1*f)+d2)
-        return betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
+        let result = betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
+        return result > 1 ? 1 : result
     }
     
     func TStudentCDF(t : Double, v : Double) -> Double{
         let x = v/((t*t) + v)
-        return 1 - 0.5*betaRegularizedIncomplete(x: x, a: v/2, b: 0.5)
+        let result =  1 - 0.5*betaRegularizedIncomplete(x: x, a: v/2, b: 0.5)
+        return result > 1 ? 1 : result
     }
     
     func normalValue(x: Double) -> Double{

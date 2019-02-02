@@ -313,8 +313,9 @@ protocol OLSTestable: OLSCalculable, Statisticable{
 
 private var fvalueLastCalculated : Double = 0
 private var fTestvalueLastCalculated : Double = 0
-private var tvalueLastCalculated : Double = 0
-private var tTestvalueLastCalculated : Double = 0
+private var tvalueLastCalculated : [Double] = [Double]()
+private var tTestvalueLastCalculated : [Double] = [Double]()
+private var tTestStop : Bool = false
 private var chivalueLastCalculated : Double = 0
 private var chiTestvalueLastCalculated : Double = 0
 
@@ -328,6 +329,7 @@ extension OLSTestable where Self==Model{
             if F == fvalueLastCalculated{
                 return fTestvalueLastCalculated
             }else{
+
                 fvalueLastCalculated = F
                 let result = FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
                 fTestvalueLastCalculated = result
@@ -341,12 +343,22 @@ extension OLSTestable where Self==Model{
             var tmp = [Double]()
             for i in 0..<SEB.count{
                 let T = getOLSRegressionEquation()[i]/SEB[i]
-                if tvalueLastCalculated == T{
-                    tmp.append(tTestvalueLastCalculated)
+                if tvalueLastCalculated.count == k+1{
+                    if tvalueLastCalculated[i] == T{
+                        tmp.append(tTestvalueLastCalculated[i])
+                    }else{
+                        
+                        let calculatedT = TStudentCDF(t: T, v: Double(n-k-1))
+                        tvalueLastCalculated[i] = T
+                        tTestvalueLastCalculated[i] = calculatedT
+                        tmp.append(calculatedT)
+                    }
                 }else{
+//                    tvalueLastCalculated.removeAll()
+//                    tTestvalueLastCalculated.removeAll()
                     let calculatedT = TStudentCDF(t: T, v: Double(n-k-1))
-                    tvalueLastCalculated = T
-                    tTestvalueLastCalculated = calculatedT
+                    tvalueLastCalculated.append(T)
+                    tTestvalueLastCalculated.append(calculatedT)
                     tmp.append(calculatedT)
                 }
             }
@@ -386,11 +398,14 @@ private var LMvalueLast : Double = 0
 private var LMtestValueLast : Double = 0
 
 struct OLSTestsAdvanced : Statisticable{
-    var model1 = Model()
-    var model2 = Model()
     
-    mutating func RESET(modelBase : Model) -> Double{
-        model1 = modelBase
+    var model1 : Model
+    init(baseModel : Model){
+        self.model1 = baseModel
+    }
+    
+    func RESET() -> Double{
+        var model2 = Model()
         model2 = model1
         var tmp2 = [Double]()
         var tmp3 = [Double]()
@@ -434,8 +449,8 @@ struct OLSTestsAdvanced : Statisticable{
             return result
         }
     }
-    mutating func LMAutoCorrelation(modelBase : Model) -> Double{
-        model1 = modelBase
+    func LMAutoCorrelation() -> Double{
+        var model2 = Model()
         model2 = model1
         model2.chosenY.removeAll()
         var i = 0
@@ -457,7 +472,7 @@ struct OLSTestsAdvanced : Statisticable{
         let R = model2.squareR
         
         let chi = Double(model1.n - 1) * R
-        if chi == LMvalueLast{
+        if chi.rounded() == LMvalueLast.rounded(){
             return LMtestValueLast
         }else{
             let result = chiCDF(x: chi, k: 1)
