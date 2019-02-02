@@ -16,6 +16,8 @@ import AVKit
 
 class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var topTableView: UITableView!
     @IBOutlet weak var topLabel: UILabel!
     let topTableSections = ["Critical","Warning","Normal","Uncalculable"]
@@ -24,6 +26,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             parametersResultsLoad()
         }
     }
+    
     func parametersResultsLoad(){
         if newModel{
             parametersResults = []
@@ -33,7 +36,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
              parametersResults = [
                 ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")
                 ,ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.k)*0.05, warningFloor: 1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "sampleVideo")
-                ,ModelParameters(name: "Test F significance", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "sampleVideo")
+                ,ModelParameters(name: "Test F significance", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "sampleVideo")
                 ,ModelParameters(name: "RESET test of stability of model", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.RESET(), description: "In statistics, the Ramsey Regression Equation Specification Error Test (RESET) test is a general specification test for the linear regression model. More specifically, it tests whether non-linear combinations of the fitted values help explain the response variable. The intuition behind the test is that if non-linear combinations of the explanatory variables have any power in explaining the response variable, the model is misspecified in the sense that the data generating process might be better approximated by a polynomial or another non-linear functional form.", imageName: "F", videoName: "sampleVideo")
                 ,ModelParameters(name: "Jarque-Berry test of normality", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.JBtest, description: "The Jarque-Bera Test,a type of Lagrange multiplier test, is a test for normality. Normality is one of the assumptions for many statistical tests, like the t test or F test; the Jarque-Bera test is usually run before one of these tests to confirm normality. ", imageName: "CHI", videoName: "sampleVideo")
                 ,ModelParameters(name: "Lagrange test of autocorrelation", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.LMAutoCorrelation(), description: "Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them. The analysis of autocorrelation is a mathematical tool for finding repeating patterns, such as the presence of a periodic signal obscured by noise, or identifying the missing fundamental frequency in a signal implied by its harmonic frequencies. It is often used in signal processing for analyzing functions or series of values, such as time domain signals.", imageName: "CHI", videoName: "sampleVideo")
@@ -140,6 +143,8 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         if model.squareR.isNaN{
             topTableView.isHidden = true
             topLabel.isHidden = true
+            saveButton.isEnabled = false
+            editButton.isEnabled = false
         }
         else{
             var tmpXText = String()
@@ -211,6 +216,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     // MARK: New import
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
+        saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
         documentPicker.delegate = self
        present(documentPicker, animated: true, completion:  nil)
@@ -252,9 +258,9 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
-            let _ = parametersResults
-            topTableView.reloadData()
-            topTableView.isHidden = false
+            //let _ = parametersResults
+            //topTableView.reloadData()
+            //topTableView.isHidden = false
             var tmpXText = String()
             model.chosenXHeader.forEach { (str) in
                 tmpXText = tmpXText + " " + str
@@ -293,6 +299,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }else{
             topLabel.isHidden = true
             topTableView.isHidden = true
+            saveButton.isEnabled = true
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
@@ -311,13 +318,21 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     func loadSavedModel(){
         self.chosenY = model.chosenYHeader
         self.chosenX = model.chosenXHeader
+        parametersResultsLoad()
     }
 }
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
+        editButton.isEnabled = true
         self.newPath = (urls.first?.path)!
         //ADD ALERT YES?NO
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        if chosenY.count > 0{
+            saveButton.isEnabled = true
+        }
     }
 }
 

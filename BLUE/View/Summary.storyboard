@@ -111,10 +111,12 @@
                         <outlet property="chooseXYView" destination="ulz-n8-5eh" id="fTr-3q-FD9"/>
                         <outlet property="chooseYTableView" destination="Xe9-kx-zCB" id="tqW-wX-kbL"/>
                         <outlet property="doneButton" destination="kqW-Ne-uvD" id="eFw-iZ-DL8"/>
+                        <outlet property="editButton" destination="6MG-R7-7uI" id="uGJ-7K-2T8"/>
                         <outlet property="parametersView" destination="m0o-iS-RPz" id="WoA-kz-6Ej"/>
                         <outlet property="parametersViewDetails" destination="KEZ-jL-nt1" id="lXA-ib-xWW"/>
                         <outlet property="parametersViewImage" destination="9DF-cO-fCP" id="kj1-Tc-YQI"/>
                         <outlet property="parametersViewTitle" destination="m1G-De-fY2" id="L7X-9v-KOw"/>
+                        <outlet property="saveButton" destination="d14-mI-vgI" id="Fob-iL-mxY"/>
                         <outlet property="sideMenuButton" destination="edB-IO-cpY" id="M09-7M-HVq"/>
                         <outlet property="topLabel" destination="hec-yE-haM" id="0Zx-E9-BuB"/>
                         <outlet property="topTableView" destination="Oir-BL-yPz" id="zde-5f-PFr"/>

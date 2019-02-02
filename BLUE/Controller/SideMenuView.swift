@@ -12,9 +12,13 @@ import Darwin
 class SideMenuView: UITableViewController{
     
     var model = Model()
-    var identities = ["toObservations","toPlots"]
-    let sections = ["Observations", "Plots"]
-    let options = ["Observations":["All","Selected","Add Variable"], "Plots":["X-Y plot","Candle Chart","Rests Chart"]]
+    let sections = ["Observations", "Plots", "Data Analysis"]
+    let options =
+    [
+        "Observations": ["All","Selected","Add Variable"],
+        "Plots": ["X-Y plot","Candle Chart","Rests Chart"],
+        "Data Analysis": ["Correlations", "Data info"]
+    ]
     var allObservations = true
     var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
     var isGoToAddVariable = false
