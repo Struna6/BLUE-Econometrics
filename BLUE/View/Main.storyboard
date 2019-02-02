@@ -10,6 +10,51 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Matrix View-->
+        <scene sceneID="96O-sd-Crj">
+            <objects>
+                <viewController id="Rtg-Q5-dUW" customClass="MatrixView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yQ4-Dw-gsG">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3L-t2-qxf" customClass="SpreadsheetView">
+                                <rect key="frame" x="109" y="237" width="550" height="550"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="550" id="0fa-Zz-PBc"/>
+                                    <constraint firstAttribute="height" constant="550" id="9Cu-Wx-bzn"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uK7-rk-V7J">
+                                <rect key="frame" x="209" y="120" width="350" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="6OC-un-Fnx"/>
+                                    <constraint firstAttribute="height" constant="50" id="izf-AT-et2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="W3L-t2-qxf" firstAttribute="centerY" secondItem="yQ4-Dw-gsG" secondAttribute="centerY" id="XrY-eG-uj8"/>
+                            <constraint firstItem="uK7-rk-V7J" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="ZLX-Eg-gW4"/>
+                            <constraint firstItem="W3L-t2-qxf" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="pQf-YE-tYf"/>
+                            <constraint firstItem="uK7-rk-V7J" firstAttribute="top" secondItem="os5-oM-Eke" secondAttribute="top" constant="50" id="rI4-gR-UTD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="os5-oM-Eke"/>
+                    </view>
+                    <connections>
+                        <outlet property="spreadSheetView" destination="W3L-t2-qxf" id="eMT-Lc-P6o"/>
+                        <outlet property="topLabel" destination="uK7-rk-V7J" id="Sle-pr-C9n"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nbl-fo-Apf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2062.5" y="226.75781249999997"/>
+        </scene>
         <!--Menu-->
         <scene sceneID="Vbe-2U-rp0">
             <objects>
@@ -39,6 +84,7 @@
                         <segue destination="fTl-ux-ahd" kind="show" identifier="toCharts" id="GWp-5E-kCR"/>
                         <segue destination="GG5-5I-TfG" kind="show" identifier="toCandleChart" id="Gxu-HM-4VB"/>
                         <segue destination="WGO-3D-cXx" kind="show" identifier="toRestsChart" id="2c9-hE-3a7"/>
+                        <segue destination="Rtg-Q5-dUW" kind="show" id="1XB-RF-jdL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>

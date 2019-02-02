@@ -27,6 +27,7 @@
 		F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
+		F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FC4BDD22060A270067A468 /* MatrixView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
+		F9FC4BDD22060A270067A468 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		F99DF53821A068F300C81AC5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F9FC4BDC220609F10067A468 /* Template Controllers */,
 				F9AA8E522199B7A200562A1F /* ViewController.swift */,
 				F9AA8E502199B7A200562A1F /* AppDelegate.swift */,
 				F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */,
@@ -162,6 +165,14 @@
 				F9C7557821C50A6E00A0F8A3 /* test1.txt */,
 			);
 			path = BLUE;
+			sourceTree = "<group>";
+		};
+		F9FC4BDC220609F10067A468 /* Template Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F9FC4BDD22060A270067A468 /* MatrixView.swift */,
+			);
+			path = "Template Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +324,7 @@
 				F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */,
 				F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */,
 				F99B87F321B1F1EB00779422 /* OLS.swift in Sources */,
+				F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */,
 				F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */,
 				F94C39B721BC535600FB98EC /* SavingService.swift in Sources */,
 			);
