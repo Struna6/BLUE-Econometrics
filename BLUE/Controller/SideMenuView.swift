@@ -16,7 +16,7 @@ class SideMenuView: UITableViewController{
     let sections = ["Observations", "Plots", "Data Analysis"]
     let options =
     [
-        "Observations": ["All","Selected","Add Variable"],
+        "Observations": ["All","Selected","Add Variable", "Normalisation"],
         "Plots": ["X-Y plot","Candle Chart","Rests Chart"],
         "Data Analysis": ["Correlations", "Data info"]
     ]

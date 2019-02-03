@@ -14,6 +14,8 @@
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
+		F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F972F0E2220723DF001F3B3A /* Charts.storyboard */; };
+		F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */; };
 		F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */; };
 		F97E417121BC19E400883010 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F97E417021BC19E400883010 /* Main.storyboard */; };
 		F99B87F321B1F1EB00779422 /* OLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99B87F221B1F1EB00779422 /* OLS.swift */; };
@@ -40,6 +42,8 @@
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
+		F972F0E2220723DF001F3B3A /* Charts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Charts.storyboard; sourceTree = "<group>"; };
+		F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerSorted.swift; sourceTree = "<group>"; };
 		F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationsSpreedsheetView.swift; sourceTree = "<group>"; };
 		F97E417021BC19E400883010 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F99B87F221B1F1EB00779422 /* OLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLS.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				F97E417021BC19E400883010 /* Main.storyboard */,
+				F972F0E2220723DF001F3B3A /* Charts.storyboard */,
 				F9FC2E7A21CED9D900A64599 /* Summary.storyboard */,
 			);
 			path = View;
@@ -171,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				F9FC4BDD22060A270067A468 /* MatrixView.swift */,
+				F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */,
 			);
 			path = "Template Controllers";
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */,
+				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
 				F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
@@ -313,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */,
 				F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */,
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
 				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
