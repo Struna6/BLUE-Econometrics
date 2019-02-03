@@ -11,9 +11,10 @@ import SpreadsheetView
 
 class MatrixView: UIViewController {
 
-    @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var topLabel: UILabel?
     @IBOutlet weak var spreadSheetView: SpreadsheetView!
     
+    var textTopLabel = String()
     var data = [[String]]()
     var headers = [String]()
     
@@ -21,6 +22,9 @@ class MatrixView: UIViewController {
         super.viewDidLoad()
         spreadSheetView.delegate = self
         spreadSheetView.dataSource = self
+        spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
+        spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
+        topLabel?.text = textTopLabel
     }
 }
 
@@ -30,27 +34,29 @@ extension MatrixView : SpreadsheetViewDelegate{
 
 extension MatrixView : SpreadsheetViewDataSource{
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(row + 1) - 5
-        if sample < CGFloat(spreadSheetView.frame.height) / 30{
-            return CGFloat(spreadSheetView.frame.height) / 30
+        let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count) - 5
+        if sample < CGFloat(spreadSheetView.frame.height) / 10{
+            return CGFloat(spreadSheetView.frame.height) / 10
         }
-        return CGFloat(spreadSheetView.frame.height) / CGFloat(row + 1) - 5
+        return sample
+       // return 60
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(column) - 5
-        if sample < CGFloat(spreadSheetView.frame.width) / 4{
-            return CGFloat(spreadSheetView.frame.width) / 4
+        let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count) - 5
+        if sample < CGFloat(spreadSheetView.frame.width) / 10{
+            return CGFloat(spreadSheetView.frame.width) / 10
         }
-        return CGFloat(spreadSheetView.frame.width) / CGFloat(column) - 10
+        return sample
+       // return 60
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return data[0].count + 1
+        return 7
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return data.count + 1
+        return 7
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -62,14 +68,25 @@ extension MatrixView : SpreadsheetViewDataSource{
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        if indexPath.row == 0 || indexPath.column == 0{
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! HeaderCell
-            cell.label.text = headers[indexPath.row]
+        if indexPath.row == 0 && indexPath.column == 0{
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
+            cell.label.text = ""
             return cell
         }else{
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
-            cell.label.text = data[indexPath.row][indexPath.column]
-            return cell
+            if indexPath.row == 0{
+                let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
+                cell.label.text = headers[indexPath.column-1]
+                return cell
+            }else if indexPath.column == 0{
+                let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
+                cell.label.text = headers[indexPath.row-1]
+                return cell
+            }
+            else{
+                let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
+                cell.label.text = data[indexPath.row][indexPath.column]
+                return cell
+            }
         }
     }
 }

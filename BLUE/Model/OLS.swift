@@ -311,6 +311,50 @@ protocol OLSTestable: OLSCalculable, Statisticable{
     var JBtest : Double {get}
 }
 
+protocol CoreDataAnalysable{
+    func makeCorrelationsArray2D() -> [[String]]
+}
+extension CoreDataAnalysable where Self==Model{
+    func makeCorrelationsArray2D() -> [[String]]{
+        let nRows = allObservations.count
+        let nCols = allObservations[0].observationArray.count
+        var tmp = Array(repeating: Array(repeating: "-", count: nCols), count: nRows)
+        for row in 0..<nRows{
+            for col in 0..<nCols{
+                if col < row{
+                    tmp[row][col] = ""
+                }else if col == row{
+                    tmp[row][col] = "1"
+                }else{
+                    var meanX : Double = 0
+                    var meanY : Double = 0
+                    var vectorX = [Double]()
+                    var vectorY = [Double]()
+                    allObservations.forEach { (i) in
+                        vectorX.append(i.observationArray[row])
+                        vectorY.append(i.observationArray[col])
+                    }
+                    meanX = mean(vectorX)
+                    meanY = mean(vectorY)
+                    var top : Double = 0
+                    var bottomX : Double = 0
+                    var bottomY : Double = 0
+                    
+                    for i in 0..<vectorX.count{
+                        top = top + ((vectorX[i]-meanX)*(vectorY[i]-meanY))
+                        bottomX = bottomX + (pow((vectorX[i]-meanX), 2.0))
+                        bottomY = bottomY + (pow((vectorY[i]-meanY), 2.0))
+                    }
+                    let bottom = sqrt(bottomX)*sqrt(bottomY)
+                    let result = top/bottom
+                    tmp[row][col] = String(format: "%.2f", result)
+                }
+            }
+        }
+        return tmp
+    }
+}
+
 private var fvalueLastCalculated : Double = 0
 private var fTestvalueLastCalculated : Double = 0
 private var tvalueLastCalculated : [Double] = [Double]()
@@ -398,7 +442,6 @@ private var LMvalueLast : Double = 0
 private var LMtestValueLast : Double = 0
 
 struct OLSTestsAdvanced : Statisticable{
-    
     var model1 : Model
     init(baseModel : Model){
         self.model1 = baseModel

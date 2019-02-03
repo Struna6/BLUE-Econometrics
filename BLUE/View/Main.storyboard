@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3L-t2-qxf" customClass="SpreadsheetView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3L-t2-qxf" customClass="SpreadsheetView" customModule="SpreadsheetView">
                                 <rect key="frame" x="109" y="237" width="550" height="550"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -84,7 +84,7 @@
                         <segue destination="fTl-ux-ahd" kind="show" identifier="toCharts" id="GWp-5E-kCR"/>
                         <segue destination="GG5-5I-TfG" kind="show" identifier="toCandleChart" id="Gxu-HM-4VB"/>
                         <segue destination="WGO-3D-cXx" kind="show" identifier="toRestsChart" id="2c9-hE-3a7"/>
-                        <segue destination="Rtg-Q5-dUW" kind="show" id="1XB-RF-jdL"/>
+                        <segue destination="Rtg-Q5-dUW" kind="show" identifier="toMatrixView" id="1XB-RF-jdL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>

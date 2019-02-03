@@ -72,47 +72,11 @@ class SideMenuView: UITableViewController{
             performSegue(withIdentifier: "toCandleChart", sender: self)
         case 12:
             performSegue(withIdentifier: "toRestsChart", sender: self)
+        case 20:
+            performSegue(withIdentifier: "toMatrixView", sender: self)
         default: break
         }
     }
-
-    func makeCorrelations() -> [[String]]{
-        var tmp = [[String]]()
-        for row in 0..<model.allObservations.count{
-            for col in 0..<model.allObservations[0].observationArray.count{
-                if col < row{
-                    tmp[row][col] = ""
-                }else if col == row{
-                    tmp[row][col] = "1"
-                }else{
-                    var meanX : Double = 0
-                    var meanY : Double = 0
-                    var vectorX = [Double]()
-                    var vectorY = [Double]()
-                    model.allObservations.forEach { (i) in
-                        vectorX.append(i.observationArray[row])
-                        vectorY.append(i.observationArray[col])
-                    }
-                    meanX = mean(vectorX)
-                    meanY = mean(vectorY)
-                    var top : Double = 0
-                    var bottomX : Double = 0
-                    var bottomY : Double = 0
-                    
-                    for i in 0..<vectorX.count{
-                        top = top + ((vectorX[i]-meanX)*(vectorY[i]-meanY))
-                        bottomX = bottomX + (pow((vectorX[i]-meanX), 2.0))
-                        bottomY = bottomY + (pow((vectorY[i]-meanY), 2.0))
-                    }
-                    let bottom = sqrt(bottomX)*sqrt(bottomY)
-                    let result = top/bottom
-                    tmp[row][col] = String(result)
-                }
-            }
-        }
-        return tmp
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toCharts"{
             let target = segue.destination as! ChartView
@@ -158,6 +122,12 @@ class SideMenuView: UITableViewController{
             let target = segue.destination as! restsChartsViewController
             target.e = model.S
             target.labels = model.labels
+        }
+        else if segue.identifier == "toMatrixView"{
+            let target = segue.destination as! MatrixView
+            target.data = model.makeCorrelationsArray2D()
+            target.headers = model.headers
+            target.textTopLabel = "Variables Correlations"
         }
     }
 }

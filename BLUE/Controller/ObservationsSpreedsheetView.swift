@@ -446,8 +446,8 @@ class TextCell: Cell {
         super.init(frame: frame)
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         contentView.addSubview(label)
     }
     
@@ -466,6 +466,8 @@ class HeaderCell: Cell {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textAlignment = .center
         label.textColor = .gray
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         contentView.addSubview(label)
     }
     
