@@ -63,7 +63,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-Rd-FsI">
+                            <visualEffectView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-Rd-FsI">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cgo-1C-KNq">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
@@ -81,6 +81,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nan" translatesAutoresizingMaskIntoConstraints="NO" id="go7-9q-vFN">
+                                <rect key="frame" x="609" y="120" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="YCp-vI-RAo"/>
+                                    <constraint firstAttribute="height" constant="50" id="x5t-Pm-S7U"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kFm-Ol-Axx">
                                 <rect key="frame" x="109" y="200" width="550" height="650"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -103,13 +110,6 @@
                                     <outlet property="delegate" destination="Ykk-CW-2fc" id="MDa-GQ-Yc1"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nan" translatesAutoresizingMaskIntoConstraints="NO" id="go7-9q-vFN">
-                                <rect key="frame" x="609" y="120" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="YCp-vI-RAo"/>
-                                    <constraint firstAttribute="height" constant="50" id="x5t-Pm-S7U"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -130,6 +130,7 @@
                         <outlet property="helpImage" destination="go7-9q-vFN" id="4GW-HJ-yzf"/>
                         <outlet property="imageHelpWindow" destination="tmO-Z5-LIv" id="C0C-pn-rgT"/>
                         <outlet property="labelHelpWindow" destination="gW7-9M-zn3" id="080-u7-sKo"/>
+                        <outlet property="popUpWindow" destination="d9P-tV-7Qv" id="jv8-TK-v2d"/>
                         <outlet property="tableView" destination="kFm-Ol-Axx" id="dIh-pd-qfq"/>
                         <outlet property="textHelpWindow" destination="uhC-L4-CEA" id="Tnr-aH-iVl"/>
                         <outlet property="topLabel" destination="isA-nI-PKB" id="Nbb-n5-WS7"/>
@@ -230,7 +231,7 @@
                         <segue destination="7Iz-qd-IK9" kind="show" identifier="toCandleChart" id="Gxu-HM-4VB"/>
                         <segue destination="0qs-48-Ysj" kind="show" identifier="toRestsChart" id="2c9-hE-3a7"/>
                         <segue destination="Rtg-Q5-dUW" kind="show" identifier="toMatrixView" id="1XB-RF-jdL"/>
-                        <segue destination="Ykk-CW-2fc" kind="show" id="JYu-Jo-zW9"/>
+                        <segue destination="Ykk-CW-2fc" kind="show" identifier="toTableViewSorted" id="JYu-Jo-zW9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>

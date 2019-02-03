@@ -74,6 +74,8 @@ class SideMenuView: UITableViewController{
             performSegue(withIdentifier: "toRestsChart", sender: self)
         case 20:
             performSegue(withIdentifier: "toMatrixView", sender: self)
+        case 21:
+            performSegue(withIdentifier: "toTableViewSorted", sender: self)
         default: break
         }
     }
@@ -128,6 +130,12 @@ class SideMenuView: UITableViewController{
             target.data = model.makeCorrelationsArray2D()
             target.headers = model.headers
             target.textTopLabel = "Variables Correlations"
+        }
+        else if segue.identifier == "toTableViewSorted"{
+            let target = segue.destination as! TableViewControllerSorted
+            target.mainModelParameter = [ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")]
+            target.parametersResults = [ModelParametersShort(name: "R\u{00B2}", value: model.squareR, isLess: true, criticalFloor: 0.5, warningFloor: 0.75)]
+            target.textTopLabel = "Core Data Info"
         }
     }
 }

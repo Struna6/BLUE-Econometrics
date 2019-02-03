@@ -467,6 +467,7 @@ extension ViewController{
     }
     
     //MARK: Gesture Recognizer for Image- Play Video
+    //change name of video
     @objc func imageTapped(){
         if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))

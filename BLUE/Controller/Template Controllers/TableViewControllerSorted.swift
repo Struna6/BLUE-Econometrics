@@ -7,42 +7,45 @@
 //
 
 import UIKit
+import AVKit
 
 class TableViewControllerSorted: UIViewController {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet var popUpWindow: UIView!
     @IBOutlet weak var viewToBlur: UIVisualEffectView!
     @IBOutlet weak var textHelpWindow: UILabel!
     @IBOutlet weak var imageHelpWindow: UIImageView!
     @IBOutlet weak var labelHelpWindow: UILabel!
     @IBOutlet weak var helpImage: UIImageView!
+    
     let tableSections = ["Critical","Warning","Normal","Uncalculable"]
-    var parametersResults = [ModelParameters]()
-    var criticalParameters : [ModelParameters]{
+    var mainModelParameter = [ModelParameters]()
+    var parametersResults = [ModelParametersShort]()
+    var criticalParameters : [ModelParametersShort]{
         get{
             return self.parametersResults.filter({$0.category.rawValue == "Critical"})
         }
     }
-    var warningParameters : [ModelParameters]{
+    var warningParameters : [ModelParametersShort]{
         get{
             return self.parametersResults.filter({$0.category.rawValue == "Warning"})
         }
     }
-    var normalParameters : [ModelParameters]{
+    var normalParameters : [ModelParametersShort]{
         get{
             return self.parametersResults.filter({$0.category.rawValue == "Normal"})
         }
     }
-    var nanParameters : [ModelParameters]{
+    var nanParameters : [ModelParametersShort]{
         get{
             return self.parametersResults.filter({$0.category.rawValue == "Nan"})
         }
     }
-    
-    var parametersCategorized : [[ModelParameters]]{
+    var parametersCategorized : [[ModelParametersShort]]{
         get{
-            var tmp = [[ModelParameters]]()
+            var tmp = [[ModelParametersShort]]()
             tmp.append(criticalParameters)
             tmp.append(warningParameters)
             tmp.append(normalParameters)
@@ -50,14 +53,53 @@ class TableViewControllerSorted: UIViewController {
             return tmp
         }
     }
+    var textTopLabel = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        topLabel.text = textTopLabel
+        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTapped))
+        helpImage.addGestureRecognizer(tapOnImage)
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.popUpWindow.transform = CGAffineTransform(translationX: 0.0, y: 300)
+            self.popUpWindow.alpha = 0
+            self.tableView.isHidden = false
+            self.viewToBlur.effect = nil
+        }) { (success) in
+            self.popUpWindow.removeFromSuperview()
+        }
     }
     
+    func loadParametersView(){
+        labelHelpWindow.text = mainModelParameter[0].name
+        textHelpWindow.text = mainModelParameter[0].description
+        imageHelpWindow.image = UIImage(named: mainModelParameter[0].imageName)
+        self.view.addSubview(popUpWindow)
+        popUpWindow.alpha = 0
+        popUpWindow.center = self.view.center
+        popUpWindow.transform = CGAffineTransform(translationX: 0.0, y: 300)
+        UIView.animate(withDuration: 0.4) {
+            self.tableView.isHidden = true
+            self.viewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            self.popUpWindow.alpha = 1
+            self.popUpWindow.transform = CGAffineTransform.identity
+        }
+    }
+    
+    //change name of video
+    @objc func imageTapped(){
+        if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
+            let video = AVPlayer(url: URL(fileURLWithPath: path))
+            let videoPlayer = AVPlayerViewController()
+            videoPlayer.player = video
+            present(videoPlayer, animated: true, completion: {
+                video.play()
+            })
+        }
+    }
 }
 
 extension TableViewControllerSorted : UITableViewDataSource{
@@ -67,7 +109,6 @@ extension TableViewControllerSorted : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return parametersCategorized[section].count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         let par = parametersCategorized[indexPath.section][indexPath.row]
@@ -87,6 +128,10 @@ extension TableViewControllerSorted : UITableViewDataSource{
         default:break
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return tableSections[section]
     }
 
 }

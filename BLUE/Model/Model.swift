@@ -82,7 +82,6 @@ struct ModelParameters{
     var imageName : String
     var videoName : String?
     var isLess : Bool
-    
     init(name : String, isLess : Bool,  criticalFloor : Double, warningFloor : Double, value : Double, description : String, imageName : String, videoName : String?){
         self.description = description
         self.imageName = imageName
@@ -115,5 +114,45 @@ struct ModelParameters{
             }
         }
        
+    }
+}
+
+struct ModelParametersShort{
+    let name : String
+    var category : ModelParametersCategory
+    let value : Double
+    var isLess : Bool
+    var criticalFloor : Double
+    var warningFloor : Double
+    
+    init(name : String, value : Double, isLess : Bool, criticalFloor : Double, warningFloor : Double){
+        self.name = name
+        self.value = value
+        self.isLess = isLess
+        self.warningFloor = warningFloor
+        self.criticalFloor = criticalFloor
+        if value.isNaN{
+            self.category = .NAN
+        }else if isLess{
+            if value <= criticalFloor {
+                self.category = .Critical
+            }
+            else if value <= warningFloor {
+                self.category = .Warning
+            }
+            else{
+                self.category = .Normal
+            }
+        }else{
+            if value >= criticalFloor {
+                self.category = .Critical
+            }
+            else if value >= warningFloor {
+                self.category = .Warning
+            }
+            else{
+                self.category = .Normal
+            }
+        }
     }
 }
