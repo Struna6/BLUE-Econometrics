@@ -327,7 +327,6 @@ protocol CoreDataAnalysable : QuantileCalculable{
     func makeCorrelationsArray2D() -> [[String]]
 }
 extension CoreDataAnalysable where Self==Model{
-    
     var avarage : [Double]{
         get{
             var result = [Double]()
@@ -411,7 +410,7 @@ extension CoreDataAnalysable where Self==Model{
         get{
             var result = [Double]()
             for col in 0..<allObservations[0].observationArray.count{
-                result.append(Q3[col]-Q1[col])
+                result.append((Q3[col]-Q1[col])/2)
             }
             return result
         }
@@ -442,7 +441,7 @@ extension CoreDataAnalysable where Self==Model{
         get{
             var result = [Double]()
             for col in 0..<allObservations[0].observationArray.count{
-                result.append(((Q1[col] + Q3[col]) - 2 * Me[col]) / (Qdifference[col]))
+                result.append(((Q1[col] + Q3[col]) - 2 * Me[col]) / (2*Qdifference[col]))
             }
             return result
         }

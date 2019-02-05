@@ -237,7 +237,7 @@ class TableViewControllerSorted: UIViewController {
     }
 }
 
-extension TableViewControllerSorted : UITableViewDataSource{
+extension TableViewControllerSorted : UITableViewDataSource, UITableViewDelegate{
     func numberOfSections(in tableView: UITableView) -> Int {
         return tableSections.count
     }
@@ -245,7 +245,7 @@ extension TableViewControllerSorted : UITableViewDataSource{
         return parametersCategorized[section].count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as UITableViewCell
         if isShortParameters{
             let par = parametersCategorizedShort[indexPath.section][indexPath.row]
             cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
@@ -260,6 +260,8 @@ extension TableViewControllerSorted : UITableViewDataSource{
                 cell.textLabel?.text = par.name
                 cell.textLabel?.textColor = UIColor.red
                 cell.imageView?.image = UIImage.init(named: "nan")
+            case 4:
+                cell.imageView?.image = nil
             default:break
             }
             return cell
@@ -278,6 +280,8 @@ extension TableViewControllerSorted : UITableViewDataSource{
                 cell.textLabel?.text = par.name
                 cell.textLabel?.textColor = UIColor.red
                 cell.imageView?.image = UIImage.init(named: "nan")
+            case 4:
+                cell.imageView?.image = nil
             default:break
             }
             return cell
@@ -287,9 +291,11 @@ extension TableViewControllerSorted : UITableViewDataSource{
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return tableSections[section]
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if !isShortParameters{
+            selectedParameterSection = indexPath.section
+            selectedParameterPosition = indexPath.row
             loadParametersView()
         }
     }

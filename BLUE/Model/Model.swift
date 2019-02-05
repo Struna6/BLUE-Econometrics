@@ -172,16 +172,4 @@ struct ModelParametersShort{
     }
 }
 
-struct GroupParametersShortDescription{
-    let name : String
-    var imageName : String
-    var videoName : String?
-    var description : String
-    
-    init(name : String, imageName : String, videoName : String?, description : String){
-        self.name = name
-        self.imageName = imageName
-        self.videoName = videoName
-        self.description = description
-    }
-}
+
