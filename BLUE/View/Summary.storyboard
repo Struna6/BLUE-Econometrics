@@ -18,13 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hec-yE-haM">
-                                <rect key="frame" x="134" y="90" width="500" height="114"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hec-yE-haM">
+                                <rect key="frame" x="134" y="75" width="500" height="114"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="114" id="GgI-VE-ThT"/>
                                     <constraint firstAttribute="width" constant="500" id="Xsl-10-6LO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -39,7 +39,7 @@
                                 </vibrancyEffect>
                             </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-BL-yPz">
-                                <rect key="frame" x="134" y="242" width="500" height="650"/>
+                                <rect key="frame" x="134" y="199" width="500" height="650"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="500" id="L5d-lC-2Nd"/>
@@ -63,8 +63,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hec-yE-haM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="7pB-nt-gct"/>
-                            <constraint firstItem="Oir-BL-yPz" firstAttribute="top" secondItem="hec-yE-haM" secondAttribute="bottom" constant="38" id="IXp-2v-aSg"/>
+                            <constraint firstItem="hec-yE-haM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="7pB-nt-gct"/>
+                            <constraint firstItem="Oir-BL-yPz" firstAttribute="top" secondItem="hec-yE-haM" secondAttribute="bottom" constant="10" id="IXp-2v-aSg"/>
                             <constraint firstItem="Oir-BL-yPz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MaZ-v6-k0g"/>
                             <constraint firstItem="hec-yE-haM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pi1-yP-fMx"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YF6-Fe-0T0"/>

@@ -328,11 +328,93 @@
                         <outlet property="addObservationView" destination="DRX-5x-d6O" id="OTC-SZ-d6N"/>
                         <outlet property="basedOnChoose" destination="8x2-ZC-Z7V" id="Bvf-Vi-flS"/>
                         <outlet property="functionChoose" destination="jJd-aE-7M5" id="N9p-fF-hNO"/>
+                        <outlet property="normChooseVar" destination="kbG-6r-HHi" id="qhN-Bj-j8O"/>
+                        <outlet property="normPicker" destination="Agf-wM-f6j" id="50F-jZ-TRF"/>
+                        <outlet property="normView" destination="nRz-3X-unR" id="UDz-5H-MFu"/>
                         <outlet property="spreedsheet" destination="L8R-yz-JXc" id="FEM-5K-xH0"/>
                         <outlet property="viewToBlur" destination="B9R-wx-XXh" id="b5d-VY-UUf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2a-4d-uLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="nRz-3X-unR">
+                    <rect key="frame" x="0.0" y="0.0" width="450" height="550"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose normalization method" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2F-lY-9tP">
+                            <rect key="frame" x="75" y="40" width="300" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="23" id="pUJ-1j-pFG"/>
+                                <constraint firstAttribute="width" constant="300" id="sMQ-OL-7zk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Agf-wM-f6j">
+                            <rect key="frame" x="0.0" y="83" width="450" height="116"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="450" id="C2A-ZT-bVs"/>
+                                <constraint firstAttribute="height" constant="116" id="f8u-3U-Yk6"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="dataSource" destination="Z3e-Hd-hZE" id="F4h-QF-Z3U"/>
+                                <outlet property="delegate" destination="Z3e-Hd-hZE" id="KvU-tj-AMW"/>
+                            </connections>
+                        </pickerView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hg5-zz-cqK">
+                            <rect key="frame" x="172.5" y="495" width="105" height="35"/>
+                            <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="RHR-0A-hCN"/>
+                                <constraint firstAttribute="width" constant="105" id="Tfx-gT-YTt"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="hse-wI-dnQ"/>
+                                <constraint firstAttribute="height" constant="35" id="sUc-rV-QfE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                            <state key="normal" title="Accept">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="normAccept:" destination="Z3e-Hd-hZE" eventType="touchUpInside" id="vhx-QY-i1T"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose variable" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFg-bg-bja">
+                            <rect key="frame" x="75" y="249" width="300" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="300" id="Nz5-85-QUz"/>
+                                <constraint firstAttribute="height" constant="23" id="hTD-kb-ELK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kbG-6r-HHi">
+                            <rect key="frame" x="0.0" y="292" width="450" height="116"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="116" id="3n0-HV-lRq"/>
+                                <constraint firstAttribute="width" constant="450" id="PsN-hK-6M3"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="dataSource" destination="Z3e-Hd-hZE" id="zCk-pV-JA8"/>
+                                <outlet property="delegate" destination="Z3e-Hd-hZE" id="WAe-8x-Z14"/>
+                            </connections>
+                        </pickerView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Agf-wM-f6j" firstAttribute="top" secondItem="a2F-lY-9tP" secondAttribute="bottom" constant="20" id="6S7-Ht-oII"/>
+                        <constraint firstItem="Agf-wM-f6j" firstAttribute="centerX" secondItem="nRz-3X-unR" secondAttribute="centerX" id="8iZ-Xg-cn6"/>
+                        <constraint firstItem="Hg5-zz-cqK" firstAttribute="centerX" secondItem="nRz-3X-unR" secondAttribute="centerX" id="CqE-85-p1g"/>
+                        <constraint firstItem="a2F-lY-9tP" firstAttribute="centerX" secondItem="nRz-3X-unR" secondAttribute="centerX" id="OEI-Kp-dDO"/>
+                        <constraint firstItem="kbG-6r-HHi" firstAttribute="centerX" secondItem="nRz-3X-unR" secondAttribute="centerX" id="Qdq-tk-0LJ"/>
+                        <constraint firstItem="JFg-bg-bja" firstAttribute="top" secondItem="Agf-wM-f6j" secondAttribute="bottom" constant="50" id="Qgx-9j-AfT"/>
+                        <constraint firstItem="JVk-EG-hrL" firstAttribute="bottom" secondItem="Hg5-zz-cqK" secondAttribute="bottom" constant="20" id="RPf-b7-1nv"/>
+                        <constraint firstItem="a2F-lY-9tP" firstAttribute="top" secondItem="JVk-EG-hrL" secondAttribute="top" constant="20" id="Wgz-ra-n9T"/>
+                        <constraint firstItem="kbG-6r-HHi" firstAttribute="top" secondItem="JFg-bg-bja" secondAttribute="bottom" constant="20" id="dow-xb-TiK"/>
+                        <constraint firstItem="JFg-bg-bja" firstAttribute="centerX" secondItem="nRz-3X-unR" secondAttribute="centerX" id="edD-GL-3e5"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="JVk-EG-hrL"/>
+                </view>
                 <view contentMode="scaleToFill" id="DRX-5x-d6O">
                     <rect key="frame" x="0.0" y="0.0" width="483" height="508"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

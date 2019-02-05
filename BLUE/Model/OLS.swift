@@ -324,6 +324,9 @@ protocol CoreDataAnalysable : QuantileCalculable{
     var skewness : [Double]{get}
     var skewnessQ : [Double]{get}
     var range : [Double]{get}
+    var minCore : [Double]{get}
+    var maxCore : [Double]{get}
+    
     func makeCorrelationsArray2D() -> [[String]]
 }
 extension CoreDataAnalysable where Self==Model{
@@ -459,6 +462,33 @@ extension CoreDataAnalysable where Self==Model{
             return result
         }
     }
+    var minCore : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(min(tmp))
+            }
+            return result
+        }
+    }
+    var maxCore : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(max(tmp))
+            }
+            return result
+        }
+    }
+    
     func makeCorrelationsArray2D() -> [[String]]{
         let nRows = allObservations.count
         let nCols = allObservations[0].observationArray.count

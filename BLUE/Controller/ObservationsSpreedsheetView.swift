@@ -10,6 +10,10 @@ import UIKit
 import SpreadsheetView
 
 class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
+    @IBOutlet weak var normPicker: UIPickerView!
+    @IBOutlet var normView: UIView!
+    @IBOutlet weak var normChooseVar: UIPickerView!
+
     var col: Int{
         get{
             return observations[0].observationArray.count
@@ -23,14 +27,22 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var observationsLabeled = false
     var observations = [Observation]()
     var headers = [String]()
+    var model = Model()
     var optionsBasedOn = [String]()
     var optionsFunction = [String]()
     var choosenFunction = String()
     var choosenVariable = Int()
     var backUpdateObservationsDelegate : BackUpdatedObservations?
     var isAddVariableOpenedOnStart = false
+    var isNormalizeOpenedOnStart = false
     var selectedRow : Int?
     var selectedCol : Int?
+    
+    
+    var normalizationOptions = ["Standarization",  "Unitarization"]
+    var normalizationChosen = String()
+    var normVarChosen = String()
+    var normAsNewVar = false
     
     @IBOutlet weak var basedOnChoose: UIPickerView!
     
@@ -128,14 +140,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 return cell
             }
             if observationsLabeled{
-                cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column-1])
+                cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column-1])
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
                     cell.backgroundColor = UIColor.blue
                     cell.label.textColor = .white
                 }
                 return cell
             }
-            cell.label.text = String(observations[indexPath.row-1].observationArray[indexPath.column])
+            cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column])
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
                 cell.backgroundColor = UIColor.blue
                 cell.label.textColor = .white
@@ -159,8 +171,15 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         choosenFunction = "Logarithm"
         choosenVariable = 0
         viewToBlur.isHidden = true
+        let tapToDismiss = UITapGestureRecognizer(target: self, action: #selector(ObservationsSpreedsheetView.dismissPopUp))
+        self.view.addGestureRecognizer(tapToDismiss)
+        normalizationChosen = normalizationOptions[0]
+        normVarChosen = headers[0]
         if isAddVariableOpenedOnStart{
             loadAddObservationsView()
+        }
+        if isNormalizeOpenedOnStart{
+            loadNormObservationsView()
         }
     }
     
@@ -195,7 +214,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         spreedsheet.reloadData()
         backUpdateObservationsDelegate?.updatedObservations(observations: observations, headers: headers)
     }
-    
     
     //ADD WARGNINGS THAT WRONG DATA
     @IBAction func editModeOnPressed(_ sender: Any) {
@@ -250,6 +268,10 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 self.observations.remove(at: self.selectedRow!-1)
             })
         })
+        let normalizeOption = UIAlertAction(title: "Normalize", style: .destructive) { (action) in
+            alert.removeFromParent()
+            self.loadNormObservationsView()
+        }
         
         alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
         
@@ -279,8 +301,21 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 alert.addAction(headerOptionDel)
                 alert.addAction(valuesOptionDel)
             }
+        }else{
+            alert.addAction(normalizeOption)
         }
         present(alert,animated: true)
+    }
+    
+    @IBAction func normAccept(_ sender: UIButton) {
+        showPopOverNormWindow()
+    }
+    @objc func dismissPopUp(){
+        if self.view.subviews.contains(addObservationView){
+            closeAddObservationsView()
+        }else if self.view.subviews.contains(normView){
+            closeNormObservationsView()
+        }
     }
 }
 
@@ -300,6 +335,10 @@ extension ObservationsSpreedsheetView{
             }
         })
         alertInput.addAction(alertInputOK)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertInput.addAction(cancelAction)
+    
         self.present(alertInput,animated: true, completion: nil)
     }
     func showPopOverAcceptWindow(name : String, toDo : @escaping () -> Void){
@@ -310,6 +349,20 @@ extension ObservationsSpreedsheetView{
             self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
         })
         let alertInputNo = UIAlertAction(title: "No", style: .default, handler: nil)
+        alertInput.addAction(alertInputOK)
+        alertInput.addAction(alertInputNo)
+        self.present(alertInput,animated: true, completion: nil)
+    }
+    func showPopOverNormWindow(){
+        let alertInput = UIAlertController(title: "Normalization", message: "Do you want modify exisiting data or create new variable?", preferredStyle: .alert)
+        let alertInputOK = UIAlertAction(title: "Exisiting", style: .destructive, handler: { (UIAlertAction) in
+            self.normAsNewVar = false
+            self.prepareForNormalize()
+        })
+        let alertInputNo = UIAlertAction(title: "New", style: .default, handler: { (UIAlertAction) in
+            self.normAsNewVar = true
+            self.prepareForNormalize()
+        })
         alertInput.addAction(alertInputOK)
         alertInput.addAction(alertInputNo)
         self.present(alertInput,animated: true, completion: nil)
@@ -326,6 +379,10 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == basedOnChoose{
             return optionsBasedOn.count
+        }else if pickerView == normPicker{
+            return normalizationOptions.count
+        }else if pickerView == normChooseVar{
+            return headers.count
         }else{
             return optionsFunction.count
         }
@@ -334,6 +391,10 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == basedOnChoose{
             return optionsBasedOn[row]
+        }else if pickerView == normPicker{
+            return normalizationOptions[row]
+        }else if pickerView == normChooseVar{
+            return headers[row]
         }else{
             return optionsFunction[row]
         }
@@ -349,11 +410,14 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
                 choosenVariable = headers.firstIndex(of: optionsBasedOn[row])!
                 functionChoose.reloadAllComponents()
             }
+        }else if pickerView == normPicker{
+            normalizationChosen = normalizationOptions[row]
+        }else if pickerView == normChooseVar{
+            normVarChosen = headers[row]
         }else{
             choosenFunction = optionsFunction[row]
         }
     }
-    
     
     func loadAddObservationsView(){
         self.view.addSubview(addObservationView)
@@ -379,6 +443,31 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    func loadNormObservationsView(){
+        self.view.addSubview(normView)
+        viewToBlur.isHidden = false
+        normView.alpha = 0
+        normView.center = self.view.center
+        normView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+        UIView.animate(withDuration: 0.4) {
+            self.viewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            self.normView.alpha = 1
+            self.normView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func closeNormObservationsView(){
+        viewToBlur.isHidden = true
+        UIView.animate(withDuration: 0.4, animations: {
+            self.normView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+            self.normView.alpha = 0
+            self.viewToBlur.effect = nil
+        }) { (success) in
+            self.normView.removeFromSuperview()
+        }
+    }
+    
+    //ADD ERROR
     func addVariableFunction(f: (Double) -> Double){
         var tmp = [Double]()
         observations.forEach { (obs) in
@@ -387,9 +476,8 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         for i in 0..<observations.count{
             observations[i].observationArray.append(tmp[i])
         }
-        headers.append(choosenFunction+(headers[choosenVariable]))
+        headers.append(choosenFunction + "_" + (headers[choosenVariable]))
     }
-    
     func addVariableFunction(f: (Double,Double) -> Double, n: Double){
         var tmp = [Double]()
         observations.forEach { (obs) in
@@ -398,9 +486,8 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         for i in 0..<observations.count{
             observations[i].observationArray.append(tmp[i])
         }
-        headers.append(choosenFunction+(headers[choosenVariable]))
+        headers.append(choosenFunction + "_" + (headers[choosenVariable]))
     }
-    
     func addVariableFunction(newValues : [Double]){
         for i in 0..<observations.count{
             observations[i].observationArray.append(newValues[i])
@@ -408,6 +495,40 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         headers.append(choosenFunction)
     }
     
+    //ADD ERROR
+    func prepareForNormalize(){
+        let chosenVarIndex = headers.firstIndex(of: normVarChosen)
+        switch normalizationChosen{
+        case "Standarization":
+            normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.SeCore[chosenVarIndex!])
+        case "Unitarization":
+            normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.range[chosenVarIndex!])
+        default : break
+        }
+        self.closeNormObservationsView()
+    }
+    func normalize(varNum : Int, top : Double, bottom : Double){
+        if normAsNewVar{
+            var tmp = [Double]()
+            for row in 0..<observations.count{
+                var x = observations[row].observationArray[varNum]
+                x = (x-top)/bottom
+                tmp.append(x)
+            }
+            for i in 0..<observations.count{
+                observations[i].observationArray.append(tmp[i])
+            }
+            headers.append("n_" + (headers[varNum]))
+        }else{
+            for row in 0..<observations.count{
+                var x = observations[row].observationArray[varNum]
+                x = (x-top)/bottom
+                observations[varNum].observationArray[col] = x
+            }
+        }
+        self.spreedsheet.reloadData()
+        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+    }
 }
 
 protocol BackUpdatedObservations {
@@ -429,11 +550,7 @@ extension BackUpdatedObservations where Self : ViewController{
 
 //MARK: Edit Observations Controll
 
-
 extension ObservationsSpreedsheetView{
-    
-    
-    
 }
 
 

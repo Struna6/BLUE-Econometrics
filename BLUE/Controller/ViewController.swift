@@ -140,6 +140,8 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         chooseXYView.layer.cornerRadius = 10
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
+        let tapToDismiss = UITapGestureRecognizer(target: self, action: #selector(ObservationsSpreedsheetView.dismissPopUp))
+        self.view.addGestureRecognizer(tapToDismiss)
         if model.squareR.isNaN{
             topTableView.isHidden = true
             topLabel.isHidden = true
@@ -268,13 +270,13 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             var tmpEq = String()
             for i in 0..<model.getOLSRegressionEquation().count{
                 if i==0{
-                    tmpEq = tmpEq + String(format:"%.4f",model.getOLSRegressionEquation()[0])
+                    tmpEq = tmpEq + String(format:"%.2f",model.getOLSRegressionEquation()[0])
                 }else{
                     let num = model.getOLSRegressionEquation()[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.4f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.4f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -319,6 +321,20 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         self.chosenY = model.chosenYHeader
         self.chosenX = model.chosenXHeader
         parametersResultsLoad()
+    }
+    
+    //to repair
+    @objc func dismissPopUp(){
+//        if self.view.subviews.contains(chooseXYView){
+//            UIView.animate(withDuration: 0.4, animations: {
+//                self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+//                self.chooseXYView.alpha = 0
+//                self.topTableView.isHidden = false
+//                self.visualViewToBlur.effect = nil
+//            }) { (success) in
+//                self.chooseXYView.removeFromSuperview()
+//            }
+//        }
     }
 }
     // MARK: File Browser Window
