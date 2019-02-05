@@ -311,10 +311,155 @@ protocol OLSTestable: OLSCalculable, Statisticable{
     var JBtest : Double {get}
 }
 
-protocol CoreDataAnalysable{
+protocol CoreDataAnalysable : QuantileCalculable{
+    var avarage : [Double]{get}
+    var SeCore : [Double]{get}
+    var Var : [Double]{get}
+    var Ve : [Double]{get}
+    var Me : [Double]{get}
+    var Q1 : [Double]{get}
+    var Q3 : [Double]{get}
+    var Qdifference : [Double]{get}
+    var kurtosis : [Double]{get}
+    var skewness : [Double]{get}
+    var skewnessQ : [Double]{get}
+    var range : [Double]{get}
     func makeCorrelationsArray2D() -> [[String]]
 }
 extension CoreDataAnalysable where Self==Model{
+    
+    var avarage : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var sum = 0.0
+                for row in 0..<allObservations.count{
+                    sum = sum + allObservations[row].observationArray[col]
+                }
+                result.append(sum/Double(n))
+            }
+            return result
+        }
+    }
+    var SeCore : [Double]{
+        get{
+            return Var.compactMap(){sqrt($0)}
+        }
+    }
+    var Var : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var sum = 0.0
+                for row in 0..<allObservations.count{
+                    sum = sum + pow((allObservations[row].observationArray[col])-avarage[col],2.0)
+                }
+                result.append(sum/Double(n))
+            }
+            return result
+        }
+    }
+    var Ve : [Double]{
+        get{
+            var result = [Double]()
+            for i in 0..<allObservations[0].observationArray.count{
+                result.append(SeCore[i]/avarage[i])
+            }
+            return result
+        }
+    }
+    var Me : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(quantile(n: 0.5, tmp))
+            }
+            return result
+        }
+    }
+    var Q1 : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(quantile(n: 0.25, tmp))
+            }
+            return result
+        }
+    }
+    var Q3 : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(quantile(n: 0.75, tmp))
+            }
+            return result
+        }
+    }
+    var Qdifference : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                result.append(Q3[col]-Q1[col])
+            }
+            return result
+        }
+    }
+    var kurtosis : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var sum = 0.0
+                for row in 0..<allObservations.count{
+                    sum = sum + pow((allObservations[row].observationArray[col])-avarage[col],4.0)
+                }
+                result.append(sum/Double(n)/pow(SeCore[col], 4.0))
+            }
+            return result
+        }
+    }
+    var skewness : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                result.append(3*(avarage[col]-Me[col])/SeCore[col])
+            }
+            return result
+        }
+    }
+    var skewnessQ : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                result.append(((Q1[col] + Q3[col]) - 2 * Me[col]) / (Qdifference[col]))
+            }
+            return result
+        }
+    }
+    var range : [Double]{
+        get{
+            var result = [Double]()
+            for col in 0..<allObservations[0].observationArray.count{
+                var tmp = [Double]()
+                for row in 0..<allObservations.count{
+                    tmp.append(allObservations[row].observationArray[col])
+                }
+                result.append(max(tmp) - min(tmp))
+            }
+            return result
+        }
+    }
     func makeCorrelationsArray2D() -> [[String]]{
         let nRows = allObservations.count
         let nCols = allObservations[0].observationArray.count

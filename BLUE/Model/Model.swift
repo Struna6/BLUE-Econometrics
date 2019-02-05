@@ -72,6 +72,7 @@ enum ModelParametersCategory : String{
     case Warning = "Warning"
     case Normal = "Normal"
     case NAN = "Nan"
+    case Other = "Other"
 }
 
 struct ModelParameters{
@@ -122,37 +123,56 @@ struct ModelParametersShort{
     var category : ModelParametersCategory
     let value : Double
     var isLess : Bool
-    var criticalFloor : Double
-    var warningFloor : Double
+    var criticalFloor : Double?
+    var warningFloor : Double?
     
-    init(name : String, value : Double, isLess : Bool, criticalFloor : Double, warningFloor : Double){
+    init(name : String, value : Double, isLess : Bool, criticalFloor : Double?, warningFloor : Double?){
         self.name = name
         self.value = value
         self.isLess = isLess
         self.warningFloor = warningFloor
         self.criticalFloor = criticalFloor
-        if value.isNaN{
-            self.category = .NAN
-        }else if isLess{
-            if value <= criticalFloor {
-                self.category = .Critical
-            }
-            else if value <= warningFloor {
-                self.category = .Warning
-            }
-            else{
-                self.category = .Normal
-            }
+        if criticalFloor == nil || warningFloor == nil{
+            self.category = .Other
         }else{
-            if value >= criticalFloor {
-                self.category = .Critical
-            }
-            else if value >= warningFloor {
-                self.category = .Warning
-            }
-            else{
-                self.category = .Normal
+            if value.isNaN{
+                self.category = .NAN
+            }else if isLess{
+                if value <= criticalFloor! {
+                    self.category = .Critical
+                }
+                else if value <= warningFloor! {
+                    self.category = .Warning
+                }
+                else{
+                    self.category = .Normal
+                }
+            }else{
+                if value >= criticalFloor! {
+                    self.category = .Critical
+                }
+                else if value >= warningFloor! {
+                    self.category = .Warning
+                }
+                else{
+                    self.category = .Normal
+                }
             }
         }
+        
+    }
+}
+
+struct GroupParametersShortDescription{
+    let name : String
+    var imageName : String
+    var videoName : String?
+    var description : String
+    
+    init(name : String, imageName : String, videoName : String?, description : String){
+        self.name = name
+        self.imageName = imageName
+        self.videoName = videoName
+        self.description = description
     }
 }

@@ -20,7 +20,7 @@ class TableViewControllerSorted: UIViewController {
     @IBOutlet weak var labelHelpWindow: UILabel!
     @IBOutlet weak var helpImage: UIImageView!
     
-    let tableSections = ["Critical","Warning","Normal","Uncalculable"]
+    let tableSections = ["Critical","Warning","Normal","Uncalculable","Uncategorised"]
     var mainModelParameter = [ModelParameters]()
     var parametersResults = [ModelParametersShort]()
     var criticalParameters : [ModelParametersShort]{
@@ -43,6 +43,11 @@ class TableViewControllerSorted: UIViewController {
             return self.parametersResults.filter({$0.category.rawValue == "Nan"})
         }
     }
+    var otherParameters : [ModelParametersShort]{
+        get{
+            return self.parametersResults.filter({$0.category.rawValue == "Other"})
+        }
+    }
     var parametersCategorized : [[ModelParametersShort]]{
         get{
             var tmp = [[ModelParametersShort]]()
@@ -50,6 +55,7 @@ class TableViewControllerSorted: UIViewController {
             tmp.append(warningParameters)
             tmp.append(normalParameters)
             tmp.append(nanParameters)
+            tmp.append(otherParameters)
             return tmp
         }
     }
@@ -58,8 +64,10 @@ class TableViewControllerSorted: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topLabel.text = textTopLabel
-        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTapped))
+        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.helpImageTapped))
         helpImage.addGestureRecognizer(tapOnImage)
+        let tapOnImageToPlay = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTappedtoPlay))
+        imageHelpWindow.addGestureRecognizer(tapOnImageToPlay)
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -90,7 +98,7 @@ class TableViewControllerSorted: UIViewController {
     }
     
     //change name of video
-    @objc func imageTapped(){
+    @objc func imageTappedtoPlay(){
         if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
@@ -99,6 +107,10 @@ class TableViewControllerSorted: UIViewController {
                 video.play()
             })
         }
+    }
+    
+    @objc func helpImageTapped(){
+        loadParametersView()
     }
 }
 
