@@ -82,38 +82,45 @@ struct ModelParameters{
     var description : String
     var imageName : String
     var videoName : String?
-    var isLess : Bool
-    init(name : String, isLess : Bool,  criticalFloor : Double, warningFloor : Double, value : Double, description : String, imageName : String, videoName : String?){
+    var isLess : Bool?
+    var variable : String?
+    init(name : String, isLess : Bool? = nil,  criticalFloor : Double? = nil, warningFloor : Double? = nil, value : Double, description : String, imageName : String, videoName : String? = nil, variable : String? = nil){
+        self.variable = variable
         self.description = description
         self.imageName = imageName
-        (videoName?.isEmpty)! ? self.videoName = videoName : nil
+        self.videoName = videoName
         self.name = name
         self.value = value
         self.isLess = isLess
         
-        if value.isNaN{
-            self.category = .NAN
-        }else if isLess{
-            if value <= criticalFloor {
-                self.category = .Critical
-            }
-            else if value <= warningFloor {
-                self.category = .Warning
-            }
-            else{
-                self.category = .Normal
-            }
+        if criticalFloor == nil || warningFloor == nil{
+            self.category = .Other
         }else{
-            if value >= criticalFloor {
-                self.category = .Critical
-            }
-            else if value >= warningFloor {
-                self.category = .Warning
-            }
-            else{
-                self.category = .Normal
+            if value.isNaN{
+                self.category = .NAN
+            }else if isLess!{
+                if value <= criticalFloor! {
+                    self.category = .Critical
+                }
+                else if value <= warningFloor! {
+                    self.category = .Warning
+                }
+                else{
+                    self.category = .Normal
+                }
+            }else{
+                if value >= criticalFloor! {
+                    self.category = .Critical
+                }
+                else if value >= warningFloor! {
+                    self.category = .Warning
+                }
+                else{
+                    self.category = .Normal
+                }
             }
         }
+        
        
     }
 }
@@ -125,13 +132,15 @@ struct ModelParametersShort{
     var isLess : Bool
     var criticalFloor : Double?
     var warningFloor : Double?
+    var variable : String?
     
-    init(name : String, value : Double, isLess : Bool, criticalFloor : Double?, warningFloor : Double?){
+    init(name : String, value : Double, isLess : Bool, criticalFloor : Double?, warningFloor : Double?, variable : String?){
         self.name = name
         self.value = value
         self.isLess = isLess
         self.warningFloor = warningFloor
         self.criticalFloor = criticalFloor
+        self.variable = variable
         if criticalFloor == nil || warningFloor == nil{
             self.category = .Other
         }else{

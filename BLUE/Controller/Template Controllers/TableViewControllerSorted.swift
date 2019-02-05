@@ -13,6 +13,7 @@ class TableViewControllerSorted: UIViewController {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet var popUpWindow: UIView!
     @IBOutlet weak var viewToBlur: UIVisualEffectView!
     @IBOutlet weak var textHelpWindow: UILabel!
@@ -20,37 +21,144 @@ class TableViewControllerSorted: UIViewController {
     @IBOutlet weak var labelHelpWindow: UILabel!
     @IBOutlet weak var helpImage: UIImageView!
     
+    var pickerSections = [String]()
+    var selectedVariable = "All"
+    var selectedParameterSection = 0
+    var selectedParameterPosition = 0
     let tableSections = ["Critical","Warning","Normal","Uncalculable","Uncategorised"]
+    var isShortParameters = true
+    //  IF SHORT PARAMETERS
+    //Main parameter
     var mainModelParameter = [ModelParameters]()
-    var parametersResults = [ModelParametersShort]()
-    var criticalParameters : [ModelParametersShort]{
+    //Short parameters
+    var parametersResultsShort = [ModelParametersShort]()
+    var criticalParametersShort : [ModelParametersShort]{
         get{
-            return self.parametersResults.filter({$0.category.rawValue == "Critical"})
+            return self.parametersResultsShort.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Critical"
+                }else{
+                    return $0.category.rawValue == "Critical" && $0.variable == selectedVariable
+                }
+            })
         }
     }
-    var warningParameters : [ModelParametersShort]{
+    var warningParametersShort : [ModelParametersShort]{
         get{
-            return self.parametersResults.filter({$0.category.rawValue == "Warning"})
+            return self.parametersResultsShort.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Warning"
+                }else{
+                    return $0.category.rawValue == "Warning" && $0.variable == selectedVariable
+                }
+            })
         }
     }
-    var normalParameters : [ModelParametersShort]{
+    var normalParametersShort : [ModelParametersShort]{
         get{
-            return self.parametersResults.filter({$0.category.rawValue == "Normal"})
+            return self.parametersResultsShort.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Normal"
+                }else{
+                    return $0.category.rawValue == "Normal" && $0.variable == selectedVariable
+                }
+            })
         }
     }
-    var nanParameters : [ModelParametersShort]{
+    var nanParametersShort : [ModelParametersShort]{
         get{
-            return self.parametersResults.filter({$0.category.rawValue == "Nan"})
+            return self.parametersResultsShort.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Nan"
+                }else{
+                    return $0.category.rawValue == "Nan" && $0.variable == selectedVariable
+                }
+            })
         }
     }
-    var otherParameters : [ModelParametersShort]{
+    var otherParametersShort : [ModelParametersShort]{
         get{
-            return self.parametersResults.filter({$0.category.rawValue == "Other"})
+            return self.parametersResultsShort.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Other"
+                }else{
+                    return $0.category.rawValue == "Other" && $0.variable == selectedVariable
+                }
+            })
         }
     }
-    var parametersCategorized : [[ModelParametersShort]]{
+    var parametersCategorizedShort : [[ModelParametersShort]]{
         get{
             var tmp = [[ModelParametersShort]]()
+            tmp.append(criticalParametersShort)
+            tmp.append(warningParametersShort)
+            tmp.append(normalParametersShort)
+            tmp.append(nanParametersShort)
+            tmp.append(otherParametersShort)
+            return tmp
+        }
+    }
+    
+    // NORMAL PARAMETERS
+    var parametersResults = [ModelParameters]()
+    var criticalParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Critical"
+                }else{
+                    return $0.category.rawValue == "Critical" && $0.variable == selectedVariable
+                }
+            })
+        }
+    }
+    var warningParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Warning"
+                }else{
+                    return $0.category.rawValue == "Warning" && $0.variable == selectedVariable
+                }
+            })
+        }
+    }
+    var normalParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Normal"
+                }else{
+                    return $0.category.rawValue == "Normal" && $0.variable == selectedVariable
+                }
+            })
+        }
+    }
+    var nanParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Nan"
+                }else{
+                    return $0.category.rawValue == "Nan" && $0.variable == selectedVariable
+                }
+            })
+        }
+    }
+    var otherParameters : [ModelParameters]{
+        get{
+            return self.parametersResults.filter({
+                if selectedVariable == "All"{
+                    return $0.category.rawValue == "Other"
+                }else{
+                    return $0.category.rawValue == "Other" && $0.variable == selectedVariable
+                }
+            })
+        }
+    }
+    var parametersCategorized : [[ModelParameters]]{
+        get{
+            var tmp = [[ModelParameters]]()
             tmp.append(criticalParameters)
             tmp.append(warningParameters)
             tmp.append(normalParameters)
@@ -59,6 +167,9 @@ class TableViewControllerSorted: UIViewController {
             return tmp
         }
     }
+    
+    // IF Complete Parameters
+    
     var textTopLabel = String()
     
     override func viewDidLoad() {
@@ -68,6 +179,11 @@ class TableViewControllerSorted: UIViewController {
         helpImage.addGestureRecognizer(tapOnImage)
         let tapOnImageToPlay = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTappedtoPlay))
         imageHelpWindow.addGestureRecognizer(tapOnImageToPlay)
+        if mainModelParameter.count == 0{
+            helpImage.isUserInteractionEnabled = false
+            helpImage.isHidden = true
+            isShortParameters = false
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -82,9 +198,16 @@ class TableViewControllerSorted: UIViewController {
     }
     
     func loadParametersView(){
-        labelHelpWindow.text = mainModelParameter[0].name
-        textHelpWindow.text = mainModelParameter[0].description
-        imageHelpWindow.image = UIImage(named: mainModelParameter[0].imageName)
+        if isShortParameters{
+            labelHelpWindow.text = mainModelParameter[0].name
+            textHelpWindow.text = mainModelParameter[0].description
+            imageHelpWindow.image = UIImage(named: mainModelParameter[0].imageName)
+        }else{
+            labelHelpWindow.text = parametersCategorized[selectedParameterSection][selectedParameterPosition].name
+            textHelpWindow.text = parametersCategorized[selectedParameterSection][selectedParameterPosition].description
+            imageHelpWindow.image = UIImage(named: (parametersCategorized[selectedParameterSection][selectedParameterPosition].imageName))
+        }
+        
         self.view.addSubview(popUpWindow)
         popUpWindow.alpha = 0
         popUpWindow.center = self.view.center
@@ -123,27 +246,70 @@ extension TableViewControllerSorted : UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
-        let par = parametersCategorized[indexPath.section][indexPath.row]
-        cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
-        
-        switch indexPath.section{
-        case 0:
-            cell.imageView?.image = UIImage.init(named: "critical")
-        case 1:
-            cell.imageView?.image = UIImage.init(named: "warning")
-        case 2:
-            cell.imageView?.image = UIImage.init(named: "ok")
-        case 3:
-            cell.textLabel?.text = par.name
-            cell.textLabel?.textColor = UIColor.red
-            cell.imageView?.image = UIImage.init(named: "nan")
-        default:break
+        if isShortParameters{
+            let par = parametersCategorizedShort[indexPath.section][indexPath.row]
+            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+            switch indexPath.section{
+            case 0:
+                cell.imageView?.image = UIImage.init(named: "critical")
+            case 1:
+                cell.imageView?.image = UIImage.init(named: "warning")
+            case 2:
+                cell.imageView?.image = UIImage.init(named: "ok")
+            case 3:
+                cell.textLabel?.text = par.name
+                cell.textLabel?.textColor = UIColor.red
+                cell.imageView?.image = UIImage.init(named: "nan")
+            default:break
+            }
+            return cell
         }
-        return cell
+        else{
+            let par = parametersCategorized[indexPath.section][indexPath.row]
+            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+            switch indexPath.section{
+            case 0:
+                cell.imageView?.image = UIImage.init(named: "critical")
+            case 1:
+                cell.imageView?.image = UIImage.init(named: "warning")
+            case 2:
+                cell.imageView?.image = UIImage.init(named: "ok")
+            case 3:
+                cell.textLabel?.text = par.name
+                cell.textLabel?.textColor = UIColor.red
+                cell.imageView?.image = UIImage.init(named: "nan")
+            default:break
+            }
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return tableSections[section]
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        if !isShortParameters{
+            loadParametersView()
+        }
+    }
+}
 
+extension TableViewControllerSorted : UIPickerViewDataSource, UIPickerViewDelegate{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerSections.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedVariable = pickerSections[row]
+        tableView.reloadData()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerSections[row]
+    }
 }

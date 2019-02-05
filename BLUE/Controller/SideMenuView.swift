@@ -131,11 +131,18 @@ class SideMenuView: UITableViewController{
             target.headers = model.headers
             target.textTopLabel = "Variables Correlations"
         }
+            //Have to pass topLabelName, mainModelParameter?, shortParameters and picker with All and headers
         else if segue.identifier == "toTableViewSorted"{
             let target = segue.destination as! TableViewControllerSorted
-            target.mainModelParameter = [ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")]
-            target.parametersResults = [ModelParametersShort(name: "R\u{00B2}", value: model.squareR, isLess: true, criticalFloor: 0.5, warningFloor: 0.75)]
             target.textTopLabel = "Core Data Info"
+            target.pickerSections = model.headers
+            target.pickerSections.insert("All", at: 0)
+            let avarage = model.avarage
+            
+            for i in 0..<model.headers.count{
+                target.parametersResults.append(ModelParameters(name: "Avarage for: \(model.headers[i])", value: avarage[i], description: "The arithmetic mean is the most commonly used and readily understood measure of central tendency in a data set. In statistics, the term average refers to any of the measures of central tendency. The arithmetic mean of a set of observed data is defined as being equal to the sum of the numerical values of each and every observation divided by the total number of observations.", imageName: "me_avg"))
+            }
+            
         }
     }
 }

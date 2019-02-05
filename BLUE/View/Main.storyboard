@@ -89,11 +89,10 @@
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kFm-Ol-Axx">
-                                <rect key="frame" x="109" y="200" width="550" height="650"/>
+                                <rect key="frame" x="109" y="200" width="550" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="550" id="PrX-qJ-AVP"/>
-                                    <constraint firstAttribute="height" constant="650" id="jyJ-WU-dW4"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="2ID-DI-Gdo">
@@ -110,17 +109,31 @@
                                     <outlet property="delegate" destination="Ykk-CW-2fc" id="MDa-GQ-Yc1"/>
                                 </connections>
                             </tableView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bo6-7l-h4t">
+                                <rect key="frame" x="0.0" y="788" width="768" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="768" id="KlJ-es-CNJ"/>
+                                    <constraint firstAttribute="height" constant="216" id="Rmi-eu-Dc3"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ykk-CW-2fc" id="bJw-MM-bEj"/>
+                                    <outlet property="delegate" destination="Ykk-CW-2fc" id="Mc3-Tb-FU5"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="FFe-Rd-FsI" firstAttribute="leading" secondItem="fL1-ed-wtn" secondAttribute="leading" id="A8e-3W-Uhc"/>
                             <constraint firstItem="go7-9q-vFN" firstAttribute="top" secondItem="fL1-ed-wtn" secondAttribute="top" constant="50" id="Ahw-sX-l6V"/>
                             <constraint firstItem="kFm-Ol-Axx" firstAttribute="top" secondItem="isA-nI-PKB" secondAttribute="bottom" constant="30" id="DX8-lL-2mS"/>
+                            <constraint firstItem="fL1-ed-wtn" firstAttribute="bottom" secondItem="bo6-7l-h4t" secondAttribute="bottom" constant="20" id="ENF-ep-3Jq"/>
                             <constraint firstItem="FFe-Rd-FsI" firstAttribute="top" secondItem="bWz-zc-FE3" secondAttribute="top" id="KZH-Pe-Lw7"/>
                             <constraint firstItem="isA-nI-PKB" firstAttribute="centerX" secondItem="bWz-zc-FE3" secondAttribute="centerX" id="QNK-mk-eiC"/>
+                            <constraint firstItem="bo6-7l-h4t" firstAttribute="centerX" secondItem="bWz-zc-FE3" secondAttribute="centerX" id="R9T-cc-LkN"/>
                             <constraint firstItem="isA-nI-PKB" firstAttribute="top" secondItem="fL1-ed-wtn" secondAttribute="top" constant="50" id="aht-Z8-wmd"/>
                             <constraint firstItem="FFe-Rd-FsI" firstAttribute="trailing" secondItem="fL1-ed-wtn" secondAttribute="trailing" id="eLe-8r-DbY"/>
                             <constraint firstItem="kFm-Ol-Axx" firstAttribute="centerX" secondItem="bWz-zc-FE3" secondAttribute="centerX" id="ejo-f3-b0J"/>
+                            <constraint firstItem="bo6-7l-h4t" firstAttribute="top" secondItem="kFm-Ol-Axx" secondAttribute="bottom" constant="20" id="nOB-tD-zeB"/>
                             <constraint firstItem="go7-9q-vFN" firstAttribute="leading" secondItem="isA-nI-PKB" secondAttribute="trailing" constant="50" id="xKW-FL-y1b"/>
                             <constraint firstItem="FFe-Rd-FsI" firstAttribute="bottom" secondItem="fL1-ed-wtn" secondAttribute="bottom" id="zz8-P5-f3T"/>
                         </constraints>
@@ -130,6 +143,7 @@
                         <outlet property="helpImage" destination="go7-9q-vFN" id="4GW-HJ-yzf"/>
                         <outlet property="imageHelpWindow" destination="tmO-Z5-LIv" id="C0C-pn-rgT"/>
                         <outlet property="labelHelpWindow" destination="gW7-9M-zn3" id="080-u7-sKo"/>
+                        <outlet property="pickerView" destination="bo6-7l-h4t" id="Ut6-S4-XW1"/>
                         <outlet property="popUpWindow" destination="d9P-tV-7Qv" id="jv8-TK-v2d"/>
                         <outlet property="tableView" destination="kFm-Ol-Axx" id="dIh-pd-qfq"/>
                         <outlet property="textHelpWindow" destination="uhC-L4-CEA" id="Tnr-aH-iVl"/>
