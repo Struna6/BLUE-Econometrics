@@ -304,16 +304,15 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         present(alert,animated: true)
     }
     
+    @IBAction func addVarClose(_ sender: UIButton) {
+        closeAddObservationsView()
+    }
+    @IBAction func normClose(_ sender: UIButton) {
+        closeNormObservationsView()
+    }
+    
     @IBAction func normAccept(_ sender: UIButton) {
         showPopOverNormWindow()
-    }
-    // NAREPEROWAĆ
-    @objc func dismissPopUp(){
-        if self.view.subviews.contains(addObservationView){
-            closeAddObservationsView()
-        }else if self.view.subviews.contains(normView){
-            closeNormObservationsView()
-        }
     }
 }
 

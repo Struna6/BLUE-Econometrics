@@ -315,6 +315,16 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }
     }
     
+    @IBAction func closeChooseXY(_ sender: Any) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+            self.chooseXYView.alpha = 0
+            self.topTableView.isHidden = false
+            self.visualViewToBlur.effect = nil
+        }) { (success) in
+            self.chooseXYView.removeFromSuperview()
+        }
+    }
     func loadSavedModel(){
         self.chosenY = model.chosenYHeader
         self.chosenX = model.chosenXHeader
