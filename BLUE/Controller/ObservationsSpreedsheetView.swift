@@ -9,7 +9,7 @@
 import UIKit
 import SpreadsheetView
 
-class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
+class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate, ErrorScreenPlayable {
     @IBOutlet weak var normPicker: UIPickerView!
     @IBOutlet var normView: UIView!
     @IBOutlet weak var normChooseVar: UIPickerView!
@@ -37,7 +37,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var isNormalizeOpenedOnStart = false
     var selectedRow : Int?
     var selectedCol : Int?
-    
     
     var normalizationOptions = ["Standarization",  "Unitarization"]
     var normalizationChosen = String()
@@ -171,8 +170,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         choosenFunction = "Logarithm"
         choosenVariable = 0
         viewToBlur.isHidden = true
-        let tapToDismiss = UITapGestureRecognizer(target: self, action: #selector(ObservationsSpreedsheetView.dismissPopUp))
-        self.view.addGestureRecognizer(tapToDismiss)
         normalizationChosen = normalizationOptions[0]
         normVarChosen = headers[0]
         if isAddVariableOpenedOnStart{
@@ -310,6 +307,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBAction func normAccept(_ sender: UIButton) {
         showPopOverNormWindow()
     }
+    // NAREPEROWAĆ
     @objc func dismissPopUp(){
         if self.view.subviews.contains(addObservationView){
             closeAddObservationsView()
@@ -327,10 +325,12 @@ extension ObservationsSpreedsheetView{
         
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
-                if newText.count > 0{
+                if let _ = Double(newText){
                     toDo(newText)
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                }else{
+                    self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
                 }
             }
         })
@@ -494,8 +494,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
         headers.append(choosenFunction)
     }
-    
-    //ADD ERROR
+
     func prepareForNormalize(){
         let chosenVarIndex = headers.firstIndex(of: normVarChosen)
         switch normalizationChosen{
@@ -546,11 +545,6 @@ extension BackUpdatedObservations where Self : ViewController{
         chooseYTableView.reloadData()
         topLabel.reloadInputViews()
     }
-}
-
-//MARK: Edit Observations Controll
-
-extension ObservationsSpreedsheetView{
 }
 
 

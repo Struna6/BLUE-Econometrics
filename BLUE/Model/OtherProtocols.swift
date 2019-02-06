@@ -187,17 +187,17 @@ extension Statisticable{
 
 
 protocol PlayableLoadingScreen{
-    func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void)
+    func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView)
 }
 
-extension PlayableLoadingScreen where Self : ViewController{
-    func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void){
+extension PlayableLoadingScreen{
+    func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView){
         let animationView = LOTAnimationView(name: "loading")
         animationView.loopAnimation = true
         animationView.sizeToFit()
-        self.view.addSubview(animationView)
-        animationView.frame = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 500, height: 500)
-        animationView.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY)
+        mainView.addSubview(animationView)
+        animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 500, height: 500)
+        animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
         animationView.play()
         Dispatch.DispatchQueue.global(qos: .background).async {
             tasksToDoAsync()
@@ -207,6 +207,24 @@ extension PlayableLoadingScreen where Self : ViewController{
                 animationView.removeFromSuperview()
             }
         }
+    }
+}
+
+protocol ErrorScreenPlayable{
+    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController)
+}
+
+extension ErrorScreenPlayable{
+    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController){
+        alertToDismiss.dismiss(animated: true, completion: nil)
+        let alertController = UIAlertController.init(title: "Error", message: msg, preferredStyle: .alert)
+        mainViewController.present(alertController,animated: true,completion: {
+            sleep(1)
+            alertController.dismiss(animated: true) {
+                blurView.effect = nil
+                blurView.isHidden = true
+            }
+        })
     }
 }
 
