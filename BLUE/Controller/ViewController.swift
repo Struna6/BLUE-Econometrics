@@ -14,7 +14,7 @@ import AVKit
 
 // MARK: Protocol for Transponating Arrays
 
-class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen{
+class ViewController: UIViewController, Transposable, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -26,6 +26,9 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             parametersResultsLoad()
         }
     }
+    
+    var openedFileName = ""
+    var openedFilePath = ""
     
     func parametersResultsLoad(){
         if newModel{
@@ -129,7 +132,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }
     }
     // MARK: Deinit that delete views in background
-    
     // MARK: Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,18 +182,43 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
         //MARK: Edit file name resticition/alerts
-        let alertController = UIAlertController.init(title: "Model name", message: "Choose name for model saving", preferredStyle: .alert)
-        var text = ""
-        alertController.addTextField { (textField) in
-        }
-        print(text)
-        let alert = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-            text = alertController.textFields![0].text!
-            self.save(object: self.model, fileName: text)
-        }
-        alertController.addAction(alert)
-        present(alertController,animated: true)
+        let alertPopOver = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
+        alertPopOver.popoverPresentationController?.barButtonItem = sender
         
+        let overrideOption = UIAlertAction(title: "Override current", style: .destructive) { (alert) in
+            self.save(object: self.model, pathExternal: self.openedFilePath)
+        }
+        let saveLocallyOption = UIAlertAction(title: "Save", style: .default) { (alert) in
+            alertPopOver.removeFromParent()
+                let alertController = UIAlertController.init(title: "Model name", message: "Choose name for model saving", preferredStyle: .alert)
+                var text = ""
+                alertController.addTextField(configurationHandler: nil)
+                let alert = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
+                    text = alertController.textFields![0].text!
+                    if text.count > 3{
+                        if !self.exists(fileName: text){
+                            self.save(object: self.model, fileName: text)
+                            self.openedFileName = text
+                            let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                            let name = text + ".plist"
+                            let url = path.appendingPathComponent(name)
+                            self.openedFilePath = url.path
+                        }else{
+                            self.playErrorScreen(msg: "File exists!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
+                        }
+                        
+                    }else{
+                        self.playErrorScreen(msg: "Wrong file name!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
+                    }
+                }
+                alertController.addAction(alert)
+                self.present(alertController,animated: true)
+        }
+        alertPopOver.addAction(saveLocallyOption)
+        if openedFileName != ""{
+            alertPopOver.addAction(overrideOption)
+        }
+        present(alertPopOver, animated: true)
     }
     
     // MARK: Prepare of segue
@@ -219,7 +246,8 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
         documentPicker.delegate = self
-       present(documentPicker, animated: true, completion:  nil)
+        documentPicker.modalPresentationStyle = .formSheet
+        present(documentPicker, animated: true, completion:  nil)
     }
     
     // MARK: Window pop up for chosing X and Y
@@ -232,6 +260,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }) { (success) in
             self.chooseXYView.removeFromSuperview()
         }
+        topTableView.isHidden = true
         if self.chosenX.count > 0 && self.chosenY != ""{
             let positionY = model.headers.firstIndex(of: self.chosenY)
             var positionX = [Int]()
@@ -281,6 +310,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             topLabel.isHidden = false
             sideMenuButton.isEnabled = true
             newModel = false
+            saveButton.isEnabled = true
             
             self.topTableView.isHidden = true
             UIView.animate(withDuration: 0.4) {
@@ -299,7 +329,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         }else{
             topLabel.isHidden = true
             topTableView.isHidden = true
-            saveButton.isEnabled = true
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
@@ -316,6 +345,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     }
     
     @IBAction func closeChooseXY(_ sender: Any) {
+        self.topTableView.isHidden = true
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
@@ -334,9 +364,9 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
+        controller.allowsMultipleSelection = false
         editButton.isEnabled = true
         self.newPath = (urls.first?.path)!
-        //ADD ALERT YES?NO
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -344,6 +374,8 @@ extension ViewController : UIDocumentPickerDelegate{
             saveButton.isEnabled = true
         }
     }
+    
+    
 }
 
     // MARK: Pop up windows for choosing X Y tables

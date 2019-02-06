@@ -165,13 +165,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         addObservationView.layer.cornerRadius = 10
         viewToBlur.effect = nil
         optionsBasedOn = headers
+        optionsBasedOn.insert("All", at: 0)
         optionsBasedOn.append("nothing")
         optionsFunction = ["Logarithm", "Power of 2", "Squere root","Exponent"]
         choosenFunction = "Logarithm"
         choosenVariable = 0
         viewToBlur.isHidden = true
         normalizationChosen = normalizationOptions[0]
-        normVarChosen = headers[0]
+        normVarChosen = optionsBasedOn[0]
         if isAddVariableOpenedOnStart{
             loadAddObservationsView()
         }
@@ -212,7 +213,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         backUpdateObservationsDelegate?.updatedObservations(observations: observations, headers: headers)
     }
     
-    //ADD WARGNINGS THAT WRONG DATA
     @IBAction func editModeOnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
         let headerOption = UIAlertAction(title: "Edit Header", style: .default, handler: {
@@ -381,7 +381,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }else if pickerView == normPicker{
             return normalizationOptions.count
         }else if pickerView == normChooseVar{
-            return headers.count
+            return optionsBasedOn.count
         }else{
             return optionsFunction.count
         }
@@ -393,7 +393,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }else if pickerView == normPicker{
             return normalizationOptions[row]
         }else if pickerView == normChooseVar{
-            return headers[row]
+            return optionsBasedOn[row]
         }else{
             return optionsFunction[row]
         }
@@ -406,13 +406,13 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
                 functionChoose.reloadAllComponents()
             }else{
                 optionsFunction = ["Logarithm", "Power of 2", "Squere root","Exponent"]
-                choosenVariable = headers.firstIndex(of: optionsBasedOn[row])!
+                choosenVariable = optionsBasedOn.firstIndex(of: optionsBasedOn[row])!
                 functionChoose.reloadAllComponents()
             }
         }else if pickerView == normPicker{
             normalizationChosen = normalizationOptions[row]
         }else if pickerView == normChooseVar{
-            normVarChosen = headers[row]
+            normVarChosen = optionsBasedOn[row]
         }else{
             choosenFunction = optionsFunction[row]
         }
@@ -495,7 +495,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func prepareForNormalize(){
-        let chosenVarIndex = headers.firstIndex(of: normVarChosen)
+        let chosenVarIndex = optionsBasedOn.firstIndex(of: normVarChosen)
         switch normalizationChosen{
         case "Standarization":
             normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.SeCore[chosenVarIndex!])
@@ -506,6 +506,10 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         self.closeNormObservationsView()
     }
     func normalize(varNum : Int, top : Double, bottom : Double){
+        if varNum == 0{
+            normalizeAll(top: top, bottom: bottom)
+            return
+        }
         if normAsNewVar{
             var tmp = [Double]()
             for row in 0..<observations.count{
@@ -523,6 +527,33 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
                 x = (x-top)/bottom
                 observations[varNum].observationArray[col] = x
             }
+        }
+        self.spreedsheet.reloadData()
+        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+    }
+    func normalizeAll(top : Double, bottom : Double){
+        if normAsNewVar{
+            var tmp = [Double]()
+            for varNum in 0..<observations[0].observationArray.count{
+                for row in 0..<observations.count{
+                    var x = observations[row].observationArray[varNum]
+                    x = (x-top)/bottom
+                    tmp.append(x)
+                }
+                for i in 0..<observations.count{
+                    observations[i].observationArray.append(tmp[i])
+                }
+                headers.append("n_" + (headers[varNum]))
+            }
+        }else{
+            for varNum in 0..<observations[0].observationArray.count{
+                for row in 0..<observations.count{
+                    var x = observations[row].observationArray[varNum]
+                    x = (x-top)/bottom
+                    observations[row].observationArray[varNum] = x
+                }
+            }
+            headers = headers.compactMap(){"n_" + $0}
         }
         self.spreedsheet.reloadData()
         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)

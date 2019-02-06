@@ -28,6 +28,11 @@ class FirstViewController: UIViewController, Storage {
             let target = destination.topViewController as! ViewController
             target.model = modelFromFile
             target.newModel = false
+            target.openedFileName = fileName
+            let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let name = fileName + ".plist"
+            let url = path.appendingPathComponent(name)
+            target.openedFilePath = url.path
         }
     }
 }

@@ -294,9 +294,9 @@ public func inv(_ x : Matrix<Float>) -> Matrix<Float> {
     return results
 }
 
+
 public func inv(_ x : Matrix<Double>) -> Matrix<Double> {
     precondition(x.rows == x.columns, "Matrix must be square")
-
     var results = x
 
     var ipiv = [__CLPK_integer](repeating: 0, count: x.rows * x.rows)
@@ -306,7 +306,7 @@ public func inv(_ x : Matrix<Double>) -> Matrix<Double> {
     var mc = __CLPK_integer(x.columns)
     var nc = __CLPK_integer(x.rows)
     var lda = __CLPK_integer(x.columns)
-
+ 
     dgetrf_(&mc, &nc, &(results.grid), &lda, &ipiv, &error)
     dgetri_(&nc, &(results.grid), &lda, &ipiv, &work, &lwork, &error)
 

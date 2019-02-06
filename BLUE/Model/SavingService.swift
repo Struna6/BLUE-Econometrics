@@ -10,7 +10,7 @@ import Foundation
 
 protocol Storage{
     var path : URL {get}
-    func save<T: Encodable>(object: T, fileName : String)
+    func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?)
     func get<T: Decodable>(fileName : String) -> T
     func remove(fileName : String)
     func exists(fileName : String) -> Bool
@@ -23,9 +23,16 @@ extension Storage{
             return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         }
     }
-    func save<T: Encodable>(object: T, fileName : String){
-        let name = fileName + ".plist"
-        let url = path.appendingPathComponent(name)
+    func save<T: Encodable>(object: T, fileName : String? = nil, pathExternal : String? = nil){
+        let url : URL
+        if (pathExternal != nil){
+            let index = pathExternal!.firstIndex(of: ".")!
+            let result : String = String(pathExternal![..<index])
+            url = URL(fileURLWithPath: result)
+        }else{
+            let name = fileName! + ".plist"
+            url = path.appendingPathComponent(name)
+        }
         print(url)
         let encoder = PropertyListEncoder()
         do {
