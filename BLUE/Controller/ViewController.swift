@@ -177,6 +177,8 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         parametersViewImage.addGestureRecognizer(tapOnImage)
         self.topTableView.separatorColor = UIColor.clear;
         
+        let longTapOnTableView = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableView(_:)))
+        topTableView.addGestureRecognizer(longTapOnTableView)
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
@@ -360,6 +362,59 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         self.chosenX = model.chosenXHeader
         parametersResultsLoad()
     }
+    
+    @objc func longPressOnTableView(_ sender: UIGestureRecognizer){
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.clipsToBounds = true
+        button.center = self.topTableView.center
+        button.backgroundColor = .white
+        button.alpha = 0.9
+        button.layer.borderWidth = 0.1
+        let image = UIImage.init(named: "upload")
+        let imageFilled = UIImage.init(named: "upload_filled")
+        button.setImage(image, for: .normal)
+        button.setImage(imageFilled, for: .selected)
+        button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
+        //button.imageView?.contentMode = UIView.ContentMode.center
+        
+        if sender.state == .ended{
+            Dispatch.DispatchQueue.global(qos: .background).async {
+                sleep(3)
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1.0, animations: {
+                        button.alpha = 0.0
+                        self.topTableView.layer.borderWidth = 0.0
+                        self.visualViewToBlur.effect = nil
+                        self.topTableView.layer.opacity = 1.0
+                    })
+                    self.topTableView.layer.removeAllAnimations()
+                    self.view.subviews.forEach(){
+                        if $0 is UIButton{
+                            $0.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+        }else if sender.state == .began{
+            let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
+            pulseAnimation.duration = 1.2
+            pulseAnimation.toValue = NSNumber(value: 1.08)
+            pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            pulseAnimation.autoreverses = true
+            pulseAnimation.repeatCount = Float.greatestFiniteMagnitude
+            
+            UIView.animate(withDuration: 1.0, animations: {
+                self.visualViewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                self.topTableView.layer.borderWidth = 0.1
+                self.topTableView.layer.opacity = 0.8
+            })
+            
+            self.topTableView.layer.add(pulseAnimation, forKey: "scale")
+            self.view.addSubview(button)
+        }
+    }
+    
 }
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
