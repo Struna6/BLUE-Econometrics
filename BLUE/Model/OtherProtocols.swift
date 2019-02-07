@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Darwin
 import Lottie
+import SpreadsheetView
 
 protocol Transposable{
     func transposeArray(array : [[Double]], rows : Int, cols : Int) -> [[Double]]
@@ -228,15 +229,74 @@ extension ErrorScreenPlayable{
     }
 }
 
-extension UIImage {
-    func scaled(with scale: CGFloat) -> UIImage? {
-        // size has to be integer, otherwise it could get white lines
-        let size = CGSize(width: floor(self.size.width * scale), height: floor(self.size.height * scale))
-        UIGraphicsBeginImageContext(size)
-        draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
+
+class LongTappableToSaveContext : NSObject{
+    var object : AnyObject?
+    var viewToBlur : UIVisualEffectView?
+    var targetViewController : UIViewController?
+
+    override init(){
+        self.object = nil
+        self.viewToBlur = nil
+        self.targetViewController = nil
+    }
+    init(newObject : AnyObject, toBlur : UIVisualEffectView, targetViewController : UIViewController){
+        self.object = newObject
+        self.viewToBlur = toBlur
+        self.targetViewController = targetViewController
+    }
+    @objc func longTapOnObject(sender: UIGestureRecognizer){
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.clipsToBounds = true
+        button.center = self.object!.center
+        button.backgroundColor = UIColor(displayP3Red: 0.9, green: 0.9, blue: 1, alpha: 0.95)
+        //button.alpha =
+        button.layer.borderWidth = 0.5
+        let image = UIImage.init(named: "upload")
+        let imageFilled = UIImage.init(named: "upload_filled")
+        button.setImage(image, for: .normal)
+        button.setImage(imageFilled, for: .selected)
+        button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
+        //button.imageView?.contentMode = UIView.ContentMode.center
+        if sender.state == .ended{
+            Dispatch.DispatchQueue.global(qos: .background).async {
+                sleep(3)
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1.0, animations: {
+                        button.alpha = 0.0
+                        self.object!.layer.borderWidth = 0.0
+                        self.viewToBlur!.effect = nil
+                        self.object!.layer.opacity = 1.0
+                    })
+                    self.object!.layer.removeAllAnimations()
+                    self.targetViewController!.view.subviews.forEach(){
+                        if $0 is UIButton{
+                            $0.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+        }else if sender.state == .began{
+            let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
+            pulseAnimation.duration = 1.2
+            pulseAnimation.toValue = NSNumber(value: 1.08)
+            pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            pulseAnimation.autoreverses = true
+            pulseAnimation.repeatCount = Float.greatestFiniteMagnitude
+            
+            
+            
+            self.targetViewController!.view.bringSubviewToFront(object! as! UIView)
+            
+            UIView.animate(withDuration: 1.0, animations: {
+                self.viewToBlur!.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                self.object!.layer.borderWidth = 0.1
+                self.object!.layer.opacity = 0.8
+            })
+
+            self.object!.layer.add(pulseAnimation, forKey: "scale")
+            self.targetViewController!.view.addSubview(button)
+        }
     }
 }
-

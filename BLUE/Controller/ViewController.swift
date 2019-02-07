@@ -176,10 +176,23 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
         parametersViewImage.addGestureRecognizer(tapOnImage)
         self.topTableView.separatorColor = UIColor.clear;
+        //table
+        selectObjectForTableView = LongTappableToSaveContext(newObject: self.topTableView, toBlur: self.visualViewToBlur, targetViewController: self)
         
-        let longTapOnTableView = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableView(_:)))
+        let longTapOnTableView = UILongPressGestureRecognizer(target: selectObjectForTableView, action: #selector(selectObjectForTableView.longTapOnObject(sender:)))
         topTableView.addGestureRecognizer(longTapOnTableView)
+        //label
+        selectObjectForTopLabel = LongTappableToSaveContext(newObject: self.topLabel, toBlur: self.visualViewToBlur, targetViewController: self)
+        
+        let longTapOnLabel = UILongPressGestureRecognizer(target: selectObjectForTopLabel, action: #selector(selectObjectForTopLabel.longTapOnObject(sender:)))
+        topLabel.addGestureRecognizer(longTapOnLabel)
+        
+//        let longTapOnTableView = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableView(_:)))
+//        topTableView.addGestureRecognizer(longTapOnTableView)
     }
+    
+    var selectObjectForTableView = LongTappableToSaveContext()
+    var selectObjectForTopLabel = LongTappableToSaveContext()
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
@@ -414,7 +427,6 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             self.view.addSubview(button)
         }
     }
-    
 }
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
