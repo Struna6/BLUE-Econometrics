@@ -230,17 +230,18 @@ extension ErrorScreenPlayable{
 }
 
 
-class LongTappableToSaveContext : NSObject{
+class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
     var object : AnyObject?
     var viewToBlur : UIVisualEffectView?
     var targetViewController : UIViewController?
-
+    
     override init(){
         self.object = nil
         self.viewToBlur = nil
         self.targetViewController = nil
     }
     init(newObject : AnyObject, toBlur : UIVisualEffectView, targetViewController : UIViewController){
+        super.init()
         self.object = newObject
         self.viewToBlur = toBlur
         self.targetViewController = targetViewController
@@ -250,34 +251,18 @@ class LongTappableToSaveContext : NSObject{
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.clipsToBounds = true
         button.center = self.object!.center
-        button.backgroundColor = UIColor(displayP3Red: 0.9, green: 0.9, blue: 1, alpha: 0.95)
-        //button.alpha =
-        button.layer.borderWidth = 0.5
+        button.backgroundColor = UIColor(red:0.78, green:0.76, blue:0.98, alpha: 0.8)
+        button.layer.borderWidth = 1.0
         let image = UIImage.init(named: "upload")
         let imageFilled = UIImage.init(named: "upload_filled")
         button.setImage(image, for: .normal)
         button.setImage(imageFilled, for: .selected)
         button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
+        addActionsToButton(btn : button)
+        
         //button.imageView?.contentMode = UIView.ContentMode.center
-        if sender.state == .ended{
-            Dispatch.DispatchQueue.global(qos: .background).async {
-                sleep(3)
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 1.0, animations: {
-                        button.alpha = 0.0
-                        self.object!.layer.borderWidth = 0.0
-                        self.viewToBlur!.effect = nil
-                        self.object!.layer.opacity = 1.0
-                    })
-                    self.object!.layer.removeAllAnimations()
-                    self.targetViewController!.view.subviews.forEach(){
-                        if $0 is UIButton{
-                            $0.removeFromSuperview()
-                        }
-                    }
-                }
-            }
-        }else if sender.state == .began{
+        if sender.state == .began{
+            sender.isEnabled = false
             let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
             pulseAnimation.duration = 1.2
             pulseAnimation.toValue = NSNumber(value: 1.08)
@@ -285,18 +270,86 @@ class LongTappableToSaveContext : NSObject{
             pulseAnimation.autoreverses = true
             pulseAnimation.repeatCount = Float.greatestFiniteMagnitude
             
-            
-            
-            self.targetViewController!.view.bringSubviewToFront(object! as! UIView)
-            
             UIView.animate(withDuration: 1.0, animations: {
-                self.viewToBlur!.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-                self.object!.layer.borderWidth = 0.1
+                self.object!.layer.borderWidth = 0.8
                 self.object!.layer.opacity = 0.8
             })
-
+            self.targetViewController!.view.bringSubviewToFront(object! as! UIView)
             self.object!.layer.add(pulseAnimation, forKey: "scale")
             self.targetViewController!.view.addSubview(button)
+            
+            Dispatch.DispatchQueue.global(qos: .background).async {
+                sleep(3)
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1.0, animations: {
+                        button.alpha = 0.0
+                        self.object!.layer.borderWidth = 0.0
+                        self.object!.layer.opacity = 1.0
+                    })
+                    self.object!.layer.removeAllAnimations()
+                    sender.isEnabled = true
+                    self.targetViewController!.view.subviews.forEach(){
+                        if $0 is UIButton{
+                            $0.removeFromSuperview()
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    func addActionsToButton(btn : UIButton){
+        if object is UILabel{
+            btn.isUserInteractionEnabled = true
+            let tapToSaveLabel = UITapGestureRecognizer(target: self, action: #selector(self.saveFromLabel))
+            btn.addGestureRecognizer(tapToSaveLabel)
+        }
+    }
+    
+    @objc func saveFromLabel(){
+        let label = object as! UILabel
+        label.backgroundColor = UIColor.white
+        label.alpha = 1.0
+        label.layer.opacity = 1.0
+        let result = UIImage.imageWithLabel(label: label)
+        result.save("1obrazek")
+    }
+    
+    func inputPopUp(){
+        let alertInput = UIAlertController(title: "File name", message: "Enter file name", preferredStyle: .alert)
+        alertInput.addTextField(configurationHandler: nil)
+        
+        let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+            if let newText = alertInput.textFields![0].text{
+                if newText.count > 0{
+                }else{
+                    self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
+                }
+            }
+        })
+        alertInput.addAction(alertInputOK)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertInput.addAction(cancelAction)
+        
+        self.present(alertInput,animated: true, completion: nil)
+    }
+}
+
+
+extension UIImage {
+    class func imageWithLabel(label: UILabel) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(label.bounds.size, false, 0.0)
+        label.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img!
+    }
+    
+    func save(_ name: String) {
+        let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let url = URL(fileURLWithPath: path).appendingPathComponent(name)
+        try! self.pngData()?.write(to: url)
+        print("saved image at \(url)")
     }
 }
