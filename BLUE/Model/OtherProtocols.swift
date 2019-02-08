@@ -246,6 +246,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         self.viewToBlur = toBlur
         self.targetViewController = targetViewController
     }
+    
     @objc func longTapOnObject(sender: UIGestureRecognizer){
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
@@ -298,32 +299,60 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         }
     }
     
-    func addActionsToButton(btn : UIButton){
+    private func addActionsToButton(btn : UIButton){
+        btn.isUserInteractionEnabled = true
         if object is UILabel{
-            btn.isUserInteractionEnabled = true
-            let tapToSaveLabel = UITapGestureRecognizer(target: self, action: #selector(self.saveFromLabel))
-            btn.addGestureRecognizer(tapToSaveLabel)
+            let tapToSave = UITapGestureRecognizer(target: self, action: #selector(self.saveFromLabel))
+            btn.addGestureRecognizer(tapToSave)
+        }else if object is UITableView{
+            let tapToSave = UITapGestureRecognizer(target: self, action: #selector(self.saveFromTable))
+            btn.addGestureRecognizer(tapToSave)
+        }else if object is SpreadsheetView{
+            let tapToSave = UITapGestureRecognizer(target: self, action: #selector(self.saveFromSpreadsheet))
+            btn.addGestureRecognizer(tapToSave)
         }
     }
     
     @objc func saveFromLabel(){
-        let label = object as! UILabel
-        label.backgroundColor = UIColor.white
-        label.alpha = 1.0
-        label.layer.opacity = 1.0
-        let result = UIImage.imageWithLabel(label: label)
-        result.save("1obrazek")
+        inputPopUp { (fileName) in
+            let label = self.object as! UILabel
+            label.backgroundColor = UIColor.white
+            label.alpha = 1.0
+            label.layer.opacity = 1.0
+            let result = UIImage.imageWithLabel(label: label)
+            result.save(fileName)
+        }
     }
     
-    func inputPopUp(){
+    @objc func saveFromTable(){
+        inputPopUp { (fileName) in
+            let tableView = self.object as! UITableView
+            tableView.backgroundColor = UIColor.white
+            tableView.alpha = 1.0
+            tableView.layer.opacity = 1.0
+            let result = UITableView.saveWholeTable(tableView: tableView)
+            result.save(fileName)
+        }
+    }
+    
+    @objc func saveFromSpreadsheet(){
+        inputPopUp { (fileName) in
+            let sp = self.object as! SpreadsheetView
+            let result = UIView.save(view: sp)
+            result.save(fileName)
+        }
+    }
+    
+    private func inputPopUp(toDo : @escaping (_ fileName : String) -> Void){
         let alertInput = UIAlertController(title: "File name", message: "Enter file name", preferredStyle: .alert)
         alertInput.addTextField(configurationHandler: nil)
         
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
+                    toDo(newText)
                 }else{
-                    self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
+                    self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur!, mainViewController: self.targetViewController!, alertToDismiss : alertInput)
                 }
             }
         })
@@ -332,13 +361,13 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertInput.addAction(cancelAction)
         
-        self.present(alertInput,animated: true, completion: nil)
+        targetViewController!.present(alertInput,animated: true, completion: nil)
     }
 }
 
 
 extension UIImage {
-    class func imageWithLabel(label: UILabel) -> UIImage {
+    class func imageWithLabel(label: UILabel) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(label.bounds.size, false, 0.0)
         label.layer.render(in: UIGraphicsGetCurrentContext()!)
         let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -346,10 +375,57 @@ extension UIImage {
         return img!
     }
     
-    func save(_ name: String) {
+    func save(_ name: String){
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let url = URL(fileURLWithPath: path).appendingPathComponent(name)
         try! self.pngData()?.write(to: url)
         print("saved image at \(url)")
     }
 }
+
+extension UITableView{
+    class func saveWholeTable(tableView : UITableView) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:tableView.contentSize.width, height:tableView.contentSize.height),false, 0.0)
+        let context = UIGraphicsGetCurrentContext()
+        let previousFrame = tableView.frame
+        tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.contentSize.width, height: tableView.contentSize.height)
+        tableView.layer.render(in: context!)
+        tableView.frame = previousFrame
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return img
+    }
+}
+
+extension UIScrollView{
+    class func saveWholeView(scrollView : UIScrollView) -> UIImage?
+    {
+        UIGraphicsBeginImageContext(scrollView.contentSize)
+        
+        let savedContentOffset = scrollView.contentOffset
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
+        
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        scrollView.contentOffset = savedContentOffset
+        scrollView.frame = savedFrame
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
+extension UIView{
+    class func save(view : UIView) -> UIImage{
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in:UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return UIImage(cgImage: image!.cgImage!)
+    }
+    
+}
+

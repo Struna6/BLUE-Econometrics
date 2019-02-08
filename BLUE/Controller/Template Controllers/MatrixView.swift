@@ -17,6 +17,7 @@ class MatrixView: UIViewController {
     var textTopLabel = String()
     var data = [[String]]()
     var headers = [String]()
+    var selectObjectForSP = LongTappableToSaveContext()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,20 @@ class MatrixView: UIViewController {
         spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
         spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
         topLabel?.text = textTopLabel
+        
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualViewToBlur.frame = self.view.frame
+        visualViewToBlur.isHidden = true
+        self.view.addSubview(visualViewToBlur)
+        
+        selectObjectForSP = LongTappableToSaveContext(newObject: self.spreadSheetView, toBlur: visualViewToBlur, targetViewController: self)
+        
+        let longTapOnLabel = UILongPressGestureRecognizer(target: selectObjectForSP, action: #selector(selectObjectForSP.longTapOnObject(sender:)))
+        spreadSheetView.addGestureRecognizer(longTapOnLabel)
     }
 }
 
 extension MatrixView : SpreadsheetViewDelegate{
-    
 }
 
 extension MatrixView : SpreadsheetViewDataSource{
