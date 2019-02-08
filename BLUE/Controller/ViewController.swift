@@ -239,6 +239,10 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         present(alertPopOver, animated: true)
     }
     
+    func autosave(){
+        self.save(object: self.model, pathExternal: self.openedFilePath)
+    }
+    
     // MARK: Prepare of segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSideMenu"{

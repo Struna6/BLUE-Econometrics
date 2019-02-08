@@ -614,6 +614,8 @@ private var RESETvalueLast : Double = 0
 private var RESETtestValueLast : Double = 0
 private var LMvalueLast : Double = 0
 private var LMtestValueLast : Double = 0
+private var WhiteTestValueLast : Double = 0
+private var WhiteValueLast : Double = 0
 
 struct OLSTestsAdvanced : Statisticable{
     var model1 : Model
@@ -698,5 +700,35 @@ struct OLSTestsAdvanced : Statisticable{
             return result
         }
     }
+    func WhiteHomo() -> Double{
+        var model2 = model1
+        var tmpSqueres = model1.chosenX
+        
+        for i in 0..<model1.k{
+            for j in 0..<model1.k{
+                var tmp = [Double]()
+                if j >= i{
+                    for row in 0..<model1.n{
+                        tmp.append(tmpSqueres[row][i] * tmpSqueres[row][j])
+                    }
+                }
+                tmpSqueres.append(tmp)
+            }
+        }
+        model2.flatY = model1.SR
+        
+        let R = model2.squareR
+        let chi = Double(model2.n) * R
+        let degrees = model2.k - model1.k
+        if chi.rounded() == WhiteValueLast.rounded(){
+            return WhiteTestValueLast
+        }else{
+            let result = chiCDF(x: chi, k: Double(degrees))
+            WhiteValueLast = chi
+            WhiteTestValueLast  = result
+            return result
+        }
+    }
 }
+
 
