@@ -310,47 +310,74 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         }else if object is SpreadsheetView{
             let tapToSave = UITapGestureRecognizer(target: self, action: #selector(self.saveFromSpreadsheet))
             btn.addGestureRecognizer(tapToSave)
+        }else if object is UIView{
+            let tapToSave = UITapGestureRecognizer(target: self, action: #selector(self.saveFromChart))
+            btn.addGestureRecognizer(tapToSave)
         }
     }
     
     @objc func saveFromLabel(){
-        inputPopUp { (fileName) in
+        inputPopUp {
             let label = self.object as! UILabel
             label.backgroundColor = UIColor.white
             label.alpha = 1.0
             label.layer.opacity = 1.0
             let result = UIImage.imageWithLabel(label: label)
-            result.save(fileName)
+            return result
         }
     }
     
     @objc func saveFromTable(){
-        inputPopUp { (fileName) in
+        inputPopUp {
             let tableView = self.object as! UITableView
             tableView.backgroundColor = UIColor.white
             tableView.alpha = 1.0
             tableView.layer.opacity = 1.0
             let result = UITableView.saveWholeTable(tableView: tableView)
-            result.save(fileName)
+            return result
         }
     }
     
     @objc func saveFromSpreadsheet(){
-        inputPopUp { (fileName) in
+        inputPopUp {
             let sp = self.object as! SpreadsheetView
+            sp.backgroundColor = UIColor.white
+            sp.deselectItem(at: sp.indexPathForSelectedItem!, animated: false)
+            sp.alpha = 1.0
+            sp.layer.opacity = 1.0
             let result = UIView.save(view: sp)
-            result.save(fileName)
+            return result
         }
     }
     
-    private func inputPopUp(toDo : @escaping (_ fileName : String) -> Void){
-        let alertInput = UIAlertController(title: "File name", message: "Enter file name", preferredStyle: .alert)
+    @objc func saveFromChart(){
+        inputPopUp {
+            let chart = self.object as! UIView
+            chart.backgroundColor = UIColor.white
+            chart.alpha = 1.0
+            chart.layer.opacity = 1.0
+            let picker = chart.viewWithTag(2)
+            chart.subviews.forEach(){
+                if $0 is UIButton{
+                    $0.removeFromSuperview()
+                }
+            }
+            picker?.isHidden = true
+            let result = UIView.save(view: chart)
+            picker?.isHidden = false
+            return result
+        }
+    }
+    
+    private func inputPopUp(toDo : @escaping () -> UIImage){
+        let alertInput = UIAlertController(title: "File name", message: "Image saved to clipboard, if you want to save it to file give it a file name:", preferredStyle: .alert)
         alertInput.addTextField(configurationHandler: nil)
+        let image = toDo()
         
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
-                    toDo(newText)
+                    image.save(newText)
                 }else{
                     self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur!, mainViewController: self.targetViewController!, alertToDismiss : alertInput)
                 }
@@ -358,10 +385,16 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         })
         alertInput.addAction(alertInputOK)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { alert in
+            self.copyToClipboard(image)
+        })
         alertInput.addAction(cancelAction)
         
         targetViewController!.present(alertInput,animated: true, completion: nil)
+    }
+    
+    private func copyToClipboard(_ image : UIImage){
+        UIPasteboard.general.image = image
     }
 }
 

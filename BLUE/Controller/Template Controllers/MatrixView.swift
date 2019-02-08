@@ -30,7 +30,7 @@ class MatrixView: UIViewController {
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
         visualViewToBlur.isHidden = true
-        self.view.addSubview(visualViewToBlur)
+        self.navigationController!.view.addSubview(visualViewToBlur)
         
         selectObjectForSP = LongTappableToSaveContext(newObject: self.spreadSheetView, toBlur: visualViewToBlur, targetViewController: self)
         

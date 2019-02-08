@@ -83,7 +83,7 @@
                                     <constraint firstAttribute="height" constant="450" id="oou-tO-4dX"/>
                                 </constraints>
                             </view>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Tz-gY-fx6">
+                            <pickerView tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Tz-gY-fx6">
                                 <rect key="frame" x="217" y="644" width="334" height="231"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="334" id="AGQ-OD-wpL"/>

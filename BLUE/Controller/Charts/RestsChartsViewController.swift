@@ -15,6 +15,7 @@ class restsChartsViewController: UIViewController{
     @IBOutlet weak var viewBarChart: BarChartView!
     var e = [Double]()
     var labels : [String]?
+    var selectObjectForChart = LongTappableToSaveContext()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,5 +38,15 @@ class restsChartsViewController: UIViewController{
         let data = BarChartData(dataSet: barChartDataSet)
         viewBarChart.data = data
         viewBarChart.notifyDataSetChanged()
+        
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualViewToBlur.frame = self.view.frame
+        visualViewToBlur.isHidden = true
+        self.navigationController!.view.addSubview(visualViewToBlur)
+        
+        selectObjectForChart = LongTappableToSaveContext(newObject: self.viewBarChart.superview!, toBlur: visualViewToBlur, targetViewController: self)
+        
+        let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
+        viewBarChart.addGestureRecognizer(longTapOnChart)
     }
 }

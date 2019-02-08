@@ -172,6 +172,8 @@ class TableViewControllerSorted: UIViewController {
     
     var textTopLabel = String()
     
+    var selectObjectForTableView = LongTappableToSaveContext()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         topLabel.text = textTopLabel
@@ -179,6 +181,12 @@ class TableViewControllerSorted: UIViewController {
         helpImage.addGestureRecognizer(tapOnImage)
         let tapOnImageToPlay = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTappedtoPlay))
         imageHelpWindow.addGestureRecognizer(tapOnImageToPlay)
+        
+        selectObjectForTableView = LongTappableToSaveContext(newObject: self.tableView, toBlur: self.viewToBlur, targetViewController: self)
+        
+        let longTapOnTableView = UILongPressGestureRecognizer(target: selectObjectForTableView, action: #selector(selectObjectForTableView.longTapOnObject(sender:)))
+        tableView.addGestureRecognizer(longTapOnTableView)
+        
         if mainModelParameter.count == 0{
             helpImage.isUserInteractionEnabled = false
             helpImage.isHidden = true

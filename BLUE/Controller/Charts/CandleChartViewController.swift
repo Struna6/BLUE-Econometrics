@@ -23,9 +23,21 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
     }
     var headers = [String]()
     
+    var selectObjectForChart = LongTappableToSaveContext()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         chosenVariable = 0
+        
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualViewToBlur.frame = self.view.frame
+        visualViewToBlur.isHidden = true
+        self.navigationController!.view.addSubview(visualViewToBlur)
+        
+        selectObjectForChart = LongTappableToSaveContext(newObject: self.chartView.superview!, toBlur: visualViewToBlur, targetViewController: self)
+        
+        let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
+        chartView.addGestureRecognizer(longTapOnChart)
     }
     
     func drawChart(){

@@ -26,6 +26,8 @@ class ChartView: UIViewController{
     //MARK: For candleChart
     var observations = [Observation]()
     
+    var selectObjectForChart = LongTappableToSaveContext()
+    
     private var chosenX = 0
     private var max : Int {
         get{
@@ -50,6 +52,16 @@ class ChartView: UIViewController{
         super.viewDidLoad()
         lineX.removeAll()
         combinedLinAndScateerUpdate()
+        
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualViewToBlur.frame = self.view.frame
+        visualViewToBlur.isHidden = true
+        self.navigationController!.view.addSubview(visualViewToBlur)
+        
+        selectObjectForChart = LongTappableToSaveContext(newObject: self.chartView.superview!, toBlur: visualViewToBlur, targetViewController: self)
+        
+        let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
+        chartView.addGestureRecognizer(longTapOnChart)
     }
     
     private func createLineValues(){

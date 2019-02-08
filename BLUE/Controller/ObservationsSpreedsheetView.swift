@@ -155,6 +155,8 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         }
     }
     
+    var selectObjectForSP = LongTappableToSaveContext()
+    
     @IBOutlet weak var spreedsheet: SpreadsheetView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,6 +175,12 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         viewToBlur.isHidden = true
         normalizationChosen = normalizationOptions[0]
         normVarChosen = optionsBasedOn[0]
+        
+        selectObjectForSP = LongTappableToSaveContext(newObject: self.spreedsheet, toBlur: viewToBlur, targetViewController: self)
+        
+        let longTapOnLabel = UILongPressGestureRecognizer(target: selectObjectForSP, action: #selector(selectObjectForSP.longTapOnObject(sender:)))
+        spreedsheet.addGestureRecognizer(longTapOnLabel)
+        
         if isAddVariableOpenedOnStart{
             loadAddObservationsView()
         }
