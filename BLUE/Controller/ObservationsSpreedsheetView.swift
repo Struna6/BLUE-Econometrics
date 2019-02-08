@@ -233,14 +233,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 }else{
                     self.headers[self.selectedCol!] = newText
                 }
-            })
+            }, isString: true)
         })
         let labelOption = UIAlertAction(title: "Edit Label", style: .default, handler: {
             action in
             alert.removeFromParent()
             self.showPopOverInputWindow(name: "Edit Label", toDo: { (text) in
                 self.observations[self.selectedRow!-1].label = text
-            })
+            }, isString: true)
         })
         let valuesOption = UIAlertAction(title: "Edit Value", style: .default, handler: {
             action in
@@ -326,18 +326,24 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
 
 //MARK: Edit options functions
 extension ObservationsSpreedsheetView{
-    func showPopOverInputWindow(name : String, toDo : @escaping (String) -> Void){
+    func showPopOverInputWindow(name : String, toDo : @escaping (String) -> Void, isString : Bool = false){
         let alertInput = UIAlertController(title: name, message: "Enter new value", preferredStyle: .alert)
         alertInput.addTextField(configurationHandler: nil)
         
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
-                if let _ = Double(newText){
+                if isString{
                     toDo(newText)
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
                 }else{
-                    self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
+                    if let _ = Double(newText){
+                        toDo(newText)
+                        self.spreedsheet.reloadData()
+                        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                    }else{
+                        self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
+                    }
                 }
             }
         })
@@ -389,7 +395,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }else if pickerView == normPicker{
             return normalizationOptions.count
         }else if pickerView == normChooseVar{
-            return optionsBasedOn.count
+            return optionsBasedOn.count - 1
         }else{
             return optionsFunction.count
         }

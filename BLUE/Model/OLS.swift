@@ -704,18 +704,22 @@ struct OLSTestsAdvanced : Statisticable{
         var model2 = model1
         var tmpSqueres = model1.chosenX
         
-        for i in 0..<model1.k{
-            for j in 0..<model1.k{
-                var tmp = [Double]()
+        for i in 1..<model1.k+1{
+            for j in 1..<model1.k+1{
                 if j >= i{
                     for row in 0..<model1.n{
-                        tmp.append(tmpSqueres[row][i] * tmpSqueres[row][j])
+                        tmpSqueres[row].append(tmpSqueres[row][i] * tmpSqueres[row][j])
                     }
                 }
-                tmpSqueres.append(tmp)
             }
         }
+        
         model2.flatY = model1.SR
+        model2.chosenX = tmpSqueres
+        
+        for i in 0..<model1.n{
+            model2.chosenY[i] = [model1.SR[i]]
+        }
         
         let R = model2.squareR
         let chi = Double(model2.n) * R
