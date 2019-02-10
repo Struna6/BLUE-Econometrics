@@ -216,6 +216,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                     text = alertController.textFields![0].text!
                     if text.count > 3{
                         if !self.exists(fileName: text){
+                            self.model.name = text
                             self.save(object: self.model, fileName: text)
                             self.openedFileName = text
                             let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -250,11 +251,11 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
         if segue.identifier == "toSideMenu"{
             dismissAllViews()
             let target = segue.destination as! UISideMenuNavigationController
-            target.sideMenuManager.menuPresentMode = .menuDissolveIn
+            target.sideMenuManager.menuPresentMode = .menuSlideIn
             target.sideMenuManager.menuPushStyle = .popWhenPossible
-            target.sideMenuManager.menuWidth = 400
-            target.sideMenuManager.menuAnimationFadeStrength = 0.4
-            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.extraLight
+            target.sideMenuManager.menuWidth = 300
+            target.sideMenuManager.menuAnimationFadeStrength = 0.6
+            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.dark
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
             targetVC.sendBackSpreedVCDelegate = self
@@ -450,8 +451,6 @@ extension ViewController : UIDocumentPickerDelegate{
             saveButton.isEnabled = true
         }
     }
-    
-    
 }
 
     // MARK: Pop up windows for choosing X Y tables

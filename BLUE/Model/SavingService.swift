@@ -12,6 +12,7 @@ protocol Storage{
     var path : URL {get}
     func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?)
     func get<T: Decodable>(fileName : String) -> T
+    func get<T: Decodable>(path : String) -> T
     func remove(fileName : String)
     func exists(fileName : String) -> Bool
     func getListOfFiles() -> [String]
@@ -48,6 +49,17 @@ extension Storage{
         let modelOutput : Model
         do{
             let data = try Data(contentsOf: url)
+            modelOutput = try decoder.decode(Model.self, from: data)
+        }catch{
+            fatalError(error.localizedDescription)
+        }
+        return modelOutput as! T
+    }
+    func get<T: Decodable>(path : String) -> T{
+        let decoder = PropertyListDecoder()
+        let modelOutput : Model
+        do{
+            let data = try Data(contentsOf: URL(fileURLWithPath: path))
             modelOutput = try decoder.decode(Model.self, from: data)
         }catch{
             fatalError(error.localizedDescription)

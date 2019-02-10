@@ -10,24 +10,32 @@ import UIKit
 import Darwin
 import Surge
 
-class SideMenuView: UITableViewController, PlayableLoadingScreen{
+class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, ErrorScreenPlayable{
     
     var model = Model()
-    let sections = ["Observations", "Plots", "Data Analysis","Regression"]
+    let sections = ["Observations", "Plots", "Data Analysis","Regression", "Comparing", "Machine Learning", "Settings"]
     let options =
     [
         "Observations": ["All","Selected","Add Variable", "Normalization", "Untypical"],
         "Plots": ["X-Y plot","Candle Chart","Rests Chart"],
         "Data Analysis": ["Correlations", "Data info"],
-        "Regression": ["Parameters", "Testing"]
+        "Regression": ["Parameters", "Testing"],
+        "Comparing" : ["Compare Created Models"],
+        "Machine Learning" : ["Regression model", "Tree model", "Auto Creating"],
+        "Settings" : ["User Settings"]
     ]
     var allObservations = true
     var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
     var isGoToAddVariable = false
     var isGoToNormalize = false
+    var docPicker = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .open)
+    var paths = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        docPicker.delegate = self
+        docPicker.allowsMultipleSelection = true
+        docPicker.modalPresentationStyle = .formSheet
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,6 +95,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
             performSegue(withIdentifier: "toParameters", sender: self)
         case 31:
             performSegue(withIdentifier: "toTesting", sender: self)
+        case 40:
+            toCompare()
         default: break
         }
     }
@@ -271,6 +281,72 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
                 target.spreadSheetView.reloadData()
             }, mainView: target.view)
         }
+        else if segue.identifier == "toCompare"{
+            let target = segue.destination as! MatrixView
+            target.headers = ["Leverage", "Influancial", "DFFITS"]
+            target.textTopLabel = "Compare Models"
+            //F, R^2, unimportant var num, reset, jb, lm, homo   REGRESSOR, REGRESSANDS, OTHER R, CHECK T AFTER
+            var models = [Model]()
+            let modelsNum = paths.count
+            
+            target.headers = ["n", "k", "Test F", "R\u{00B2}", "Test t var failed", "RESET test", "JB test", "LM test", "White test"]
+            target.data = Array(repeating: Array(repeating: "", count: target.headers.count), count: modelsNum)
+            //load models
+            paths.forEach(){
+                let model = get(path: $0) as Model
+                models.append(model)
+            }
+            
+            models.forEach(){
+                target.leftHeaders.append($0.name!)
+            }
+            
+            playLoadingAsync(tasksToDoAsync: {
+                for i in 0..<models.count{
+                    target.data[i][0] = String(models[i].n)
+                    target.data[i][1] = String(models[i].k)
+                    target.data[i][2] = String(format: "%.2f",models[i].parametersF)
+                    target.data[i][3] = String(format: "%.2f",models[i].squareR)
+                    var j = 0
+                    models[i].parametersT.forEach(){
+                        if $0 > 0.05{
+                            j = j + 1
+                        }
+                    }
+                    target.data[i][4] = String(j)
+                    let testAdv = OLSTestsAdvanced(baseModel: models[i])
+                    target.data[i][5] = String(format: "%.2f",testAdv.RESET())
+                    target.data[i][6] = String(format: "%.2f",models[i].JBtest)
+                    target.data[i][7] = String(format: "%.2f",testAdv.LMAutoCorrelation())
+                    target.data[i][8] = String(format: "%.2f",testAdv.WhiteHomo())
+                }
+            }, tasksToMainBack: {
+                target.spreadSheetView.reloadData()
+            }, mainView: target.view)
+            
+        }
+    }
+    
+    func toCompare(){
+        present(docPicker, animated: true){
+            if self.paths.count > 1{
+                self.performSegue(withIdentifier: "toCompare", sender: self)
+            }else{
+                //error
+            }
+        }
+    }
+}
+
+extension SideMenuView : UIDocumentPickerDelegate{
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        //error
+    }
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        paths = urls.compactMap(){
+            $0.path
+        }
+        toCompare()
     }
 }
 

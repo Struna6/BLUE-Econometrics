@@ -119,10 +119,10 @@
 			children = (
 				F9FC4BDC220609F10067A468 /* Template Controllers */,
 				F9AA8E522199B7A200562A1F /* ViewController.swift */,
+				F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */,
 				F9AA8E502199B7A200562A1F /* AppDelegate.swift */,
 				F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */,
 				F941DD5421BD37F500CD93BF /* FirstViewController.swift */,
-				F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */,
 				F90FACE921D1157100B1D238 /* Charts */,
 			);
 			path = Controller;

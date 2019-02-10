@@ -223,12 +223,14 @@ extension PlayableLoadingScreen{
 }
 
 protocol ErrorScreenPlayable{
-    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController)
+    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController?)
 }
 
 extension ErrorScreenPlayable{
-    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController){
-        alertToDismiss.dismiss(animated: true, completion: nil)
+    func playErrorScreen(msg : String, blurView: UIVisualEffectView, mainViewController : UIViewController, alertToDismiss : UIAlertController?){
+        if (alertToDismiss != nil){
+            alertToDismiss!.dismiss(animated: true, completion: nil)
+        }
         let alertController = UIAlertController.init(title: "Error", message: msg, preferredStyle: .alert)
         mainViewController.present(alertController,animated: true,completion: {
             sleep(1)

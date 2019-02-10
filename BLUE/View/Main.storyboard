@@ -249,6 +249,7 @@
                         <segue destination="Ykk-CW-2fc" kind="show" identifier="toTesting" id="lzY-7a-Wcp"/>
                         <segue destination="Ykk-CW-2fc" kind="show" identifier="toParameters" id="Bcd-8d-Aia"/>
                         <segue destination="Rtg-Q5-dUW" kind="show" identifier="toUntypical" id="gQO-bf-2UM"/>
+                        <segue destination="Rtg-Q5-dUW" kind="show" identifier="toCompare" id="SHb-F6-h7Y"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -568,6 +569,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Bcd-8d-Aia"/>
-        <segue reference="gQO-bf-2UM"/>
+        <segue reference="SHb-F6-h7Y"/>
     </inferredMetricsTieBreakers>
 </document>
