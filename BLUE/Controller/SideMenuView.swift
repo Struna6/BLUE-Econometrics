@@ -53,6 +53,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
         return cell
     }
     
+    var readytoTableViewSorted = false
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let num = Int("\(indexPath.section)\(indexPath.row)")
         switch num {
@@ -146,10 +148,12 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
             target.pickerSections = model.headers
             target.pickerSections.insert("All", at: 0)
             
+            readytoTableViewSorted = false
+            
             playLoadingAsync(tasksToDoAsync: {
-                let avarage = self.self.self.model.avarage
-                let se = self.self.model.SeCore
-                let v = self.self.model.Ve
+                let avarage = self.model.avarage
+                let se = self.model.SeCore
+                let v = self.model.Ve
                 let Var = self.model.Var
                 let Me = self.model.Me
                 let Q1 = self.model.Q1
@@ -193,8 +197,17 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
                     target.parametersResults.append(ModelParameters(name: "Range for: \(self.model.headers[i])", value: range[i], description: "In statistics, the range of a set of data is the difference between the largest and smallest values.However, in descriptive statistics, this concept of range has a more complex meaning. The range is the size of the smallest interval (statistics) which contains all the data and provides an indication of statistical dispersion. It is measured in the same units as the data. Since it only depends on two of the observations, it is most useful in representing the dispersion of small data sets", imageName: "me_avg", variable: self.model.headers[i]))
                 }
             }, tasksToMainBack: {
-    
+                self.readytoTableViewSorted = true
+                target.tableView.reloadData()
             }, mainView: self.view)
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "toTableViewSorted"{
+            return readytoTableViewSorted
+        }else{
+            return true
         }
     }
 }
