@@ -17,10 +17,11 @@ class MatrixView: UIViewController {
     var textTopLabel = String()
     var data = [[String]]()
     var headers = [String]()
+    var leftHeaders = [String]()
     var selectObjectForSP = LongTappableToSaveContext()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        //super.viewDidLoad()
         spreadSheetView.delegate = self
         spreadSheetView.dataSource = self
         spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
@@ -30,7 +31,7 @@ class MatrixView: UIViewController {
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
         visualViewToBlur.isHidden = true
-        self.navigationController!.view.addSubview(visualViewToBlur)
+        self.view.addSubview(visualViewToBlur)
         
         selectObjectForSP = LongTappableToSaveContext(newObject: self.spreadSheetView, toBlur: visualViewToBlur, targetViewController: self)
         
@@ -44,7 +45,7 @@ extension MatrixView : SpreadsheetViewDelegate{
 
 extension MatrixView : SpreadsheetViewDataSource{
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count) - 5
+        let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count + 1) - 5
         if sample < CGFloat(spreadSheetView.frame.height) / 10{
             return CGFloat(spreadSheetView.frame.height) / 10
         }
@@ -53,7 +54,7 @@ extension MatrixView : SpreadsheetViewDataSource{
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count) - 5
+        let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count + 1) - 5
         if sample < CGFloat(spreadSheetView.frame.width) / 10{
             return CGFloat(spreadSheetView.frame.width) / 10
         }
@@ -62,11 +63,11 @@ extension MatrixView : SpreadsheetViewDataSource{
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return 7
+        return data[0].count + 1
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 7
+        return data.count + 1
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -89,12 +90,16 @@ extension MatrixView : SpreadsheetViewDataSource{
                 return cell
             }else if indexPath.column == 0{
                 let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
-                cell.label.text = headers[indexPath.row-1]
+                if leftHeaders.count == 0{
+                    cell.label.text = headers[indexPath.row-1]
+                }else{
+                    cell.label.text = leftHeaders[indexPath.row-1]
+                }
                 return cell
             }
             else{
                 let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
-                cell.label.text = data[indexPath.row][indexPath.column]
+                cell.label.text = data[indexPath.row - 1][indexPath.column - 1]
                 return cell
             }
         }

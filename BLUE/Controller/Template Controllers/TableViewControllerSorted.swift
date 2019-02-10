@@ -168,6 +168,7 @@ class TableViewControllerSorted: UIViewController {
         }
     }
     
+    var isHiddenPicker = false
     // IF Complete Parameters
     
     var textTopLabel = String()
@@ -176,6 +177,11 @@ class TableViewControllerSorted: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if isHiddenPicker{
+            pickerView.isHidden = true
+        }
+        
         topLabel.text = textTopLabel
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.helpImageTapped))
         helpImage.addGestureRecognizer(tapOnImage)
@@ -250,7 +256,12 @@ extension TableViewControllerSorted : UITableViewDataSource, UITableViewDelegate
         return tableSections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parametersCategorized[section].count
+        if isShortParameters{
+            return parametersCategorizedShort[section].count
+        }else{
+            return parametersCategorized[section].count
+        }
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as UITableViewCell

@@ -193,6 +193,13 @@ protocol PlayableLoadingScreen{
 
 extension PlayableLoadingScreen{
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView){
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        visualViewToBlur.frame = mainView.frame
+        mainView.addSubview(visualViewToBlur)
+        
+        UIView.animate(withDuration: 0.4) {
+            visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
+        }
         let animationView = LOTAnimationView(name: "loading")
         animationView.loopAnimation = true
         animationView.sizeToFit()
@@ -203,6 +210,10 @@ extension PlayableLoadingScreen{
         Dispatch.DispatchQueue.global(qos: .background).async {
             tasksToDoAsync()
             DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.4) {
+                    visualViewToBlur.backgroundColor = UIColor.clear
+                }
+                visualViewToBlur.removeFromSuperview()
                 tasksToMainBack()
                 animationView.stop()
                 animationView.removeFromSuperview()

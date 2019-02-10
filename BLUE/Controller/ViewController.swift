@@ -337,14 +337,14 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             saveButton.isEnabled = true
             
             self.topTableView.isHidden = true
-            UIView.animate(withDuration: 0.4) {
-                self.visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
-            }
+//            UIView.animate(withDuration: 0.4) {
+//                self.visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
+//            }
             playLoadingAsync(tasksToDoAsync: {
                 self.updateParametersResults = true
             }, tasksToMainBack: {
                 UIView.animate(withDuration: 0.4) {
-                    self.visualViewToBlur.backgroundColor = UIColor.clear
+                    //self.visualViewToBlur.backgroundColor = UIColor.clear
                     self.topTableView.isHidden = false
                 }
                 self.topTableView.reloadData()

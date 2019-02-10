@@ -192,8 +192,14 @@ protocol OLSCalculable{
     var squereFi : Double {get}
     var MAE : Double {get}
     var SEB : [Double] {get}
+    var ELAS : [Double] {get}
+    
+    var leverageObservations : [Double] {get}
+
     func getOLSRegressionEquation() -> [Double]
+    func influentialObservationDFFITS() -> (inf: [Double], dffits: [Double])
 }
+
 extension OLSCalculable where Self==Model{
     var estimatedY: [Double]{
         get{
@@ -293,6 +299,70 @@ extension OLSCalculable where Self==Model{
             return result
         }
     }
+    var ELAS : [Double]{
+        get{
+            var tmp = [Double]()
+            var means = [Double]()
+            let avgY = mean(flatY)
+            
+            for i in 1..<SEB.count{
+                var avg = [Double]()
+                chosenX[i].forEach({
+                    avg.append($0)
+                })
+                means.append(mean(avg))
+            }
+            
+            
+            for i in 1..<SEB.count{
+                let val = (getOLSRegressionEquation()[i] - means[i-1]) / avgY
+                tmp.append(val)
+            }
+            return tmp
+        }
+    }
+    var leverageObservations : [Double]{
+        get{
+            var result = [Double]()
+            let X = Matrix(chosenX)
+            let H = mul(X, y: mul(inv(mul(transpose(X), y: X)),y : transpose(X)))
+            
+            for i in 0..<n{
+                H.forEach { (slice) in
+                    let start = slice.startIndex
+                    result.append(slice[start + i])
+                }
+            }
+            return result
+        }
+    }
+    
+    func influentialObservationDFFITS() -> (inf: [Double], dffits: [Double]){
+        var result = [Double]()
+        var DFFITS = [Double]()
+        
+        for i in 0..<n-1{
+            let y0 = estimatedY[i]
+            var tmpModel = self
+            tmpModel.chosenX.remove(at: i)
+            tmpModel.chosenY.remove(at: i)
+            tmpModel.flatY.remove(at: i)
+            let y1 = tmpModel.estimatedY[i]
+            let e = y1-y0
+            let h = leverageObservations[i]
+            result.append(e * (h / (1-h)))
+            if tmpModel.se == 0{
+                DFFITS.append(0.0)
+            }else{
+                DFFITS.append(e / tmpModel.se * sqrt(h))
+            }
+            
+        }
+        result.append(Double.nan)
+        DFFITS.append(Double.nan)
+        return (result, DFFITS)
+    }
+    
     func getOLSRegressionEquation() -> [Double]{
         var equation = [Double]()
         let X = Matrix<Double>(chosenX)
@@ -490,14 +560,11 @@ extension CoreDataAnalysable where Self==Model{
     }
     
     func makeCorrelationsArray2D() -> [[String]]{
-        let nRows = allObservations.count
         let nCols = allObservations[0].observationArray.count
-        var tmp = Array(repeating: Array(repeating: "-", count: nCols), count: nRows)
-        for row in 0..<nRows{
+        var tmp = Array(repeating: Array(repeating: "-", count: nCols), count: nCols)
+        for row in 0..<nCols{
             for col in 0..<nCols{
-                if col < row{
-                    tmp[row][col] = ""
-                }else if col == row{
+                if col == row{
                     tmp[row][col] = "1"
                 }else{
                     var meanX : Double = 0

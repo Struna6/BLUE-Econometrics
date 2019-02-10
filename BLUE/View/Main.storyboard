@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3L-t2-qxf" customClass="SpreadsheetView" customModule="SpreadsheetView">
-                                <rect key="frame" x="109" y="237" width="550" height="550"/>
+                                <rect key="frame" x="109" y="190" width="550" height="650"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="550" id="0fa-Zz-PBc"/>
-                                    <constraint firstAttribute="height" constant="550" id="9Cu-Wx-bzn"/>
+                                    <constraint firstAttribute="height" constant="650" id="9Cu-Wx-bzn"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uK7-rk-V7J">
@@ -39,7 +39,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="W3L-t2-qxf" firstAttribute="centerY" secondItem="yQ4-Dw-gsG" secondAttribute="centerY" id="XrY-eG-uj8"/>
+                            <constraint firstItem="W3L-t2-qxf" firstAttribute="top" secondItem="uK7-rk-V7J" secondAttribute="bottom" constant="20" id="Gwf-Hf-Rzb"/>
                             <constraint firstItem="uK7-rk-V7J" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="ZLX-Eg-gW4"/>
                             <constraint firstItem="W3L-t2-qxf" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="pQf-YE-tYf"/>
                             <constraint firstItem="uK7-rk-V7J" firstAttribute="top" secondItem="os5-oM-Eke" secondAttribute="top" constant="50" id="rI4-gR-UTD"/>
@@ -246,6 +246,9 @@
                         <segue destination="0qs-48-Ysj" kind="show" identifier="toRestsChart" id="2c9-hE-3a7"/>
                         <segue destination="Rtg-Q5-dUW" kind="show" identifier="toMatrixView" id="1XB-RF-jdL"/>
                         <segue destination="Ykk-CW-2fc" kind="show" identifier="toTableViewSorted" id="JYu-Jo-zW9"/>
+                        <segue destination="Ykk-CW-2fc" kind="show" identifier="toTesting" id="lzY-7a-Wcp"/>
+                        <segue destination="Ykk-CW-2fc" kind="show" identifier="toParameters" id="Bcd-8d-Aia"/>
+                        <segue destination="Rtg-Q5-dUW" kind="show" identifier="toUntypical" id="gQO-bf-2UM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -563,4 +566,8 @@
         <image name="delete" width="512" height="512"/>
         <image name="nan" width="96" height="96"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Bcd-8d-Aia"/>
+        <segue reference="gQO-bf-2UM"/>
+    </inferredMetricsTieBreakers>
 </document>

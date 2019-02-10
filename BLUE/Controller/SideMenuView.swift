@@ -13,12 +13,13 @@ import Surge
 class SideMenuView: UITableViewController, PlayableLoadingScreen{
     
     var model = Model()
-    let sections = ["Observations", "Plots", "Data Analysis"]
+    let sections = ["Observations", "Plots", "Data Analysis","Regression"]
     let options =
     [
-        "Observations": ["All","Selected","Add Variable", "Normalisation"],
+        "Observations": ["All","Selected","Add Variable", "Normalization", "Untypical"],
         "Plots": ["X-Y plot","Candle Chart","Rests Chart"],
-        "Data Analysis": ["Correlations", "Data info"]
+        "Data Analysis": ["Correlations", "Data info"],
+        "Regression": ["Parameters", "Testing"]
     ]
     var allObservations = true
     var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
@@ -53,8 +54,6 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
         return cell
     }
     
-    var readytoTableViewSorted = false
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let num = Int("\(indexPath.section)\(indexPath.row)")
         switch num {
@@ -72,6 +71,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
         case 03:
             isGoToNormalize = true
             performSegue(withIdentifier: "toObservations", sender: self)
+        case 04:
+            performSegue(withIdentifier: "toUntypical", sender: self)
         case 10:
             performSegue(withIdentifier: "toCharts", sender: self)
         case 11:
@@ -82,6 +83,10 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
             performSegue(withIdentifier: "toMatrixView", sender: self)
         case 21:
             performSegue(withIdentifier: "toTableViewSorted", sender: self)
+        case 30:
+            performSegue(withIdentifier: "toParameters", sender: self)
+        case 31:
+            performSegue(withIdentifier: "toTesting", sender: self)
         default: break
         }
     }
@@ -148,8 +153,6 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
             target.pickerSections = model.headers
             target.pickerSections.insert("All", at: 0)
             
-            readytoTableViewSorted = false
-            
             playLoadingAsync(tasksToDoAsync: {
                 let avarage = self.model.avarage
                 let se = self.model.SeCore
@@ -197,17 +200,76 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen{
                     target.parametersResults.append(ModelParameters(name: "Range for: \(self.model.headers[i])", value: range[i], description: "In statistics, the range of a set of data is the difference between the largest and smallest values.However, in descriptive statistics, this concept of range has a more complex meaning. The range is the size of the smallest interval (statistics) which contains all the data and provides an indication of statistical dispersion. It is measured in the same units as the data. Since it only depends on two of the observations, it is most useful in representing the dispersion of small data sets", imageName: "me_avg", variable: self.model.headers[i]))
                 }
             }, tasksToMainBack: {
-                self.readytoTableViewSorted = true
                 target.tableView.reloadData()
-            }, mainView: self.view)
+            }, mainView: target.self.view)
         }
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "toTableViewSorted"{
-            return readytoTableViewSorted
-        }else{
-            return true
+        else if segue.identifier == "toTesting"{
+            let target = segue.destination as! TableViewControllerSorted
+            target.textTopLabel = "Model Testing"
+            target.pickerSections = model.headers
+            target.pickerSections.insert("All", at: 0)
+            
+            playLoadingAsync(tasksToDoAsync: {
+                let testsAdvanced = OLSTestsAdvanced(baseModel: self.model)
+                target.parametersResults = [ModelParameters(name: "R\u{00B2}", isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: self.model.squareR, description: "The better the linear regression (on the right) fits the data in comparison to the simple average (on the left graph), the closer the value of R\u{00B2} is to 1. The areas of the blue squares represent the squared residuals with respect to the linear regression. The areas of the red squares represent the squared residuals with respect to the average value.", imageName: "R", videoName: "sampleVideo")
+                    ,ModelParameters(name: "Test F significance", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "sampleVideo")
+                    ,ModelParameters(name: "RESET test of stability of model", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.RESET(), description: "In statistics, the Ramsey Regression Equation Specification Error Test (RESET) test is a general specification test for the linear regression model. More specifically, it tests whether non-linear combinations of the fitted values help explain the response variable. The intuition behind the test is that if non-linear combinations of the explanatory variables have any power in explaining the response variable, the model is misspecified in the sense that the data generating process might be better approximated by a polynomial or another non-linear functional form.", imageName: "F", videoName: "sampleVideo")
+                    ,ModelParameters(name: "Jarque-Berry test of normality", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.JBtest, description: "The Jarque-Bera Test,a type of Lagrange multiplier test, is a test for normality. Normality is one of the assumptions for many statistical tests, like the t test or F test; the Jarque-Bera test is usually run before one of these tests to confirm normality. ", imageName: "CHI", videoName: "sampleVideo")
+                    ,ModelParameters(name: "Lagrange test of autocorrelation", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.LMAutoCorrelation(), description: "Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them. The analysis of autocorrelation is a mathematical tool for finding repeating patterns, such as the presence of a periodic signal obscured by noise, or identifying the missing fundamental frequency in a signal implied by its harmonic frequencies. It is often used in signal processing for analyzing functions or series of values, such as time domain signals.", imageName: "CHI", videoName: "sampleVideo"),
+                     ModelParameters(name: "White test of homoskedasticity", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.WhiteHomo(), description: "In statistics, the White test is a statistical test that establishes whether the variance of the errors in a regression model is constant: that is for homoskedasticity.These methods have become extremely widely used, making this paper one of the most cited articles in economics.[2]In cases where the White test statistic is statistically significant, heteroskedasticity may not necessarily be the cause; instead the problem could be a specification error. In other words, the White test can be a test of heteroskedasticity or specification error or both. If no cross product terms are introduced in the White test procedure, then this is a test of pure heteroskedasticity. If cross products are introduced in the model, then it is a test of both heteroskedasticity and specification bias.", imageName: "CHI", videoName: "sampleVideo")
+                ]
+                target.parametersResults.append(ModelParameters(name: "Test t for free variable", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.parametersT[0], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo"))
+                for i in 0..<self.model.k{
+                    let tmpElement = ModelParameters(name: "Test t for \(self.model.chosenXHeader[i]) variable", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.parametersT[i+1], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "sampleVideo")
+                    target.parametersResults.append(tmpElement)
+                }
+            }, tasksToMainBack: {
+                target.tableView.reloadData()
+                target.pickerView.isHidden = true
+            }, mainView: target.view)
+        }
+        else if segue.identifier == "toParameters"{
+            let target = segue.destination as! TableViewControllerSorted
+            target.textTopLabel = "Regression parameters"
+            target.pickerSections = model.headers
+            target.pickerSections.insert("All", at: 0)
+            
+            target.mainModelParameter = [ModelParameters(name: "Regression parameters", isLess: nil, criticalFloor: nil, warningFloor: nil, value: 0, description: "In linear regression, the relationships are modeled using linear predictor functions whose unknown model parameters are estimated from the data. Such models are called linear models. Most commonly, the conditional mean of the response given the values of the explanatory variables (or predictors) is assumed to be an affine function of those values; less commonly, the conditional median or some other quantile is used. Like all forms of regression analysis, linear regression focuses on the conditional probability distribution of the response given the values of the predictors, rather than on the joint probability distribution of all of these variables, which is the domain of multivariate analysis.", imageName: "regression")]
+            
+            for i in 0..<model.getOLSRegressionEquation().count{
+                target.parametersResultsShort.append(ModelParametersShort(name: "b\(i)", value: model.getOLSRegressionEquation()[i], isLess: false, criticalFloor: nil, warningFloor: nil, variable: nil))
+            }
+            
+            for i in 0..<model.ELAS.count{
+                target.parametersResultsShort.append(ModelParametersShort(name: "ELAS for b\(i)", value: model.ELAS[i], isLess: false, criticalFloor: nil, warningFloor: nil, variable: nil))
+            }
+           
+            target.isHiddenPicker = true
+        }
+        else if segue.identifier == "toUntypical"{
+            let target = segue.destination as! MatrixView
+            target.headers = ["Leverage", "Influancial", "DFFITS"]
+            target.textTopLabel = "Untypical"
+            target.data = Array(repeating: Array(repeating: "", count: 3), count: model.n)
+            
+            for i in 0..<self.model.n{
+                target.leftHeaders.append(String(i))
+            }
+            
+            playLoadingAsync(tasksToDoAsync: {
+                 for i in 0..<self.model.n{
+                    target.data[i][0] = String(format: "%.2f",self.model.leverageObservations[i])
+                }
+                let results = self.model.influentialObservationDFFITS()
+                
+                for i in 0..<self.model.n{
+                    target.data[i][1] = String(format: "%.2f",results.inf[i])
+                    target.data[i][2] = String(format: "%.2f",results.dffits[i])
+                }
+                
+            }, tasksToMainBack: {
+                target.spreadSheetView.reloadData()
+            }, mainView: target.view)
         }
     }
 }
