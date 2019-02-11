@@ -79,7 +79,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Summary" id="6pl-rR-9Rg">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="edB-IO-cpY">
+                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="edB-IO-cpY">
                             <connections>
                                 <segue destination="u0M-90-nK0" kind="presentation" identifier="toSideMenu" id="sWI-cl-Iqa"/>
                             </connections>
@@ -396,7 +396,6 @@
     </scenes>
     <resources>
         <image name="delete" width="512" height="512"/>
-        <image name="menu" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bpV-t2-4bs"/>

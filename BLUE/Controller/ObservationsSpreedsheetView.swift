@@ -215,6 +215,30 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                     tmp.append(Double(i))
                 }
                 addVariableFunction(newValues: tmp)
+            case "From":
+                showPopOverInputWindow(name: "Enter from Value:", toDo: { (value) in
+                    if let num = Double(value){
+                        var tmp = [Double]()
+                        for i in 0..<self.observations.count{
+                            tmp.append(num+Double(i))
+                        }
+                        self.addVariableFunction(newValues: tmp)
+                    }else{
+                        self.playErrorScreen(msg: "Wrong data format!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                    }
+            })
+            case "To":
+            showPopOverInputWindow(name: "Enter to Value:", toDo: { (value) in
+                if let num = Double(value){
+                    var tmp = [Double]()
+                    for i in 0..<self.observations.count{
+                        tmp.append(num-Double(i))
+                    }
+                    self.addVariableFunction(newValues: tmp)
+                }else{
+                    self.playErrorScreen(msg: "Wrong data format!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                }
+            })
             default: return
         }
         spreedsheet.reloadData()
@@ -277,6 +301,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             alert.removeFromParent()
             self.loadNormObservationsView()
         }
+        
         
         alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
         
@@ -416,7 +441,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == basedOnChoose{
             if optionsBasedOn[row] == "nothing"{
-                optionsFunction = ["Ascending", "Descending"]
+                optionsFunction = ["Ascending", "Descending", "From", "To"]
                 functionChoose.reloadAllComponents()
             }else{
                 optionsFunction = ["Logarithm", "Power of 2", "Squere root","Exponent"]

@@ -48,5 +48,10 @@ class restsChartsViewController: UIViewController{
         
         let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
         viewBarChart.addGestureRecognizer(longTapOnChart)
+        
+        viewBarChart.pinchZoomEnabled = true
+        viewBarChart.doubleTapToZoomEnabled = true
+        viewBarChart.scaleXEnabled = true
+        viewBarChart.scaleYEnabled = true
     }
 }

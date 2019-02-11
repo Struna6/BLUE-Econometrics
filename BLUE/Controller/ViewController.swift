@@ -255,7 +255,7 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
             target.sideMenuManager.menuPushStyle = .popWhenPossible
             target.sideMenuManager.menuWidth = 300
             target.sideMenuManager.menuAnimationFadeStrength = 0.6
-            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.dark
+            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.light
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
             targetVC.sendBackSpreedVCDelegate = self

@@ -13,7 +13,7 @@ import Surge
 class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, ErrorScreenPlayable{
     
     var model = Model()
-    let sections = ["Observations", "Plots", "Data Analysis","Regression", "Comparing", "Machine Learning", "Settings"]
+    let sections = ["Observations", "Plots", "Data Analysis","Regression", "Comparing", "Other Models", "Settings"]
     let options =
     [
         "Observations": ["All","Selected","Add Variable", "Normalization", "Untypical"],
@@ -21,7 +21,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         "Data Analysis": ["Correlations", "Data info"],
         "Regression": ["Parameters", "Testing"],
         "Comparing" : ["Compare Created Models"],
-        "Machine Learning" : ["Regression model", "Tree model", "Auto Creating"],
+        "Other Models" : ["Instrumental Variables", "Logit", "Probit"],
         "Settings" : ["User Settings"]
     ]
     var allObservations = true

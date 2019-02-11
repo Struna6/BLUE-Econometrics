@@ -62,6 +62,11 @@ class ChartView: UIViewController{
         
         let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
         chartView.addGestureRecognizer(longTapOnChart)
+        
+        chartView.pinchZoomEnabled = true
+        chartView.doubleTapToZoomEnabled = true
+        chartView.scaleXEnabled = true
+        chartView.scaleYEnabled = true
     }
     
     private func createLineValues(){

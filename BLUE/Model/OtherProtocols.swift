@@ -195,16 +195,18 @@ extension PlayableLoadingScreen{
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView){
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualViewToBlur.frame = mainView.frame
+        visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
         mainView.addSubview(visualViewToBlur)
         
-        UIView.animate(withDuration: 0.4) {
-            visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
-        }
         let animationView = LOTAnimationView(name: "loading")
         animationView.loopAnimation = true
         animationView.sizeToFit()
+        animationView.layer.cornerRadius = 18.0
+        animationView.clipsToBounds = true
+        animationView.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.5)
+        animationView.alpha = 0.7
         mainView.addSubview(animationView)
-        animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 500, height: 500)
+        animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 400, height: 400)
         animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
         animationView.play()
         Dispatch.DispatchQueue.global(qos: .background).async {

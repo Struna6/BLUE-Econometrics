@@ -38,6 +38,11 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         
         let longTapOnChart = UILongPressGestureRecognizer(target: selectObjectForChart, action: #selector(selectObjectForChart.longTapOnObject(sender:)))
         chartView.addGestureRecognizer(longTapOnChart)
+        
+        chartView.pinchZoomEnabled = true
+        chartView.doubleTapToZoomEnabled = true
+        chartView.scaleXEnabled = true
+        chartView.scaleYEnabled = true
     }
     
     func drawChart(){
@@ -59,8 +64,8 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         let bottomEnd = low - (1.5*(high-low))
         let maxValue = [max(numbers),topEnd]
         let minValue = [min(numbers),bottomEnd]
-        chartView.leftAxis.axisMaximum = max(maxValue)+5
-        chartView.leftAxis.axisMinimum = min(minValue)-5
+        chartView.leftAxis.axisMaximum = max(maxValue)+20
+        chartView.leftAxis.axisMinimum = min(minValue)-20
         let dataEntry = CandleChartDataEntry(x: 1, shadowH: topEnd, shadowL: bottomEnd, open: high, close: low)
         let dataEntriesSet = CandleChartDataSet(values: [dataEntry], label: headers[chosenVariable])
         
@@ -77,6 +82,21 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         chartView.leftAxis.removeAllLimitLines()
         chartView.leftAxis.addLimitLine(ChartLimitLine(limit: topEnd))
         chartView.leftAxis.addLimitLine(ChartLimitLine(limit: bottomEnd))
+        chartView.leftAxis.addLimitLine(ChartLimitLine(limit: max(numbers), label: "Max Value"))
+        chartView.leftAxis.addLimitLine(ChartLimitLine(limit: min(numbers), label: "Min Value"))
+        
+        chartView.leftAxis.limitLines[2].lineDashPhase = 1.0
+        chartView.leftAxis.limitLines[2].lineDashLengths = [2.0,2.0]
+        chartView.leftAxis.limitLines[3].lineDashPhase = 1.0
+        chartView.leftAxis.limitLines[3].lineDashLengths = [2.0,2.0]
+        chartView.leftAxis.limitLines[2].labelPosition = .rightBottom
+        chartView.leftAxis.limitLines[3].labelPosition = .rightTop
+        
+        chartView.leftAxis.limitLines[0].lineWidth = 3.0
+        chartView.leftAxis.limitLines[1].lineWidth = 3.0
+        chartView.leftAxis.limitLines[0].lineColor = UIColor.black
+        chartView.leftAxis.limitLines[1].lineColor = UIColor.black
+        
         topLabel.text = "Candle chart of variable: " + headers[chosenVariable]
     }
 }
