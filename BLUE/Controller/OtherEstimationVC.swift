@@ -158,13 +158,11 @@ class OtherEstimationVC: UIViewController {
             
             var tmp = [[Double]]()
             tmp = model.chosenX
-            newHeaders = model.chosenXHeader
             
             numsToDel.forEach(){num in
                 for i in 0..<tmp.count{
                     tmp[i].remove(at: num+1)
                 }
-                newHeaders.remove(at: num)
             }
             numsToAdd.forEach(){num in
                 var tmpCol = [Double]()
@@ -174,9 +172,8 @@ class OtherEstimationVC: UIViewController {
                 for i in 0..<tmpCol.count{
                     tmp[i].append(tmpCol[i])
                 }
-                newHeaders.append(model.headers[num])
             }
-            
+            Z = tmp
             var tmpEq = String()
             let eq = model.getGIVRegressionEquation(Z: Z)
             for i in 0..<eq.count{
@@ -185,9 +182,9 @@ class OtherEstimationVC: UIViewController {
                 }else{
                     let num = eq[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + newHeaders[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + newHeaders[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -204,6 +201,9 @@ class OtherEstimationVC: UIViewController {
             }
             
             topLabel.text = "Regressand: \(model.chosenYHeader)\nInstrumentalized:   \(tmpXText)\nEquation: \(tmpEq)\nInstruments: \(tmpInstruments)"
+            
+            parametersResults.append(ModelParameters(name: "Hausmann Test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.HausmannTest(Z: Z), description: "The Hausman Test (also called the Hausman specification test) detects endogenous regressors (predictor variables) in a regression model. Endogenous variables have values that are determined by other variables in the system. Having endogenous regressors in a model will cause ordinary least squares estimators to fail, as one of the assumptions of OLS is that there is no correlation between an predictor variable and the error term. Instrumental variables estimators can be used as an alternative in this case. However, before you can decide on the best regression method, you first have to figure out if your predictor variables are endogenous. This is what the Hausman test will do.", imageName: "CHI", videoName: "sampleVideo", variable: nil))
+            tableView.reloadData()
         }
     }
 }

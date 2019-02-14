@@ -36,11 +36,12 @@ extension IVCalculable where Self==Model{
     }
     func IVestimatedY(Z: [[Double]]) -> [Double]{
         var returnTmp = [Double]()
+        let X = Matrix<Double>(chosenX)
         var tmpY = [[Double]]()
         tmpY.append(getGIVRegressionEquation(Z: Z))
         let Y = Matrix<Double>(tmpY)
-        let Z = Matrix<Double>(Z)
-        let result = mul(Z, y: Surge.transpose(Y))
+        
+        let result = mul(X, y: Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
         })
@@ -49,7 +50,8 @@ extension IVCalculable where Self==Model{
     func SEBIV(Z: [[Double]]) -> [Double]{
         let Z0 = Matrix<Double>(Z)
         let ZT = transpose(Z0)
-        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), x: inv(mul(ZT, y: Z0)))
+        let t0 = seIV(Z:Z)*seIV(Z:Z)
+        let matrix = mul(t0, x: inv(mul(ZT, y: Z0)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -96,8 +98,8 @@ extension IVTestable where Self==Model{
         var bGt = Array(repeating: Array(repeating: 0.0, count: 1), count: bGIV.count)
         
         for i in 0..<bOLS.count{
-            bOt[0][i] = bOLS[i]
-            bGt[0][i] = -bGIV[i]
+            bOt[i][0] = bOLS[i]
+            bGt[i][0] = -bGIV[i]
         }
         let bO = Matrix(bOt)
         let bG = Matrix(bGt)
