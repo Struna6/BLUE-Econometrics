@@ -97,6 +97,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             performSegue(withIdentifier: "toTesting", sender: self)
         case 40:
             toCompare()
+        case 50:
+            performSegue(withIdentifier: "toOther", sender: self)
         default: break
         }
     }
@@ -324,6 +326,10 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
                 target.spreadSheetView.reloadData()
             }, mainView: target.view)
             
+        }
+        else if segue.identifier == "toOther"{
+            let target = segue.destination as! OtherEstimationVC
+            target.model = self.model
         }
     }
     

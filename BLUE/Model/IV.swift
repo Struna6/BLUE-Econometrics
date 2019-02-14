@@ -63,12 +63,15 @@ extension IVCalculable where Self==Model{
         let X = Matrix(chosenX)
         let Z = Matrix(Z)
         let Y = Matrix(chosenY)
-        let X2 = mul(mul(Z,y: inv(mul(Z, y: transpose(Z)))), y: mul(transpose(Z),y: X))
+        
+        let X2 = mul(mul(Z, y: inv(mul(transpose(Z), y: Z))), y: mul(transpose(Z),y: X))
         let b = mul(inv(mul(transpose(X2), y: X2)), y: mul(transpose(X2), y: Y))
         
         var result = [Double]()
         b.forEach { (array) in
-            result.append(array[0])
+            array.forEach(){
+                result.append($0)
+            }
         }
         return result
     }
@@ -114,7 +117,7 @@ extension IVTestable where Self==Model{
             return hTestValue
         }else{
             hValue = H
-            let result = chiCDF(x: H, k: Double(Z[0].count-chosenX[0].count))
+            let result = chiICDF(x: H, k: Double(Z[0].count-chosenX[0].count))
             hTestValue = result
             return result
         }

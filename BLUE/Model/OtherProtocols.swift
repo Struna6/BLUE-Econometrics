@@ -71,13 +71,13 @@ extension oddObservationQuantileSpotter where Self==Model {
 
 protocol Statisticable{
     func incompleteGammaF(s : Double, z : Double) -> Double
-    func chiCDF(x : Double, k : Double) -> Double
+    func chiICDF(x : Double, k : Double) -> Double
     func betaValue(x : Double, a : Double, b : Double) -> Double
     func betaIncomplete(x : Double, a : Double, b : Double) -> Double
     func betaComplete(a : Double, b : Double) -> Double
     func betaRegularizedIncomplete(x : Double, a : Double, b : Double) -> Double
-    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double
-    func TStudentCDF(t : Double, v : Double) -> Double
+    func FSnedeccorICDF(f : Double, d1 : Double, d2 : Double) -> Double
+    func TStudentICDF(t : Double, v : Double) -> Double
     func normalValue(x: Double) -> Double
     func normalCDF(x: Double) -> Double
     func normalInverseCDF(p : Double) -> Double
@@ -109,7 +109,7 @@ extension Statisticable{
         return sum * sc
     }
     
-    func chiCDF(x : Double, k : Double) -> Double{
+    func chiICDF(x : Double, k : Double) -> Double{
         let upper = incompleteGammaF(s: k/2, z: x/2)
         let result = upper/tgamma(k/2)
         return result > 1 ? 1 : result
@@ -138,13 +138,13 @@ extension Statisticable{
         return betaIncomplete(x: x, a: a, b: b)/betaComplete(a: a, b: b)
     }
     
-    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double{
+    func FSnedeccorICDF(f : Double, d1 : Double, d2 : Double) -> Double{
         let x = (d1*f)/((d1*f)+d2)
         let result = betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
         return result > 1 ? 1 : result
     }
     
-    func TStudentCDF(t : Double, v : Double) -> Double{
+    func TStudentICDF(t : Double, v : Double) -> Double{
         let x = v/((t*t) + v)
         let result =  1 - 0.5*betaRegularizedIncomplete(x: x, a: v/2, b: 0.5)
         return result > 1 ? 1 : result

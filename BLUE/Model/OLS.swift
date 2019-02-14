@@ -375,11 +375,7 @@ extension OLSCalculable where Self==Model{
     }
 }
 
-protocol OLSTestable: OLSCalculable, Statisticable{
-    var parametersF : Double{get}
-    var parametersT : [Double]{get}
-    var JBtest : Double {get}
-}
+
 
 protocol CoreDataAnalysable : QuantileCalculable{
     var avarage : [Double]{get}
@@ -604,6 +600,12 @@ private var tTestStop : Bool = false
 private var chivalueLastCalculated : Double = 0
 private var chiTestvalueLastCalculated : Double = 0
 
+protocol OLSTestable: OLSCalculable, Statisticable{
+    var parametersF : Double{get}
+    var parametersT : [Double]{get}
+    var JBtest : Double {get}
+}
+
 extension OLSTestable where Self==Model{
     var parametersF : Double{
         get{
@@ -616,7 +618,7 @@ extension OLSTestable where Self==Model{
             }else{
 
                 fvalueLastCalculated = F
-                let result = FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
+                let result = FSnedeccorICDF(f: F, d1: Double(k), d2: Double(n-k-1))
                 fTestvalueLastCalculated = result
                 fvalueLastCalculated = F
                 return result
@@ -633,7 +635,7 @@ extension OLSTestable where Self==Model{
                         tmp.append(tTestvalueLastCalculated[i])
                     }else{
                         
-                        let calculatedT = TStudentCDF(t: T, v: Double(n-k-1))
+                        let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
                         tvalueLastCalculated[i] = T
                         tTestvalueLastCalculated[i] = calculatedT
                         tmp.append(calculatedT)
@@ -641,7 +643,7 @@ extension OLSTestable where Self==Model{
                 }else{
 //                    tvalueLastCalculated.removeAll()
 //                    tTestvalueLastCalculated.removeAll()
-                    let calculatedT = TStudentCDF(t: T, v: Double(n-k-1))
+                    let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
                     tvalueLastCalculated.append(T)
                     tTestvalueLastCalculated.append(calculatedT)
                     tmp.append(calculatedT)
@@ -668,7 +670,7 @@ extension OLSTestable where Self==Model{
             if x == chivalueLastCalculated{
                 return chiTestvalueLastCalculated
             }else{
-                let chiResult = chiCDF(x: x, k: 2)
+                let chiResult = chiICDF(x: x, k: 2)
                 chivalueLastCalculated = x
                 chiTestvalueLastCalculated = chiResult
                 return chiResult
@@ -729,7 +731,7 @@ struct OLSTestsAdvanced : Statisticable{
         if F == RESETvalueLast{
             return RESETtestValueLast
         }else{
-            let result = FSnedeccorCDF(f: F, d1: d1, d2: d2)
+            let result = FSnedeccorICDF(f: F, d1: d1, d2: d2)
             RESETvalueLast = F
             RESETtestValueLast = result
             return result
@@ -761,7 +763,7 @@ struct OLSTestsAdvanced : Statisticable{
         if chi.rounded() == LMvalueLast.rounded(){
             return LMtestValueLast
         }else{
-            let result = chiCDF(x: chi, k: 1)
+            let result = chiICDF(x: chi, k: 1)
             LMvalueLast = chi
             LMtestValueLast = result
             return result
@@ -794,7 +796,7 @@ struct OLSTestsAdvanced : Statisticable{
         if chi.rounded() == WhiteValueLast.rounded(){
             return WhiteTestValueLast
         }else{
-            let result = chiCDF(x: chi, k: Double(degrees))
+            let result = chiICDF(x: chi, k: Double(degrees))
             WhiteValueLast = chi
             WhiteTestValueLast  = result
             return result

@@ -2,6 +2,7 @@
 
 
 struct Model : OLSTestable, OLSCalculable, IVCalculable, IVTestable, ImportableFromTextFile, Transposable, oddObservationQuantileSpotter, CSVImportable, CoreDataAnalysable, Codable{
+    
     var name : String?
     var allObservations = [Observation]()
     var chosenX = [[Double]](){
