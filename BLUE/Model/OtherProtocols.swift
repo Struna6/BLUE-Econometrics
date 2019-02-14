@@ -12,26 +12,6 @@ import Darwin
 import Lottie
 import SpreadsheetView
 
-protocol Transposable{
-    //func transposeArray(array : [[Double]], rows : Int, cols : Int) -> [[Double]]
-}
-extension Transposable{
-//    func transposeArray(array : [[Double]], rows : Int, cols : Int) -> [[Double]]{
-//        var tmpX2 = Array(repeating: Array(repeating: 0.0, count: rows), count: cols)
-//        var i = 0
-//        var j = 0
-//        array.forEach { (row) in
-//            j = 0
-//            row.forEach({ (item) in
-//                tmpX2[j][i] = item
-//                j = j + 1
-//            })
-//            i = i + 1
-//        }
-//        return tmpX2
-//    }
-}
-
 
 protocol QuantileCalculable{
     func quantile(n: Double, _ numbers: [Double]) -> Double

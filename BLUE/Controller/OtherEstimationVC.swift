@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import AVKit
 
 class OtherEstimationVC: UIViewController {
 
-
+    @IBOutlet weak var parametersViewText: UILabel!
+    @IBOutlet var parametersView: UIView!
+    @IBOutlet weak var parametersViewImage: UIImageView!
+    @IBOutlet weak var parametersViewTopLabel: UILabel!
     @IBOutlet var popUpView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -94,17 +98,41 @@ class OtherEstimationVC: UIViewController {
         }
     }
     
+    var selectObjectForTopLabel = LongTappableToSaveContext()
+    var selectObjectForTableView = LongTappableToSaveContext()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewToBlur.isHidden = true
         self.tableView.isHidden = true
         self.topLabel.isHidden = true
+        parametersView.layer.cornerRadius = 10
+        popUpView.layer.cornerRadius = 10
         instrumentsToChoose = model.headers
         model.chosenXHeader.forEach(){
             instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: $0)!)
         }
+        
+        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
+        parametersViewImage.addGestureRecognizer(tapOnImage)
+        self.tableView.separatorColor = UIColor.clear;
+        
+        //topLabel
+        selectObjectForTopLabel = LongTappableToSaveContext(newObject: self.topLabel, toBlur: self.viewToBlur, targetViewController: self)
+        
+        let longTapOnLabel = UILongPressGestureRecognizer(target: selectObjectForTopLabel, action: #selector(selectObjectForTopLabel.longTapOnObject(sender:)))
+        topLabel.addGestureRecognizer(longTapOnLabel)
+        
+        //table
+        selectObjectForTableView = LongTappableToSaveContext(newObject: self.tableView, toBlur: self.viewToBlur, targetViewController: self)
+        
+        let longTapOnTableView = UILongPressGestureRecognizer(target: selectObjectForTableView, action: #selector(selectObjectForTableView.longTapOnObject(sender:)))
+        tableView.addGestureRecognizer(longTapOnTableView)
     }
     
+    @IBAction func backParametersView(_ sender: UIButton) {
+        closeParametersView()
+    }
     @IBAction func closeChooseZ(_ sender: UIButton) {
         if !chosenZHeader.isEmpty && !chosenZInstrumentsHeader.isEmpty{
             self.tableView.isHidden = false
@@ -148,7 +176,8 @@ class OtherEstimationVC: UIViewController {
             instrumentsCalculate()
         }
     }
-    func instrumentsCalculate(){
+    
+    private func instrumentsCalculate(){
         self.tableView.isHidden = false
         self.topLabel.isHidden = false
         
@@ -219,6 +248,46 @@ class OtherEstimationVC: UIViewController {
         parametersResults.append(ModelParameters(name: "Sargan–Hansen test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.SarganTest(instruments: instruments, p: Double(numsToAdd.count-numsToDel.count)), description: "The Sargan test is based on the assumption that model parameters are identified via a priori restrictions on the coefficients, and tests the validity of over-identifying restrictions. The test statistic can be computed from residuals from instrumental variables regression by constructing a quadratic form based on the cross-product of the residuals and exogenous variables.[4]:132–33 Under the null hypothesis that the over-identifying restrictions are valid, the statistic is asymptotically distributed as a chi-square variable with (m−k)degrees of freedom (where m is the number of instruments and k is the number of endogenous variables).", imageName: "CHI", videoName: "sampleVideo", variable: nil))
         parametersResults.append(ModelParameters(name: "Weak Instruments test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.FTestInstruments(instruments: instruments), description: "Weak instruments can produce biased IV estimators and hypothesis tests with large size distortions. But what, precisely, are weak instruments, and how does one detect them in practice? This paper proposes quantitative definitions of weak instruments based on the maximum IV estimator bias, or the maximum Wald test size distortion, when there are multiple endogenous regressors. We tabulate critical values that enable using the first-stage F-statistic (or, when there are multiple endogenous regressors, the Cragg–Donald [1993] statistic) to test whether the given instruments are weak.", imageName: "F", videoName: "sampleVideo", variable: nil))
         tableView.reloadData()
+    }
+    
+    func loadParametersView(item : ModelParameters){
+        parametersViewTopLabel.text = item.name
+        parametersViewText.text = item.description
+        parametersViewImage.image = UIImage(named: item.imageName)
+        self.view.addSubview(parametersView)
+        parametersView.alpha = 0
+        parametersView.center = self.view.center
+        parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+        UIView.animate(withDuration: 0.4) {
+            self.tableView.isHidden = true
+            self.viewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            self.viewToBlur.isHidden = false
+            self.parametersView.alpha = 1
+            self.parametersView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func closeParametersView(){
+        UIView.animate(withDuration: 0.4, animations: {
+            self.parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
+            self.parametersView.alpha = 0
+            self.tableView.isHidden = false
+            self.viewToBlur.effect = nil
+        }) { (success) in
+            self.parametersView.removeFromSuperview()
+            self.viewToBlur.isHidden = false
+        }
+    }
+    
+    @objc func imageTapped(){
+        if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
+            let video = AVPlayer(url: URL(fileURLWithPath: path))
+            let videoPlayer = AVPlayerViewController()
+            videoPlayer.player = video
+            present(videoPlayer, animated: true, completion: {
+                video.play()
+            })
+        }
     }
 }
 
@@ -292,7 +361,8 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
             }else{
                 self.chosenZHeader.append(text)
             }
-        }else if tableView == self.tableViewInstr{
+        }
+        else if tableView == self.tableViewInstr{
             if cell?.accessoryType == UITableViewCell.AccessoryType.none{
                 cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
             }else{
@@ -304,6 +374,8 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
             }else{
                 self.chosenZInstrumentsHeader.append(text)
             }
+        }else{
+            loadParametersView(item: self.parametersCategorized[indexPath.section][indexPath.row])
         }
     }
     

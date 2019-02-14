@@ -177,7 +177,7 @@ class TableViewControllerSorted: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        popUpWindow.layer.cornerRadius = 10
         if isHiddenPicker{
             pickerView.isHidden = true
         }

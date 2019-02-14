@@ -165,6 +165,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         spreedsheet.delegate = self
         spreedsheet.dataSource = self
         addObservationView.layer.cornerRadius = 10
+        normView.layer.cornerRadius = 10
         viewToBlur.effect = nil
         optionsBasedOn = headers
         optionsBasedOn.insert("All", at: 0)
