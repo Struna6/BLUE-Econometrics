@@ -309,7 +309,12 @@ class ViewController: UIViewController, Transposable, Storage, BackUpdatedObserv
                 i = i + 1
             }
             tmpX.insert([Double](repeating: 1.0, count: model.n), at: 0)
-            model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
+            var tmp = [[Double]]()
+            tmpX.forEach(){row in
+                tmp.append(row)
+            }
+            model.chosenX = tmp
+            //model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
             //let _ = parametersResults

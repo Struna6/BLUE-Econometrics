@@ -13,7 +13,11 @@ struct Model : OLSTestable, OLSCalculable, IVCalculable, IVTestable, ImportableF
     }
     var chosenY = [[Double]](){
         didSet{
-            flatY = transposeArray(array: chosenY, rows: n, cols: 1)[0]
+            var tmp = [Double]()
+            chosenY.forEach(){row in
+                tmp.append(row[0])
+            }
+            flatY = tmp
         }
     }
     var chosenXHeader = [String]()

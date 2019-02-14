@@ -50,8 +50,7 @@ extension IVCalculable where Self==Model{
     func SEBIV(Z: [[Double]]) -> [Double]{
         let Z0 = Matrix<Double>(Z)
         let ZT = transpose(Z0)
-        let t0 = seIV(Z:Z)*seIV(Z:Z)
-        let matrix = mul(t0, x: inv(mul(ZT, y: Z0)))
+        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), x: inv(mul(ZT, y: Z0)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -82,11 +81,18 @@ extension IVCalculable where Self==Model{
 protocol IVTestable : Statisticable{
     
     func HausmannTest(Z: [[Double]]) -> Double
-    
+    func SarganTest(instruments : [[Double]], p : Double) -> Double
+    func FTestInstruments(instruments : [[Double]]) -> Double
 }
 
 private var hValue = 0.0
 private var hTestValue = 0.0
+
+private var SarganValue = 0.0
+private var SarganTestValue = 0.0
+
+private var FValue = 0.0
+private var FTestValue = 0.0
 
 extension IVTestable where Self==Model{
     
@@ -105,11 +111,28 @@ extension IVTestable where Self==Model{
         let bG = Matrix(bGt)
         let q = add(bO, y: bG)
         
-        let sbO = Matrix([SEB])
-        let sbG = Matrix([SEBIV(Z: Z)])
-        let s = add(sbO, y: mul(-1.0, x: sbG))
+        let sbO = SEB
+        let sbG = SEBIV(Z: Z)
+        let sbOMean = mean(sbO)
+        let sbGMean = mean(sbG)
         
-        let H0 = mul(mul(transpose(q), y: inv(s)),y:q)
+        var sumSbO = 0.0
+        var sumSbG = 0.0
+        
+        sbO.forEach(){
+            sumSbO = sumSbO + pow($0-sbOMean,2.0)
+        }
+        sumSbO = sumSbO / Double(sbO.count)
+        
+        sbG.forEach(){
+            sumSbG = sumSbG + pow($0-sbGMean,2.0)
+        }
+        sumSbG = sumSbG / Double(sbG.count)
+        
+        let s0 = sumSbG - sumSbO
+        let s = 1/s0
+        
+        let H0 = mul(s, x: (mul(transpose(q), y:q)))
         var H = 0.0
         H0.forEach { (row) in
             H = row[0]
@@ -123,5 +146,48 @@ extension IVTestable where Self==Model{
             hTestValue = result
             return result
         }
+    }
+    func SarganTest(instruments : [[Double]], p : Double) -> Double{
+        var model2 = self
+        model2.flatY = self.S
+        for i in 0..<n{
+            model2.chosenY[i][0] = self.S[i]
+        }
+        model2.chosenX = instruments
+        
+        let S = Double(model2.n) * model2.squareR
+        
+        if S == SarganValue{
+            return SarganTestValue
+        }else{
+            SarganValue = S
+            let result = chiICDF(x: S, k: p)
+            SarganTestValue = result
+            return result
+        }
+    }
+    func FTestInstruments(instruments : [[Double]]) -> Double{
+        var model2 = self
+        for i in 0..<n{
+            instruments[i].forEach(){
+              model2.chosenX[i].append($0)
+            }
+        }
+        let ei = self.SSR
+        let ui = model2.SSR
+        let p = Double(instruments[0].count)
+        let bottom = Double(n-k-1-Int(p))
+        
+        let F = ((ei - ui) / p) / (ui / bottom)
+        
+        if F == FValue{
+            return FTestValue
+        }else{
+            FValue = F
+            let result = FSnedeccorICDF(f: F, d1: p, d2: bottom)
+            FTestValue = result
+            return result
+        }
+        
     }
 }
