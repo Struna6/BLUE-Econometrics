@@ -112,6 +112,7 @@ class OtherEstimationVC: UIViewController {
         model.chosenXHeader.forEach(){
             instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: $0)!)
         }
+        instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: model.chosenYHeader)!)
         
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
         parametersViewImage.addGestureRecognizer(tapOnImage)

@@ -1,7 +1,7 @@
 
 
 
-struct Model : OLSTestable, OLSCalculable, IVCalculable, IVTestable, ImportableFromTextFile, oddObservationQuantileSpotter, CSVImportable, CoreDataAnalysable, Codable{
+struct Model : OLSTestable, OLSCalculable, IVCalculable, IVTestable, LogProb, ImportableFromTextFile, oddObservationQuantileSpotter, CSVImportable, CoreDataAnalysable, Codable{
     
     var name : String?
     var allObservations = [Observation]()

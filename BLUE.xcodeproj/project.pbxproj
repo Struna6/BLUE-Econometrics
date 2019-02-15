@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		66218F66FBBAEBC07819F0FF /* Pods_BLUE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */; };
+		F90D8322221744A90068D58E /* LogProb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D8321221744A90068D58E /* LogProb.swift */; };
 		F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */; };
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
@@ -38,6 +39,7 @@
 		18A4C8C755078E31FF9E3FF3 /* Pods-BLUE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLUE.release.xcconfig"; path = "Pods/Target Support Files/Pods-BLUE/Pods-BLUE.release.xcconfig"; sourceTree = "<group>"; };
 		BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLUE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11274C3C9B3985703778622 /* Pods-BLUE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLUE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BLUE/Pods-BLUE.debug.xcconfig"; sourceTree = "<group>"; };
+		F90D8321221744A90068D58E /* LogProb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogProb.swift; sourceTree = "<group>"; };
 		F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestsChartsViewController.swift; sourceTree = "<group>"; };
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				F925853221A02B4A00920E33 /* Model.swift */,
 				F99B87F221B1F1EB00779422 /* OLS.swift */,
 				F97AB3422211D23D001917D3 /* IV.swift */,
+				F90D8321221744A90068D58E /* LogProb.swift */,
 				F94C39B621BC535600FB98EC /* SavingService.swift */,
 				F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */,
 			);
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */,
+				F90D8322221744A90068D58E /* LogProb.swift in Sources */,
 				F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */,
 				F97AB3432211D23D001917D3 /* IV.swift in Sources */,
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
