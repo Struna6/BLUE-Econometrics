@@ -252,6 +252,7 @@
                         <segue destination="Rtg-Q5-dUW" kind="show" identifier="toCompare" id="SHb-F6-h7Y"/>
                         <segue destination="zTb-dS-IZN" kind="show" identifier="toOther" id="SR6-Jt-23s"/>
                         <segue destination="zTb-dS-IZN" kind="show" identifier="toLogit" id="r8R-2A-3Zf"/>
+                        <segue destination="zTb-dS-IZN" kind="show" identifier="toProbit" id="m9g-1L-HK7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxa-Rh-CYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -622,6 +623,7 @@
                         <outlet property="tableViewInstr" destination="07z-NH-POA" id="Fl1-7s-TnD"/>
                         <outlet property="tableViewX" destination="WBg-TA-e3j" id="3Ss-Um-weV"/>
                         <outlet property="topLabel" destination="GbG-qN-v3X" id="7h7-2c-FCb"/>
+                        <outlet property="topText" destination="6wx-eH-gBg" id="7dJ-l5-dAg"/>
                         <outlet property="viewToBlur" destination="23D-B7-PLQ" id="toK-dU-qqy"/>
                     </connections>
                 </viewController>
@@ -832,7 +834,7 @@
         <image name="nan" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="r8R-2A-3Zf"/>
+        <segue reference="m9g-1L-HK7"/>
         <segue reference="Bcd-8d-Aia"/>
         <segue reference="1XB-RF-jdL"/>
     </inferredMetricsTieBreakers>

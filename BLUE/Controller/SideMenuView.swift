@@ -21,7 +21,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         "Data Analysis": ["Correlations", "Data info"],
         "Regression": ["Parameters", "Testing"],
         "Comparing" : ["Compare Created Models"],
-        "Other Models" : ["Instrumental Variables", "Logit", "Segment Model"],
+        "Other Models" : ["Instrumental Variables", "Logit", "Probit"],
         "Settings" : ["User Settings"]
     ]
     var allObservations = true
@@ -101,6 +101,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             performSegue(withIdentifier: "toOther", sender: self)
         case 51:
             performSegue(withIdentifier: "toLogit", sender: self)
+        case 52:
+            performSegue(withIdentifier: "toProbit", sender: self)
         default: break
         }
     }
@@ -336,7 +338,13 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         else if segue.identifier == "toLogit"{
             let target = segue.destination as! OtherEstimationVC
             target.model = self.model
-            target.isLogit = true
+            target.isLogitProbit = true
+        }
+        else if segue.identifier == "toProbit"{
+            let target = segue.destination as! OtherEstimationVC
+            target.model = self.model
+            target.isLogitProbit = true
+            target.isProbit = true
         }
     }
     

@@ -11,6 +11,7 @@ import AVKit
 
 class OtherEstimationVC: UIViewController {
 
+    @IBOutlet weak var topText: UINavigationItem!
     @IBOutlet weak var parametersViewText: UILabel!
     @IBOutlet var parametersView: UIView!
     @IBOutlet weak var parametersViewImage: UIImageView!
@@ -23,7 +24,8 @@ class OtherEstimationVC: UIViewController {
     @IBOutlet weak var viewToBlur: UIVisualEffectView!
     
     
-    var isLogit = false
+    var isLogitProbit = false
+    var isProbit = false
     var logitToChoose = [String]()
     var model = Model()
     var chosenZHeader = [String]()
@@ -106,6 +108,17 @@ class OtherEstimationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if isLogitProbit{
+            if isProbit{
+                topText.title = "Probit Model"
+            }else{
+                topText.title = "Logit Model"
+            }
+        }else{
+            topText.title = "Instrumental Variables Model"
+        }
+        
         viewToBlur.isHidden = true
         self.tableView.isHidden = true
         self.topLabel.isHidden = true
@@ -113,7 +126,7 @@ class OtherEstimationVC: UIViewController {
         popUpView.layer.cornerRadius = 10
         instrumentsToChoose = model.headers
         
-        if isLogit{
+        if isLogitProbit{
             labelToChoose1.text = "Choose variable for n"
             labelToChoose2.text = "Choose variable for success"
             logitToChoose = model.headers
@@ -189,8 +202,13 @@ class OtherEstimationVC: UIViewController {
             self.popUpView.removeFromSuperview()
         }
         if !chosenZHeader.isEmpty && !chosenZInstrumentsHeader.isEmpty{
-            if isLogit{
-                logitCalculate()
+            if isLogitProbit{
+                if isProbit{
+                    probitCalculate()
+                }else{
+                    logitCalculate()
+                }
+                
             }else{
                instrumentsCalculate()
             }
@@ -311,7 +329,62 @@ class OtherEstimationVC: UIViewController {
         let dict = model.calculateLogitCountedR(nGroup: nGroup, success: success, X: model.chosenX)
         dict.forEach { (arg0) in
             let (key, value) = arg0
-            parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            if key.contains("%"){
+                parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            }else{
+                parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            }
+            
+        }
+        tableView.reloadData()
+    }
+    
+    private func probitCalculate(){
+        self.tableView.isHidden = false
+        self.topLabel.isHidden = false
+        
+        var nGroup = [Double]()
+        var success = [Double]()
+        
+        let numGroup = model.headers.firstIndex(of: chosenZHeader.first!)!
+        let numSuccess = model.headers.firstIndex(of: chosenZInstrumentsHeader.first!)!
+        
+        for i in 0..<model.allObservations.count{
+            nGroup.append(model.allObservations[i].observationArray[numGroup])
+            success.append(model.allObservations[i].observationArray[numSuccess])
+        }
+        
+        var tmpEq = String()
+        let eq = model.getProbitEquation(nGroup: nGroup, success: success, X: model.chosenX)
+        for i in 0..<eq.count{
+            if i==0{
+                tmpEq = tmpEq + String(format:"%.2f",eq[0])
+            }else{
+                let num = eq[i]
+                if num>=0{
+                    tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                }else{
+                    tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                }
+            }
+        }
+        
+        var tmpXText = String()
+        model.chosenXHeader.forEach { (str) in
+            tmpXText = tmpXText + " " + str
+        }
+        
+        topLabel.text = "Regressand: \(chosenZHeader[0]) / \(chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
+        
+        parametersResults.removeAll()
+        let dict = model.calculateProbitCountedR(nGroup: nGroup, success: success, X: model.chosenX)
+        dict.forEach { (arg0) in
+            let (key, value) = arg0
+            if key.contains("%"){
+                parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            }else{
+                parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            }
         }
         tableView.reloadData()
     }
@@ -376,7 +449,7 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLogit{
+        if isLogitProbit{
             if tableView == self.tableView{
                 return parametersCategorized[section].count
             }else{
@@ -396,7 +469,7 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
-        if isLogit{
+        if isLogitProbit{
             if tableView == self.tableView{
                 let par = parametersCategorized[indexPath.section][indexPath.row]
                 cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
