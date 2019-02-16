@@ -169,6 +169,8 @@ extension Statisticable{
 
 protocol PlayableLoadingScreen{
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView)
+    
+    func playShortAnimationOnce(mainViewController : UIViewController, animationName : String?)
 }
 
 extension PlayableLoadingScreen{
@@ -201,6 +203,37 @@ extension PlayableLoadingScreen{
                 animationView.removeFromSuperview()
             }
         }
+    }
+    
+    func playShortAnimationOnce(mainViewController : UIViewController, animationName : String? = "done"){
+        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        visualViewToBlur.frame = mainViewController.view.frame
+        visualViewToBlur.isHidden = true
+        //visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
+        
+        UIView.animate(withDuration: 0.05) {
+            visualViewToBlur.isHidden = false
+            mainViewController.view.addSubview(visualViewToBlur)
+        }
+        
+        let animationView = LOTAnimationView(name: animationName!)
+        mainViewController.view.addSubview(animationView)
+        animationView.loopAnimation = false
+        animationView.sizeToFit()
+        animationView.layer.cornerRadius = 18.0
+        animationView.autoReverseAnimation = false
+        animationView.clipsToBounds = true
+        animationView.animationSpeed = 1.5
+        animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
+        
+        animationView.play(fromProgress: 0.0, toProgress: 1.0, withCompletion: { (complete: Bool) in
+            animationView.stop()
+            UIView.animate(withDuration: 0.05) {
+                visualViewToBlur.isHidden = true
+                visualViewToBlur.removeFromSuperview()
+                animationView.removeFromSuperview()
+            }
+        })
     }
 }
 

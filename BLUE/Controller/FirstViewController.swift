@@ -55,6 +55,9 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
                 filesTab = getListOfFiles()
             }else{
                 filesTab = getListOfFiles()
+                if !filesTab.contains("Screenshots"){
+                    createDirectories()
+                }
             }
         }else{
             defaults.set(true, forKey: "firstOpen")

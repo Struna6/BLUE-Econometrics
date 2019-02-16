@@ -24,11 +24,13 @@ extension ImportableFromTextFile where Self==Model{
             print("error getting data " + path)
             fatalError(error.localizedDescription)
         }
+        if let range = text.range(of: "f0\\fs24 \\cf0"){
+            text = String(text[range.upperBound...])
+        }
         var labeled = false
         var headered = false
         var headers = [String]()
         var observations = [Observation]()
-        
         var result = [[String]]()
         let rows = text.components(separatedBy: ";")
         rows.forEach { (row) in
@@ -37,9 +39,9 @@ extension ImportableFromTextFile where Self==Model{
             result.append(columns)
         }
         let firstRow = result[0]
-        if firstRow.count < 2{
-            fatalError("Minimim column number: 2")
-        }
+//        if firstRow.count < 2{
+//            fatalError("Minimim column number: 2")
+//        }
         if firstRow[0] == ""{
             //[0,0] is blank
             labeled = true
@@ -109,6 +111,10 @@ extension CSVImportable where Self==Model{
             print("error getting data " + path)
             fatalError(error.localizedDescription)
         }
+        text = String(text.dropFirst())
+        text = String(text.dropFirst())
+        text = String(text.dropFirst())
+        
         var labeled = false
         var headered = false
         var headers = [String]()

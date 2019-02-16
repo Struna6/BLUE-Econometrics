@@ -132,7 +132,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 self.chooseYTableView.reloadData()
                 self.chooseXTableView.reloadData()
                 self.topTableView.reloadData()
-            }, mainView: self.view)  
+            }, mainView: self.view)
+            playShortAnimationOnce(mainViewController: self)
         }
     }
     // MARK: Deinit that delete views in background
@@ -230,6 +231,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                                 let url = path.appendingPathComponent(name)
                                 self.openedFilePath = url.path
                                 self.model.name = url.path
+                                self.playShortAnimationOnce(mainViewController: self, animationName: "done")
                             }
                             
                         }else{

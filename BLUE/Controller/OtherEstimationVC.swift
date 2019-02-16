@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class OtherEstimationVC: UIViewController {
+class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
 
     @IBOutlet weak var topText: UINavigationItem!
     @IBOutlet weak var parametersViewText: UILabel!
@@ -219,174 +219,186 @@ class OtherEstimationVC: UIViewController {
     private func instrumentsCalculate(){
         self.tableView.isHidden = false
         self.topLabel.isHidden = false
-        
-        var numsToDel = [Int]()
-        var numsToAdd = [Int]()
-        
-        chosenZHeader.forEach(){
-            if let num = model.chosenXHeader.firstIndex(of: $0){
-                numsToDel.append(num)
-            }
-        }
-        chosenZInstrumentsHeader.forEach(){
-            if let num = model.headers.firstIndex(of: $0){
-                numsToAdd.append(num)
-            }
-        }
-        
-        var tmp = [[Double]]()
-        tmp = model.chosenX
-        
-        numsToDel.forEach(){num in
-            for i in 0..<tmp.count{
-                tmp[i].remove(at: num+1)
-            }
-        }
-        var instruments = Array(repeating: Array(repeating: 0.0, count: 0), count: model.n)
-        numsToAdd.forEach(){num in
-            var tmpCol = [Double]()
-            model.allObservations.forEach(){obs in
-                tmpCol.append(obs.observationArray[num])
-            }
-            for i in 0..<tmpCol.count{
-                tmp[i].append(tmpCol[i])
-                instruments[i].append(tmpCol[i])
-            }
-        }
-        Z = tmp
         var tmpEq = String()
-        let eq = model.getGIVRegressionEquation(Z: Z)
-        for i in 0..<eq.count{
-            if i==0{
-                tmpEq = tmpEq + String(format:"%.2f",eq[0])
-            }else{
-                let num = eq[i]
-                if num>=0{
-                    tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
-                }else{
-                    tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+        var tmpXText = String()
+        var tmpInstruments = String()
+        
+        playLoadingAsync(tasksToDoAsync: {
+            var numsToDel = [Int]()
+            var numsToAdd = [Int]()
+            
+            self.chosenZHeader.forEach(){
+                if let num = self.model.chosenXHeader.firstIndex(of: $0){
+                    numsToDel.append(num)
                 }
             }
-        }
+            self.chosenZInstrumentsHeader.forEach(){
+                if let num = self.model.headers.firstIndex(of: $0){
+                    numsToAdd.append(num)
+                }
+            }
+            
+            var tmp = [[Double]]()
+            tmp = self.model.chosenX
+            
+            numsToDel.forEach(){num in
+                for i in 0..<tmp.count{
+                    tmp[i].remove(at: num+1)
+                }
+            }
+            var instruments = Array(repeating: Array(repeating: 0.0, count: 0), count: self.model.n)
+            numsToAdd.forEach(){num in
+                var tmpCol = [Double]()
+                self.model.allObservations.forEach(){obs in
+                    tmpCol.append(obs.observationArray[num])
+                }
+                for i in 0..<tmpCol.count{
+                    tmp[i].append(tmpCol[i])
+                    instruments[i].append(tmpCol[i])
+                }
+            }
+            self.Z = tmp
+            
+            let eq = self.model.getGIVRegressionEquation(Z: self.Z)
+            for i in 0..<eq.count{
+                if i==0{
+                    tmpEq = tmpEq + String(format:"%.2f",eq[0])
+                }else{
+                    let num = eq[i]
+                    if num>=0{
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }else{
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }
+                }
+            }
+            
+            self.chosenZHeader.forEach { (str) in
+                tmpXText = tmpXText + " " + str
+            }
+            
+            self.chosenZInstrumentsHeader.forEach(){
+                tmpInstruments = tmpInstruments + " " + $0
+            }
+            
+            self.parametersResults.removeAll()
+            self.parametersResults.append(ModelParameters(name: "Hausmann Test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.HausmannTest(Z: self.Z), description: "The Hausman Test (also called the Hausman specification test) detects endogenous regressors (predictor variables) in a regression model. Endogenous variables have values that are determined by other variables in the system. Having endogenous regressors in a model will cause ordinary least squares estimators to fail, as one of the assumptions of OLS is that there is no correlation between an predictor variable and the error term. Instrumental variables estimators can be used as an alternative in this case. However, before you can decide on the best regression method, you first have to figure out if your predictor variables are endogenous. This is what the Hausman test will do.", imageName: "CHI", videoName: "sampleVideo", variable: nil))
+            self.parametersResults.append(ModelParameters(name: "Sargan–Hansen test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.SarganTest(instruments: instruments, p: Double(numsToAdd.count-numsToDel.count)), description: "The Sargan test is based on the assumption that model parameters are identified via a priori restrictions on the coefficients, and tests the validity of over-identifying restrictions. The test statistic can be computed from residuals from instrumental variables regression by constructing a quadratic form based on the cross-product of the residuals and exogenous variables.[4]:132–33 Under the null hypothesis that the over-identifying restrictions are valid, the statistic is asymptotically distributed as a chi-square variable with (m−k)degrees of freedom (where m is the number of instruments and k is the number of endogenous variables).", imageName: "CHI", videoName: "sampleVideo", variable: nil))
+            self.parametersResults.append(ModelParameters(name: "Weak Instruments test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: self.model.FTestInstruments(instruments: instruments), description: "Weak instruments can produce biased IV estimators and hypothesis tests with large size distortions. But what, precisely, are weak instruments, and how does one detect them in practice? This paper proposes quantitative definitions of weak instruments based on the maximum IV estimator bias, or the maximum Wald test size distortion, when there are multiple endogenous regressors. We tabulate critical values that enable using the first-stage F-statistic (or, when there are multiple endogenous regressors, the Cragg–Donald [1993] statistic) to test whether the given instruments are weak.", imageName: "F", videoName: "sampleVideo", variable: nil))
+        }, tasksToMainBack: {
+            self.topLabel.text = "Regressand: \(self.model.chosenYHeader)\nInstrumentalized:   \(tmpXText)\nEquation: \(tmpEq)\nInstruments: \(tmpInstruments)"
+            self.tableView.reloadData()
+        }, mainView: self.view)
         
-        var tmpXText = String()
-        self.chosenZHeader.forEach { (str) in
-            tmpXText = tmpXText + " " + str
-        }
-        
-        var tmpInstruments = String()
-        self.chosenZInstrumentsHeader.forEach(){
-            tmpInstruments = tmpInstruments + " " + $0
-        }
-        
-        topLabel.text = "Regressand: \(model.chosenYHeader)\nInstrumentalized:   \(tmpXText)\nEquation: \(tmpEq)\nInstruments: \(tmpInstruments)"
-        
-        parametersResults.removeAll()
-        parametersResults.append(ModelParameters(name: "Hausmann Test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.HausmannTest(Z: Z), description: "The Hausman Test (also called the Hausman specification test) detects endogenous regressors (predictor variables) in a regression model. Endogenous variables have values that are determined by other variables in the system. Having endogenous regressors in a model will cause ordinary least squares estimators to fail, as one of the assumptions of OLS is that there is no correlation between an predictor variable and the error term. Instrumental variables estimators can be used as an alternative in this case. However, before you can decide on the best regression method, you first have to figure out if your predictor variables are endogenous. This is what the Hausman test will do.", imageName: "CHI", videoName: "sampleVideo", variable: nil))
-        parametersResults.append(ModelParameters(name: "Sargan–Hansen test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.SarganTest(instruments: instruments, p: Double(numsToAdd.count-numsToDel.count)), description: "The Sargan test is based on the assumption that model parameters are identified via a priori restrictions on the coefficients, and tests the validity of over-identifying restrictions. The test statistic can be computed from residuals from instrumental variables regression by constructing a quadratic form based on the cross-product of the residuals and exogenous variables.[4]:132–33 Under the null hypothesis that the over-identifying restrictions are valid, the statistic is asymptotically distributed as a chi-square variable with (m−k)degrees of freedom (where m is the number of instruments and k is the number of endogenous variables).", imageName: "CHI", videoName: "sampleVideo", variable: nil))
-        parametersResults.append(ModelParameters(name: "Weak Instruments test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.FTestInstruments(instruments: instruments), description: "Weak instruments can produce biased IV estimators and hypothesis tests with large size distortions. But what, precisely, are weak instruments, and how does one detect them in practice? This paper proposes quantitative definitions of weak instruments based on the maximum IV estimator bias, or the maximum Wald test size distortion, when there are multiple endogenous regressors. We tabulate critical values that enable using the first-stage F-statistic (or, when there are multiple endogenous regressors, the Cragg–Donald [1993] statistic) to test whether the given instruments are weak.", imageName: "F", videoName: "sampleVideo", variable: nil))
-        tableView.reloadData()
+        playShortAnimationOnce(mainViewController: self)
     }
     
     private func logitCalculate(){
         self.tableView.isHidden = false
         self.topLabel.isHidden = false
-        
-        var nGroup = [Double]()
-        var success = [Double]()
-        
-        let numGroup = model.headers.firstIndex(of: chosenZHeader.first!)!
-        let numSuccess = model.headers.firstIndex(of: chosenZInstrumentsHeader.first!)!
-        
-        for i in 0..<model.allObservations.count{
-            nGroup.append(model.allObservations[i].observationArray[numGroup])
-            success.append(model.allObservations[i].observationArray[numSuccess])
-        }
-        
-        var tmpEq = String()
-        let eq = model.getLogitEquation(nGroup: nGroup, success: success, X: model.chosenX)
-        for i in 0..<eq.count{
-            if i==0{
-                tmpEq = tmpEq + String(format:"%.2f",eq[0])
-            }else{
-                let num = eq[i]
-                if num>=0{
-                    tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
-                }else{
-                    tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
-                }
-            }
-        }
-        
         var tmpXText = String()
-        model.chosenXHeader.forEach { (str) in
-            tmpXText = tmpXText + " " + str
-        }
+        var tmpEq = String()
         
-        topLabel.text = "Regressand: \(chosenZHeader[0]) / \(chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
-        
-        parametersResults.removeAll()
-        let dict = model.calculateLogitCountedR(nGroup: nGroup, success: success, X: model.chosenX)
-        dict.forEach { (arg0) in
-            let (key, value) = arg0
-            if key.contains("%"){
-                parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
-            }else{
-                parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+        playLoadingAsync(tasksToDoAsync: {
+            var nGroup = [Double]()
+            var success = [Double]()
+            
+            let numGroup = self.model.headers.firstIndex(of: self.chosenZHeader.first!)!
+            let numSuccess = self.model.headers.firstIndex(of: self.chosenZInstrumentsHeader.first!)!
+            
+            for i in 0..<self.model.allObservations.count{
+                nGroup.append(self.model.allObservations[i].observationArray[numGroup])
+                success.append(self.model.allObservations[i].observationArray[numSuccess])
             }
             
-        }
-        tableView.reloadData()
+            let eq = self.model.getLogitEquation(nGroup: nGroup, success: success, X: self.model.chosenX)
+            for i in 0..<eq.count{
+                if i==0{
+                    tmpEq = tmpEq + String(format:"%.2f",eq[0])
+                }else{
+                    let num = eq[i]
+                    if num>=0{
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }else{
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }
+                }
+            }
+            
+            self.model.chosenXHeader.forEach { (str) in
+                tmpXText = tmpXText + " " + str
+            }
+            
+            self.parametersResults.removeAll()
+            let dict = self.model.calculateLogitCountedR(nGroup: nGroup, success: success, X: self.model.chosenX)
+            dict.forEach { (arg0) in
+                let (key, value) = arg0
+                if key.contains("%"){
+                    self.parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                }else{
+                    self.parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                }
+            }
+        }, tasksToMainBack: {
+            self.topLabel.text = "Regressand: \(self.chosenZHeader[0]) / \(self.chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
+            self.tableView.reloadData()
+        }, mainView: self.view)
+        
+        playShortAnimationOnce(mainViewController: self)
     }
     
     private func probitCalculate(){
         self.tableView.isHidden = false
         self.topLabel.isHidden = false
+        var tmpEq = String()
+        var tmpXText = String()
         
         var nGroup = [Double]()
         var success = [Double]()
         
-        let numGroup = model.headers.firstIndex(of: chosenZHeader.first!)!
-        let numSuccess = model.headers.firstIndex(of: chosenZInstrumentsHeader.first!)!
-        
-        for i in 0..<model.allObservations.count{
-            nGroup.append(model.allObservations[i].observationArray[numGroup])
-            success.append(model.allObservations[i].observationArray[numSuccess])
-        }
-        
-        var tmpEq = String()
-        let eq = model.getProbitEquation(nGroup: nGroup, success: success, X: model.chosenX)
-        for i in 0..<eq.count{
-            if i==0{
-                tmpEq = tmpEq + String(format:"%.2f",eq[0])
-            }else{
-                let num = eq[i]
-                if num>=0{
-                    tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+        playLoadingAsync(tasksToDoAsync: {
+            let numGroup = self.model.headers.firstIndex(of: self.chosenZHeader.first!)!
+            let numSuccess = self.model.headers.firstIndex(of: self.chosenZInstrumentsHeader.first!)!
+            
+            for i in 0..<self.model.allObservations.count{
+                nGroup.append(self.model.allObservations[i].observationArray[numGroup])
+                success.append(self.model.allObservations[i].observationArray[numSuccess])
+            }
+            
+            let eq = self.model.getProbitEquation(nGroup: nGroup, success: success, X: self.model.chosenX)
+            for i in 0..<eq.count{
+                if i==0{
+                    tmpEq = tmpEq + String(format:"%.2f",eq[0])
                 }else{
-                    tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                    let num = eq[i]
+                    if num>=0{
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }else{
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                    }
                 }
             }
-        }
-        
-        var tmpXText = String()
-        model.chosenXHeader.forEach { (str) in
-            tmpXText = tmpXText + " " + str
-        }
-        
-        topLabel.text = "Regressand: \(chosenZHeader[0]) / \(chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
-        
-        parametersResults.removeAll()
-        let dict = model.calculateProbitCountedR(nGroup: nGroup, success: success, X: model.chosenX)
-        dict.forEach { (arg0) in
-            let (key, value) = arg0
-            if key.contains("%"){
-                parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
-            }else{
-                parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+            
+            self.model.chosenXHeader.forEach { (str) in
+                tmpXText = tmpXText + " " + str
             }
-        }
-        tableView.reloadData()
+            
+            self.parametersResults.removeAll()
+            let dict = self.model.calculateProbitCountedR(nGroup: nGroup, success: success, X: self.model.chosenX)
+            dict.forEach { (arg0) in
+                let (key, value) = arg0
+                if key.contains("%"){
+                    self.parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                }else{
+                    self.parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                }
+            }
+        }, tasksToMainBack: {
+            self.topLabel.text = "Regressand: \(self.chosenZHeader[0]) / \(self.chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
+            self.tableView.reloadData()
+        }, mainView: self.view)
+        
+        playShortAnimationOnce(mainViewController: self)
     }
     
     func loadParametersView(item : ModelParameters){
