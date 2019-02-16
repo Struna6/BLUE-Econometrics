@@ -360,7 +360,13 @@ extension OLSCalculable where Self==Model{
             if tmpModel.se == 0{
                 DFFITS.append(0.0)
             }else{
-                DFFITS.append(e / tmpModel.se * sqrt(h))
+                let tmp = e / tmpModel.se * sqrt(h)
+                if tmp.isFinite{
+                    DFFITS.append(tmp)
+                }else{
+                    DFFITS.append(0.0)
+                }
+                
             }
             
         }
