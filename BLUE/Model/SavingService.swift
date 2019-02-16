@@ -16,6 +16,7 @@ protocol Storage{
     func remove(fileName : String)
     func exists(fileName : String) -> Bool
     func getListOfFiles() -> [String]
+    func getListOfFilesRoot() -> [String]
 }
 
 extension Storage{
@@ -31,7 +32,7 @@ extension Storage{
             let result : String = String(pathExternal![..<index])
             url = URL(fileURLWithPath: result)
         }else{
-            let name = fileName! + ".plist"
+            let name = "/Saved Models/" + fileName! + ".plist"
             url = path.appendingPathComponent(name)
         }
         print(url)
@@ -44,7 +45,7 @@ extension Storage{
         }
     }
     func get<T: Decodable>(fileName : String) -> T{
-        let url = path.appendingPathComponent(fileName)
+        let url = path.appendingPathComponent("/Saved Models/" + fileName)
         let decoder = PropertyListDecoder()
         let modelOutput : Model
         do{
@@ -87,6 +88,17 @@ extension Storage{
         }
     }
     func getListOfFiles() -> [String]{
+        var tabTmp = [String]()
+        do{
+            tabTmp = try FileManager.default.contentsOfDirectory(atPath: path.path + "/Saved Models")
+        }catch{
+            fatalError(error.localizedDescription)
+        }
+        let tab = tabTmp.filter{$0.contains(".plist") && $0.count>6}
+        return tab
+    }
+    
+    func getListOfFilesRoot() -> [String]{
         var tabTmp = [String]()
         do{
             tabTmp = try FileManager.default.contentsOfDirectory(atPath: path.path)

@@ -79,7 +79,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Summary" id="6pl-rR-9Rg">
-                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="edB-IO-cpY">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="edB-IO-cpY">
                             <connections>
                                 <segue destination="u0M-90-nK0" kind="presentation" identifier="toSideMenu" id="sWI-cl-Iqa"/>
                             </connections>
@@ -308,11 +308,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mal-aC-C0l">
-                                <rect key="frame" x="165" y="105" width="438" height="598"/>
+                                <rect key="frame" x="165" y="181" width="438" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="438" id="UEW-NY-BA7"/>
-                                    <constraint firstAttribute="height" constant="598" id="okM-50-aIO"/>
+                                    <constraint firstAttribute="height" constant="598" id="u1u-6R-D0A"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="Ifa-zR-0vX">
@@ -328,13 +327,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ic-CC-RdG">
-                                <rect key="frame" x="284" y="759" width="200" height="49"/>
-                                <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ic-CC-RdG">
+                                <rect key="frame" x="209" y="844" width="350" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="9ic-CC-RdG" secondAttribute="height" multiplier="200:49" id="9Va-cK-NLP"/>
+                                    <constraint firstAttribute="height" constant="100" id="1kg-Yc-MF8"/>
+                                    <constraint firstAttribute="width" constant="350" id="XUF-wB-FmE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
                                 <state key="normal" title="New">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -346,19 +346,42 @@
                                     <segue destination="fmo-bL-jx8" kind="show" identifier="toMainNew" id="Fen-4l-FZY"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved projects" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0WL-IB-DXQ">
+                                <rect key="frame" x="259" y="81" width="250" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Wq6-Eg-VGQ"/>
+                                    <constraint firstAttribute="height" constant="80" id="wdz-24-aTQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nan" translatesAutoresizingMaskIntoConstraints="NO" id="bgi-Xm-XqS">
+                                <rect key="frame" x="668" y="81" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="7q2-zn-tiE"/>
+                                    <constraint firstAttribute="height" constant="80" id="pgL-wN-pFt"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9ic-CC-RdG" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="Ywv-H0-3Dr"/>
-                            <constraint firstItem="9ic-CC-RdG" firstAttribute="top" secondItem="mal-aC-C0l" secondAttribute="bottom" constant="56" id="h4I-P7-JJ1"/>
-                            <constraint firstItem="mal-aC-C0l" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="jg7-C0-0kH"/>
-                            <constraint firstItem="mal-aC-C0l" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="85" id="xns-cE-fZx"/>
+                            <constraint firstItem="bgi-Xm-XqS" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="61" id="2p3-dl-G8G"/>
+                            <constraint firstItem="muC-Ot-qcD" firstAttribute="bottom" secondItem="9ic-CC-RdG" secondAttribute="bottom" constant="80" id="5Uh-ZR-fLk"/>
+                            <constraint firstItem="9ic-CC-RdG" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="E7k-4M-Uc0"/>
+                            <constraint firstItem="mal-aC-C0l" firstAttribute="top" secondItem="0WL-IB-DXQ" secondAttribute="bottom" constant="20" id="Fj3-Ga-RHq"/>
+                            <constraint firstItem="mal-aC-C0l" firstAttribute="leading" secondItem="muC-Ot-qcD" secondAttribute="leading" constant="165" id="eNf-aT-1Hc"/>
+                            <constraint firstItem="9ic-CC-RdG" firstAttribute="top" secondItem="mal-aC-C0l" secondAttribute="bottom" constant="65" id="lhc-FY-dAS"/>
+                            <constraint firstItem="0WL-IB-DXQ" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="od2-PV-cKu"/>
+                            <constraint firstItem="muC-Ot-qcD" firstAttribute="trailing" secondItem="mal-aC-C0l" secondAttribute="trailing" constant="165" id="rZG-Tq-a2R"/>
+                            <constraint firstItem="bgi-Xm-XqS" firstAttribute="leading" secondItem="0WL-IB-DXQ" secondAttribute="trailing" constant="159" id="xeN-71-IJi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="muC-Ot-qcD"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="newButton" destination="9ic-CC-RdG" id="pzT-oU-4kZ"/>
                         <outlet property="tableView" destination="mal-aC-C0l" id="BMX-1Y-Smc"/>
                     </connections>
                 </viewController>
@@ -396,6 +419,8 @@
     </scenes>
     <resources>
         <image name="delete" width="512" height="512"/>
+        <image name="menu" width="25" height="25"/>
+        <image name="nan" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bpV-t2-4bs"/>

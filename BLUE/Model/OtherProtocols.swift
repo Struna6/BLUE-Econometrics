@@ -189,7 +189,7 @@ extension PlayableLoadingScreen{
         animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 400, height: 400)
         animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
         animationView.play()
-        Dispatch.DispatchQueue.global(qos: .background).async {
+        Dispatch.DispatchQueue.global(qos: .utility).async {
             tasksToDoAsync()
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.4) {
@@ -405,7 +405,7 @@ extension UIImage {
     
     func save(_ name: String){
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let url = URL(fileURLWithPath: path).appendingPathComponent(name)
+        let url = URL(fileURLWithPath: path).appendingPathComponent("/Saved Models/Screenshots/" + name)
         try! self.pngData()?.write(to: url)
         print("saved image at \(url)")
     }
@@ -459,7 +459,7 @@ extension UIView{
 extension String {
     
     var stripped: String {
-        let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_[]{}@#$%^&*")
+        let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_[]{}@#$%^&*\n \t;")
         return self.filter {okayChars.contains($0) }
     }
 }

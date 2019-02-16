@@ -8,16 +8,28 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, Storage {
+class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
 
+    @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var filesTab = [String]()
+    var rootCatalogue = [String]()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        filesTab = getListOfFiles()
+        //tableView.separatorColor = UIColor.clear
+        newButton.layer.cornerRadius = 10.0
+        tableView.layer.cornerRadius = 5.0
+        newButton.layer.borderWidth = 1.0
+        tableView.layer.borderWidth = 0.5
+        //createDirectories()
+        rootCatalogue = getListOfFilesRoot()
+
+        checkIfFirstLoad()
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMain"{
@@ -35,6 +47,34 @@ class FirstViewController: UIViewController, Storage {
             target.openedFilePath = url.path
         }
     }
+    
+    func checkIfFirstLoad(){
+        if defaults.bool(forKey: "firstOpen"){
+            if !rootCatalogue.contains("Saved Models") || !rootCatalogue.contains("Sample Models") || !rootCatalogue.contains("Import data"){
+                createDirectories()
+                filesTab = getListOfFiles()
+            }else{
+                filesTab = getListOfFiles()
+            }
+        }else{
+            defaults.set(true, forKey: "firstOpen")
+            createDirectories()
+            filesTab = getListOfFiles()
+        }
+    }
+    
+    func createDirectories(){
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path
+        do{
+            try FileManager.default.createDirectory(atPath: url+"/Saved Models", withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: url+"/Sample Models", withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: url+"/Import data", withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: url+"/Saved Models/Screenshots", withIntermediateDirectories: true, attributes: nil)
+        }catch {
+            fatalError("unable to create")
+        }
+    }
+    
 }
 
 extension FirstViewController : UITableViewDelegate, UITableViewDataSource{
@@ -45,6 +85,7 @@ extension FirstViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         let text = filesTab[indexPath.row]
+        cell.textLabel?.textAlignment = .center
         cell.textLabel?.text = String(text[..<text.index(text.endIndex, offsetBy: -6)])
         return cell
     }

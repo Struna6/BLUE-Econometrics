@@ -116,20 +116,23 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     // MARK: Getter that updates everything after loading new data
     var newPath = ""{
         didSet{
-            if newPath.contains(".csv"){
-                model = Model(path: newPath)
-            }else{
-                model = Model(withHeaders: false, observationLabeled: false, path: newPath)
-            }
-            newModel = true
-            let _ = parametersResults
-            chooseYTableView.reloadData()
-            chooseXTableView.reloadData()
-            topTableView.reloadData()
             topTableView.isHidden = true
             topLabel.isHidden = true
             chosenY.removeAll()
             chosenX.removeAll()
+            playLoadingAsync(tasksToDoAsync: {
+                if self.newPath.contains(".csv"){
+                    self.model = Model(path: self.newPath)
+                }else{
+                    self.model = Model(withHeaders: false, observationLabeled: false, path: self.newPath)
+                }
+            }, tasksToMainBack: {
+                self.newModel = true
+                //let _ = parametersResults
+                self.chooseYTableView.reloadData()
+                self.chooseXTableView.reloadData()
+                self.topTableView.reloadData()
+            }, mainView: self.view)  
         }
     }
     // MARK: Deinit that delete views in background
@@ -216,17 +219,22 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                     text = alertController.textFields![0].text!
                     if text.count > 3{
                         if !self.exists(fileName: text){
-                            self.model.name = text
-                            self.save(object: self.model, fileName: text)
-                            self.openedFileName = text
-                            let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                            let name = text + ".plist"
-                            let url = path.appendingPathComponent(name)
-                            self.openedFilePath = url.path
+                            if self.getListOfFiles().contains(text + ".plist"){
+                                self.playErrorScreen(msg: "File exists!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
+                            }else{
+                                self.model.name = text
+                                self.save(object: self.model, fileName: text)
+                                self.openedFileName = text
+                                let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                                let name = "/Saved Models/" + text + ".plist"
+                                let url = path.appendingPathComponent(name)
+                                self.openedFilePath = url.path
+                                self.model.name = url.path
+                            }
+                            
                         }else{
                             self.playErrorScreen(msg: "File exists!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
                         }
-                        
                     }else{
                         self.playErrorScreen(msg: "Wrong file name!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
                     }
@@ -393,7 +401,11 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     func loadSavedModel(){
         self.chosenY = model.chosenYHeader
         self.chosenX = model.chosenXHeader
-        parametersResultsLoad()
+        playLoadingAsync(tasksToDoAsync: {
+            self.parametersResultsLoad()
+        }, tasksToMainBack: {
+            self.topTableView.reloadData()
+        }, mainView: self.view)
     }
     
     @objc func longPressOnTableView(_ sender: UIGestureRecognizer){

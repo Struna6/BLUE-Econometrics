@@ -84,6 +84,7 @@ extension ImportableFromTextFile where Self==Model{
                 if tmpI.contains(","){
                     tmpI = String(tmpI.map{$0 == "," ? "." : $0})
                 }
+                tmpI = tmpI.stripped
                 tmpDouble.append(Double(tmpI)!)
             }
             if tmpDouble.count > 0{
@@ -91,7 +92,6 @@ extension ImportableFromTextFile where Self==Model{
                 observations.append(tmp)
             }
             k = k + 1
-            
         }
         return(headers,observations.count,observations,labeled,headered)
     }
