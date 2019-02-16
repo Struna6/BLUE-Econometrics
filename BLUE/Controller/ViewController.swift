@@ -309,10 +309,15 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 i = i + 1
             }
             tmpX.insert([Double](repeating: 1.0, count: model.n), at: 0)
-            var tmp = [[Double]]()
-            tmpX.forEach(){row in
-                tmp.append(row)
+            var tmp = Array(repeating: Array(repeating: 0.0, count: tmpX.count), count: tmpX[0].count)
+            
+            for row in 0..<tmp.count{
+                for col in 0..<tmp[0].count{
+                    tmp[row][col] = tmpX[col][row]
+                }
             }
+            
+            
             model.chosenX = tmp
             //model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX

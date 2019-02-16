@@ -21,7 +21,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         "Data Analysis": ["Correlations", "Data info"],
         "Regression": ["Parameters", "Testing"],
         "Comparing" : ["Compare Created Models"],
-        "Other Models" : ["Instrumental Variables", "Logit", "Probit"],
+        "Other Models" : ["Instrumental Variables", "Logit", "Segment Model"],
         "Settings" : ["User Settings"]
     ]
     var allObservations = true
@@ -99,6 +99,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             toCompare()
         case 50:
             performSegue(withIdentifier: "toOther", sender: self)
+        case 51:
+            performSegue(withIdentifier: "toLogit", sender: self)
         default: break
         }
     }
@@ -330,6 +332,11 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         else if segue.identifier == "toOther"{
             let target = segue.destination as! OtherEstimationVC
             target.model = self.model
+        }
+        else if segue.identifier == "toLogit"{
+            let target = segue.destination as! OtherEstimationVC
+            target.model = self.model
+            target.isLogit = true
         }
     }
     

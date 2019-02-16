@@ -7,18 +7,208 @@
 //
 
 import Foundation
+import Surge
 
-protocol LogProb{
-    func isYBinnary() -> Bool
+
+protocol LogProb : OLSCalculable, Statisticable{
+    func logEstimatedY(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]
+    func logSR(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]
+    func logSSR(nGroup : [Double], success : [Double], X : [[Double]]) -> Double
+    func logSe(nGroup : [Double], success : [Double], X : [[Double]]) -> Double
+    func logSEB(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]
+    
+    func calculateLogitCountedR(nGroup : [Double], success : [Double], X : [[Double]]) -> [String : Double]
+    
+    func getLogitEquation(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]
+    func getProbitEquation(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]
 }
 
-extension LogProb where Self==Model{    
-    func isYBinnary() -> Bool{
-        for i in 0..<n{
-            if flatY[i] != 0.0 && flatY[i] != 1.0{
+extension LogProb where Self==Model{
+    func logEstimatedY(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]{
+        var returnTmp = [Double]()
+        var tmpY = [[Double]]()
+        tmpY.append(getLogitEquation(nGroup: nGroup, success: success, X: X))
+        let Y = Matrix<Double>(tmpY)
+        let X = Matrix<Double>(chosenX)
+        let result = mul(X, y: Surge.transpose(Y))
+        result.forEach({ (slice) in
+            returnTmp.append(Array(slice)[0])
+        })
+        return returnTmp
+    }
+    func logSR(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]{
+        var tmp = [Double]()
+        var logFlatY = [Double]()
+        
+        for i in 0..<nGroup.count{
+            let tmp = success[i]/nGroup[i]
+            if tmp < 0.0 || tmp > 1.0{
+                return [Double.nan]
+            }else{
+                logFlatY.append(tmp)
+            }
+        }
+        
+        for i in 0..<flatY.count{
+            tmp.append(pow((logFlatY[i]-logEstimatedY(nGroup: nGroup, success: success, X: X)[i]), 2.0))
+        }
+        return tmp
+    }
+    func logSSR(nGroup : [Double], success : [Double], X : [[Double]]) -> Double{
+        return sum(logSR(nGroup: nGroup, success: success, X: X))
+    }
+    func logSe(nGroup : [Double], success : [Double], X : [[Double]]) -> Double{
+        return sqrt(1.0/((Double(n)-Double(k)-1.0))*logSSR(nGroup: nGroup, success: success, X: X))
+    }
+    func logSEB(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double] {
+        let se = logSe(nGroup: nGroup, success: success, X: X)
+        let X = Matrix<Double>(chosenX)
+        let XT = transpose(X)
+        let matrix = mul((se*se), x: inv(mul(XT, y: X)))
+        var result = [Double]()
+        var i = 0
+        matrix.forEach { (row) in
+            result.append(Array(row)[i])
+            i = i + 1
+        }
+        return result
+    }
+    
+    func calculateLogitCountedR(nGroup : [Double], success : [Double], X : [[Double]]) -> [String : Double]{
+        var dict = [String : Double]()
+        var pTrue = [Double]()
+        for i in 0..<nGroup.count{
+            let tmp = success[i]/nGroup[i]
+            if tmp < 0.0 || tmp > 1.0{
+                return ["Error" : Double.nan]
+            }else{
+                pTrue.append(tmp)
+            }
+        }
+        let pEst = logEstimatedY(nGroup: nGroup, success: success, X: X)
+        
+        let truePositive = pTrue.filter(){
+            if $0 > 0.5{
+                return true
+            }else{
                 return false
             }
         }
-        return true
+        let trueNegative = pTrue.filter(){
+            if $0 <= 0.5{
+                return true
+            }else{
+                return false
+            }
+        }
+        let estPositive = pEst.filter(){
+            if $0 > 0.5{
+                return true
+            }else{
+                return false
+            }
+        }
+        let estNegative = pEst.filter(){
+            if $0 <= 0.5{
+                return true
+            }else{
+                return false
+            }
+        }
+        
+        
+        dict.updateValue(Double(truePositive.count), forKey: "True Positive")
+        dict.updateValue(Double(trueNegative.count), forKey: "True Negative")
+        dict.updateValue(Double(estPositive.count), forKey: "Estimated Positive")
+        dict.updateValue(Double(estNegative.count), forKey: "Estimated Negative")
+        if truePositive.count != 0{
+            dict.updateValue(Double(estPositive.count / truePositive.count), forKey: "True Positive Rate")
+        }
+        if trueNegative.count != 0 {
+            dict.updateValue(Double(estNegative.count / trueNegative.count), forKey: "True Negative Rate")
+        }
+        
+        return dict
+    }
+    
+    func getLogitEquation(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]{
+        var p = [Double]()
+        for i in 0..<nGroup.count{
+            let tmp = success[i]/nGroup[i]
+            if tmp < 0.0 || tmp > 1.0{
+                return [Double.nan]
+            }else{
+                p.append(tmp)
+            }
+        }
+        
+        var Ltmp = [Double]()
+        p.forEach(){
+            Ltmp.append(log(1/(1 - $0)))
+        }
+        
+        var L2 = [[Double]]()
+        Ltmp.forEach(){
+            L2.append([$0])
+        }
+        let L = Matrix(L2)
+        
+        var om = Array(repeating: Array(repeating: 0.0, count: p.count), count: p.count)
+        for i in 0..<om.count{
+            om[i][i] = 1 / nGroup[i] * p[i] * (1 - p[i])
+        }
+        
+        let omega = Matrix(om)
+        let X = Matrix(X)
+        
+        let b = mul(mul(mul(inv(mul(mul(transpose(X), y: inv(omega)),y: X)),y:transpose(X)),y:inv(omega)),y: L)
+        
+        var result = [Double]()
+        b.forEach { (array) in
+            array.forEach(){
+                result.append($0)
+            }
+        }
+        return result
+    }
+    func getProbitEquation(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double]{
+        var p = [Double]()
+        for i in 0..<nGroup.count{
+            let tmp = success[i]/nGroup[i]
+            if tmp < 0.0 || tmp > 1.0{
+                return [Double.nan]
+            }else{
+                p.append(tmp)
+            }
+        }
+        
+        var Ltmp = [Double]()
+        p.forEach(){
+            Ltmp.append(normalInverseCDF(p: $0))
+        }
+        
+        var L2 = [[Double]]()
+        Ltmp.forEach(){
+            L2.append([$0])
+        }
+        let L = Matrix(L2)
+        
+        var om = Array(repeating: Array(repeating: 0.0, count: p.count), count: p.count)
+        for i in 0..<om.count{
+            om[i][i] = 1 / nGroup[i] * p[i] * (1 - p[i])
+        }
+        
+        let omega = Matrix(om)
+        let X = Matrix(X)
+        
+        let b = mul(mul(mul(inv(mul(mul(transpose(X), y: inv(omega)),y: X)),y:transpose(X)),y:inv(omega)),y: L)
+        
+        var result = [Double]()
+        b.forEach { (array) in
+            array.forEach(){
+                result.append($0)
+            }
+        }
+        return result
     }
 }

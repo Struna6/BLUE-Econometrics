@@ -22,6 +22,9 @@ class OtherEstimationVC: UIViewController {
     @IBOutlet weak var tableViewInstr: UITableView!
     @IBOutlet weak var viewToBlur: UIVisualEffectView!
     
+    
+    var isLogit = false
+    var logitToChoose = [String]()
     var model = Model()
     var chosenZHeader = [String]()
     var chosenZInstrumentsHeader = [String]()
@@ -109,6 +112,16 @@ class OtherEstimationVC: UIViewController {
         parametersView.layer.cornerRadius = 10
         popUpView.layer.cornerRadius = 10
         instrumentsToChoose = model.headers
+        
+        if isLogit{
+            labelToChoose1.text = "Choose variable for n"
+            labelToChoose2.text = "Choose variable for success"
+            logitToChoose = model.headers
+            model.chosenXHeader.forEach(){
+                logitToChoose.remove(at: logitToChoose.firstIndex(of: $0)!)
+            }
+        }
+        
         model.chosenXHeader.forEach(){
             instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: $0)!)
         }
@@ -134,6 +147,8 @@ class OtherEstimationVC: UIViewController {
     @IBAction func backParametersView(_ sender: UIButton) {
         closeParametersView()
     }
+    @IBOutlet weak var labelToChoose1: UILabel!
+    @IBOutlet weak var labelToChoose2: UILabel!
     @IBAction func closeChooseZ(_ sender: UIButton) {
         if !chosenZHeader.isEmpty && !chosenZInstrumentsHeader.isEmpty{
             self.tableView.isHidden = false
@@ -174,7 +189,12 @@ class OtherEstimationVC: UIViewController {
             self.popUpView.removeFromSuperview()
         }
         if !chosenZHeader.isEmpty && !chosenZInstrumentsHeader.isEmpty{
-            instrumentsCalculate()
+            if isLogit{
+                logitCalculate()
+            }else{
+               instrumentsCalculate()
+            }
+            
         }
     }
     
@@ -230,7 +250,6 @@ class OtherEstimationVC: UIViewController {
                 }
             }
         }
-        topLabel.text = tmpEq
         
         var tmpXText = String()
         self.chosenZHeader.forEach { (str) in
@@ -248,6 +267,52 @@ class OtherEstimationVC: UIViewController {
         parametersResults.append(ModelParameters(name: "Hausmann Test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.HausmannTest(Z: Z), description: "The Hausman Test (also called the Hausman specification test) detects endogenous regressors (predictor variables) in a regression model. Endogenous variables have values that are determined by other variables in the system. Having endogenous regressors in a model will cause ordinary least squares estimators to fail, as one of the assumptions of OLS is that there is no correlation between an predictor variable and the error term. Instrumental variables estimators can be used as an alternative in this case. However, before you can decide on the best regression method, you first have to figure out if your predictor variables are endogenous. This is what the Hausman test will do.", imageName: "CHI", videoName: "sampleVideo", variable: nil))
         parametersResults.append(ModelParameters(name: "Sargan–Hansen test", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.SarganTest(instruments: instruments, p: Double(numsToAdd.count-numsToDel.count)), description: "The Sargan test is based on the assumption that model parameters are identified via a priori restrictions on the coefficients, and tests the validity of over-identifying restrictions. The test statistic can be computed from residuals from instrumental variables regression by constructing a quadratic form based on the cross-product of the residuals and exogenous variables.[4]:132–33 Under the null hypothesis that the over-identifying restrictions are valid, the statistic is asymptotically distributed as a chi-square variable with (m−k)degrees of freedom (where m is the number of instruments and k is the number of endogenous variables).", imageName: "CHI", videoName: "sampleVideo", variable: nil))
         parametersResults.append(ModelParameters(name: "Weak Instruments test", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.FTestInstruments(instruments: instruments), description: "Weak instruments can produce biased IV estimators and hypothesis tests with large size distortions. But what, precisely, are weak instruments, and how does one detect them in practice? This paper proposes quantitative definitions of weak instruments based on the maximum IV estimator bias, or the maximum Wald test size distortion, when there are multiple endogenous regressors. We tabulate critical values that enable using the first-stage F-statistic (or, when there are multiple endogenous regressors, the Cragg–Donald [1993] statistic) to test whether the given instruments are weak.", imageName: "F", videoName: "sampleVideo", variable: nil))
+        tableView.reloadData()
+    }
+    
+    private func logitCalculate(){
+        self.tableView.isHidden = false
+        self.topLabel.isHidden = false
+        
+        var nGroup = [Double]()
+        var success = [Double]()
+        
+        let numGroup = model.headers.firstIndex(of: chosenZHeader.first!)!
+        let numSuccess = model.headers.firstIndex(of: chosenZInstrumentsHeader.first!)!
+        
+        for i in 0..<model.allObservations.count{
+            nGroup.append(model.allObservations[i].observationArray[numGroup])
+            success.append(model.allObservations[i].observationArray[numSuccess])
+        }
+        
+        var tmpEq = String()
+        let eq = model.getLogitEquation(nGroup: nGroup, success: success, X: model.chosenX)
+        for i in 0..<eq.count{
+            if i==0{
+                tmpEq = tmpEq + String(format:"%.2f",eq[0])
+            }else{
+                let num = eq[i]
+                if num>=0{
+                    tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                }else{
+                    tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                }
+            }
+        }
+        
+        var tmpXText = String()
+        model.chosenXHeader.forEach { (str) in
+            tmpXText = tmpXText + " " + str
+        }
+        
+        topLabel.text = "Regressand: \(chosenZHeader[0]) / \(chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
+        
+        parametersResults.removeAll()
+        let dict = model.calculateLogitCountedR(nGroup: nGroup, success: success, X: model.chosenX)
+        dict.forEach { (arg0) in
+            let (key, value) = arg0
+            parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "n statistics, the logistic model (or logit model) is a widely used statistical model that, in its basic form, uses a logistic function to model a binary dependent variable; many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model; it is a form of binomial regression. Mathematically, a binary logistic model has a dependent variable with two possible values, such as pass/fail, win/lose, alive/dead or healthy/sick; these are represented by an indicator variable, where the two values are labeled \"0\" and \"1\". In the logistic model, the log-odds (the logarithm of the odds) for the value labeled \"1\" is a linear combination of one or more independent variables (\"predictors\"); the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value). The corresponding probability of the value labeled \"1\" can vary between 0 (certainly the value \"0\") and 1 (certainly the value \"1\"), hence the labeling; the function that converts log-odds to probability is the logistic function, hence the name. ", imageName: "logit", videoName: "sampleVideo", variable: nil))
+        }
         tableView.reloadData()
     }
     
@@ -311,40 +376,74 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.tableView{
-            return parametersCategorized[section].count
-        }else if tableView == self.tableViewX{
-            return model.chosenXHeader.count
+        if isLogit{
+            if tableView == self.tableView{
+                return parametersCategorized[section].count
+            }else{
+                return logitToChoose.count
+            }
         }else{
-            return instrumentsToChoose.count
+            if tableView == self.tableView{
+                return parametersCategorized[section].count
+            }else if tableView == self.tableViewX{
+                return model.chosenXHeader.count
+            }else{
+                return instrumentsToChoose.count
+            }
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
-        if tableView == self.tableView{
-            let par = parametersCategorized[indexPath.section][indexPath.row]
-            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
-            
-            switch indexPath.section{
-            case 0:
-                cell.imageView?.image = UIImage.init(named: "critical")
-            case 1:
-                cell.imageView?.image = UIImage.init(named: "warning")
-            case 2:
-                cell.imageView?.image = UIImage.init(named: "ok")
-            case 3:
-                cell.textLabel?.text = par.name
-                cell.textLabel?.textColor = UIColor.red
-                cell.imageView?.image = UIImage.init(named: "nan")
-            default:break
+        if isLogit{
+            if tableView == self.tableView{
+                let par = parametersCategorized[indexPath.section][indexPath.row]
+                cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+                
+                switch indexPath.section{
+                case 0:
+                    cell.imageView?.image = UIImage.init(named: "critical")
+                case 1:
+                    cell.imageView?.image = UIImage.init(named: "warning")
+                case 2:
+                    cell.imageView?.image = UIImage.init(named: "ok")
+                case 3:
+                    cell.textLabel?.text = par.name
+                    cell.textLabel?.textColor = UIColor.red
+                    cell.imageView?.image = UIImage.init(named: "nan")
+                default:break
+                }
+            }else{
+                cell.textLabel?.text = logitToChoose[indexPath.row]
             }
-        }else if tableView == self.tableViewX{
-            cell.textLabel?.text = model.chosenXHeader[indexPath.row]
+            return cell
         }else{
-            cell.textLabel?.text = instrumentsToChoose[indexPath.row]
+            if tableView == self.tableView{
+                let par = parametersCategorized[indexPath.section][indexPath.row]
+                cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+                
+                switch indexPath.section{
+                case 0:
+                    cell.imageView?.image = UIImage.init(named: "critical")
+                case 1:
+                    cell.imageView?.image = UIImage.init(named: "warning")
+                case 2:
+                    cell.imageView?.image = UIImage.init(named: "ok")
+                case 3:
+                    cell.textLabel?.text = par.name
+                    cell.textLabel?.textColor = UIColor.red
+                    cell.imageView?.image = UIImage.init(named: "nan")
+                default:break
+                }
+            }else if tableView == self.tableViewX{
+                cell.textLabel?.text = model.chosenXHeader[indexPath.row]
+            }else{
+                cell.textLabel?.text = instrumentsToChoose[indexPath.row]
+            }
+            return cell
         }
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
