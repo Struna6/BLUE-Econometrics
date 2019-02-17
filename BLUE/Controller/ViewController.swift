@@ -16,6 +16,7 @@ import AVKit
 
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
+    
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var topTableView: UITableView!
@@ -136,6 +137,12 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             playShortAnimationOnce(mainViewController: self)
         }
     }
+    @IBAction func goToFirstView(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: {
+            self.navigationController?.popToRootViewController(animated: true)
+        })
+    }
+    
     // MARK: Deinit that delete views in background
     // MARK: Init
     override func viewDidLoad() {
@@ -271,7 +278,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             targetVC.sendBackSpreedVCDelegate = self
         }
         if segue.identifier == "back"{
-            dismissAllViews()
+            //dismissAllViews()
         }
     }
     

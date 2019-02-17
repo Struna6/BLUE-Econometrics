@@ -11,6 +11,7 @@ import Foundation
 protocol Storage{
     var path : URL {get}
     func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?)
+    func copy(toPath: URL)
     func get<T: Decodable>(fileName : String) -> T
     func get<T: Decodable>(path : String) -> T
     func remove(fileName : String)
@@ -43,6 +44,27 @@ extension Storage{
         } catch {
             print("error saving!")
         }
+    }
+    func copy(toPath: URL){
+        let fileMenager = FileManager.default
+        let loc1 = path
+        //let loc1 = path.appendingPathComponent("/Saved Models")
+        let loc2 = toPath.appendingPathComponent("/BLUE Documents")
+        if fileMenager.fileExists(atPath: loc2.path){
+            do{
+                try fileMenager.removeItem(at: loc2)
+                try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
+            }catch{
+                print("error")
+            }
+        }else{
+            do{
+                try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
+            }catch{
+                print("error")
+            }
+        }
+        
     }
     func get<T: Decodable>(fileName : String) -> T{
         let url = path.appendingPathComponent("/Saved Models/" + fileName)
@@ -97,7 +119,6 @@ extension Storage{
         let tab = tabTmp.filter{$0.contains(".plist") && $0.count>6}
         return tab
     }
-    
     func getListOfFilesRoot() -> [String]{
         var tabTmp = [String]()
         do{
@@ -105,8 +126,10 @@ extension Storage{
         }catch{
             fatalError(error.localizedDescription)
         }
-        let tab = tabTmp.filter{$0.contains(".plist") && $0.count>6}
-        return tab
+        if let index = tabTmp.firstIndex(of: ".Trash"){
+            tabTmp.remove(at: index)
+        }
+        return tabTmp
     }
 }
 

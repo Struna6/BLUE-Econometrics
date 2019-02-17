@@ -23,11 +23,10 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
         //tableView.separatorColor = UIColor.clear
         newButton.layer.cornerRadius = 10.0
         tableView.layer.cornerRadius = 5.0
-        newButton.layer.borderWidth = 1.0
+        newButton.layer.borderWidth = 0.0
         tableView.layer.borderWidth = 0.5
         //createDirectories()
         rootCatalogue = getListOfFilesRoot()
-
         checkIfFirstLoad()
         
     }
@@ -45,6 +44,12 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
             let name = fileName + ".plist"
             let url = path.appendingPathComponent(name)
             target.openedFilePath = url.path
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
         }
     }
     

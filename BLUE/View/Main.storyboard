@@ -167,16 +167,21 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nei-lb-0dK">
-                            <rect key="frame" x="247.5" y="733" width="105" height="35"/>
+                            <rect key="frame" x="200" y="718" width="200" height="50"/>
                             <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="uyd-O5-SyI"/>
-                                <constraint firstAttribute="width" constant="105" id="wA0-J8-4Tl"/>
+                                <constraint firstAttribute="height" constant="50" id="uyd-O5-SyI"/>
+                                <constraint firstAttribute="width" constant="200" id="wA0-J8-4Tl"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                             <state key="normal" title="Back">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cordnerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="backButtonPressed:" destination="Ykk-CW-2fc" eventType="touchUpInside" id="YQq-FI-fcW"/>
                             </connections>
@@ -369,18 +374,24 @@
                             </connections>
                         </pickerView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hg5-zz-cqK">
-                            <rect key="frame" x="172.5" y="495" width="105" height="35"/>
+                            <rect key="frame" x="125" y="480" width="200" height="50"/>
                             <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="RHR-0A-hCN"/>
-                                <constraint firstAttribute="width" constant="105" id="Tfx-gT-YTt"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="hse-wI-dnQ"/>
-                                <constraint firstAttribute="height" constant="35" id="sUc-rV-QfE"/>
+                                <constraint firstAttribute="width" constant="200" id="Tfx-gT-YTt"/>
+                                <constraint firstAttribute="height" constant="50" id="sUc-rV-QfE"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                             <state key="normal" title="Accept">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cordnerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="normAccept:" destination="Z3e-Hd-hZE" eventType="touchUpInside" id="vhx-QY-i1T"/>
                             </connections>
@@ -481,16 +492,24 @@
                             </connections>
                         </pickerView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdd-3P-VsX">
-                            <rect key="frame" x="189" y="450" width="105" height="35"/>
+                            <rect key="frame" x="141.5" y="438" width="200" height="50"/>
                             <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="2My-Ey-nG9"/>
-                                <constraint firstAttribute="width" constant="105" id="Dxy-Ra-ZKf"/>
+                                <constraint firstAttribute="height" constant="50" id="2My-Ey-nG9"/>
+                                <constraint firstAttribute="width" constant="200" id="Dxy-Ra-ZKf"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                             <state key="normal" title="Accept">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cordnerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="acceptButtonPressed:" destination="Z3e-Hd-hZE" eventType="touchUpInside" id="BE0-FE-pql"/>
                             </connections>
@@ -525,7 +544,6 @@
                         <constraint firstItem="8x2-ZC-Z7V" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="ORN-5O-OxW"/>
                         <constraint firstItem="yDN-wR-HwX" firstAttribute="leading" secondItem="sgb-VU-0U4" secondAttribute="leading" constant="46" id="eHc-QY-FFL"/>
                         <constraint firstItem="FOQ-0q-Q5m" firstAttribute="top" secondItem="sgb-VU-0U4" secondAttribute="top" constant="15" id="eeX-a6-3Fs"/>
-                        <constraint firstItem="vdd-3P-VsX" firstAttribute="top" secondItem="jJd-aE-7M5" secondAttribute="bottom" constant="46" id="evc-qH-cN6"/>
                         <constraint firstItem="pZ3-Rv-req" firstAttribute="leading" secondItem="sgb-VU-0U4" secondAttribute="leading" constant="47" id="fUL-FW-Ytq"/>
                         <constraint firstItem="yDN-wR-HwX" firstAttribute="top" secondItem="8x2-ZC-Z7V" secondAttribute="bottom" constant="13" id="lIA-W8-o5C"/>
                         <constraint firstItem="jJd-aE-7M5" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="lnP-l2-6tg"/>
@@ -533,6 +551,7 @@
                         <constraint firstItem="vdd-3P-VsX" firstAttribute="centerX" secondItem="DRX-5x-d6O" secondAttribute="centerX" id="qfG-Nj-cOJ"/>
                         <constraint firstItem="sgb-VU-0U4" firstAttribute="trailing" secondItem="V1W-wK-6kV" secondAttribute="trailing" constant="10" id="uYz-SS-ah6"/>
                         <constraint firstItem="yDN-wR-HwX" firstAttribute="top" secondItem="pZ3-Rv-req" secondAttribute="bottom" constant="144" id="vqx-Tg-rc7"/>
+                        <constraint firstItem="sgb-VU-0U4" firstAttribute="bottom" secondItem="vdd-3P-VsX" secondAttribute="bottom" constant="20" id="wqF-5m-Ozl"/>
                         <constraint firstItem="pZ3-Rv-req" firstAttribute="top" secondItem="sgb-VU-0U4" secondAttribute="top" constant="67" id="xux-Wv-zCc"/>
                         <constraint firstItem="8x2-ZC-Z7V" firstAttribute="top" secondItem="pZ3-Rv-req" secondAttribute="bottom" constant="22" id="zSO-Ef-alX"/>
                     </constraints>
@@ -665,16 +684,24 @@
                             </connections>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIF-Fc-Epe">
-                            <rect key="frame" x="287.5" y="445" width="105" height="35"/>
+                            <rect key="frame" x="240" y="430" width="200" height="50"/>
                             <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="105" id="EM2-HX-QLh"/>
-                                <constraint firstAttribute="height" constant="35" id="qG1-KY-V99"/>
+                                <constraint firstAttribute="width" constant="200" id="EM2-HX-QLh"/>
+                                <constraint firstAttribute="height" constant="50" id="qG1-KY-V99"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                             <state key="normal" title="Accept">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cordnerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="editDissmiss:" destination="zTb-dS-IZN" eventType="touchUpInside" id="whA-hd-OhZ"/>
                             </connections>
@@ -755,16 +782,24 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uR7-v6-LDU">
-                            <rect key="frame" x="247.5" y="715" width="105" height="35"/>
+                            <rect key="frame" x="200" y="700" width="200" height="50"/>
                             <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="SJD-ue-G2S"/>
-                                <constraint firstAttribute="width" constant="105" id="hla-46-sxc"/>
+                                <constraint firstAttribute="height" constant="50" id="SJD-ue-G2S"/>
+                                <constraint firstAttribute="width" constant="200" id="hla-46-sxc"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                             <state key="normal" title="Back">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cordnerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="backButtonPressed:" destination="Ykk-CW-2fc" eventType="touchUpInside" id="mEu-6I-2tJ"/>
                                 <action selector="backParametersView:" destination="zTb-dS-IZN" eventType="touchUpInside" id="hZF-7s-1Zo"/>

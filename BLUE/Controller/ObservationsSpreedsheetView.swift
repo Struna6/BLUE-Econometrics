@@ -168,7 +168,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         normView.layer.cornerRadius = 10
         viewToBlur.effect = nil
         optionsBasedOn = headers
-        optionsBasedOn.insert("All", at: 0)
+        //optionsBasedOn.insert("All", at: 0)
         optionsBasedOn.append("nothing")
         optionsFunction = ["Logarithm", "Power of 2", "Squere root","Exponent"]
         choosenFunction = "Logarithm"
@@ -483,6 +483,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func loadNormObservationsView(){
+        optionsBasedOn.insert("All", at: 0)
         self.view.addSubview(normView)
         viewToBlur.isHidden = false
         normView.alpha = 0
@@ -496,6 +497,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func closeNormObservationsView(){
+        optionsBasedOn.remove(at: 0)
         viewToBlur.isHidden = true
         UIView.animate(withDuration: 0.4, animations: {
             self.normView.transform = CGAffineTransform(translationX: 0.0, y: 300)

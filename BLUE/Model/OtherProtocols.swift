@@ -226,7 +226,7 @@ extension PlayableLoadingScreen{
         animationView.animationSpeed = 1.5
         animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
         
-        animationView.play(fromProgress: 0.0, toProgress: 1.0, withCompletion: { (complete: Bool) in
+        animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
             animationView.stop()
             UIView.animate(withDuration: 0.05) {
                 visualViewToBlur.isHidden = true
@@ -490,10 +490,27 @@ extension UIView{
 }
 
 extension String {
-    
     var stripped: String {
         let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_[]{}@#$%^&*\n \t;")
         return self.filter {okayChars.contains($0) }
     }
 }
 
+@IBDesignable extension UIButton{
+    @IBInspectable var cordnerRadius : CGFloat{
+        set{
+            layer.cornerRadius = newValue
+        }
+        get{
+            return layer.cornerRadius
+        }
+    }
+    @IBInspectable var cornerWidth : CGFloat{
+        set{
+            layer.borderWidth = newValue
+        }
+        get{
+            return layer.borderWidth
+        }
+    }
+}
