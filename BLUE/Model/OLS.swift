@@ -11,18 +11,24 @@ import Accelerate
 import Surge
 import CSV
 
+enum ImportError : String, Error{
+    case readingFileError = "Reading file filed!"
+    case wrongValue = "Wrong value, check file!"
+    case doubleError = "Imported value is not a number!"
+    case sizeError = "Size of variables are not the same!"
+}
+
 protocol ImportableFromTextFile{
-    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool)
+    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) throws -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool)
 }
 extension ImportableFromTextFile where Self==Model{
-    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool){
+    func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) throws -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool){
         //let path = Bundle.main.path(forResource: "test1", ofType: "txt")
         var text = ""
         do {
             text = try String(contentsOfFile: path, encoding: String.Encoding.macOSRoman)
         } catch  {
-            print("error getting data " + path)
-            fatalError(error.localizedDescription)
+            throw ImportError.readingFileError
         }
         if let range = text.range(of: "f0\\fs24 \\cf0"){
             text = String(text[range.upperBound...])
@@ -39,6 +45,10 @@ extension ImportableFromTextFile where Self==Model{
             result.append(columns)
         }
         let firstRow = result[0]
+        
+        if firstRow.count < 2{
+            throw ImportError.wrongValue
+        }
 //        if firstRow.count < 2{
 //            fatalError("Minimim column number: 2")
 //        }
@@ -63,7 +73,18 @@ extension ImportableFromTextFile where Self==Model{
             }
         }
         var k = 0
-        result.forEach { (row) in
+        
+        var checker = result[0].count
+        
+        try result.forEach(){
+            if $0.count != checker{
+                throw ImportError.sizeError
+            }else{
+                checker = $0.count
+            }
+        }
+        
+        try result.forEach { (row) in
             var tmpRow = row
             var tmp = Observation()
             if k==0 && headered{
@@ -78,7 +99,7 @@ extension ImportableFromTextFile where Self==Model{
                 tmpRow.remove(at: 0)
             }
             var tmpDouble = [Double]()
-            tmpRow.forEach { (i) in
+            try tmpRow.forEach { (i) in
                 var tmpI = i
                 if tmpI.contains("\n"){
                     tmpI.remove(at: tmpI.firstIndex(of: "\n")!)
@@ -87,7 +108,11 @@ extension ImportableFromTextFile where Self==Model{
                     tmpI = String(tmpI.map{$0 == "," ? "." : $0})
                 }
                 tmpI = tmpI.stripped
-                tmpDouble.append(Double(tmpI)!)
+                if let check = Double(tmpI){
+                    tmpDouble.append(check)
+                }else{
+                    throw ImportError.doubleError
+                }
             }
             if tmpDouble.count > 0{
                 tmp.observationArray = tmpDouble
@@ -100,16 +125,15 @@ extension ImportableFromTextFile where Self==Model{
 }
 
 protocol CSVImportable{
-    func loadDataFromCSV(path: String) -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation])
+    func loadDataFromCSV(path: String) throws -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation])
 }
 extension CSVImportable where Self==Model{
-    func loadDataFromCSV(path: String) -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation]){
+    func loadDataFromCSV(path: String) throws -> (labeled : Bool, headered : Bool, headers : [String], observations : [Observation]){
         var text = ""
         do {
             text = try String(contentsOfFile: path, encoding: String.Encoding.isoLatin1)
         } catch  {
-            print("error getting data " + path)
-            fatalError(error.localizedDescription)
+            throw ImportError.readingFileError
         }
         text = String(text.dropFirst())
         text = String(text.dropFirst())
@@ -129,9 +153,11 @@ extension CSVImportable where Self==Model{
             result.append(columns)
         }
         let firstRow = result[0]
+        
         if firstRow.count < 2{
-            fatalError("Minimim column number: 2")
+            throw ImportError.wrongValue
         }
+        
         if firstRow[0] == ""{
             //[0,0] is blank
             labeled = true
@@ -153,7 +179,16 @@ extension CSVImportable where Self==Model{
                 }
         }
         var k = 0
-        result.forEach { (row) in
+        var checker = result[0].count
+        try result.forEach(){
+            if $0.count != checker{
+                throw ImportError.sizeError
+            }else{
+                checker = $0.count
+            }
+        }
+        
+        try result.forEach { (row) in
             var tmpRow = row
             var tmp = Observation()
             if k==0 && headered{
@@ -168,12 +203,16 @@ extension CSVImportable where Self==Model{
                 tmpRow.remove(at: 0)
             }
             var tmpDouble = [Double]()
-            tmpRow.forEach { (i) in
+            try tmpRow.forEach { (i) in
                 var tmpI = i
                 if tmpI.contains(","){
                     tmpI = String(tmpI.map{$0 == "," ? "." : $0})
                 }
-                tmpDouble.append(Double(tmpI)!)
+                if let check = Double(tmpI){
+                    tmpDouble.append(check)
+                }else{
+                    throw ImportError.doubleError
+                }
             }
             if tmpDouble.count > 0{
                 tmp.observationArray = tmpDouble

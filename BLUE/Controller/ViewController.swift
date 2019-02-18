@@ -121,19 +121,32 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             topLabel.isHidden = true
             chosenY.removeAll()
             chosenX.removeAll()
-            playLoadingAsync(tasksToDoAsync: {
-                if self.newPath.contains(".csv"){
-                    self.model = Model(path: self.newPath)
-                }else{
-                    self.model = Model(withHeaders: false, observationLabeled: false, path: self.newPath)
+            if self.newPath.contains(".csv"){
+                do{
+                    model = try Model(path: self.newPath)
+                }catch let er as ImportError{
+                    self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                    self.editButton.isEnabled = false
+                    return
+                }catch{
+                    
                 }
-            }, tasksToMainBack: {
-                self.newModel = true
-                //let _ = parametersResults
-                self.chooseYTableView.reloadData()
-                self.chooseXTableView.reloadData()
-                self.topTableView.reloadData()
-            }, mainView: self.view)
+            }else{
+                do{
+                    model = try Model(withHeaders: false, observationLabeled: false, path: newPath)
+                }catch let er as ImportError{
+                    self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                    self.editButton.isEnabled = false
+                    return
+                }catch{
+                    
+                }
+            }
+            self.newModel = true
+            //let _ = parametersResults
+            self.chooseYTableView.reloadData()
+            self.chooseXTableView.reloadData()
+            self.topTableView.reloadData()
             playShortAnimationOnce(mainViewController: self)
         }
     }

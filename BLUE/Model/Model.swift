@@ -43,29 +43,37 @@ struct Model : OLSTestable, OLSCalculable, IVCalculable, IVTestable, LogProb, Im
     var n = 0
     var k = 0
     
-    init(withHeaders : Bool, observationLabeled : Bool, path : String){
-        let result = importFromTextFile(withHeaders: withHeaders, observationLabeled: observationLabeled, path: path)
-        self.allObservations = result.observations
-        self.n = result.n
-        self.withHeaders = result.headered
-        self.observationLabeled = result.labeled
-        self.k = result.observations[0].observationArray.count
-        if !withHeaders{
-            for i in 0..<allObservations[0].observationArray.count{
-                headers.append(String(UnicodeScalar(i+65)!))
+    init(withHeaders : Bool, observationLabeled : Bool, path : String) throws{
+        do{
+            let result = try importFromTextFile(withHeaders: withHeaders, observationLabeled: observationLabeled, path: path)
+            self.allObservations = result.observations
+            self.n = result.n
+            self.withHeaders = result.headered
+            self.observationLabeled = result.labeled
+            self.k = result.observations[0].observationArray.count
+            if !withHeaders{
+                for i in 0..<allObservations[0].observationArray.count{
+                    headers.append(String(UnicodeScalar(i+65)!))
+                }
             }
+        }catch let er as ImportError{
+            throw er
         }
     }
-    init(path : String){
-        self.withHeaders = false
-        self.observationLabeled = false
-        let result = loadDataFromCSV(path: path)
-        self.allObservations = result.observations
-        self.withHeaders = result.headered
-        self.observationLabeled = result.labeled
-        self.headers = result.headers
-        self.n = allObservations.count
-        self.k = allObservations[0].observationArray.count
+    init(path : String) throws {
+        do{
+            self.withHeaders = false
+            self.observationLabeled = false
+            let result = try loadDataFromCSV(path: path)
+            self.allObservations = result.observations
+            self.withHeaders = result.headered
+            self.observationLabeled = result.labeled
+            self.headers = result.headers
+            self.n = allObservations.count
+            self.k = allObservations[0].observationArray.count
+        }catch let er as ImportError{
+            throw er
+        }
     }
     init(){
         withHeaders = false
