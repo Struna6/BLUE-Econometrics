@@ -31,6 +31,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
     var docPicker = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .open)
     var paths = [String]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         docPicker.delegate = self
@@ -103,6 +104,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             performSegue(withIdentifier: "toLogit", sender: self)
         case 52:
             performSegue(withIdentifier: "toProbit", sender: self)
+        case 60:
+            performSegue(withIdentifier: "toSettings", sender: self)
         default: break
         }
     }

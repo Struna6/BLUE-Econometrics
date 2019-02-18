@@ -168,12 +168,21 @@ extension Statisticable{
 
 
 protocol PlayableLoadingScreen{
+    var ifCanPlay : Bool {get}
+    
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView)
     
     func playShortAnimationOnce(mainViewController : UIViewController, animationName : String?)
 }
 
 extension PlayableLoadingScreen{
+    var ifCanPlay : Bool {
+        get{
+            let defaults = UserDefaults.standard
+            return defaults.bool(forKey: "animations")
+        }
+    }
+    
     func playLoadingAsync(tasksToDoAsync: @escaping () -> Void, tasksToMainBack: @escaping () -> Void, mainView : UIView){
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualViewToBlur.frame = mainView.frame
@@ -206,34 +215,36 @@ extension PlayableLoadingScreen{
     }
     
     func playShortAnimationOnce(mainViewController : UIViewController, animationName : String? = "done"){
-        let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-        visualViewToBlur.frame = mainViewController.view.frame
-        visualViewToBlur.isHidden = true
-        //visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
-        
-        UIView.animate(withDuration: 0.05) {
-            visualViewToBlur.isHidden = false
-            mainViewController.view.addSubview(visualViewToBlur)
-        }
-        
-        let animationView = LOTAnimationView(name: animationName!)
-        mainViewController.view.addSubview(animationView)
-        animationView.loopAnimation = false
-        animationView.sizeToFit()
-        animationView.layer.cornerRadius = 18.0
-        animationView.autoReverseAnimation = false
-        animationView.clipsToBounds = true
-        animationView.animationSpeed = 1.5
-        animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
-        
-        animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
-            animationView.stop()
+        if ifCanPlay{
+            let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+            visualViewToBlur.frame = mainViewController.view.frame
+            visualViewToBlur.isHidden = true
+            //visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
+            
             UIView.animate(withDuration: 0.05) {
-                visualViewToBlur.isHidden = true
-                visualViewToBlur.removeFromSuperview()
-                animationView.removeFromSuperview()
+                visualViewToBlur.isHidden = false
+                mainViewController.view.addSubview(visualViewToBlur)
             }
-        })
+            
+            let animationView = LOTAnimationView(name: animationName!)
+            mainViewController.view.addSubview(animationView)
+            animationView.loopAnimation = false
+            animationView.sizeToFit()
+            animationView.layer.cornerRadius = 18.0
+            animationView.autoReverseAnimation = false
+            animationView.clipsToBounds = true
+            animationView.animationSpeed = 1.5
+            animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
+            
+            animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
+                animationView.stop()
+                UIView.animate(withDuration: 0.05) {
+                    visualViewToBlur.isHidden = true
+                    visualViewToBlur.removeFromSuperview()
+                    animationView.removeFromSuperview()
+                }
+            })
+        }
     }
 }
 
@@ -276,50 +287,54 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
     }
     
     @objc func longTapOnObject(sender: UIGestureRecognizer){
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.clipsToBounds = true
-        button.center = self.object!.center
-        button.backgroundColor = UIColor(red:0.78, green:0.76, blue:0.98, alpha: 0.8)
-        button.layer.borderWidth = 1.0
-        let image = UIImage.init(named: "upload")
-        let imageFilled = UIImage.init(named: "upload_filled")
-        button.setImage(image, for: .normal)
-        button.setImage(imageFilled, for: .selected)
-        button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
-        addActionsToButton(btn : button)
+        let defaults = UserDefaults.standard
         
-        //button.imageView?.contentMode = UIView.ContentMode.center
-        if sender.state == .began{
-            sender.isEnabled = false
-            let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
-            pulseAnimation.duration = 1.2
-            pulseAnimation.toValue = NSNumber(value: 1.08)
-            pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-            pulseAnimation.autoreverses = true
-            pulseAnimation.repeatCount = Float.greatestFiniteMagnitude
+        if defaults.bool(forKey: "longPress"){
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            button.layer.cornerRadius = 0.5 * button.bounds.size.width
+            button.clipsToBounds = true
+            button.center = self.object!.center
+            button.backgroundColor = UIColor(red:0.78, green:0.76, blue:0.98, alpha: 0.8)
+            button.layer.borderWidth = 1.0
+            let image = UIImage.init(named: "upload")
+            let imageFilled = UIImage.init(named: "upload_filled")
+            button.setImage(image, for: .normal)
+            button.setImage(imageFilled, for: .selected)
+            button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
+            addActionsToButton(btn : button)
             
-            UIView.animate(withDuration: 1.0, animations: {
-                self.object!.layer.borderWidth = 0.8
-                self.object!.layer.opacity = 0.8
-            })
-            self.targetViewController!.view.bringSubviewToFront(object! as! UIView)
-            self.object!.layer.add(pulseAnimation, forKey: "scale")
-            self.targetViewController!.view.addSubview(button)
-            
-            Dispatch.DispatchQueue.global(qos: .background).async {
-                sleep(3)
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 1.0, animations: {
-                        button.alpha = 0.0
-                        self.object!.layer.borderWidth = 0.0
-                        self.object!.layer.opacity = 1.0
-                    })
-                    self.object!.layer.removeAllAnimations()
-                    sender.isEnabled = true
-                    self.targetViewController!.view.subviews.forEach(){
-                        if $0 is UIButton{
-                            $0.removeFromSuperview()
+            //button.imageView?.contentMode = UIView.ContentMode.center
+            if sender.state == .began{
+                sender.isEnabled = false
+                let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
+                pulseAnimation.duration = 1.2
+                pulseAnimation.toValue = NSNumber(value: 1.08)
+                pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+                pulseAnimation.autoreverses = true
+                pulseAnimation.repeatCount = Float.greatestFiniteMagnitude
+                
+                UIView.animate(withDuration: 1.0, animations: {
+                    self.object!.layer.borderWidth = 0.8
+                    self.object!.layer.opacity = 0.8
+                })
+                self.targetViewController!.view.bringSubviewToFront(object! as! UIView)
+                self.object!.layer.add(pulseAnimation, forKey: "scale")
+                self.targetViewController!.view.addSubview(button)
+                
+                Dispatch.DispatchQueue.global(qos: .background).async {
+                    sleep(3)
+                    DispatchQueue.main.async {
+                        UIView.animate(withDuration: 1.0, animations: {
+                            button.alpha = 0.0
+                            self.object!.layer.borderWidth = 0.0
+                            self.object!.layer.opacity = 1.0
+                        })
+                        self.object!.layer.removeAllAnimations()
+                        sender.isEnabled = true
+                        self.targetViewController!.view.subviews.forEach(){
+                            if $0 is UIButton{
+                                $0.removeFromSuperview()
+                            }
                         }
                     }
                 }

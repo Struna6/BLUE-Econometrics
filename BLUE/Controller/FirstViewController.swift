@@ -66,6 +66,8 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
             }
         }else{
             defaults.set(true, forKey: "firstOpen")
+            defaults.set(true, forKey: "longPress")
+            defaults.set(true, forKey: "animations")
             createDirectories()
             filesTab = getListOfFiles()
         }

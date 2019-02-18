@@ -27,6 +27,7 @@
 		F9AA8E5B2199B7A400562A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5A2199B7A400562A1F /* Assets.xcassets */; };
 		F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5C2199B7A400562A1F /* LaunchScreen.storyboard */; };
 		F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */; };
+		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
 		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */; };
@@ -60,6 +61,7 @@
 		F9AA8E5D2199B7A400562A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9AA8E5F2199B7A400562A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleChartViewController.swift; sourceTree = "<group>"; };
+		F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				F9AA8E502199B7A200562A1F /* AppDelegate.swift */,
 				F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */,
 				F941DD5421BD37F500CD93BF /* FirstViewController.swift */,
+				F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */,
 				F90FACE921D1157100B1D238 /* Charts */,
 			);
 			path = Controller;
@@ -329,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */,
 				F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */,
 				F90D8322221744A90068D58E /* LogProb.swift in Sources */,
 				F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */,
