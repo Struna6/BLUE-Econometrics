@@ -11,7 +11,7 @@ import Foundation
 protocol Storage{
     var path : URL {get}
     func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?)
-    func copy(toPath: URL)
+    func copyToChosenExternalPath()
     func get<T: Decodable>(fileName : String) -> T
     func get<T: Decodable>(path : String) -> T
     func remove(fileName : String)
@@ -44,27 +44,30 @@ extension Storage{
         } catch {
             print("error saving!")
         }
+        copyToChosenExternalPath()
     }
-    func copy(toPath: URL){
-        let fileMenager = FileManager.default
-        let loc1 = path
-        //let loc1 = path.appendingPathComponent("/Saved Models")
-        let loc2 = toPath.appendingPathComponent("/BLUE Documents")
-        if fileMenager.fileExists(atPath: loc2.path){
-            do{
-                try fileMenager.removeItem(at: loc2)
-                try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
-            }catch{
-                print("error")
-            }
-        }else{
-            do{
-                try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
-            }catch{
-                print("error")
+    func copyToChosenExternalPath(){
+        let defaults = UserDefaults.standard
+        if let toPath = defaults.url(forKey: "externalPathToAutoSave"){
+            let fileMenager = FileManager.default
+            let loc1 = path
+            //let loc1 = path.appendingPathComponent("/Saved Models")
+            let loc2 = toPath.appendingPathComponent("/BLUE Documents")
+            if fileMenager.fileExists(atPath: loc2.path){
+                do{
+                    try fileMenager.removeItem(at: loc2)
+                    try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
+                }catch{
+                    print("error")
+                }
+            }else{
+                do{
+                    try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
+                }catch{
+                    print("error")
+                }
             }
         }
-        
     }
     func get<T: Decodable>(fileName : String) -> T{
         let url = path.appendingPathComponent("/Saved Models/" + fileName)

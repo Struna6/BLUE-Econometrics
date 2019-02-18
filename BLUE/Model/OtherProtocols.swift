@@ -268,7 +268,6 @@ extension ErrorScreenPlayable{
     }
 }
 
-
 class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
     var object : AnyObject?
     var viewToBlur : UIVisualEffectView?
@@ -511,6 +510,7 @@ extension String {
     }
 }
 
+//make storyboard option to edit rounded edges
 @IBDesignable extension UIButton{
     @IBInspectable var cordnerRadius : CGFloat{
         set{

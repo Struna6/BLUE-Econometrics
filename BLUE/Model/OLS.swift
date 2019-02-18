@@ -680,12 +680,12 @@ extension OLSTestable where Self==Model{
         get{
             var tmp = [Double]()
             for i in 0..<SEB.count{
-                let T = getOLSRegressionEquation()[i]/SEB[i]
+                var T = getOLSRegressionEquation()[i]/SEB[i]
+                T = T.magnitude
                 if tvalueLastCalculated.count == k+1{
                     if tvalueLastCalculated[i] == T{
                         tmp.append(tTestvalueLastCalculated[i])
                     }else{
-                        
                         let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
                         tvalueLastCalculated[i] = T
                         tTestvalueLastCalculated[i] = calculatedT

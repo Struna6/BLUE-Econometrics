@@ -14,6 +14,13 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var isPremium: UILabel!
     @IBOutlet var pickers: [UISwitch]!
     
+    var chosenDirectory = String(){
+        didSet{
+            var dir = URL(fileURLWithPath: chosenDirectory)
+            dir.deleteLastPathComponent()
+            defaults.set(dir, forKey: "externalPathToAutoSave")
+        }
+    }
     let defaults = UserDefaults.standard
     //add premium functionality
     override func viewDidLoad() {
@@ -70,7 +77,12 @@ class SettingsVC: UIViewController {
         }else if sender.tag == 2{
             defaults.set(sender.isOn, forKey: "autoSave")
             if sender.isOn{
-                //documentPickerForAutoSaving
+                let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
+                documentPicker.delegate = self
+                documentPicker.modalPresentationStyle = .formSheet
+                present(documentPicker, animated: true, completion:  nil)
+            }else{
+                defaults.removeObject(forKey: "externalPathToAutoSave")
             }
         }
     }
@@ -79,4 +91,11 @@ class SettingsVC: UIViewController {
     @IBAction func buyPremium(_ sender: UIButton) {
     }
     
+}
+
+extension SettingsVC : UIDocumentPickerDelegate{
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
+        controller.allowsMultipleSelection = false
+        chosenDirectory = urls[0].path
+    }
 }
