@@ -50,7 +50,7 @@ extension IVCalculable where Self==Model{
     func SEBIV(Z: [[Double]]) -> [Double]{
         let Z0 = Matrix<Double>(Z)
         let ZT = transpose(Z0)
-        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), x: inv(mul(ZT, y: Z0)))
+        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), x: myInv(mul(ZT, y: Z0)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -65,8 +65,8 @@ extension IVCalculable where Self==Model{
         let Z = Matrix(Z)
         let Y = Matrix(chosenY)
         
-        let X2 = mul(mul(Z, y: inv(mul(transpose(Z), y: Z))), y: mul(transpose(Z),y: X))
-        let b = mul(inv(mul(transpose(X2), y: X2)), y: mul(transpose(X2), y: Y))
+        let X2 = mul(mul(Z, y: myInv(mul(transpose(Z), y: Z))), y: mul(transpose(Z),y: X))
+        let b = mul(myInv(mul(transpose(X2), y: X2)), y: mul(transpose(X2), y: Y))
         
         var result = [Double]()
         b.forEach { (array) in

@@ -334,7 +334,7 @@ extension OLSCalculable where Self==Model{
         get{
             let X = Matrix<Double>(chosenX)
             let XT = transpose(X)
-            let matrix = mul((se*se), x: inv(mul(XT, y: X)))
+            let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
             var result = [Double]()
             var i = 0
             matrix.forEach { (row) in
@@ -370,7 +370,7 @@ extension OLSCalculable where Self==Model{
         get{
             var result = [Double]()
             let X = Matrix(chosenX)
-            let H = mul(X, y: mul(inv(mul(transpose(X), y: X)),y : transpose(X)))
+            let H = mul(X, y: mul(myInv(mul(transpose(X), y: X)),y : transpose(X)))
             
             for i in 0..<n{
                 H.forEach { (slice) in
@@ -418,7 +418,7 @@ extension OLSCalculable where Self==Model{
         var equation = [Double]()
         let X = Matrix<Double>(chosenX)
         let Y = Matrix<Double>(chosenY)
-        let result = (mul((inv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
+        let result = (mul((myInv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
         result.forEach({ (slice) in
             equation.append(Array(slice)[0])
         })

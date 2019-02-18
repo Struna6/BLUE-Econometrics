@@ -8,6 +8,8 @@
 
 import UIKit
 
+import Surge
+
 class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
 
     @IBOutlet weak var newButton: UIButton!
@@ -25,7 +27,7 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
         tableView.layer.cornerRadius = 5.0
         newButton.layer.borderWidth = 0.0
         tableView.layer.borderWidth = 0.5
-        //createDirectories()
+        
         rootCatalogue = getListOfFilesRoot()
         checkIfFirstLoad()
         

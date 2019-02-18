@@ -859,8 +859,8 @@
         <!--SettingsVC-->
         <scene sceneID="ErI-b3-8NY">
             <objects>
-                <viewController id="JPp-qZ-OdV" customClass="SettingsVC" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iC9-da-UOG">
+                <viewController modalTransitionStyle="crossDissolve" id="JPp-qZ-OdV" customClass="SettingsVC" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="iC9-da-UOG">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -884,7 +884,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="z9E-Td-fOs" firstAttribute="leading" secondItem="nrJ-U3-FLo" secondAttribute="leading" id="9ae-dg-pbq"/>
                             <constraint firstItem="z9E-Td-fOs" firstAttribute="bottom" secondItem="nrJ-U3-FLo" secondAttribute="bottom" id="X2v-8M-x3I"/>

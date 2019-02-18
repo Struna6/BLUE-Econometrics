@@ -79,7 +79,7 @@ extension LogProb where Self==Model{
         let se = logSe(nGroup: nGroup, success: success, X: X)
         let X = Matrix<Double>(chosenX)
         let XT = transpose(X)
-        let matrix = mul((se*se), x: inv(mul(XT, y: X)))
+        let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -232,7 +232,7 @@ extension LogProb where Self==Model{
         let omega = Matrix(om)
         let X = Matrix(X)
         
-        let b = mul(mul(mul(inv(mul(mul(transpose(X), y: inv(omega)),y: X)),y:transpose(X)),y:inv(omega)),y: L)
+        let b = mul(mul(mul(myInv(mul(mul(transpose(X), y: myInv(omega)),y: X)),y:transpose(X)),y:myInv(omega)),y: L)
         
         var result = [Double]()
         b.forEach { (array) in
@@ -272,7 +272,7 @@ extension LogProb where Self==Model{
         let omega = Matrix(om)
         let X = Matrix(X)
         
-        let b = mul(mul(mul(inv(mul(mul(transpose(X), y: inv(omega)),y: X)),y:transpose(X)),y:inv(omega)),y: L)
+        let b = mul(mul(mul(myInv(mul(mul(transpose(X), y: myInv(omega)),y: X)),y:transpose(X)),y:myInv(omega)),y: L)
         
         var result = [Double]()
         b.forEach { (array) in

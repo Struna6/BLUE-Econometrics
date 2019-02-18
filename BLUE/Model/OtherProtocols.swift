@@ -529,3 +529,36 @@ extension String {
         }
     }
 }
+
+
+import Surge
+import Accelerate
+
+//MY INV TO IGNORE nonsingular MATRIXES and make them invertible anyway
+
+public func myInv(_ x : Matrix<Double>) -> Matrix<Double> {
+    precondition(x.rows == x.columns, "Matrix must be square")
+    var results = x
+    
+    var ipiv = [__CLPK_integer](repeating: 0, count: x.rows * x.rows)
+    var lwork = __CLPK_integer(x.columns * x.columns)
+    var work = [CDouble](repeating: 0.0, count: Int(lwork))
+    var error: __CLPK_integer = 0
+    var mc = __CLPK_integer(x.columns)
+    var nc = __CLPK_integer(x.rows)
+    var lda = __CLPK_integer(x.columns)
+    
+    dgetrf_(&mc, &nc, &(results.grid), &lda, &ipiv, &error)
+    
+    if error == 1{
+        var tmp = Array(repeating: Array(repeating: 0.0, count: x.rows), count: x.rows)
+        for i in 0..<x.rows{
+            tmp[i][i] = 0.0001
+        }
+        let newX = add(x, y: Matrix(tmp))
+        return myInv(newX)
+    }else{
+        dgetri_(&nc, &(results.grid), &lda, &ipiv, &work, &lwork, &error)
+        return results
+    }
+}
