@@ -338,7 +338,7 @@ extension OLSCalculable where Self==Model{
             var result = [Double]()
             var i = 0
             matrix.forEach { (row) in
-                result.append(Array(row)[i])
+                result.append(sqrt(Array(row)[i]))
                 i = i + 1
             }
             return result
