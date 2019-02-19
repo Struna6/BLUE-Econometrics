@@ -145,11 +145,9 @@ extension CSVImportable where Self==Model{
         var observations = [Observation]()
         
         var result = [[String]]()
-        let rows = text.components(separatedBy: "\n")
+        let rows = text.components(separatedBy: "\r\n")
         rows.forEach { (row) in
-            var tmpRow = row
-            tmpRow.removeLast()
-            let columns = tmpRow.components(separatedBy: ";")
+            let columns = row.components(separatedBy: ";")
             result.append(columns)
         }
         let firstRow = result[0]
@@ -543,7 +541,7 @@ extension CoreDataAnalysable where Self==Model{
                 for row in 0..<allObservations.count{
                     sum = sum + pow((allObservations[row].observationArray[col])-avarage[col],4.0)
                 }
-                result.append(sum/Double(n)/pow(SeCore[col], 4.0))
+                result.append((sum/Double(n)/pow(SeCore[col], 4.0))-3)
             }
             return result
         }
@@ -692,8 +690,6 @@ extension OLSTestable where Self==Model{
                         tmp.append(calculatedT)
                     }
                 }else{
-//                    tvalueLastCalculated.removeAll()
-//                    tTestvalueLastCalculated.removeAll()
                     let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
                     tvalueLastCalculated.append(T)
                     tTestvalueLastCalculated.append(calculatedT)

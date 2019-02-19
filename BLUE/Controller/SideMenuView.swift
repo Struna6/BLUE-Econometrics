@@ -262,6 +262,10 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             for i in 0..<model.ELAS.count{
                 target.parametersResultsShort.append(ModelParametersShort(name: "ELAS for b\(i)", value: model.ELAS[i], isLess: false, criticalFloor: nil, warningFloor: nil, variable: nil))
             }
+            
+            for i in 0..<model.SEB.count{
+                target.parametersResultsShort.append(ModelParametersShort(name: "Se for b\(i)", value: model.SEB[i], isLess: false, criticalFloor: nil, warningFloor: nil, variable: nil))
+            }
            
             target.isHiddenPicker = true
         }
