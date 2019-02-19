@@ -684,13 +684,13 @@ extension OLSTestable where Self==Model{
                     if tvalueLastCalculated[i] == T{
                         tmp.append(tTestvalueLastCalculated[i])
                     }else{
-                        let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
+                        let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(n-k-1)))
                         tvalueLastCalculated[i] = T
                         tTestvalueLastCalculated[i] = calculatedT
                         tmp.append(calculatedT)
                     }
                 }else{
-                    let calculatedT = TStudentICDF(t: T, v: Double(n-k-1))
+                    let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(n-k-1)))
                     tvalueLastCalculated.append(T)
                     tTestvalueLastCalculated.append(calculatedT)
                     tmp.append(calculatedT)
