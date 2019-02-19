@@ -667,7 +667,7 @@ extension OLSTestable where Self==Model{
             }else{
 
                 fvalueLastCalculated = F
-                let result = FSnedeccorICDF(f: F, d1: Double(k), d2: Double(n-k-1))
+                let result = 1 - FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
                 fTestvalueLastCalculated = result
                 fvalueLastCalculated = F
                 return result
@@ -710,14 +710,14 @@ extension OLSTestable where Self==Model{
             for i in 0..<flatY.count{
                 tmp4.append(pow((flatY[i]-estimatedY[i]), 4.0))
             }
-            let beta1 = 1 / Double(n) * sum(tmp3) / pow(se, 3.0)
-            let beta2 = 1 / Double(n) * sum(tmp4) / pow(se, 4.0)
+            let beta1 = ((1 / Double(n)) * sum(tmp3)) / pow(se, 3.0)
+            let beta2 = ((1 / Double(n)) * sum(tmp4)) / pow(se, 4.0)
             let x = Double(n) * ((beta1 / 6) + (pow(beta2 - 3, 2.0) / 24))
             
             if x == chivalueLastCalculated{
                 return chiTestvalueLastCalculated
             }else{
-                let chiResult = chiICDF(x: x, k: 2)
+                let chiResult =  1 - chiICDF(x: x, k: 2)
                 chivalueLastCalculated = x
                 chiTestvalueLastCalculated = chiResult
                 return chiResult
@@ -758,7 +758,6 @@ struct OLSTestsAdvanced : Statisticable{
             model2.chosenX[i].append(el)
             i = i + 1
         }
-        model2.k = model2.k + 2
         
         let R1 = model1.squareR
         let R2 = model2.squareR
@@ -778,7 +777,7 @@ struct OLSTestsAdvanced : Statisticable{
         if F == RESETvalueLast{
             return RESETtestValueLast
         }else{
-            let result = FSnedeccorICDF(f: F, d1: d1, d2: d2)
+            let result = 1 - FSnedeccorCDF(f: F, d1: d1, d2: d2)
             RESETvalueLast = F
             RESETtestValueLast = result
             return result
@@ -810,7 +809,7 @@ struct OLSTestsAdvanced : Statisticable{
         if chi.rounded() == LMvalueLast.rounded(){
             return LMtestValueLast
         }else{
-            let result = chiICDF(x: chi, k: 1)
+            let result = 1 - chiICDF(x: chi, k: 1)
             LMvalueLast = chi
             LMtestValueLast = result
             return result
@@ -839,11 +838,12 @@ struct OLSTestsAdvanced : Statisticable{
         
         let R = model2.squareR
         let chi = Double(model2.n) * R
-        let degrees = model2.k - model1.k
+        let degrees = model2.k
+            //- model1.k
         if chi.rounded() == WhiteValueLast.rounded(){
             return WhiteTestValueLast
         }else{
-            let result = chiICDF(x: chi, k: Double(degrees))
+            let result =  1 - chiICDF(x: chi, k: Double(degrees))
             WhiteValueLast = chi
             WhiteTestValueLast  = result
             return result

@@ -56,7 +56,7 @@ protocol Statisticable{
     func betaIncomplete(x : Double, a : Double, b : Double) -> Double
     func betaComplete(a : Double, b : Double) -> Double
     func betaRegularizedIncomplete(x : Double, a : Double, b : Double) -> Double
-    func FSnedeccorICDF(f : Double, d1 : Double, d2 : Double) -> Double
+    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double
     func TStudentCDF(t : Double, v : Double) -> Double
     func normalValue(x: Double) -> Double
     func normalCDF(x: Double) -> Double
@@ -118,7 +118,7 @@ extension Statisticable{
         return betaIncomplete(x: x, a: a, b: b)/betaComplete(a: a, b: b)
     }
     
-    func FSnedeccorICDF(f : Double, d1 : Double, d2 : Double) -> Double{
+    func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double{
         let x = (d1*f)/((d1*f)+d2)
         let result = betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
         return result > 1 ? 1 : result

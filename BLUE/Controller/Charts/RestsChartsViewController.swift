@@ -38,6 +38,8 @@ class restsChartsViewController: UIViewController{
         let data = BarChartData(dataSet: barChartDataSet)
         viewBarChart.data = data
         viewBarChart.notifyDataSetChanged()
+        viewBarChart.drawValueAboveBarEnabled = true
+        
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
