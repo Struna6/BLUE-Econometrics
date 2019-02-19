@@ -892,6 +892,7 @@
                         <outlet property="buyPremiumButton" destination="BhG-1g-7aV" id="QM3-M1-HV1"/>
                         <outlet property="isPremium" destination="R3Z-HL-QtR" id="Olk-et-esj"/>
                         <outlet property="popUpView" destination="XJR-8d-bkC" id="cy8-6u-lhM"/>
+                        <outlet property="premiumImage" destination="iuV-wY-lyz" id="ZCf-W0-7X3"/>
                         <outletCollection property="pickers" destination="P6n-wo-mdF" collectionClass="NSMutableArray" id="12q-Gu-6f7"/>
                         <outletCollection property="pickers" destination="Wyf-h1-KOg" collectionClass="NSMutableArray" id="7F0-P2-eFD"/>
                         <outletCollection property="pickers" destination="noo-7R-qfD" collectionClass="NSMutableArray" id="0qO-Ev-SL1"/>

@@ -15,6 +15,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     @IBOutlet var pickers: [UISwitch]!
     @IBOutlet weak var buyPremiumButton: UIButton!
     
+    @IBOutlet weak var premiumImage: UIImageView!
     var chosenDirectory = String(){
         didSet{
             var dir = URL(fileURLWithPath: chosenDirectory)
@@ -60,15 +61,14 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             isPremium.text = "premium"
             buyPremiumButton.isEnabled = false
             buyPremiumButton.backgroundColor = UIColor.gray
-            
+            premiumImage.isHidden = true
         }else{
             isPremium.text = "normal"
             pickers.forEach(){
                 if $0.tag == 0{
                     $0.isEnabled = false
                     $0.isOn = false
-                    $0.backgroundColor = UIColor.gray
-                    $0.tintColor = UIColor.gray
+                    $0.onTintColor = UIColor.gray
                 }
             }
         }
