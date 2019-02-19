@@ -17,6 +17,7 @@ import AVKit
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     
+    @IBOutlet weak var premiumLabel: UIStackView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var topTableView: UITableView!
@@ -152,6 +153,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             playShortAnimationOnce(mainViewController: self)
         }
     }
+    let defaults = UserDefaults.standard
+    
     @IBAction func goToFirstView(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: {
             self.navigationController?.popToRootViewController(animated: true)
@@ -172,6 +175,11 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         chooseXYView.layer.cornerRadius = 10
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
+        
+        if defaults.bool(forKey: "premium"){
+            premiumLabel.isHidden = true
+        }
+        
         if model.squareR.isNaN{
             topTableView.isHidden = true
             topLabel.isHidden = true
@@ -233,7 +241,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         alertPopOver.popoverPresentationController?.barButtonItem = sender
         
         let overrideOption = UIAlertAction(title: "Override current", style: .destructive) { (alert) in
-            self.save(object: self.model, pathExternal: self.openedFilePath)
+            do{
+                try self.save(object: self.model, pathExternal: self.openedFilePath)
+            }catch let er as SavingErrors{
+                self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+            }catch{
+                
+            }
         }
         let saveLocallyOption = UIAlertAction(title: "Save", style: .default) { (alert) in
             alertPopOver.removeFromParent()
@@ -248,7 +262,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                                 self.playErrorScreen(msg: "File exists!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: alertController)
                             }else{
                                 self.model.name = text
-                                self.save(object: self.model, fileName: text)
+                                do{
+                                    try self.save(object: self.model, fileName: text)
+                                }catch let er as SavingErrors{
+                                    self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                                }catch{
+                                    
+                                }
                                 self.openedFileName = text
                                 let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
                                 let name = "/Saved Models/" + text + ".plist"
@@ -276,9 +296,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     }
     
     //unused
-    func autosave(){
-        self.save(object: self.model, pathExternal: self.openedFilePath)
-    }
+//    func autosave(){
+//        self.save(object: self.model, pathExternal: self.openedFilePath)
+//    }
     
     // MARK: Prepare of segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -585,17 +605,33 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     self.chosenY.removeAll()
                 }
             }
-            if tableView == self.chooseXTableView{
-                if cell?.accessoryType == UITableViewCell.AccessoryType.none{
-                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-                }else{
-                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+            if defaults.bool(forKey: "premium"){
+                if tableView == self.chooseXTableView{
+                    if cell?.accessoryType == UITableViewCell.AccessoryType.none{
+                        cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    }else{
+                        cell?.accessoryType = UITableViewCell.AccessoryType.none
+                    }
+                    let text = (cell?.textLabel?.text)!
+                    if self.chosenX.contains(text){
+                        self.chosenX.remove(at: chosenX.firstIndex(of: text)!)
+                    }else{
+                        self.chosenX.append(text)
+                    }
                 }
-                let text = (cell?.textLabel?.text)!
-                if self.chosenX.contains(text){
-                    self.chosenX.remove(at: chosenX.firstIndex(of: text)!)
-                }else{
-                    self.chosenX.append(text)
+            }else{
+                if tableView == self.chooseXTableView{
+                    if cell?.accessoryType == UITableViewCell.AccessoryType.none && chosenX.count<2{
+                        cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                    }else{
+                        cell?.accessoryType = UITableViewCell.AccessoryType.none
+                    }
+                    let text = (cell?.textLabel?.text)!
+                    if self.chosenX.contains(text){
+                        self.chosenX.remove(at: chosenX.firstIndex(of: text)!)
+                    }else{
+                        self.chosenX.append(text)
+                    }
                 }
             }
         }

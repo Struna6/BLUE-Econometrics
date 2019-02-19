@@ -8,20 +8,42 @@
 
 import UIKit
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
 
     @IBOutlet var popUpView: UIView!
     @IBOutlet weak var isPremium: UILabel!
     @IBOutlet var pickers: [UISwitch]!
+    @IBOutlet weak var buyPremiumButton: UIButton!
     
     var chosenDirectory = String(){
         didSet{
             var dir = URL(fileURLWithPath: chosenDirectory)
             dir.deleteLastPathComponent()
             defaults.set(dir, forKey: "externalPathToAutoSave")
+            do{
+                try copyToChosenExternalPath()
+            }catch let er as SavingErrors{
+                defaults.removeObject(forKey: "externalPathToAutoSave")
+                defaults.removeObject(forKey: "autoSave")
+                defaults.synchronize()
+                pickers.forEach(){
+                    if $0.tag == 2{
+                        $0.isOn = false
+                    }
+                }
+                let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+                visualViewToBlur.frame = self.view.frame
+                visualViewToBlur.isHidden = true
+                self.view.addSubview(visualViewToBlur)
+                
+                playErrorScreen(msg: er.rawValue, blurView: visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+            }catch{
+                
+            }
         }
     }
     let defaults = UserDefaults.standard
+    
     //add premium functionality
     override func viewDidLoad() {
         popUpView.layer.cornerRadius = 10
@@ -33,6 +55,22 @@ class SettingsVC: UIViewController {
         UIView.animate(withDuration: 0.4) {
             self.popUpView.alpha = 1
             self.popUpView.transform = CGAffineTransform.identity
+        }
+        if defaults.bool(forKey: "premium"){
+            isPremium.text = "premium"
+            buyPremiumButton.isEnabled = false
+            buyPremiumButton.backgroundColor = UIColor.gray
+            
+        }else{
+            isPremium.text = "normal"
+            pickers.forEach(){
+                if $0.tag == 0{
+                    $0.isEnabled = false
+                    $0.isOn = false
+                    $0.backgroundColor = UIColor.gray
+                    $0.tintColor = UIColor.gray
+                }
+            }
         }
         
         pickers.forEach(){
@@ -83,12 +121,15 @@ class SettingsVC: UIViewController {
                 present(documentPicker, animated: true, completion:  nil)
             }else{
                 defaults.removeObject(forKey: "externalPathToAutoSave")
+                defaults.removeObject(forKey: "autoSave")
+                defaults.synchronize()
             }
         }
     }
     
     //add premium functionality
     @IBAction func buyPremium(_ sender: UIButton) {
+        defaults.set(true, forKey: "premium")
     }
     
 }
@@ -97,5 +138,15 @@ extension SettingsVC : UIDocumentPickerDelegate{
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
         controller.allowsMultipleSelection = false
         chosenDirectory = urls[0].path
+    }
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        pickers.forEach(){
+            if $0.tag == 2{
+                $0.isOn = false
+            }
+        }
+        defaults.removeObject(forKey: "externalPathToAutoSave")
+        defaults.removeObject(forKey: "autoSave")
+        defaults.synchronize()
     }
 }

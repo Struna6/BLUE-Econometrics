@@ -24,6 +24,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         "Other Models" : ["Instrumental Variables", "Logit", "Probit"],
         "Settings" : ["User Settings"]
     ]
+    let notPremiumIndexes = ["12","20","30","60"]
     var allObservations = true
     var sendBackSpreedVCDelegate : SendBackSpreedSheetView?
     var isGoToAddVariable = false
@@ -37,6 +38,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         docPicker.delegate = self
         docPicker.allowsMultipleSelection = true
         docPicker.modalPresentationStyle = .formSheet
+        tableView.separatorColor = UIColor.clear
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,6 +53,8 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         return sections[section]
     }
     
+    let defaults = UserDefaults.standard
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
         cell.textLabel?.text = options[sections[indexPath.section]]![indexPath.row]
@@ -60,11 +64,21 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             cell.isUserInteractionEnabled = false
         }
         
+        if !defaults.bool(forKey: "premium"){
+            let num = "\(indexPath.section)\(indexPath.row)"
+            
+            if !notPremiumIndexes.contains(num){
+                cell.isUserInteractionEnabled = false
+                cell.alpha = 0.8
+                cell.imageView?.image = UIImage(named: "pro")
+            }
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let num = Int("\(indexPath.section)\(indexPath.row)")
+        
         switch num {
             //All observations
         case 00:
@@ -306,7 +320,19 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             target.data = Array(repeating: Array(repeating: "", count: target.headers.count), count: modelsNum)
             //load models
             paths.forEach(){
-                let model = get(path: $0) as Model
+                var model = Model()
+                do{
+                    model = try get(path: $0) as Model
+                }catch let er as SavingErrors{
+                    let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+                    visualViewToBlur.frame = self.view.frame
+                    visualViewToBlur.isHidden = true
+                    self.view.addSubview(visualViewToBlur)
+                    
+                    playErrorScreen(msg: er.rawValue, blurView: visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                }catch{
+                    
+                }
                 models.append(model)
             }
             

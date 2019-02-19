@@ -10,14 +10,21 @@ import Foundation
 
 protocol Storage{
     var path : URL {get}
-    func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?)
-    func copyToChosenExternalPath()
-    func get<T: Decodable>(fileName : String) -> T
-    func get<T: Decodable>(path : String) -> T
+    func save<T: Encodable>(object: T, fileName : String?, pathExternal : String?) throws
+    func copyToChosenExternalPath() throws
+    func get<T: Decodable>(fileName : String) throws -> T
+    func get<T: Decodable>(path : String) throws -> T
     func remove(fileName : String)
+    func remove(path : URL)
     func exists(fileName : String) -> Bool
     func getListOfFiles() -> [String]
     func getListOfFilesRoot() -> [String]
+}
+
+enum SavingErrors : String, Error{
+    case savingError = "Unable to save!"
+    case autoSavingError = "Unable to copy to selected path!"
+    case cannotLoadModel = "Unable to import file!"
 }
 
 extension Storage{
@@ -26,7 +33,7 @@ extension Storage{
             return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         }
     }
-    func save<T: Encodable>(object: T, fileName : String? = nil, pathExternal : String? = nil){
+    func save<T: Encodable>(object: T, fileName : String? = nil, pathExternal : String? = nil) throws{
         let url : URL
         if (pathExternal != nil){
             let index = pathExternal!.firstIndex(of: ".")!
@@ -42,11 +49,16 @@ extension Storage{
             let data = try encoder.encode(object)
             try data.write(to: url)
         } catch {
-            print("error saving!")
+            throw SavingErrors.savingError
         }
-        copyToChosenExternalPath()
+        do{
+            try copyToChosenExternalPath()
+        }catch{
+            throw SavingErrors.autoSavingError
+        }
+        
     }
-    func copyToChosenExternalPath(){
+    func copyToChosenExternalPath() throws{
         let defaults = UserDefaults.standard
         if let toPath = defaults.url(forKey: "externalPathToAutoSave"){
             let fileMenager = FileManager.default
@@ -58,18 +70,20 @@ extension Storage{
                     try fileMenager.removeItem(at: loc2)
                     try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
                 }catch{
-                    print("error")
+                    remove(path: loc2)
+                    throw SavingErrors.autoSavingError
                 }
             }else{
                 do{
                     try fileMenager.copyItem(atPath: loc1.path, toPath: loc2.path)
                 }catch{
-                    print("error")
+                    remove(path: loc2)
+                    throw SavingErrors.autoSavingError
                 }
             }
         }
     }
-    func get<T: Decodable>(fileName : String) -> T{
+    func get<T: Decodable>(fileName : String) throws -> T{
         let url = path.appendingPathComponent("/Saved Models/" + fileName)
         let decoder = PropertyListDecoder()
         let modelOutput : Model
@@ -77,18 +91,18 @@ extension Storage{
             let data = try Data(contentsOf: url)
             modelOutput = try decoder.decode(Model.self, from: data)
         }catch{
-            fatalError(error.localizedDescription)
+            throw SavingErrors.cannotLoadModel
         }
         return modelOutput as! T
     }
-    func get<T: Decodable>(path : String) -> T{
+    func get<T: Decodable>(path : String) throws -> T{
         let decoder = PropertyListDecoder()
         let modelOutput : Model
         do{
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             modelOutput = try decoder.decode(Model.self, from: data)
         }catch{
-            fatalError(error.localizedDescription)
+            throw SavingErrors.cannotLoadModel
         }
         return modelOutput as! T
     }
@@ -101,6 +115,13 @@ extension Storage{
             }catch{
                 fatalError(error.localizedDescription)
             }
+        }
+    }
+    func remove(path : URL){
+        do{
+            try FileManager.default.removeItem(at: path)
+        }catch{
+            print("cannot remove")
         }
     }
     func exists(fileName : String) -> Bool{

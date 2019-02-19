@@ -10,13 +10,14 @@ import UIKit
 
 import Surge
 
-class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
+class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, ErrorScreenPlayable {
 
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var filesTab = [String]()
     var rootCatalogue = [String]()
     let defaults = UserDefaults.standard
+    var canGoNext = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,20 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
         if segue.identifier == "toMain"{
             let index = Int(tableView.indexPathForSelectedRow!.row)
             let fileName = filesTab[index]
-            let modelFromFile = get(fileName: fileName) as Model
+            var modelFromFile = Model()
+            do{
+                modelFromFile =  try get(fileName: fileName) as Model
+            }catch let er as SavingErrors{
+                canGoNext = false
+                let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+                visualViewToBlur.frame = self.view.frame
+                visualViewToBlur.isHidden = true
+                self.view.addSubview(visualViewToBlur)
+                
+                playErrorScreen(msg: er.rawValue, blurView: visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+            }catch{
+                
+            }
             let destination = segue.destination as! UINavigationController
             let target = destination.topViewController as! ViewController
             target.model = modelFromFile
@@ -46,6 +60,14 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen {
             let name = fileName + ".plist"
             let url = path.appendingPathComponent(name)
             target.openedFilePath = url.path
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if canGoNext{
+            return true
+        }else{
+            return false
         }
     }
     
