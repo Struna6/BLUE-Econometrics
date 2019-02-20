@@ -310,14 +310,12 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         }
         else if segue.identifier == "toCompare"{
             let target = segue.destination as! MatrixView
-            target.headers = ["Leverage", "Influancial", "DFFITS"]
             target.textTopLabel = "Compare Models"
             //F, R^2, unimportant var num, reset, jb, lm, homo   REGRESSOR, REGRESSANDS, OTHER R, CHECK T AFTER
             var models = [Model]()
             let modelsNum = paths.count
             
-            target.headers = ["n", "k", "Test F", "R\u{00B2}", "Test t var failed", "RESET test", "JB test", "LM test", "White test"]
-            target.data = Array(repeating: Array(repeating: "", count: target.headers.count), count: modelsNum)
+            
             //load models
             paths.forEach(){
                 var model = Model()
@@ -336,31 +334,37 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
                 models.append(model)
             }
             
+            target.leftHeaders = ["n", "k", "Test F", "R\u{00B2}", "Test t var failed", "RESET test", "JB test", "LM test", "White test"]
+            
             models.forEach(){
-                target.leftHeaders.append($0.name!)
+                target.headers.append($0.name!)
             }
             
+            target.data = Array(repeating: Array(repeating: "", count: modelsNum), count: target.leftHeaders.count)
+            
+            target.toCompare = true
             playLoadingAsync(tasksToDoAsync: {
                 for i in 0..<models.count{
-                    target.data[i][0] = String(models[i].n)
-                    target.data[i][1] = String(models[i].k)
-                    target.data[i][2] = String(format: "%.2f",models[i].parametersF)
-                    target.data[i][3] = String(format: "%.2f",models[i].squareR)
+                    target.data[0][i] = String(models[i].n)
+                    target.data[1][i] = String(models[i].k)
+                    target.data[2][i] = String(format: "%.2f",models[i].parametersF)
+                    target.data[3][i] = String(format: "%.2f",models[i].squareR)
                     var j = 0
                     models[i].parametersT.forEach(){
                         if $0 > 0.05{
                             j = j + 1
                         }
                     }
-                    target.data[i][4] = String(j)
+                    target.data[4][i] = String(j)
                     let testAdv = OLSTestsAdvanced(baseModel: models[i])
-                    target.data[i][5] = String(format: "%.2f",testAdv.RESET())
-                    target.data[i][6] = String(format: "%.2f",models[i].JBtest)
-                    target.data[i][7] = String(format: "%.2f",testAdv.LMAutoCorrelation())
-                    target.data[i][8] = String(format: "%.2f",testAdv.WhiteHomo())
+                    target.data[5][i] = String(format: "%.2f",testAdv.RESET())
+                    target.data[6][i] = String(format: "%.2f",models[i].JBtest)
+                    target.data[7][i] = String(format: "%.2f",testAdv.LMAutoCorrelation())
+                    target.data[8][i] = String(format: "%.2f",testAdv.WhiteHomo())
                 }
             }, tasksToMainBack: {
                 target.spreadSheetView.reloadData()
+                self.playShortAnimationOnce(mainViewController: target)
             }, mainView: target.view)
             
         }

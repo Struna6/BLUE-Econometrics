@@ -105,9 +105,13 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
     
     var selectObjectForTopLabel = LongTappableToSaveContext()
     var selectObjectForTableView = LongTappableToSaveContext()
+    let imgViewBeforeEdit = UIImageView.init(image: UIImage(named: "editChoose"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imgViewBeforeEdit.center = self.view.center
+        self.view.addSubview(imgViewBeforeEdit)
         
         if isLogitProbit{
             if isProbit{
@@ -179,6 +183,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
     }
     @IBAction func editButtonPressed(_ sender: Any) {
         self.view.addSubview(popUpView)
+        imgViewBeforeEdit.removeFromSuperview()
         popUpView.alpha = 0
         popUpView.center = self.view.center
         popUpView.transform = CGAffineTransform(translationX: 0.0, y: 300)

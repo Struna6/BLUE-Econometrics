@@ -19,30 +19,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3L-t2-qxf" customClass="SpreadsheetView" customModule="SpreadsheetView">
-                                <rect key="frame" x="109" y="190" width="550" height="650"/>
+                                <rect key="frame" x="109" y="178.5" width="550" height="825.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="550" id="0fa-Zz-PBc"/>
-                                    <constraint firstAttribute="height" constant="650" id="9Cu-Wx-bzn"/>
-                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uK7-rk-V7J">
-                                <rect key="frame" x="209" y="120" width="350" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="350" id="6OC-un-Fnx"/>
-                                    <constraint firstAttribute="height" constant="50" id="izf-AT-et2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <rect key="frame" x="209" y="120" width="350" height="38.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="W3L-t2-qxf" firstAttribute="top" secondItem="uK7-rk-V7J" secondAttribute="bottom" constant="20" id="Gwf-Hf-Rzb"/>
-                            <constraint firstItem="uK7-rk-V7J" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="ZLX-Eg-gW4"/>
-                            <constraint firstItem="W3L-t2-qxf" firstAttribute="centerX" secondItem="yQ4-Dw-gsG" secondAttribute="centerX" id="pQf-YE-tYf"/>
-                            <constraint firstItem="uK7-rk-V7J" firstAttribute="top" secondItem="os5-oM-Eke" secondAttribute="top" constant="50" id="rI4-gR-UTD"/>
+                            <constraint firstItem="W3L-t2-qxf" firstAttribute="leading" secondItem="os5-oM-Eke" secondAttribute="leading" constant="109" id="42I-eH-TVp"/>
+                            <constraint firstItem="uK7-rk-V7J" firstAttribute="leading" secondItem="os5-oM-Eke" secondAttribute="leading" constant="209" id="Atu-mK-CPK"/>
+                            <constraint firstItem="os5-oM-Eke" firstAttribute="trailing" secondItem="uK7-rk-V7J" secondAttribute="trailing" constant="209" id="B1o-vo-D3f"/>
+                            <constraint firstItem="W3L-t2-qxf" firstAttribute="top" secondItem="uK7-rk-V7J" secondAttribute="bottom" constant="20" id="ac3-rd-rE4"/>
+                            <constraint firstItem="uK7-rk-V7J" firstAttribute="top" secondItem="os5-oM-Eke" secondAttribute="top" constant="50" id="cnZ-yO-3yq"/>
+                            <constraint firstItem="os5-oM-Eke" firstAttribute="trailing" secondItem="W3L-t2-qxf" secondAttribute="trailing" constant="109" id="wVc-Wp-60y"/>
+                            <constraint firstItem="os5-oM-Eke" firstAttribute="bottom" secondItem="W3L-t2-qxf" secondAttribute="bottom" constant="20" id="wfg-fE-Ahm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="os5-oM-Eke"/>
                     </view>
@@ -77,7 +72,7 @@
                                     <constraint firstAttribute="height" constant="50" id="UTV-67-gqR"/>
                                     <constraint firstAttribute="width" constant="350" id="zNo-oF-8SR"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -287,9 +282,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8R-yz-JXc" customClass="SpreadsheetView" customModule="SpreadsheetView">
-                                <rect key="frame" x="85" y="127" width="602" height="786"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8R-yz-JXc" customClass="SpreadsheetView" customModule="SpreadsheetView">
+                                <rect key="frame" x="83" y="120" width="602" height="854"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-wx-XXh">
@@ -316,6 +310,12 @@
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7qo-1E-2zg" firstAttribute="trailing" secondItem="L8R-yz-JXc" secondAttribute="trailing" constant="83" id="H7n-ZS-r1u"/>
+                            <constraint firstItem="7qo-1E-2zg" firstAttribute="bottom" secondItem="L8R-yz-JXc" secondAttribute="bottom" constant="50" id="RhS-88-BwH"/>
+                            <constraint firstItem="L8R-yz-JXc" firstAttribute="top" secondItem="7qo-1E-2zg" secondAttribute="top" constant="50" id="cNW-yP-7bo"/>
+                            <constraint firstItem="L8R-yz-JXc" firstAttribute="leading" secondItem="7qo-1E-2zg" secondAttribute="leading" constant="83" id="j8W-zi-QLT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="7qo-1E-2zg"/>
                     </view>
                     <navigationItem key="navigationItem" title="Observations" id="yMl-fS-EgH">
@@ -629,7 +629,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="editButton" destination="XGL-ma-Weq" id="YiE-DC-RPo"/>
                         <outlet property="labelToChoose1" destination="9bK-hO-tzI" id="it4-co-BtN"/>
                         <outlet property="labelToChoose2" destination="jkx-TS-AT9" id="UWx-k5-jHM"/>
                         <outlet property="parametersView" destination="dkv-Vc-dux" id="PyF-VJ-GLd"/>

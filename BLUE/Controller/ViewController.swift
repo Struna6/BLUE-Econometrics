@@ -247,7 +247,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         
         let overrideOption = UIAlertAction(title: "Override current", style: .destructive) { (alert) in
             do{
-                try self.save(object: self.model, pathExternal: self.openedFilePath)
+                try self.save(object: self.model, pathExternal: self.openedFilePath + ".plist")
             }catch let er as SavingErrors{
                 self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
             }catch{
@@ -279,7 +279,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                                 let name = "/Saved Models/" + text + ".plist"
                                 let url = path.appendingPathComponent(name)
                                 self.openedFilePath = url.path
-                                self.model.name = url.path
+                                self.model.name = text
                                 self.playShortAnimationOnce(mainViewController: self, animationName: "done")
                             }
                             
@@ -422,7 +422,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             }, mainView: self.view)
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
             //other hint?
-            topLabel.showHint(text: "Long press to activate saving option, then press on the button that will be shown. This will work on every element in application like text, tables, charts!")
+            topLabel.showHint(text: "Long press to activate saving option, then press on the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
             if defaults.bool(forKey: "firstChecker"){
                 topTableView.showHint(text: "Remember test values shown there are p-values. Tap on parameter to show details")
             }else{
@@ -453,7 +453,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
-            //self.topTableView.isHidden = false
+            if self.model.squareR.isFinite{
+                self.topTableView.isHidden = false
+            }
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.chooseXYView.removeFromSuperview()

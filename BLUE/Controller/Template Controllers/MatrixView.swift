@@ -19,11 +19,12 @@ class MatrixView: UIViewController {
     var headers = [String]()
     var leftHeaders = [String]()
     var selectObjectForSP = LongTappableToSaveContext()
+    var toCompare = false
     
     override func viewDidLoad() {
-        //super.viewDidLoad()
         spreadSheetView.delegate = self
         spreadSheetView.dataSource = self
+        
         spreadSheetView.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
         spreadSheetView.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
         topLabel?.text = textTopLabel
@@ -45,21 +46,27 @@ extension MatrixView : SpreadsheetViewDelegate{
 
 extension MatrixView : SpreadsheetViewDataSource{
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count + 1) - 5
-        if sample < CGFloat(spreadSheetView.frame.height) / 8{
-            return CGFloat(spreadSheetView.frame.height) / 8
+        if toCompare{
+            return 50
+        }else{
+            let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count + 1) - 5
+            if sample < CGFloat(spreadSheetView.frame.height) / 8{
+                return CGFloat(spreadSheetView.frame.height) / 8
+            }
+            return sample
         }
-        return sample
-       // return 60
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count + 1) - 5
-        if sample < CGFloat(spreadSheetView.frame.width) / 8{
-            return CGFloat(spreadSheetView.frame.width) / 8
+        if toCompare{
+            return 200
+        }else{
+            let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count + 1) - 5
+            if sample < CGFloat(spreadSheetView.frame.width) / 8{
+                return CGFloat(spreadSheetView.frame.width) / 8
+            }
+            return sample
         }
-        return sample
-       // return 60
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {

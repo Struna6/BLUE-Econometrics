@@ -28,6 +28,7 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
     override func viewDidLoad() {
         super.viewDidLoad()
         chosenVariable = 0
+        pickerView.showHint(text: "Choose variable")
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame

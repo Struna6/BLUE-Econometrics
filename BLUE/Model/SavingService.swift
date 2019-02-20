@@ -38,7 +38,7 @@ extension Storage{
         if (pathExternal != nil){
             let index = pathExternal!.firstIndex(of: ".")!
             let result : String = String(pathExternal![..<index])
-            url = URL(fileURLWithPath: result)
+            url = URL(fileURLWithPath: result+".plist")
         }else{
             let name = "/Saved Models/" + fileName! + ".plist"
             url = path.appendingPathComponent(name)
