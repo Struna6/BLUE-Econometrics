@@ -10,6 +10,8 @@ import UIKit
 import SpreadsheetView
 
 class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate, ErrorScreenPlayable {
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var normPicker: UIPickerView!
     @IBOutlet var normView: UIView!
     @IBOutlet weak var normChooseVar: UIPickerView!
@@ -160,6 +162,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBOutlet weak var spreedsheet: SpreadsheetView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        spreedsheet.showHint(text: "Tap to choose cell to edit")
         spreedsheet.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
         spreedsheet.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
         spreedsheet.delegate = self

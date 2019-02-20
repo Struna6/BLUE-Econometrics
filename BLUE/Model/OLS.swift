@@ -16,6 +16,7 @@ enum ImportError : String, Error{
     case wrongValue = "Wrong value, check file!"
     case doubleError = "Imported value is not a number!"
     case sizeError = "Size of variables are not the same!"
+    case headerError = "Plase give all variables name in header!"
 }
 
 protocol ImportableFromTextFile{
@@ -135,9 +136,11 @@ extension CSVImportable where Self==Model{
         } catch  {
             throw ImportError.readingFileError
         }
-        text = String(text.dropFirst())
-        text = String(text.dropFirst())
-        text = String(text.dropFirst())
+        if text.contains("ï") && text.contains("»") && text.contains("¿"){
+            text = String(text.dropFirst())
+            text = String(text.dropFirst())
+            text = String(text.dropFirst())
+        }
         
         var labeled = false
         var headered = false
@@ -146,6 +149,7 @@ extension CSVImportable where Self==Model{
         
         var result = [[String]]()
         let rows = text.components(separatedBy: "\r\n")
+        
         rows.forEach { (row) in
             let columns = row.components(separatedBy: ";")
             result.append(columns)
@@ -178,14 +182,20 @@ extension CSVImportable where Self==Model{
         }
         var k = 0
         var checker = result[0].count
-        try result.forEach(){
-            if $0.count != checker{
-                throw ImportError.sizeError
+        for i in 1..<result.count{
+            if i==1{
+                if checker + 1 < result[i].count{
+                    throw ImportError.headerError
+                }
+                checker = result[i].count
             }else{
-                checker = $0.count
+                if result[i].count != checker{
+                   throw ImportError.sizeError
+                }
+                checker = result[i].count
             }
         }
-        
+    
         try result.forEach { (row) in
             var tmpRow = row
             var tmp = Observation()

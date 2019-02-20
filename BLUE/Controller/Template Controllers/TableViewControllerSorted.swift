@@ -181,7 +181,9 @@ class TableViewControllerSorted: UIViewController {
         if isHiddenPicker{
             pickerView.isHidden = true
         }
-        
+        tableView.showHint(text: "Long press to save")
+        pickerView.showHint(text: "Choose variable")
+        helpImage.showHint(text: "Press to see more information about group of variables")
         topLabel.text = textTopLabel
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.helpImageTapped))
         helpImage.addGestureRecognizer(tapOnImage)

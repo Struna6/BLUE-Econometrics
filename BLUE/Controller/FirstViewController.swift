@@ -9,9 +9,12 @@
 import UIKit
 
 import Surge
+import Tutti
 
 class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, ErrorScreenPlayable {
-
+    @IBOutlet weak var helpView: UIImageView!
+    
+    @IBOutlet weak var newModel: UIButton!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var filesTab = [String]()
@@ -29,9 +32,12 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         newButton.layer.borderWidth = 0.0
         tableView.layer.borderWidth = 0.5
         
+        newButton.showHint(text: "Press here to make new model")
+        tableView.showHint(text: "There will be displayed list of your saved models")
+        helpView.showHint(text: "There you can proceed to tutorials about this application and econometrics")
+        
         rootCatalogue = getListOfFilesRoot()
         checkIfFirstLoad()
-        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMain"{

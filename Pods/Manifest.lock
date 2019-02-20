@@ -7,6 +7,7 @@ PODS:
   - SideMenu (5.0.3)
   - SpreadsheetView (0.8.4)
   - Surge (2.0.0)
+  - Tutti (1.5.1)
 
 DEPENDENCIES:
   - Charts
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - SideMenu
   - SpreadsheetView
   - Surge (~> 2.0.0)
+  - Tutti
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -24,6 +26,7 @@ SPEC REPOS:
     - SideMenu
     - SpreadsheetView
     - Surge
+    - Tutti
 
 SPEC CHECKSUMS:
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
@@ -32,7 +35,8 @@ SPEC CHECKSUMS:
   SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
   SpreadsheetView: 17c55b6dc82099993cc2ceb818248d19f3220998
   Surge: 1f0286bc5f0fe4283f3455479895bf85c7ef7760
+  Tutti: 97f9924f25b9f4cce177845e32adf76c4f019cec
 
-PODFILE CHECKSUM: fc23991ccb32bb830c3a5f9ed40f5f92c0194e3d
+PODFILE CHECKSUM: 6548e9b862eeefa700f9dd52c8330ff7721eeff9
 
 COCOAPODS: 1.5.3

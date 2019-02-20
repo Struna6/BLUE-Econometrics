@@ -148,6 +148,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Surge/Surge.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tutti/Tutti.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -156,6 +157,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Surge/Surge.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tutti/Tutti.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

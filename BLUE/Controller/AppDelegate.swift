@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Tutti
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        loadApperanceOfTutorial()
         return true
+    }
+    
+    func loadApperanceOfTutorial(){
+        var pref = CalloutView.globalPreferences
+        pref.drawing.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:1.00)
+        CalloutView.globalPreferences = pref
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

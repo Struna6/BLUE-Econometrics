@@ -12,4 +12,5 @@ target 'BLUE' do
     pod 'SideMenu'
     pod 'CSV.swift'
     pod 'lottie-ios'
+    pod 'Tutti'
 end

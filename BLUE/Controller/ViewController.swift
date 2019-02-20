@@ -11,13 +11,16 @@ import Surge
 import MobileCoreServices
 import SideMenu
 import AVKit
+import Tutti
 
 // MARK: Protocol for Transponating Arrays
 
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     
+    @IBOutlet weak var sideMenu: UIBarButtonItem!
     @IBOutlet weak var premiumLabel: UIStackView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var topTableView: UITableView!
@@ -166,6 +169,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     // MARK: Deinit that delete views in background
     // MARK: Init
+
     override func viewDidLoad() {
         super.viewDidLoad()
         chooseXTableView.delegate = self
@@ -180,6 +184,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             premiumLabel.isHidden = true
         }
         
+        addButton.showHint(text: "Here you can import data", viewController: self)
+        
         if model.squareR.isNaN{
             topTableView.isHidden = true
             topLabel.isHidden = true
@@ -188,7 +194,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             
             imgViewBeforeImport.center = self.view.center
             self.view.addSubview(imgViewBeforeImport)
-            
         }
         else{
             var tmpXText = String()
@@ -416,6 +421,14 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 self.topTableView.reloadData()
             }, mainView: self.view)
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
+            //other hint?
+            topLabel.showHint(text: "Long press to activate saving option, then press on the button that will be shown. This will work on every element in application like text, tables, charts!")
+            if defaults.bool(forKey: "firstChecker"){
+                topTableView.showHint(text: "Remember test values shown there are p-values. Tap on parameter to show details")
+            }else{
+                defaults.set(true, forKey: "firstChecker")
+            }
+            
         }else{
             topLabel.isHidden = true
             topTableView.isHidden = true
@@ -436,11 +449,11 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     }
     
     @IBAction func closeChooseXY(_ sender: Any) {
-        self.topTableView.isHidden = true
+        //self.topTableView.isHidden = true
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
-            self.topTableView.isHidden = false
+            //self.topTableView.isHidden = false
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.chooseXYView.removeFromSuperview()

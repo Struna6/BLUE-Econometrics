@@ -333,8 +333,10 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="ljE-hT-D5D" id="ZnW-GZ-oVU"/>
                         <outlet property="addObservationView" destination="DRX-5x-d6O" id="OTC-SZ-d6N"/>
                         <outlet property="basedOnChoose" destination="8x2-ZC-Z7V" id="Bvf-Vi-flS"/>
+                        <outlet property="editButton" destination="ej2-ZZ-wsS" id="DAm-Eb-XpQ"/>
                         <outlet property="functionChoose" destination="jJd-aE-7M5" id="N9p-fF-hNO"/>
                         <outlet property="normChooseVar" destination="kbG-6r-HHi" id="qhN-Bj-j8O"/>
                         <outlet property="normPicker" destination="Agf-wM-f6j" id="50F-jZ-TRF"/>
@@ -627,6 +629,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="XGL-ma-Weq" id="YiE-DC-RPo"/>
                         <outlet property="labelToChoose1" destination="9bK-hO-tzI" id="it4-co-BtN"/>
                         <outlet property="labelToChoose2" destination="jkx-TS-AT9" id="UWx-k5-jHM"/>
                         <outlet property="parametersView" destination="dkv-Vc-dux" id="PyF-VJ-GLd"/>

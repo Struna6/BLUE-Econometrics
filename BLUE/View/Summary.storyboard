@@ -109,6 +109,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="6Yq-Yc-YD1" id="LN5-Fr-EpE"/>
                         <outlet property="chooseXTableView" destination="LVi-rY-068" id="VEG-PW-SI9"/>
                         <outlet property="chooseXYView" destination="ulz-n8-5eh" id="fTr-3q-FD9"/>
                         <outlet property="chooseYTableView" destination="Xe9-kx-zCB" id="tqW-wX-kbL"/>
@@ -120,6 +121,7 @@
                         <outlet property="parametersViewTitle" destination="m1G-De-fY2" id="L7X-9v-KOw"/>
                         <outlet property="premiumLabel" destination="Izb-1f-yap" id="wlF-mG-gJG"/>
                         <outlet property="saveButton" destination="d14-mI-vgI" id="Fob-iL-mxY"/>
+                        <outlet property="sideMenu" destination="edB-IO-cpY" id="NdN-V2-Ld2"/>
                         <outlet property="sideMenuButton" destination="edB-IO-cpY" id="M09-7M-HVq"/>
                         <outlet property="topLabel" destination="hec-yE-haM" id="0Zx-E9-BuB"/>
                         <outlet property="topTableView" destination="Oir-BL-yPz" id="zde-5f-PFr"/>
@@ -421,7 +423,9 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="helpView" destination="bgi-Xm-XqS" id="ulF-ea-bSS"/>
                         <outlet property="newButton" destination="9ic-CC-RdG" id="pzT-oU-4kZ"/>
+                        <outlet property="newModel" destination="9ic-CC-RdG" id="AW1-Kp-sK6"/>
                         <outlet property="tableView" destination="mal-aC-C0l" id="BMX-1Y-Smc"/>
                     </connections>
                 </viewController>

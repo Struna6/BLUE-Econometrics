@@ -29,6 +29,7 @@
 		F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */; };
 		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
 		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
+		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
@@ -64,6 +65,7 @@
 		F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
+		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				F90D8321221744A90068D58E /* LogProb.swift */,
 				F94C39B621BC535600FB98EC /* SavingService.swift */,
 				F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */,
+				F9CE04F1221C8AD300242F3C /* Tutorial.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework",
 				"${BUILT_PRODUCTS_DIR}/Surge/Surge.framework",
+				"${BUILT_PRODUCTS_DIR}/Tutti/Tutti.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -318,6 +322,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpreadsheetView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Surge.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tutti.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +346,7 @@
 				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
 				F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */,
+				F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */,
 				F9AA8E532199B7A200562A1F /* ViewController.swift in Sources */,
 				F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */,
 				F9AA8E512199B7A200562A1F /* AppDelegate.swift in Sources */,
