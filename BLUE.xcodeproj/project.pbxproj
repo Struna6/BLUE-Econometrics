@@ -16,6 +16,7 @@
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
+		F968AE6D221EBCFA00EF76DB /* IntroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F968AE6C221EBCFA00EF76DB /* IntroVC.swift */; };
 		F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F972F0E2220723DF001F3B3A /* Charts.storyboard */; };
 		F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */; };
 		F97AB3432211D23D001917D3 /* IV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97AB3422211D23D001917D3 /* IV.swift */; };
@@ -49,6 +50,7 @@
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
+		F968AE6C221EBCFA00EF76DB /* IntroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVC.swift; sourceTree = "<group>"; };
 		F972F0E2220723DF001F3B3A /* Charts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Charts.storyboard; sourceTree = "<group>"; };
 		F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerSorted.swift; sourceTree = "<group>"; };
 		F97AB3422211D23D001917D3 /* IV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IV.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		F99DF53821A068F300C81AC5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F968AE6C221EBCFA00EF76DB /* IntroVC.swift */,
 				F9FC4BDC220609F10067A468 /* Template Controllers */,
 				F9AA8E522199B7A200562A1F /* ViewController.swift */,
 				F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */,
@@ -342,6 +345,7 @@
 				F90D8322221744A90068D58E /* LogProb.swift in Sources */,
 				F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */,
 				F97AB3432211D23D001917D3 /* IV.swift in Sources */,
+				F968AE6D221EBCFA00EF76DB /* IntroVC.swift in Sources */,
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
 				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
