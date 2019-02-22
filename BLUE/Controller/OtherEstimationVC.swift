@@ -182,6 +182,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
         }
     }
     @IBAction func editButtonPressed(_ sender: Any) {
+        self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(popUpView)
         imgViewBeforeEdit.removeFromSuperview()
         popUpView.alpha = 0
@@ -410,6 +411,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
         parametersViewTopLabel.text = item.name
         parametersViewText.text = item.description
         parametersViewImage.image = UIImage(named: item.imageName)
+        self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(parametersView)
         parametersView.alpha = 0
         parametersView.center = self.view.center
@@ -538,34 +540,65 @@ extension OtherEstimationVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-    
-        if tableView == self.tableViewX{
-            if cell?.accessoryType == UITableViewCell.AccessoryType.none{
-                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-            }else{
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
+        
+        if !isLogitProbit{
+            if tableView == self.tableViewX{
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
+                let text = (cell?.textLabel?.text)!
+                if self.chosenZHeader.contains(text){
+                    self.chosenZHeader.remove(at: chosenZHeader.firstIndex(of: text)!)
+                }else{
+                    self.chosenZHeader.append(text)
+                }
             }
-            let text = (cell?.textLabel?.text)!
-            if self.chosenZHeader.contains(text){
-                self.chosenZHeader.remove(at: chosenZHeader.firstIndex(of: text)!)
+            else if tableView == self.tableViewInstr{
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
+                let text = (cell?.textLabel?.text)!
+                if self.chosenZInstrumentsHeader.contains(text){
+                    self.chosenZInstrumentsHeader.remove(at: chosenZInstrumentsHeader.firstIndex(of: text)!)
+                }else{
+                    self.chosenZInstrumentsHeader.append(text)
+                }
             }else{
-                self.chosenZHeader.append(text)
-            }
-        }
-        else if tableView == self.tableViewInstr{
-            if cell?.accessoryType == UITableViewCell.AccessoryType.none{
-                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-            }else{
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
-            }
-            let text = (cell?.textLabel?.text)!
-            if self.chosenZInstrumentsHeader.contains(text){
-                self.chosenZInstrumentsHeader.remove(at: chosenZInstrumentsHeader.firstIndex(of: text)!)
-            }else{
-                self.chosenZInstrumentsHeader.append(text)
+                loadParametersView(item: self.parametersCategorized[indexPath.section][indexPath.row])
             }
         }else{
-            loadParametersView(item: self.parametersCategorized[indexPath.section][indexPath.row])
+            if tableView == self.tableViewX{
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none && chosenZHeader.isEmpty{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
+                let text = (cell?.textLabel?.text)!
+                if self.chosenZHeader.contains(text){
+                    self.chosenZHeader.remove(at: chosenZHeader.firstIndex(of: text)!)
+                }else{
+                    self.chosenZHeader.append(text)
+                }
+            }
+            else if tableView == self.tableViewInstr{
+                if cell?.accessoryType == UITableViewCell.AccessoryType.none && chosenZInstrumentsHeader.isEmpty{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
+                let text = (cell?.textLabel?.text)!
+                if self.chosenZInstrumentsHeader.contains(text){
+                    self.chosenZInstrumentsHeader.remove(at: chosenZInstrumentsHeader.firstIndex(of: text)!)
+                }else{
+                    self.chosenZInstrumentsHeader.append(text)
+                }
+            }else{
+                loadParametersView(item: self.parametersCategorized[indexPath.section][indexPath.row])
+            }
         }
     }
     

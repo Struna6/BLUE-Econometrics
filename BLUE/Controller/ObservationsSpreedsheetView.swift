@@ -162,7 +162,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBOutlet weak var spreedsheet: SpreadsheetView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        spreedsheet.showHint(text: "Tap to choose cell to edit")
+        spreedsheet.showHint(text: "Tap to choose cell, then click edit on the top bar")
         spreedsheet.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
         spreedsheet.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
         spreedsheet.delegate = self
@@ -178,7 +178,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         choosenVariable = 0
         viewToBlur.isHidden = true
         normalizationChosen = normalizationOptions[0]
-        normVarChosen = optionsBasedOn[0]
+        normVarChosen = "All"
         
         selectObjectForSP = LongTappableToSaveContext(newObject: self.spreedsheet, toBlur: viewToBlur, targetViewController: self)
         
@@ -351,8 +351,10 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBAction func normAccept(_ sender: UIButton) {
         showPopOverNormWindow()
     }
+    
+    func reloadHeaders(){
+    }
 }
-
 //MARK: Edit options functions
 extension ObservationsSpreedsheetView{
     func showPopOverInputWindow(name : String, toDo : @escaping (String) -> Void, isString : Bool = false){
@@ -365,11 +367,13 @@ extension ObservationsSpreedsheetView{
                     toDo(newText)
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                    self.reloadHeaders()
                 }else{
                     if let _ = Double(newText){
                         toDo(newText)
                         self.spreedsheet.reloadData()
                         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+                        self.reloadHeaders()
                     }else{
                         self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
                     }
@@ -389,6 +393,7 @@ extension ObservationsSpreedsheetView{
             toDo()
             self.spreedsheet.reloadData()
             self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+            self.reloadHeaders()
         })
         let alertInputNo = UIAlertAction(title: "No", style: .default, handler: nil)
         alertInput.addAction(alertInputOK)
@@ -462,6 +467,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func loadAddObservationsView(){
+        self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(addObservationView)
         viewToBlur.isHidden = false
         addObservationView.alpha = 0
@@ -486,7 +492,11 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func loadNormObservationsView(){
+        self.view.bringSubviewToFront(viewToBlur)
+        optionsBasedOn = headers
+        optionsBasedOn.append("nothing")
         optionsBasedOn.insert("All", at: 0)
+        normChooseVar.reloadAllComponents()
         self.view.addSubview(normView)
         viewToBlur.isHidden = false
         normView.alpha = 0
@@ -548,7 +558,6 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
             normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.range[chosenVarIndex!])
         default : break
         }
-        self.closeNormObservationsView()
     }
     func normalize(varNum : Int, top : Double, bottom : Double){
         if varNum == 0{
@@ -557,24 +566,32 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
         if normAsNewVar{
             var tmp = [Double]()
-            for row in 0..<observations.count{
-                var x = observations[row].observationArray[varNum]
-                x = (x-top)/bottom
-                tmp.append(x)
+            if headers.contains("n_" + (headers[varNum-1])){
+                playErrorScreen(msg: "Variable already normalized!", blurView: viewToBlur, mainViewController: self, alertToDismiss: nil)
+            }else{
+                for row in 0..<observations.count{
+                    var x = observations[row].observationArray[varNum-1]
+                    x = (x-top)/bottom
+                    tmp.append(x)
+                }
+                for i in 0..<observations.count{
+                    observations[i].observationArray.append(tmp[i])
+                }
+                headers.append("n_" + (headers[varNum-1]))
             }
-            for i in 0..<observations.count{
-                observations[i].observationArray.append(tmp[i])
-            }
-            headers.append("n_" + (headers[varNum]))
+            
         }else{
             for row in 0..<observations.count{
-                var x = observations[row].observationArray[varNum]
+                var x = observations[row].observationArray[varNum-1]
                 x = (x-top)/bottom
-                observations[varNum].observationArray[col] = x
+                observations[varNum-1].observationArray[col] = x
+                headers[varNum-1] = "n_" + headers[varNum-1]
             }
         }
         self.spreedsheet.reloadData()
         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+        self.reloadHeaders()
+        closeNormObservationsView()
     }
     func normalizeAll(top : Double, bottom : Double){
         if normAsNewVar{
@@ -602,6 +619,8 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
         self.spreedsheet.reloadData()
         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+        self.reloadHeaders()
+        closeNormObservationsView()
     }
 }
 

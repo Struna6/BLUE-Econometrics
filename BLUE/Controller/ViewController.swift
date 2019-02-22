@@ -422,9 +422,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             }, mainView: self.view)
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
             //other hint?
-            topLabel.showHint(text: "Long press to activate saving option, then press on the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
+            topLabel.showHint(text: "Long press to activate saving option, then press the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
             if defaults.bool(forKey: "firstChecker"){
-                topTableView.showHint(text: "Remember test values shown there are p-values. Tap on parameter to show details")
+                topTableView.showHint(text: "Remember test values shown here are p-values. Tap on parameter to show details")
             }else{
                 defaults.set(true, forKey: "firstChecker")
             }
@@ -435,7 +435,11 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         }
     }
     @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
+        if defaults.bool(forKey: "premium"){
+            premiumLabel.isHidden = true
+        }
         imgViewBeforeEdit.removeFromSuperview()
+        self.view.bringSubviewToFront(visualViewToBlur)
         self.view.addSubview(chooseXYView)
         chooseXYView.alpha = 0
         chooseXYView.center = self.view.center
@@ -453,7 +457,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
-            if self.model.squareR.isFinite{
+            if self.model.chosenX.count > 0 && self.model.squareR.isFinite{
                 self.topTableView.isHidden = false
             }
             self.visualViewToBlur.effect = nil
@@ -661,6 +665,7 @@ extension ViewController{
         parametersViewTitle.text = item.name
         parametersViewDetails.text = item.description
         parametersViewImage.image = UIImage(named: item.imageName)
+        self.view.bringSubviewToFront(visualViewToBlur)
         self.view.addSubview(parametersView)
         parametersView.alpha = 0
         parametersView.center = self.view.center

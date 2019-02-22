@@ -33,8 +33,8 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         tableView.layer.borderWidth = 0.5
         
         newButton.showHint(text: "Press here to make new model")
-        tableView.showHint(text: "There will be displayed list of your saved models")
-        helpView.showHint(text: "There you can proceed to tutorials about this application and econometrics")
+        tableView.showHint(text: "Here will be displayed list of your saved models")
+        helpView.showHint(text: "Here you can proceed to tutorials about this application and econometrics")
         
         rootCatalogue = getListOfFilesRoot()
         checkIfFirstLoad()
@@ -81,6 +81,8 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
+        filesTab = getListOfFiles()
+        tableView.reloadData()
     }
     
     func checkIfFirstLoad(){

@@ -130,6 +130,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     //add premium functionality
     @IBAction func buyPremium(_ sender: UIButton) {
         defaults.set(true, forKey: "premium")
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

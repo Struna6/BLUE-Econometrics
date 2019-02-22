@@ -180,8 +180,9 @@ class TableViewControllerSorted: UIViewController {
         popUpWindow.layer.cornerRadius = 10
         if isHiddenPicker{
             pickerView.isHidden = true
+        }else{
+            pickerView.showHint(text: "Choose variable")
         }
-        pickerView.showHint(text: "Choose variable")
         if isShortParameters{
             helpImage.showHint(text: "Press to see more information about group of variables")
         }
