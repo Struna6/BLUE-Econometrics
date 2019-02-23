@@ -40,7 +40,7 @@ extension oddObservationQuantileSpotter where Self==Model {
             let q1=quantile(n: 0.25, tmp)
             let q3=quantile(n: 0.75, tmp)
             tmp.forEach { (num) in
-                if num > q3+(1.5*(q3-q1)) || num < q3-(1.5*(q3-q1)){
+                if num > q3+(1.5*(q3-q1)) || num < q1-(1.5*(q3-q1)){
                     sum = sum + 1
                 }
             }

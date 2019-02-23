@@ -31,6 +31,11 @@
 		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
 		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
+		F9D331B32221AA9C00BB7077 /* squereR.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B22221AA9C00BB7077 /* squereR.m4v */; };
+		F9D331B52221B23900BB7077 /* quantileOdd.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B42221B23900BB7077 /* quantileOdd.m4v */; };
+		F9D331B72221BC9C00BB7077 /* fTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B62221BC9C00BB7077 /* fTest.m4v */; };
+		F9D331B92221D3C100BB7077 /* tTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B82221D3C000BB7077 /* tTest.m4v */; };
+		F9D331BB2221DF5600BB7077 /* RESET.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331BA2221DF5600BB7077 /* RESET.m4v */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
@@ -68,6 +73,11 @@
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
+		F9D331B22221AA9C00BB7077 /* squereR.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = squereR.m4v; sourceTree = "<group>"; };
+		F9D331B42221B23900BB7077 /* quantileOdd.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = quantileOdd.m4v; sourceTree = "<group>"; };
+		F9D331B62221BC9C00BB7077 /* fTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = fTest.m4v; sourceTree = "<group>"; };
+		F9D331B82221D3C000BB7077 /* tTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = tTest.m4v; sourceTree = "<group>"; };
+		F9D331BA2221DF5600BB7077 /* RESET.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = RESET.m4v; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
@@ -159,6 +169,11 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
+				F9D331BA2221DF5600BB7077 /* RESET.m4v */,
+				F9D331B82221D3C000BB7077 /* tTest.m4v */,
+				F9D331B62221BC9C00BB7077 /* fTest.m4v */,
+				F9D331B42221B23900BB7077 /* quantileOdd.m4v */,
+				F9D331B22221AA9C00BB7077 /* squereR.m4v */,
 				F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
@@ -264,6 +279,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9D331BB2221DF5600BB7077 /* RESET.m4v in Resources */,
+				F9D331B92221D3C100BB7077 /* tTest.m4v in Resources */,
+				F9D331B72221BC9C00BB7077 /* fTest.m4v in Resources */,
+				F9D331B52221B23900BB7077 /* quantileOdd.m4v in Resources */,
+				F9D331B32221AA9C00BB7077 /* squereR.m4v in Resources */,
 				F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
 				F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */,
