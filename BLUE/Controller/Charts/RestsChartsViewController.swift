@@ -30,7 +30,7 @@ class restsChartsViewController: UIViewController{
         for i in 0..<e.count{
             barChartEntries.append(BarChartDataEntry(x: Double(0+i), y: e[i]))
         }
-        let barChartDataSet = BarChartDataSet(values: barChartEntries, label: nil)
+        let barChartDataSet = BarChartDataSet(values: barChartEntries, label: "Rests of estimation")
         
         barChartDataSet.axisDependency = .left
         barChartDataSet.colors = [UIColor.blue]
@@ -39,7 +39,6 @@ class restsChartsViewController: UIViewController{
         viewBarChart.data = data
         viewBarChart.notifyDataSetChanged()
         viewBarChart.drawValueAboveBarEnabled = true
-        
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame

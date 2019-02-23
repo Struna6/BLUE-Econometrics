@@ -213,6 +213,7 @@ class TableViewControllerSorted: UIViewController {
             self.viewToBlur.effect = nil
         }) { (success) in
             self.popUpWindow.removeFromSuperview()
+            self.view.sendSubviewToBack(self.viewToBlur)
         }
     }
     
@@ -226,7 +227,7 @@ class TableViewControllerSorted: UIViewController {
             textHelpWindow.text = parametersCategorized[selectedParameterSection][selectedParameterPosition].description
             imageHelpWindow.image = UIImage(named: (parametersCategorized[selectedParameterSection][selectedParameterPosition].imageName))
         }
-        
+        self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(popUpWindow)
         popUpWindow.alpha = 0
         popUpWindow.center = self.view.center

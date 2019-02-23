@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
+class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPlayable {
 
     @IBOutlet weak var topText: UINavigationItem!
     @IBOutlet weak var parametersViewText: UILabel!
@@ -179,6 +179,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
             self.viewToBlur.isHidden = true
         }) { (success) in
             self.popUpView.removeFromSuperview()
+            self.view.sendSubviewToBack(self.viewToBlur)
         }
     }
     @IBAction func editButtonPressed(_ sender: Any) {
@@ -305,6 +306,26 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
         var tmpXText = String()
         var tmpEq = String()
         
+        var nGroupTest = [Double]()
+        var successTest = [Double]()
+        
+        let numGroupTest = self.model.headers.firstIndex(of: self.chosenZHeader.first!)!
+        let numSuccessTest = self.model.headers.firstIndex(of: self.chosenZInstrumentsHeader.first!)!
+        
+        for i in 0..<self.model.allObservations.count{
+            nGroupTest.append(self.model.allObservations[i].observationArray[numGroupTest])
+            successTest.append(self.model.allObservations[i].observationArray[numSuccessTest])
+        }
+        
+        for i in 0..<nGroupTest.count{
+            let test = successTest[i]/nGroupTest[i]
+            if test < 0.0 || test > 1.0{
+                playErrorScreen(msg: "Cannot build model! Probability lower than 0 or greater than 1", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                topLabel.text = "Error"
+                return
+            }
+        }
+        
         playLoadingAsync(tasksToDoAsync: {
             var nGroup = [Double]()
             var success = [Double]()
@@ -361,6 +382,26 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
         
         var nGroup = [Double]()
         var success = [Double]()
+        
+        var nGroupTest = [Double]()
+        var successTest = [Double]()
+        
+        let numGroupTest = self.model.headers.firstIndex(of: self.chosenZHeader.first!)!
+        let numSuccessTest = self.model.headers.firstIndex(of: self.chosenZInstrumentsHeader.first!)!
+        
+        for i in 0..<self.model.allObservations.count{
+            nGroupTest.append(self.model.allObservations[i].observationArray[numGroupTest])
+            successTest.append(self.model.allObservations[i].observationArray[numSuccessTest])
+        }
+        
+        for i in 0..<nGroupTest.count{
+            let test = successTest[i]/nGroupTest[i]
+            if test < 0.0 || test > 1.0{
+                playErrorScreen(msg: "Cannot build model! Probability lower than 0 or greater than 1", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                topLabel.text = "Error"
+                return
+            }
+        }
         
         playLoadingAsync(tasksToDoAsync: {
             let numGroup = self.model.headers.firstIndex(of: self.chosenZHeader.first!)!
@@ -433,7 +474,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen {
             self.viewToBlur.effect = nil
         }) { (success) in
             self.parametersView.removeFromSuperview()
-            self.viewToBlur.isHidden = false
+            self.view.sendSubviewToBack(self.viewToBlur)
         }
     }
     

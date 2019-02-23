@@ -344,6 +344,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.chooseXYView.removeFromSuperview()
+            self.view.sendSubviewToBack(self.visualViewToBlur)
         }
         topTableView.isHidden = true
         if self.chosenX.count > 0 && self.chosenY != ""{
@@ -463,6 +464,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.chooseXYView.removeFromSuperview()
+            self.view.sendSubviewToBack(self.visualViewToBlur)
         }
     }
     func loadSavedModel(){
@@ -686,6 +688,7 @@ extension ViewController{
             self.visualViewToBlur.effect = nil
         }) { (success) in
             self.parametersView.removeFromSuperview()
+            self.view.sendSubviewToBack(self.visualViewToBlur)
         }
     }
     
