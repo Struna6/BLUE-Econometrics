@@ -11,6 +11,7 @@ import AVKit
 
 class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPlayable {
 
+    @IBOutlet weak var playButton: UIView!
     @IBOutlet weak var topText: UINavigationItem!
     @IBOutlet weak var parametersViewText: UILabel!
     @IBOutlet var parametersView: UIView!
@@ -143,9 +144,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: $0)!)
         }
         instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: model.chosenYHeader)!)
-        
+        playButton.layer.cornerRadius = 10.0
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
-        parametersViewImage.addGestureRecognizer(tapOnImage)
+        playButton.addGestureRecognizer(tapOnImage)
         self.tableView.separatorColor = UIColor.clear;
         
         //topLabel
@@ -448,6 +449,8 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         playShortAnimationOnce(mainViewController: self)
     }
     
+    var chosenParameter : ModelParameters?
+    
     func loadParametersView(item : ModelParameters){
         parametersViewTopLabel.text = item.name
         parametersViewText.text = item.description
@@ -464,6 +467,14 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             self.parametersView.alpha = 1
             self.parametersView.transform = CGAffineTransform.identity
         }
+        chosenParameter = item
+        if (chosenParameter?.videoName != nil){
+            if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v") == nil{
+                playButton.isHidden = true
+            }
+        }else{
+            playButton.isHidden = true
+        }
     }
     
     func closeParametersView(){
@@ -479,7 +490,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
     }
     
     @objc func imageTapped(){
-        if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
+        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video

@@ -18,6 +18,7 @@ import Tutti
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     
+    @IBOutlet weak var playButton: UIView!
     @IBOutlet weak var sideMenu: UIBarButtonItem!
     @IBOutlet weak var premiumLabel: UIStackView!
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -46,9 +47,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 ,ModelParameters(name: "Quantile odd observations", isLess: false, criticalFloor: Double(model.n)*0.05, warningFloor: Double(model.n)*0.1, value: Double(model.calculateNumberOfOddObservations()), description: "In statistics and probability quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one less quantile than the number of groups created. Thus quartiles are the three cut points that will divide a dataset into four equal-sized groups. Common quantiles have special names: for instance quartile, decile (creating 10 groups: see below for more). The groups created are termed halves, thirds, quarters, etc., though sometimes the terms for the quantile are used for the groups created, rather than for the cut points.", imageName: "Q", videoName: "quantileOdd")
                 ,ModelParameters(name: "Test F significance", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersF, description: "The F value in regression is the result of a test where the null hypothesis is that all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. If you get a significant result, then whatever coefficients you included in your model improved the model’s fit.", imageName: "F", videoName: "fTest")
                 ,ModelParameters(name: "RESET test of stability of model", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.RESET(), description: "In statistics, the Ramsey Regression Equation Specification Error Test (RESET) test is a general specification test for the linear regression model. More specifically, it tests whether non-linear combinations of the fitted values help explain the response variable. The intuition behind the test is that if non-linear combinations of the explanatory variables have any power in explaining the response variable, the model is misspecified in the sense that the data generating process might be better approximated by a polynomial or another non-linear functional form.", imageName: "F", videoName: "RESET")
-                ,ModelParameters(name: "Jarque-Berry test of normality", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.JBtest, description: "The Jarque-Bera Test,a type of Lagrange multiplier test, is a test for normality. Normality is one of the assumptions for many statistical tests, like the t test or F test; the Jarque-Bera test is usually run before one of these tests to confirm normality. ", imageName: "CHI", videoName: "sampleVideo")
-                ,ModelParameters(name: "Lagrange test of autocorrelation", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.LMAutoCorrelation(), description: "Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them. The analysis of autocorrelation is a mathematical tool for finding repeating patterns, such as the presence of a periodic signal obscured by noise, or identifying the missing fundamental frequency in a signal implied by its harmonic frequencies. It is often used in signal processing for analyzing functions or series of values, such as time domain signals.", imageName: "CHI", videoName: "sampleVideo"),
-                 ModelParameters(name: "White test of homoskedasticity", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.WhiteHomo(), description: "In statistics, the White test is a statistical test that establishes whether the variance of the errors in a regression model is constant: that is for homoskedasticity.These methods have become extremely widely used, making this paper one of the most cited articles in economics.[2]In cases where the White test statistic is statistically significant, heteroskedasticity may not necessarily be the cause; instead the problem could be a specification error. In other words, the White test can be a test of heteroskedasticity or specification error or both. If no cross product terms are introduced in the White test procedure, then this is a test of pure heteroskedasticity. If cross products are introduced in the model, then it is a test of both heteroskedasticity and specification bias.", imageName: "CHI", videoName: "sampleVideo")
+                ,ModelParameters(name: "Jarque-Bera test of normality", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: model.JBtest, description: "The Jarque-Bera Test,a type of Lagrange multiplier test, is a test for normality. Normality is one of the assumptions for many statistical tests, like the t test or F test; the Jarque-Bera test is usually run before one of these tests to confirm normality. ", imageName: "CHI", videoName: "JBtest")
+                ,ModelParameters(name: "Lagrange test of autocorrelation", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.LMAutoCorrelation(), description: "Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them. The analysis of autocorrelation is a mathematical tool for finding repeating patterns, such as the presence of a periodic signal obscured by noise, or identifying the missing fundamental frequency in a signal implied by its harmonic frequencies. It is often used in signal processing for analyzing functions or series of values, such as time domain signals.", imageName: "CHI", videoName: "LMtest"),
+                 ModelParameters(name: "White test of homoskedasticity", isLess: true, criticalFloor: 0.05, warningFloor: 0.1, value: testsAdvanced.WhiteHomo(), description: "In statistics, the White test is a statistical test that establishes whether the variance of the errors in a regression model is constant: that is for homoskedasticity.These methods have become extremely widely used, making this paper one of the most cited articles in economics.[2]In cases where the White test statistic is statistically significant, heteroskedasticity may not necessarily be the cause; instead the problem could be a specification error. In other words, the White test can be a test of heteroskedasticity or specification error or both. If no cross product terms are introduced in the White test procedure, then this is a test of pure heteroskedasticity. If cross products are introduced in the model, then it is a test of both heteroskedasticity and specification bias.", imageName: "CHI", videoName: "WhiteHomo")
             ]
             parametersResults.append(ModelParameters(name: "Test t for free variable", isLess: false, criticalFloor: 0.05, warningFloor: 0.1, value: model.parametersT[0], description: "A statistically significant t-test result is one in which a difference between two groups is unlikely to have occurred because the sample happened to be atypical. Statistical significance is determined by the size of the difference between the group averages, the sample size, and the standard deviations of the groups. For practical purposes statistical significance suggests that the two larger populations from which we sample are “actually” different.", imageName: "T", videoName: "tTest"))
             for i in 0..<model.k{
@@ -187,6 +188,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         }
         
         addButton.showHint(text: "Here you can import data", viewController: self)
+        playButton.layer.cornerRadius = 10.0
         
         if model.squareR.isNaN{
             topTableView.isHidden = true
@@ -223,7 +225,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             sideMenuButton.isEnabled = false
         }
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
-        parametersViewImage.addGestureRecognizer(tapOnImage)
+        playButton.addGestureRecognizer(tapOnImage)
+        
         self.topTableView.separatorColor = UIColor.clear;
          //label
         selectObjectForTopLabel = LongTappableToSaveContext(newObject: self.topLabel, toBlur: self.visualViewToBlur, targetViewController: self)
@@ -311,6 +314,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSideMenu"{
             dismissAllViews()
+            self.view.sendSubviewToBack(visualViewToBlur)
             let target = segue.destination as! UISideMenuNavigationController
             target.sideMenuManager.menuPresentMode = .menuSlideIn
             target.sideMenuManager.menuPushStyle = .popWhenPossible
@@ -675,6 +679,13 @@ extension ViewController{
         parametersView.center = self.view.center
         parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
         chosenParameters = item
+        if (chosenParameters?.videoName != nil){
+            if Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "m4v") == nil{
+                playButton.isHidden = true
+            }
+        }else{
+            playButton.isHidden = true
+        }
         UIView.animate(withDuration: 0.4) {
             self.topTableView.isHidden = true
             self.visualViewToBlur.effect = UIBlurEffect(style: UIBlurEffect.Style.dark)
@@ -710,6 +721,7 @@ extension ViewController{
     
     //MARK: Dismiss open windows
     func dismissAllViews(){
+        self.view.sendSubviewToBack(visualViewToBlur)
         self.view.subviews.forEach { (view) in
             if view == chooseXYView || view == parametersView{
                 UIView.animate(withDuration: 0.4, animations: {

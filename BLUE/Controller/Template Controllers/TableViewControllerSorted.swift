@@ -175,6 +175,7 @@ class TableViewControllerSorted: UIViewController {
     
     var selectObjectForTableView = LongTappableToSaveContext()
     
+    @IBOutlet weak var playButton: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         popUpWindow.layer.cornerRadius = 10
@@ -187,11 +188,13 @@ class TableViewControllerSorted: UIViewController {
             helpImage.showHint(text: "Press to see more information about group of variables")
         }
         
+        playButton.layer.cornerRadius = 10.0
         topLabel.text = textTopLabel
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.helpImageTapped))
         helpImage.addGestureRecognizer(tapOnImage)
+        
         let tapOnImageToPlay = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.imageTappedtoPlay))
-        imageHelpWindow.addGestureRecognizer(tapOnImageToPlay)
+        playButton.addGestureRecognizer(tapOnImageToPlay)
         
         selectObjectForTableView = LongTappableToSaveContext(newObject: self.tableView, toBlur: self.viewToBlur, targetViewController: self)
         
@@ -226,6 +229,14 @@ class TableViewControllerSorted: UIViewController {
             labelHelpWindow.text = parametersCategorized[selectedParameterSection][selectedParameterPosition].name
             textHelpWindow.text = parametersCategorized[selectedParameterSection][selectedParameterPosition].description
             imageHelpWindow.image = UIImage(named: (parametersCategorized[selectedParameterSection][selectedParameterPosition].imageName))
+            chosenParameter = parametersCategorized[selectedParameterSection][selectedParameterPosition]
+            if (chosenParameter?.videoName != nil){
+                if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v") == nil{
+                    playButton.isHidden = true
+                }
+            }else{
+                playButton.isHidden = true
+            }
         }
         self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(popUpWindow)
@@ -240,9 +251,11 @@ class TableViewControllerSorted: UIViewController {
         }
     }
     
+    var chosenParameter : ModelParameters?
+    
     //change name of video
     @objc func imageTappedtoPlay(){
-        if let path = Bundle.main.path(forResource: "sampleVideo", ofType: "mp4"){
+        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video

@@ -29,15 +29,16 @@
 		F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5C2199B7A400562A1F /* LaunchScreen.storyboard */; };
 		F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */; };
 		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
-		F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9C7557821C50A6E00A0F8A3 /* test1.txt */; };
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
-		F9D331B32221AA9C00BB7077 /* squereR.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B22221AA9C00BB7077 /* squereR.m4v */; };
-		F9D331B52221B23900BB7077 /* quantileOdd.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B42221B23900BB7077 /* quantileOdd.m4v */; };
-		F9D331B72221BC9C00BB7077 /* fTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B62221BC9C00BB7077 /* fTest.m4v */; };
-		F9D331B92221D3C100BB7077 /* tTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331B82221D3C000BB7077 /* tTest.m4v */; };
-		F9D331BB2221DF5600BB7077 /* RESET.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D331BA2221DF5600BB7077 /* RESET.m4v */; };
+		F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D1122F2222DA2B00F28BF8 /* tTest.m4v */; };
+		F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */; };
+		F9D112392222DA4000F28BF8 /* fTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112312222DA3100F28BF8 /* fTest.m4v */; };
+		F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112322222DA3600F28BF8 /* RESET.m4v */; };
+		F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112332222DA3900F28BF8 /* squereR.m4v */; };
+		F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112342222DA3A00F28BF8 /* LMtest.m4v */; };
+		F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */; };
+		F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112362222DA4000F28BF8 /* JBtest.m4v */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
-		F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
 		F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FC4BDD22060A270067A468 /* MatrixView.swift */; };
@@ -73,13 +74,15 @@
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
-		F9D331B22221AA9C00BB7077 /* squereR.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = squereR.m4v; sourceTree = "<group>"; };
-		F9D331B42221B23900BB7077 /* quantileOdd.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = quantileOdd.m4v; sourceTree = "<group>"; };
-		F9D331B62221BC9C00BB7077 /* fTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = fTest.m4v; sourceTree = "<group>"; };
-		F9D331B82221D3C000BB7077 /* tTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = tTest.m4v; sourceTree = "<group>"; };
-		F9D331BA2221DF5600BB7077 /* RESET.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = RESET.m4v; sourceTree = "<group>"; };
+		F9D1122F2222DA2B00F28BF8 /* tTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = tTest.m4v; sourceTree = "<group>"; };
+		F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = WhiteHomo.m4v; sourceTree = "<group>"; };
+		F9D112312222DA3100F28BF8 /* fTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = fTest.m4v; sourceTree = "<group>"; };
+		F9D112322222DA3600F28BF8 /* RESET.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = RESET.m4v; sourceTree = "<group>"; };
+		F9D112332222DA3900F28BF8 /* squereR.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = squereR.m4v; sourceTree = "<group>"; };
+		F9D112342222DA3A00F28BF8 /* LMtest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = LMtest.m4v; sourceTree = "<group>"; };
+		F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = quantileOdd.m4v; sourceTree = "<group>"; };
+		F9D112362222DA4000F28BF8 /* JBtest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = JBtest.m4v; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
-		F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 		F9FC4BDD22060A270067A468 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
@@ -169,12 +172,14 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
-				F9D331BA2221DF5600BB7077 /* RESET.m4v */,
-				F9D331B82221D3C000BB7077 /* tTest.m4v */,
-				F9D331B62221BC9C00BB7077 /* fTest.m4v */,
-				F9D331B42221B23900BB7077 /* quantileOdd.m4v */,
-				F9D331B22221AA9C00BB7077 /* squereR.m4v */,
-				F9E584C421D0FA9A0063ABFE /* sampleVideo.mp4 */,
+				F9D112312222DA3100F28BF8 /* fTest.m4v */,
+				F9D112362222DA4000F28BF8 /* JBtest.m4v */,
+				F9D112342222DA3A00F28BF8 /* LMtest.m4v */,
+				F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */,
+				F9D112322222DA3600F28BF8 /* RESET.m4v */,
+				F9D112332222DA3900F28BF8 /* squereR.m4v */,
+				F9D1122F2222DA2B00F28BF8 /* tTest.m4v */,
+				F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -279,14 +284,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9D331BB2221DF5600BB7077 /* RESET.m4v in Resources */,
-				F9D331B92221D3C100BB7077 /* tTest.m4v in Resources */,
-				F9D331B72221BC9C00BB7077 /* fTest.m4v in Resources */,
-				F9D331B52221B23900BB7077 /* quantileOdd.m4v in Resources */,
-				F9D331B32221AA9C00BB7077 /* squereR.m4v in Resources */,
-				F9E584C521D0FA9A0063ABFE /* sampleVideo.mp4 in Resources */,
+				F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */,
+				F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */,
+				F9D112392222DA4000F28BF8 /* fTest.m4v in Resources */,
+				F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */,
+				F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */,
+				F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */,
+				F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */,
+				F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
-				F9C7557921C50A6E00A0F8A3 /* test1.txt in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9AA8E5B2199B7A400562A1F /* Assets.xcassets in Resources */,
