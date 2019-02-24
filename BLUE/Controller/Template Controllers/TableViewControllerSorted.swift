@@ -9,10 +9,11 @@
 import UIKit
 import AVKit
 
-class TableViewControllerSorted: UIViewController {
+class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var premiumLabel: UIStackView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet var popUpWindow: UIView!
     @IBOutlet weak var viewToBlur: UIVisualEffectView!
@@ -188,6 +189,11 @@ class TableViewControllerSorted: UIViewController {
             helpImage.showHint(text: "Press to see more information about group of variables")
         }
         
+        let defaults = UserDefaults.standard
+        if defaults.bool(forKey: "premium"){
+            premiumLabel.isHidden = true
+        }
+        
         playButton.layer.cornerRadius = 10.0
         topLabel.text = textTopLabel
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(TableViewControllerSorted.helpImageTapped))
@@ -262,6 +268,18 @@ class TableViewControllerSorted: UIViewController {
             present(videoPlayer, animated: true, completion: {
                 video.play()
             })
+            
+            let defaults = UserDefaults.standard
+            if !defaults.bool(forKey: "premium"){
+                Dispatch.DispatchQueue.global(qos: .background).async {
+                    sleep(60)
+                    DispatchQueue.main.async {
+                        videoPlayer.dismiss(animated: true, completion: {
+                            self.playErrorScreen(msg: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                        })
+                    }
+                }
+            }
         }
     }
     

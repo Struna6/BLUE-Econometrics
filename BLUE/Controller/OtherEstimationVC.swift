@@ -11,6 +11,7 @@ import AVKit
 
 class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPlayable {
 
+    @IBOutlet weak var premiumButton: UIStackView!
     @IBOutlet weak var playButton: UIView!
     @IBOutlet weak var topText: UINavigationItem!
     @IBOutlet weak var parametersViewText: UILabel!
@@ -110,6 +111,11 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        if defaults.bool(forKey: "premium"){
+            premiumButton.isHidden = true
+        }
         
         imgViewBeforeEdit.center = self.view.center
         self.view.addSubview(imgViewBeforeEdit)
@@ -497,6 +503,18 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             present(videoPlayer, animated: true, completion: {
                 video.play()
             })
+            
+            let defaults = UserDefaults.standard
+            if !defaults.bool(forKey: "premium"){
+                Dispatch.DispatchQueue.global(qos: .background).async {
+                    sleep(60)
+                    DispatchQueue.main.async {
+                        videoPlayer.dismiss(animated: true, completion: {
+                            self.playErrorScreen(msg: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
+                        })
+                    }
+                }
+            }
         }
     }
 }

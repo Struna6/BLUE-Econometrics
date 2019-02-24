@@ -21,6 +21,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     @IBOutlet weak var playButton: UIView!
     @IBOutlet weak var sideMenu: UIBarButtonItem!
     @IBOutlet weak var premiumLabel: UIStackView!
+    @IBOutlet weak var premiumLabel2: UIStackView!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -185,6 +186,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         
         if defaults.bool(forKey: "premium"){
             premiumLabel.isHidden = true
+            premiumLabel2.isHidden = true
         }
         
         addButton.showHint(text: "Here you can import data", viewController: self)
@@ -716,6 +718,17 @@ extension ViewController{
             present(videoPlayer, animated: true, completion: {
                 video.play()
             })
+            
+            if !defaults.bool(forKey: "premium"){
+                Dispatch.DispatchQueue.global(qos: .background).async {
+                    sleep(60)
+                    DispatchQueue.main.async {
+                        videoPlayer.dismiss(animated: true, completion: {
+                            self.playErrorScreen(msg: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                        })
+                    }
+                }
+            }
         }
     }
     
