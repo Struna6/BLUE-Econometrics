@@ -38,6 +38,9 @@
 		F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */; };
 		F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112362222DA4000F28BF8 /* JBtest.m4v */; };
 		F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */; };
+		F9D11244222326B200F28BF8 /* weakF.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11241222326AF00F28BF8 /* weakF.m4v */; };
+		F9D11245222326B200F28BF8 /* Sargan.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11242222326B000F28BF8 /* Sargan.m4v */; };
+		F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11243222326B200F28BF8 /* Hausmann.m4v */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
@@ -82,6 +85,9 @@
 		F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = quantileOdd.m4v; sourceTree = "<group>"; };
 		F9D112362222DA4000F28BF8 /* JBtest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = JBtest.m4v; sourceTree = "<group>"; };
 		F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F9D11241222326AF00F28BF8 /* weakF.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = weakF.m4v; sourceTree = "<group>"; };
+		F9D11242222326B000F28BF8 /* Sargan.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sargan.m4v; sourceTree = "<group>"; };
+		F9D11243222326B200F28BF8 /* Hausmann.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hausmann.m4v; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
@@ -172,6 +178,9 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
+				F9D11243222326B200F28BF8 /* Hausmann.m4v */,
+				F9D11242222326B000F28BF8 /* Sargan.m4v */,
+				F9D11241222326AF00F28BF8 /* weakF.m4v */,
 				F9D112312222DA3100F28BF8 /* fTest.m4v */,
 				F9D112362222DA4000F28BF8 /* JBtest.m4v */,
 				F9D112342222DA3A00F28BF8 /* LMtest.m4v */,
@@ -284,6 +293,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9D11244222326B200F28BF8 /* weakF.m4v in Resources */,
+				F9D11245222326B200F28BF8 /* Sargan.m4v in Resources */,
+				F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */,
 				F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */,
 				F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */,
 				F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */,
