@@ -720,11 +720,17 @@ extension ViewController{
             })
             
             if !defaults.bool(forKey: "premium"){
+                videoPlayer.showsPlaybackControls = false
+                videoPlayer.setValue(true, forKey: "requiresLinearPlayback")
                 Dispatch.DispatchQueue.global(qos: .background).async {
                     sleep(60)
                     DispatchQueue.main.async {
                         videoPlayer.dismiss(animated: true, completion: {
-                            self.playErrorScreen(msg: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                            let alertController = UIAlertController.init(title: "Error", message: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", preferredStyle: .alert)
+                            self.present(alertController,animated: true,completion: {
+                                sleep(1)
+                                alertController.dismiss(animated: true)
+                            })
                         })
                     }
                 }
