@@ -117,6 +117,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             premiumButton.isHidden = true
         }
         
+        let imgViewBeforeEditTap = UITapGestureRecognizer(target: self, action: #selector(self.editButtonPressed(_:)))
+        imgViewBeforeEdit.addGestureRecognizer(imgViewBeforeEditTap)
+        imgViewBeforeEdit.isUserInteractionEnabled = true
         imgViewBeforeEdit.center = self.view.center
         self.view.addSubview(imgViewBeforeEdit)
         
@@ -189,7 +192,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             self.view.sendSubviewToBack(self.viewToBlur)
         }
     }
-    @IBAction func editButtonPressed(_ sender: Any) {
+    @objc @IBAction func editButtonPressed(_ sender: Any) {
         self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(popUpView)
         imgViewBeforeEdit.removeFromSuperview()

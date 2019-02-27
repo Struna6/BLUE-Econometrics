@@ -148,6 +148,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                     
                 }
             }
+            imgViewBeforeImport.removeFromSuperview()
             imgViewBeforeEdit.center = self.view.center
             self.view.addSubview(imgViewBeforeEdit)
             self.newModel = true
@@ -183,6 +184,14 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         chooseXYView.layer.cornerRadius = 10
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
+        
+        let tapOnImgBeforeImport = UITapGestureRecognizer(target: self, action: #selector(self.addButtonPressed(_:)))
+        imgViewBeforeImport.addGestureRecognizer(tapOnImgBeforeImport)
+        imgViewBeforeImport.isUserInteractionEnabled = true
+        
+        let tapOnImgBeforeEdit = UITapGestureRecognizer(target: self, action: #selector(self.chooseXYButtonPressed(_:)))
+        imgViewBeforeEdit.addGestureRecognizer(tapOnImgBeforeEdit)
+        imgViewBeforeEdit.isUserInteractionEnabled = true
         
         if defaults.bool(forKey: "premium"){
             premiumLabel.isHidden = true
@@ -333,8 +342,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     }
     
     // MARK: New import
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        imgViewBeforeImport.removeFromSuperview()
+    @objc @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
         dismissAllViews()
         saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
@@ -443,7 +452,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             topTableView.isHidden = true
         }
     }
-    @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
+    @objc @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
         if defaults.bool(forKey: "premium"){
             premiumLabel.isHidden = true
         }
