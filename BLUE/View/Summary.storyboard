@@ -597,7 +597,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mal-aC-C0l">
-                                <rect key="frame" x="165" y="181" width="438" height="598"/>
+                                <rect key="frame" x="165" y="213" width="438" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="598" id="u1u-6R-D0A"/>
@@ -641,7 +641,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved projects" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0WL-IB-DXQ">
-                                <rect key="frame" x="259" y="81" width="250" height="80"/>
+                                <rect key="frame" x="259" y="80" width="250" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="Wq6-Eg-VGQ"/>
                                     <constraint firstAttribute="height" constant="80" id="wdz-24-aTQ"/>
@@ -651,7 +651,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nan" translatesAutoresizingMaskIntoConstraints="NO" id="bgi-Xm-XqS">
-                                <rect key="frame" x="668" y="81" width="80" height="80"/>
+                                <rect key="frame" x="668" y="80" width="80" height="80"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="7q2-zn-tiE"/>
@@ -664,12 +664,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bgi-Xm-XqS" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="61" id="2p3-dl-G8G"/>
+                            <constraint firstItem="bgi-Xm-XqS" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="60" id="2p3-dl-G8G"/>
                             <constraint firstItem="muC-Ot-qcD" firstAttribute="bottom" secondItem="9ic-CC-RdG" secondAttribute="bottom" constant="80" id="5Uh-ZR-fLk"/>
+                            <constraint firstItem="mal-aC-C0l" firstAttribute="centerY" secondItem="QQf-IT-ERs" secondAttribute="centerY" id="7xH-wK-aqI"/>
                             <constraint firstItem="9ic-CC-RdG" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="E7k-4M-Uc0"/>
-                            <constraint firstItem="mal-aC-C0l" firstAttribute="top" secondItem="0WL-IB-DXQ" secondAttribute="bottom" constant="20" id="Fj3-Ga-RHq"/>
                             <constraint firstItem="mal-aC-C0l" firstAttribute="leading" secondItem="muC-Ot-qcD" secondAttribute="leading" constant="165" id="eNf-aT-1Hc"/>
-                            <constraint firstItem="9ic-CC-RdG" firstAttribute="top" secondItem="mal-aC-C0l" secondAttribute="bottom" constant="65" id="lhc-FY-dAS"/>
+                            <constraint firstItem="0WL-IB-DXQ" firstAttribute="top" secondItem="muC-Ot-qcD" secondAttribute="top" constant="60" id="fe8-Du-AEw"/>
                             <constraint firstItem="0WL-IB-DXQ" firstAttribute="centerX" secondItem="QQf-IT-ERs" secondAttribute="centerX" id="od2-PV-cKu"/>
                             <constraint firstItem="muC-Ot-qcD" firstAttribute="trailing" secondItem="mal-aC-C0l" secondAttribute="trailing" constant="165" id="rZG-Tq-a2R"/>
                             <constraint firstItem="bgi-Xm-XqS" firstAttribute="leading" secondItem="0WL-IB-DXQ" secondAttribute="trailing" constant="159" id="xeN-71-IJi"/>

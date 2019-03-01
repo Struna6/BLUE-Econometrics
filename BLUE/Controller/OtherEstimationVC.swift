@@ -152,7 +152,12 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         model.chosenXHeader.forEach(){
             instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: $0)!)
         }
-        instrumentsToChoose.remove(at: instrumentsToChoose.firstIndex(of: model.chosenYHeader)!)
+        
+        if let index = instrumentsToChoose.firstIndex(of: model.chosenYHeader){
+            instrumentsToChoose.remove(at: index)
+        }
+        
+        
         playButton.layer.cornerRadius = 10.0
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped))
         playButton.addGestureRecognizer(tapOnImage)

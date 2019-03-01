@@ -98,7 +98,7 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
             }
         }else{
             defaults.set(true, forKey: "firstOpen")
-            defaults.set(true, forKey: "longPress")
+            //defaults.set(false, forKey: "longPress")
             defaults.set(true, forKey: "animations")
             createDirectories()
             filesTab = getListOfFiles()
@@ -115,8 +115,16 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         }catch {
             fatalError("unable to create")
         }
+        copyBundleSampleModels()
     }
     
+    func copyBundleSampleModels(){
+        do{
+            try copySampleModels(name: "sampleCity", type: ".csv")
+        }catch let er as SavingErrors{
+            print(er)
+        }catch{}
+    }
 }
 
 extension FirstViewController : UITableViewDelegate, UITableViewDataSource{

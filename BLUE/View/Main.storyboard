@@ -361,18 +361,17 @@
                                 <rect key="frame" x="83" y="120" width="602" height="854"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-wx-XXh">
-                                <rect key="frame" x="-9" y="0.0" width="785" height="1024"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="b02-K6-OdX">
-                                    <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-wx-XXh">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="b02-K6-OdX">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vT8-CB-Ntc">
-                                            <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="tYJ-fB-0xa">
-                                                <rect key="frame" x="0.0" y="0.0" width="785" height="1024"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <vibrancyEffect>
@@ -386,10 +385,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="B9R-wx-XXh" secondAttribute="trailing" id="Ezi-3E-9YR"/>
                             <constraint firstItem="7qo-1E-2zg" firstAttribute="trailing" secondItem="L8R-yz-JXc" secondAttribute="trailing" constant="83" id="H7n-ZS-r1u"/>
+                            <constraint firstItem="B9R-wx-XXh" firstAttribute="leading" secondItem="2pU-2e-zAc" secondAttribute="leading" id="KWi-Ho-e6b"/>
+                            <constraint firstItem="B9R-wx-XXh" firstAttribute="bottom" secondItem="7qo-1E-2zg" secondAttribute="bottom" id="O8f-TO-gZw"/>
                             <constraint firstItem="7qo-1E-2zg" firstAttribute="bottom" secondItem="L8R-yz-JXc" secondAttribute="bottom" constant="50" id="RhS-88-BwH"/>
                             <constraint firstItem="L8R-yz-JXc" firstAttribute="top" secondItem="7qo-1E-2zg" secondAttribute="top" constant="50" id="cNW-yP-7bo"/>
                             <constraint firstItem="L8R-yz-JXc" firstAttribute="leading" secondItem="7qo-1E-2zg" secondAttribute="leading" constant="83" id="j8W-zi-QLT"/>
+                            <constraint firstItem="B9R-wx-XXh" firstAttribute="top" secondItem="2pU-2e-zAc" secondAttribute="top" id="xuP-qd-TyG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7qo-1E-2zg"/>
                     </view>

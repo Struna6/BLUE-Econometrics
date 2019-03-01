@@ -13,6 +13,7 @@
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
+		F9265B852229DB2800B1EDC6 /* sampleCity.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9265B842229DB2800B1EDC6 /* sampleCity.csv */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
@@ -56,6 +57,7 @@
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F9265B842229DB2800B1EDC6 /* sampleCity.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sampleCity.csv; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				F9D112332222DA3900F28BF8 /* squereR.m4v */,
 				F9D1122F2222DA2B00F28BF8 /* tTest.m4v */,
 				F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */,
+				F9265B842229DB2800B1EDC6 /* sampleCity.csv */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -303,6 +306,7 @@
 				F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */,
 				F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */,
 				F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */,
+				F9265B852229DB2800B1EDC6 /* sampleCity.csv in Resources */,
 				F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */,
 				F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,

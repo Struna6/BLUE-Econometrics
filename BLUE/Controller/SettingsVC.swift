@@ -67,6 +67,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             pickers.forEach(){
                 if $0.tag == 0{
                     $0.isEnabled = false
+                    $0.setOn(false, animated: false)
                     $0.isOn = false
                     $0.onTintColor = UIColor.gray
                 }
@@ -74,7 +75,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
         }
         
         pickers.forEach(){
-            if $0.tag == 0{
+            if $0.tag == 0 && defaults.bool(forKey: "premium"){
                 if let val = defaults.bool(forKey: "longPress") as Bool?{
                     $0.isOn = val
                 }else{
@@ -92,6 +93,8 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
                 }else{
                     $0.isOn = false
                 }
+            }else{
+                $0.isOn = false
             }
         }
     }
@@ -108,7 +111,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     
     //ADD documentPickerForAutoSaving
     @IBAction func switchPressed(_ sender: UISwitch) {
-        if sender.tag == 0{
+        if sender.tag == 0 && defaults.bool(forKey: "premium"){
             defaults.set(sender.isOn, forKey: "longPress")
         }else if sender.tag == 1{
             defaults.set(sender.isOn, forKey: "animations")

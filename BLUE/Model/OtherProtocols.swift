@@ -287,7 +287,6 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
     
     @objc func longTapOnObject(sender: UIGestureRecognizer){
         let defaults = UserDefaults.standard
-        
         if defaults.bool(forKey: "longPress"){
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
             button.layer.cornerRadius = 0.5 * button.bounds.size.width
@@ -364,6 +363,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
             label.backgroundColor = UIColor.white
             label.alpha = 1.0
             label.layer.opacity = 1.0
+            label.layer.borderWidth = 0.0
             let result = UIImage.imageWithLabel(label: label)
             return result
         }
@@ -375,6 +375,10 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
             tableView.backgroundColor = UIColor.white
             tableView.alpha = 1.0
             tableView.layer.opacity = 1.0
+            tableView.layer.borderWidth = 0.0
+            if (tableView.indexPathForSelectedRow != nil){
+                tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+            }
             let result = UITableView.saveWholeTable(tableView: tableView)
             return result
         }
@@ -387,6 +391,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
             sp.deselectItem(at: sp.indexPathForSelectedItem!, animated: false)
             sp.alpha = 1.0
             sp.layer.opacity = 1.0
+            sp.layer.borderWidth = 0.0
             let result = UIView.save(view: sp)
             return result
         }
@@ -404,6 +409,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
                     $0.removeFromSuperview()
                 }
             }
+            chart.layer.borderWidth = 0.0
             picker?.isHidden = true
             let result = UIView.save(view: chart)
             picker?.isHidden = false
@@ -419,7 +425,8 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
         let alertInputOK = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
-                    image.save(newText)
+                    image.save(newText+".png")
+                    
                 }else{
                     self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur!, mainViewController: self.targetViewController!, alertToDismiss : alertInput)
                 }

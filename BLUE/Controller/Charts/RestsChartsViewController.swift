@@ -52,6 +52,7 @@ class restsChartsViewController: UIViewController{
         
         viewBarChart.pinchZoomEnabled = true
         viewBarChart.doubleTapToZoomEnabled = true
+        viewBarChart.highlightPerTapEnabled = false
         viewBarChart.scaleXEnabled = true
         viewBarChart.scaleYEnabled = true
     }

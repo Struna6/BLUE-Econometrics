@@ -19,12 +19,14 @@ protocol Storage{
     func exists(fileName : String) -> Bool
     func getListOfFiles() -> [String]
     func getListOfFilesRoot() -> [String]
+    func copySampleModels(name : String, type : String) throws
 }
 
 enum SavingErrors : String, Error{
     case savingError = "Unable to save!"
     case autoSavingError = "Unable to copy to selected path!"
     case cannotLoadModel = "Unable to import file!"
+    case cannotInitializeSampleModels = "Unable to initialize sample models"
 }
 
 extension Storage{
@@ -154,6 +156,19 @@ extension Storage{
             tabTmp.remove(at: index)
         }
         return tabTmp
+    }
+    func copySampleModels(name : String, type : String) throws{
+        let fileMenager = FileManager.default
+        let bundlePath = Bundle.main.path(forResource: name, ofType: type)
+        let toPath = path.appendingPathComponent("/Sample Models/" + name + type)
+        if let _ = bundlePath{
+            do{
+                try fileMenager.copyItem(at: URL(fileURLWithPath: bundlePath!), to: toPath)
+            }
+            catch{
+                throw SavingErrors.cannotInitializeSampleModels
+            }
+        }
     }
 }
 
