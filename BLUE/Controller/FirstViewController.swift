@@ -135,6 +135,16 @@ extension FirstViewController : UITableViewDelegate, UITableViewDataSource{
         let text = filesTab[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.text = String(text[..<text.index(text.endIndex, offsetBy: -6)])
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MMM-yyyy HH:mm"
+        var date = String()
+        do{
+            try date = formatter.string(from: fileModificationDate(name: filesTab[indexPath.row]))
+        }
+        catch let er as SavingErrors{
+            print(er)
+        }catch{}
+        cell.detailTextLabel?.text = "Last save time: " + date
         return cell
     }
 }

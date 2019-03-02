@@ -181,6 +181,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         chooseXTableView.dataSource = self
         chooseYTableView.delegate = self
         chooseYTableView.dataSource = self
+        
+        chooseXTableView.layer.borderWidth = 0.2
+        chooseYTableView.layer.borderWidth = 0.2
+        
+        chooseXTableView.layer.cornerRadius = 5.0
+        chooseYTableView.layer.cornerRadius = 5.0
+        
         chooseXYView.layer.cornerRadius = 10
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
@@ -730,6 +737,14 @@ extension ViewController{
     //MARK: Gesture Recognizer for Image- Play Video
     //change name of video
     @objc func imageTapped(){
+        UIView.animate(withDuration: 0.4) {
+            self.playButton.backgroundColor = UIColor.blue
+            self.playButton.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+        }
+        UIView.animate(withDuration: 0.4) {
+            self.playButton.backgroundColor = UIColor.lightGray
+            self.playButton.transform = CGAffineTransform.identity
+        }
         if let path = Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "m4v"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
@@ -737,7 +752,6 @@ extension ViewController{
             present(videoPlayer, animated: true, completion: {
                 video.play()
             })
-            
             if !defaults.bool(forKey: "premium"){
                 videoPlayer.showsPlaybackControls = false
                 videoPlayer.setValue(true, forKey: "requiresLinearPlayback")

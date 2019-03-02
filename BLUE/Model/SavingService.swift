@@ -20,6 +20,7 @@ protocol Storage{
     func getListOfFiles() -> [String]
     func getListOfFilesRoot() -> [String]
     func copySampleModels(name : String, type : String) throws
+    func fileModificationDate(name: String) throws -> Date
 }
 
 enum SavingErrors : String, Error{
@@ -27,6 +28,7 @@ enum SavingErrors : String, Error{
     case autoSavingError = "Unable to copy to selected path!"
     case cannotLoadModel = "Unable to import file!"
     case cannotInitializeSampleModels = "Unable to initialize sample models"
+    case cannotGetDate = "Unable to get date of last saved!"
 }
 
 extension Storage{
@@ -168,6 +170,15 @@ extension Storage{
             catch{
                 throw SavingErrors.cannotInitializeSampleModels
             }
+        }
+    }
+    func fileModificationDate(name: String) throws -> Date{
+        do {
+            let url = path.appendingPathComponent("/Saved Models/" + name)
+            let attr = try FileManager.default.attributesOfItem(atPath: url.path)
+            return attr[FileAttributeKey.modificationDate] as! Date
+        } catch {
+            throw SavingErrors.cannotGetDate
         }
     }
 }

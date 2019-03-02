@@ -443,7 +443,8 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
     }
     
     private func copyToClipboard(_ image : UIImage){
-        UIPasteboard.general.image = image
+        //UIPasteboard.general.image = image
+        UIPasteboard.typeListImage.adding(image)
     }
 }
 

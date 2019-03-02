@@ -117,6 +117,12 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             premiumButton.isHidden = true
         }
         
+        tableViewX.layer.borderWidth = 0.2
+        tableViewInstr.layer.borderWidth = 0.2
+        
+        tableViewX.layer.cornerRadius = 5.0
+        tableViewInstr.layer.cornerRadius = 5.0
+        
         let imgViewBeforeEditTap = UITapGestureRecognizer(target: self, action: #selector(self.editButtonPressed(_:)))
         imgViewBeforeEdit.addGestureRecognizer(imgViewBeforeEditTap)
         imgViewBeforeEdit.isUserInteractionEnabled = true
