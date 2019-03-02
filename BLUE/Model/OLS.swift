@@ -859,9 +859,9 @@ struct OLSTestsAdvanced : Statisticable{
         
         model2.flatY = model1.SR
         model2.chosenX = tmpSqueres
-        
+        let tmpSR = model1.SR
         for i in 0..<model1.n{
-            model2.chosenY[i] = [model1.SR[i]]
+            model2.chosenY[i] = [tmpSR[i]]
         }
         
         let R = model2.squareR
