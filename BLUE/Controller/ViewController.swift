@@ -629,17 +629,13 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
             let text = model.headers[indexPath.row]
             cell.textLabel?.text = text
             cell.textLabel?.textAlignment = NSTextAlignment.center
-            if !newModel{
-                if tableView == self.chooseXTableView && chosenX.contains(text){
-                    cell.accessoryType = UITableViewCell.AccessoryType.checkmark
-                }else if tableView == self.chooseYTableView && chosenY == text{
-                    cell.accessoryType = UITableViewCell.AccessoryType.checkmark
-                }
-                else{
-                cell.accessoryType = UITableViewCell.AccessoryType.none
-                }
-            }else{
-                cell.accessoryType = UITableViewCell.AccessoryType.none
+            if tableView == self.chooseXTableView && chosenX.contains(text){
+                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            }else if tableView == self.chooseYTableView && chosenY == text{
+                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            }
+            else{
+            cell.accessoryType = UITableViewCell.AccessoryType.none
             }
         }
         return cell

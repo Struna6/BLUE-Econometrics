@@ -561,7 +561,7 @@ public func myInv(_ x : Matrix<Double>) -> Matrix<Double> {
     if error == 1{
         var tmp = Array(repeating: Array(repeating: 0.0, count: x.rows), count: x.rows)
         for i in 0..<x.rows{
-            tmp[i][i] = 0.0001
+            tmp[i][i] = 0.001
         }
         let newX = add(x, y: Matrix(tmp))
         return myInv(newX)

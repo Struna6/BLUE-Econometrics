@@ -13,7 +13,6 @@
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
-		F9265B852229DB2800B1EDC6 /* sampleCity.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9265B842229DB2800B1EDC6 /* sampleCity.csv */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
@@ -44,6 +43,11 @@
 		F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11243222326B200F28BF8 /* Hausmann.m4v */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
+		F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */; };
+		F9F26F59222B178B00F17C83 /* City Riders Info.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F58222B178B00F17C83 /* City Riders Info.csv */; };
+		F9F26F5B222B1DF700F17C83 /* Life expectancy.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */; };
+		F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */; };
+		F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5E222B211A00F17C83 /* Cars Data.csv */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
 		F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FC4BDD22060A270067A468 /* MatrixView.swift */; };
 /* End PBXBuildFile section */
@@ -57,7 +61,6 @@
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		F9265B842229DB2800B1EDC6 /* sampleCity.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sampleCity.csv; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
@@ -92,6 +95,11 @@
 		F9D11243222326B200F28BF8 /* Hausmann.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hausmann.m4v; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
+		F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "USA GDP 2005-2018.csv"; sourceTree = "<group>"; };
+		F9F26F58222B178B00F17C83 /* City Riders Info.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "City Riders Info.csv"; sourceTree = "<group>"; };
+		F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Life expectancy.csv"; sourceTree = "<group>"; };
+		F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "1930-2001 Investment Data.csv"; sourceTree = "<group>"; };
+		F9F26F5E222B211A00F17C83 /* Cars Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cars Data.csv"; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 		F9FC4BDD22060A270067A468 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,7 +199,11 @@
 				F9D112332222DA3900F28BF8 /* squereR.m4v */,
 				F9D1122F2222DA2B00F28BF8 /* tTest.m4v */,
 				F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */,
-				F9265B842229DB2800B1EDC6 /* sampleCity.csv */,
+				F9F26F5E222B211A00F17C83 /* Cars Data.csv */,
+				F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */,
+				F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */,
+				F9F26F58222B178B00F17C83 /* City Riders Info.csv */,
+				F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -300,13 +312,17 @@
 				F9D11245222326B200F28BF8 /* Sargan.m4v in Resources */,
 				F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */,
 				F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */,
+				F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */,
 				F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */,
 				F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */,
 				F9D112392222DA4000F28BF8 /* fTest.m4v in Resources */,
+				F9F26F59222B178B00F17C83 /* City Riders Info.csv in Resources */,
+				F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */,
 				F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */,
 				F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */,
+				F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */,
+				F9F26F5B222B1DF700F17C83 /* Life expectancy.csv in Resources */,
 				F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */,
-				F9265B852229DB2800B1EDC6 /* sampleCity.csv in Resources */,
 				F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */,
 				F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,

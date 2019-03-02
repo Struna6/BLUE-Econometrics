@@ -148,12 +148,31 @@ extension CSVImportable where Self==Model{
         var observations = [Observation]()
         
         var result = [[String]]()
-        let rows = text.components(separatedBy: "\r\n")
+        
+        let rows = text.components(separatedBy: "\r")
         
         rows.forEach { (row) in
             let columns = row.components(separatedBy: ";")
             result.append(columns)
         }
+        
+        for i in 0..<result.count{
+            if result[i][0].contains("\n"){
+                result[i][0].removeFirst()
+            }
+            if result[i].last == ""{
+                result[i].removeLast()
+            }
+        }
+        if result.last?.count == 0{
+            result.removeLast()
+        }
+        for _ in 0...5{
+            if result.last?.first == ""{
+                result.removeLast()
+            }
+        }
+        
         let firstRow = result[0]
         
         if firstRow.count < 2{
@@ -228,7 +247,6 @@ extension CSVImportable where Self==Model{
             }
             k = k + 1
         }
-
         return (labeled,headered,headers,observations)
     }
 }

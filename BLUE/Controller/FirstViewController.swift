@@ -118,7 +118,11 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
     
     func copyBundleSampleModels(){
         do{
-            try copySampleModels(name: "sampleCity", type: ".csv")
+            try copySampleModels(name: "City Riders Info", type: ".csv")
+            try copySampleModels(name: "USA GDP 2005-2018", type: ".csv")
+            try copySampleModels(name: "Life expectancy", type: ".csv")
+            try copySampleModels(name: "1930-2001 Investment Data", type: ".csv")
+            try copySampleModels(name: "Cars Data", type: ".csv")
         }catch let er as SavingErrors{
             print(er)
         }catch{}
