@@ -40,7 +40,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     var selectedRow : Int?
     var selectedCol : Int?
     
-    var normalizationOptions = ["Standarization",  "Unitarization"]
+    var normalizationOptions = ["Standarization",  "Unitarization", "Zero Unitarization", "Positioned Unitarization"]
     var normalizationChosen = String()
     var normVarChosen = String()
     var normAsNewVar = false
@@ -306,12 +306,10 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             self.loadNormObservationsView()
         }
         
-        
         alert.popoverPresentationController?.barButtonItem = (sender as! UIBarButtonItem)
         
         if selectedRow != nil{
             if observationsLabeled && selectedCol == 0 && selectedRow == 0{
-                
             }
             if observationsLabeled && selectedCol == 0 && selectedRow != 0{
                 alert.addAction(labelOption)
@@ -336,8 +334,8 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 alert.addAction(valuesOptionDel)
             }
         }else{
-            alert.addAction(normalizeOption)
         }
+        alert.addAction(normalizeOption)
         present(alert,animated: true)
     }
     
@@ -368,12 +366,18 @@ extension ObservationsSpreedsheetView{
                     self.spreedsheet.reloadData()
                     self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
                     self.reloadHeaders()
+                    if let index = self.spreedsheet.indexPathForSelectedItem{
+                        self.spreedsheet.deselectItem(at: index, animated: false)
+                    }
                 }else{
                     if let _ = Double(newText){
                         toDo(newText)
                         self.spreedsheet.reloadData()
                         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
                         self.reloadHeaders()
+                        if let index = self.spreedsheet.indexPathForSelectedItem{
+                            self.spreedsheet.deselectItem(at: index, animated: false)
+                        }
                     }else{
                         self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss : alertInput)
                     }
@@ -394,6 +398,9 @@ extension ObservationsSpreedsheetView{
             self.spreedsheet.reloadData()
             self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
             self.reloadHeaders()
+            if let index = self.spreedsheet.indexPathForSelectedItem{
+                self.spreedsheet.deselectItem(at: index, animated: false)
+            }
         })
         let alertInputNo = UIAlertAction(title: "No", style: .default, handler: nil)
         alertInput.addAction(alertInputOK)
@@ -550,72 +557,101 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func prepareForNormalize(){
-        let chosenVarIndex = optionsBasedOn.firstIndex(of: normVarChosen)
+        var top = [Double]()
+        var bottom = [Double]()
+        var prefix = ""
+        
         switch normalizationChosen{
         case "Standarization":
-            normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.SeCore[chosenVarIndex!])
+            top = model.avarage
+            bottom = model.SeCore
+            prefix = "s_"
+        case "Zero Unitarization":
+            top = model.minCore
+            bottom = model.range
+            prefix = "zu_"
         case "Unitarization":
-            normalize(varNum: chosenVarIndex!, top: model.avarage[chosenVarIndex!], bottom: model.range[chosenVarIndex!])
+            top = model.avarage
+            bottom = model.range
+            prefix = "u_"
+        case "Positioned Unitarization":
+            top = model.Me
+            bottom = model.range
+            prefix = "pu_"
         default : break
         }
-    }
-    func normalize(varNum : Int, top : Double, bottom : Double){
-        if varNum == 0{
-            normalizeAll(top: top, bottom: bottom)
-            return
+        
+        if let chosenVarIndex = model.headers.firstIndex(of: normVarChosen){
+            normalize(varNum: chosenVarIndex, top: top[chosenVarIndex], bottom: bottom[chosenVarIndex], prefix: prefix)
         }
-        if normAsNewVar{
-            var tmp = [Double]()
-            if headers.contains("n_" + (headers[varNum-1])){
-                playErrorScreen(msg: "Variable already normalized!", blurView: viewToBlur, mainViewController: self, alertToDismiss: nil)
+        else{
+            normalizeAll(top: top, bottom: bottom, prefix: prefix)
+        }
+    }
+    func normalize(varNum : Int, top : Double, bottom : Double, prefix : String? = "n_"){
+        if headers.contains(prefix! + (headers[varNum])){
+            playErrorScreen(msg: "Variable already normalized!", blurView: viewToBlur, mainViewController: self, alertToDismiss: nil)
+        }else{
+            if normAsNewVar{
+                var tmp = [Double]()
+                    for row in 0..<observations.count{
+                        var x = observations[row].observationArray[varNum]
+                        x = (x-top)/bottom
+                        tmp.append(x)
+                    }
+                    for i in 0..<observations.count{
+                        observations[i].observationArray.append(tmp[i])
+                    }
+                    headers.append(prefix! + (headers[varNum]))
             }else{
-                for row in 0..<observations.count{
-                    var x = observations[row].observationArray[varNum-1]
-                    x = (x-top)/bottom
-                    tmp.append(x)
-                }
-                for i in 0..<observations.count{
-                    observations[i].observationArray.append(tmp[i])
-                }
-                headers.append("n_" + (headers[varNum-1]))
-            }
-            
-        }else{
-            for row in 0..<observations.count{
-                var x = observations[row].observationArray[varNum-1]
-                x = (x-top)/bottom
-                observations[varNum-1].observationArray[col] = x
-                headers[varNum-1] = "n_" + headers[varNum-1]
-            }
-        }
-        self.spreedsheet.reloadData()
-        self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
-        self.reloadHeaders()
-        closeNormObservationsView()
-    }
-    func normalizeAll(top : Double, bottom : Double){
-        if normAsNewVar{
-            var tmp = [Double]()
-            for varNum in 0..<observations[0].observationArray.count{
-                for row in 0..<observations.count{
-                    var x = observations[row].observationArray[varNum]
-                    x = (x-top)/bottom
-                    tmp.append(x)
-                }
-                for i in 0..<observations.count{
-                    observations[i].observationArray.append(tmp[i])
-                }
-                headers.append("n_" + (headers[varNum]))
-            }
-        }else{
-            for varNum in 0..<observations[0].observationArray.count{
                 for row in 0..<observations.count{
                     var x = observations[row].observationArray[varNum]
                     x = (x-top)/bottom
                     observations[row].observationArray[varNum] = x
                 }
+                headers[varNum] = prefix! + headers[varNum]
             }
-            headers = headers.compactMap(){"n_" + $0}
+            self.spreedsheet.reloadData()
+            self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)
+            self.reloadHeaders()
+        }
+        closeNormObservationsView()
+    }
+    func normalizeAll(top : [Double], bottom : [Double], prefix : String? = "n_"){
+        var error = false
+        if normAsNewVar{
+            for varNum in 0..<top.count{
+                if headers.contains(prefix! + (headers[varNum])){
+                    error = true
+                }else{
+                    var tmp = [Double]()
+                    for row in 0..<observations.count{
+                        var x = observations[row].observationArray[varNum]
+                        x = (x-top[varNum])/bottom[varNum]
+                        tmp.append(x)
+                    }
+                    for i in 0..<observations.count{
+                        observations[i].observationArray.append(tmp[i])
+                    }
+                    headers.append(prefix! + (headers[varNum]))
+                }
+            }
+        }else{
+            for varNum in 0..<observations[0].observationArray.count{
+                if headers.contains(prefix! + (headers[varNum])){
+                    error = true
+                }else{
+                    for row in 0..<observations.count{
+                        var x = observations[row].observationArray[varNum]
+                        x = (x-top[varNum])/bottom[varNum]
+                        observations[row].observationArray[varNum] = x
+                    }
+                }
+            }
+            headers = headers.compactMap(){prefix! + $0}
+        }
+        if error{
+            playErrorScreen(msg: "Some variables are already normalized!", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
         }
         self.spreedsheet.reloadData()
         self.backUpdateObservationsDelegate?.updatedObservations(observations: self.observations, headers: self.headers)

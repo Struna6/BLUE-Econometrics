@@ -262,13 +262,22 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         alertPopOver.popoverPresentationController?.barButtonItem = sender
         
         let overrideOption = UIAlertAction(title: "Override current", style: .destructive) { (alert) in
-            do{
+            let alertSureController = UIAlertController(title: "Override", message: "Are you sure you want override current model?", preferredStyle: .alert)
+            let yes = UIAlertAction.init(title: "Yes", style: UIAlertAction.Style.destructive, handler: { (alert) in
+                do{
                 try self.save(object: self.model, pathExternal: self.openedFilePath + ".plist")
+                    self.playShortAnimationOnce(mainViewController: self)
             }catch let er as SavingErrors{
                 self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
-            }catch{
-                
+            }catch{}
             }
+        )
+            let no = UIAlertAction.init(title: "No", style: UIAlertAction.Style.cancel){ (alert) in
+                alertSureController.dismiss(animated: true, completion: nil)
+            }
+            alertSureController.addAction(yes)
+            alertSureController.addAction(no)
+            self.present(alertSureController,animated: true)
         }
         let saveLocallyOption = UIAlertAction(title: "Save", style: .default) { (alert) in
             alertPopOver.removeFromParent()
@@ -365,6 +374,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         }
         topTableView.isHidden = true
         if self.chosenX.count > 0 && self.chosenY != ""{
+            imgViewBeforeEdit.removeFromSuperview()
             let positionY = model.headers.firstIndex(of: self.chosenY)
             var positionX = [Int]()
             self.chosenX.forEach { (element) in
@@ -446,17 +456,18 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             }else{
                 defaults.set(true, forKey: "firstChecker")
             }
-            
         }else{
             topLabel.isHidden = true
             topTableView.isHidden = true
+            if !self.view.subviews.contains(self.imgViewBeforeEdit){
+                self.view.addSubview(self.imgViewBeforeEdit)
+            }
         }
     }
     @objc @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
         if defaults.bool(forKey: "premium"){
             premiumLabel.isHidden = true
         }
-        imgViewBeforeEdit.removeFromSuperview()
         self.view.bringSubviewToFront(visualViewToBlur)
         self.view.addSubview(chooseXYView)
         chooseXYView.alpha = 0
@@ -604,7 +615,6 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     cell.imageView?.image = UIImage.init(named: "ok")
                 case 3:
                     cell.textLabel?.text = par.name
-                    cell.textLabel?.textColor = UIColor.red
                     cell.imageView?.image = UIImage.init(named: "nan")
                 default:break
             }

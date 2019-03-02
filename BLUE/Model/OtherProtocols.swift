@@ -268,7 +268,7 @@ extension ErrorScreenPlayable{
     }
 }
 
-class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
+class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, PlayableLoadingScreen{
     var object : AnyObject?
     var viewToBlur : UIVisualEffectView?
     var targetViewController : UIViewController?
@@ -426,7 +426,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable{
             if let newText = alertInput.textFields![0].text{
                 if newText.count > 0{
                     image.save(newText+".png")
-                    
+                    self.playShortAnimationOnce(mainViewController: self.targetViewController!)
                 }else{
                     self.playErrorScreen(msg: "Wrong format of data!", blurView: self.viewToBlur!, mainViewController: self.targetViewController!, alertToDismiss : alertInput)
                 }

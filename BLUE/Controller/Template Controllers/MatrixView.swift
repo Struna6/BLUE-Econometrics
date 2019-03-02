@@ -49,9 +49,9 @@ extension MatrixView : SpreadsheetViewDataSource{
         if toCompare{
             return 50
         }else{
-            let sample = CGFloat(spreadSheetView.frame.height) / CGFloat(data.count + 1) - 5
-            if sample < CGFloat(spreadSheetView.frame.height) / 8{
-                return CGFloat(spreadSheetView.frame.height) / 8
+            let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data.count + 1) - 5
+            if sample < CGFloat(spreadSheetView.frame.width) / 8{
+                return CGFloat(spreadSheetView.frame.width) / 8
             }
             return sample
         }

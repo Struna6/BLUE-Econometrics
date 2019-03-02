@@ -19,30 +19,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar chart of rests of the estimation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpk-hz-BN4">
-                                <rect key="frame" x="149" y="74" width="470" height="30"/>
+                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="470" id="Qnm-qu-8hf"/>
-                                    <constraint firstAttribute="height" constant="30" id="Wet-fD-pJh"/>
+                                    <constraint firstAttribute="height" constant="50" id="doW-id-TGw"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pn-X6-fKM" userLabel="Chart View" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="34" y="124" width="700" height="450"/>
+                                <rect key="frame" x="30" y="110" width="708" height="814"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="700" id="8B5-Ye-Grh"/>
-                                    <constraint firstAttribute="height" constant="450" id="UDX-Kf-J0D"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="top" secondItem="mpk-hz-BN4" secondAttribute="bottom" constant="20" id="22D-t6-wxD"/>
-                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="centerX" secondItem="DwJ-v2-Tgy" secondAttribute="centerX" id="aIX-dU-qJx"/>
-                            <constraint firstItem="mpk-hz-BN4" firstAttribute="centerX" secondItem="DwJ-v2-Tgy" secondAttribute="centerX" id="jT4-zc-mBL"/>
-                            <constraint firstItem="mpk-hz-BN4" firstAttribute="top" secondItem="s7f-Xx-7A2" secondAttribute="top" constant="54" id="prM-cW-zcb"/>
+                            <constraint firstItem="mpk-hz-BN4" firstAttribute="trailing" secondItem="s7f-Xx-7A2" secondAttribute="trailing" id="OID-J5-uwB"/>
+                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="leading" secondItem="s7f-Xx-7A2" secondAttribute="leading" constant="30" id="Y0w-zd-y9T"/>
+                            <constraint firstItem="8Pn-X6-fKM" firstAttribute="top" secondItem="mpk-hz-BN4" secondAttribute="bottom" constant="10" id="cDA-UA-u8j"/>
+                            <constraint firstItem="s7f-Xx-7A2" firstAttribute="bottom" secondItem="8Pn-X6-fKM" secondAttribute="bottom" constant="100" id="fxL-G1-yFD"/>
+                            <constraint firstItem="mpk-hz-BN4" firstAttribute="leading" secondItem="s7f-Xx-7A2" secondAttribute="leading" id="l2v-aS-SXO"/>
+                            <constraint firstItem="mpk-hz-BN4" firstAttribute="top" secondItem="s7f-Xx-7A2" secondAttribute="top" constant="30" id="vZO-Bk-gyH"/>
+                            <constraint firstItem="s7f-Xx-7A2" firstAttribute="trailing" secondItem="8Pn-X6-fKM" secondAttribute="trailing" constant="30" id="voO-la-MLh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="s7f-Xx-7A2"/>
                     </view>
@@ -64,31 +62,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Candle chart of" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAl-tz-Tix">
-                                <rect key="frame" x="149" y="65" width="470" height="30"/>
+                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="RZY-n2-XQs"/>
-                                    <constraint firstAttribute="width" constant="470" id="Uok-kZ-xpZ"/>
+                                    <constraint firstAttribute="height" constant="50" id="t9l-CQ-WRv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJS-aR-HwO" userLabel="Chart View" customClass="CandleStickChartView" customModule="Charts">
-                                <rect key="frame" x="34" y="125" width="700" height="450"/>
+                                <rect key="frame" x="30" y="110" width="708" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="700" id="8EZ-K3-b47"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="450" id="fdq-P7-iPQ"/>
-                                    <constraint firstAttribute="width" constant="700" id="nVr-Wl-yjO"/>
-                                    <constraint firstAttribute="height" constant="450" id="oou-tO-4dX"/>
-                                </constraints>
                             </view>
                             <pickerView tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Tz-gY-fx6">
-                                <rect key="frame" x="217" y="644" width="334" height="231"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="334" id="AGQ-OD-wpL"/>
-                                    <constraint firstAttribute="height" constant="231" id="ayY-7Y-YAg"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="708" width="768" height="216"/>
                                 <connections>
                                     <outlet property="dataSource" destination="GG5-5I-TfG" id="ugn-gx-v3K"/>
                                     <outlet property="delegate" destination="GG5-5I-TfG" id="p0G-Kc-zun"/>
@@ -97,12 +84,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="TAl-tz-Tix" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="JUo-mR-gfe"/>
-                            <constraint firstItem="SJS-aR-HwO" firstAttribute="top" secondItem="TAl-tz-Tix" secondAttribute="bottom" constant="30" id="SzG-dn-clu"/>
-                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="ZZJ-Ci-hJp"/>
-                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="top" secondItem="SJS-aR-HwO" secondAttribute="bottom" constant="69" id="awt-z4-X5I"/>
-                            <constraint firstItem="SJS-aR-HwO" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="bfB-mR-iUf"/>
-                            <constraint firstItem="TAl-tz-Tix" firstAttribute="top" secondItem="MID-tb-zOV" secondAttribute="top" constant="45" id="eV9-tN-bcx"/>
+                            <constraint firstItem="MID-tb-zOV" firstAttribute="trailing" secondItem="3Tz-gY-fx6" secondAttribute="trailing" id="1s3-2q-9Hc"/>
+                            <constraint firstItem="TAl-tz-Tix" firstAttribute="leading" secondItem="MID-tb-zOV" secondAttribute="leading" id="3F2-Ok-TLa"/>
+                            <constraint firstItem="SJS-aR-HwO" firstAttribute="leading" secondItem="MID-tb-zOV" secondAttribute="leading" constant="30" id="45E-v1-WC9"/>
+                            <constraint firstItem="MID-tb-zOV" firstAttribute="trailing" secondItem="TAl-tz-Tix" secondAttribute="trailing" id="LB8-7J-s0e"/>
+                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="top" secondItem="SJS-aR-HwO" secondAttribute="bottom" constant="30" id="ODF-Nz-Uvd"/>
+                            <constraint firstItem="TAl-tz-Tix" firstAttribute="top" secondItem="MID-tb-zOV" secondAttribute="top" constant="30" id="RlR-JP-Lsb"/>
+                            <constraint firstItem="MID-tb-zOV" firstAttribute="trailing" secondItem="SJS-aR-HwO" secondAttribute="trailing" constant="30" id="bmL-fm-TDI"/>
+                            <constraint firstItem="3Tz-gY-fx6" firstAttribute="leading" secondItem="MID-tb-zOV" secondAttribute="leading" id="c68-lO-CH9"/>
+                            <constraint firstItem="SJS-aR-HwO" firstAttribute="top" secondItem="TAl-tz-Tix" secondAttribute="bottom" constant="10" id="gEp-gt-fbu"/>
+                            <constraint firstItem="TAl-tz-Tix" firstAttribute="centerX" secondItem="eGH-P6-x7e" secondAttribute="centerX" id="ybw-ga-zvr"/>
+                            <constraint firstItem="MID-tb-zOV" firstAttribute="bottom" secondItem="3Tz-gY-fx6" secondAttribute="bottom" constant="100" id="zYa-h0-6ES"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MID-tb-zOV"/>
                     </view>
@@ -125,40 +117,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E90-RM-lWM">
-                                <rect key="frame" x="0.0" y="-30" width="768" height="50"/>
-                                <items>
-                                    <navigationItem title="Chart" id="8n4-3A-Klq"/>
-                                </items>
-                            </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWt-0Y-OZH" customClass="CombinedChartView" customModule="Charts">
-                                <rect key="frame" x="34" y="135" width="700" height="450"/>
+                                <rect key="frame" x="30" y="130" width="708" height="794"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="700" id="ZOy-kO-cbd"/>
-                                    <constraint firstAttribute="height" constant="450" id="u4i-Te-h6D"/>
-                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chart of estimated Y and real observation values" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o5-fX-0rS">
-                                <rect key="frame" x="149" y="67" width="470" height="25"/>
+                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="470" id="muk-cp-O7f"/>
-                                    <constraint firstAttribute="height" constant="25" id="sDO-j8-jQv"/>
+                                    <constraint firstAttribute="height" constant="50" id="8kT-E1-Bzj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="AWt-0Y-OZH" firstAttribute="top" secondItem="6o5-fX-0rS" secondAttribute="bottom" constant="43" id="2mw-Hs-DIk"/>
-                            <constraint firstItem="AWt-0Y-OZH" firstAttribute="centerX" secondItem="KSd-Jv-9I4" secondAttribute="centerX" id="Gtd-gD-TVr"/>
-                            <constraint firstItem="E90-RM-lWM" firstAttribute="bottom" secondItem="ctj-2A-WXt" secondAttribute="top" id="WY8-Pi-WXi"/>
-                            <constraint firstItem="E90-RM-lWM" firstAttribute="centerX" secondItem="6o5-fX-0rS" secondAttribute="centerX" id="bGd-ia-mM2"/>
-                            <constraint firstItem="6o5-fX-0rS" firstAttribute="top" secondItem="E90-RM-lWM" secondAttribute="bottom" constant="47" id="gXe-t2-P3d"/>
-                            <constraint firstItem="E90-RM-lWM" firstAttribute="leading" secondItem="KSd-Jv-9I4" secondAttribute="leading" id="mAz-Q8-dSO"/>
-                            <constraint firstAttribute="trailing" secondItem="E90-RM-lWM" secondAttribute="trailing" id="ny8-lf-Mmx"/>
+                            <constraint firstItem="AWt-0Y-OZH" firstAttribute="top" secondItem="6o5-fX-0rS" secondAttribute="bottom" constant="30" id="4HX-pe-W41"/>
+                            <constraint firstItem="6o5-fX-0rS" firstAttribute="top" secondItem="ctj-2A-WXt" secondAttribute="top" constant="30" id="EE0-qI-eOf"/>
+                            <constraint firstItem="6o5-fX-0rS" firstAttribute="leading" secondItem="ctj-2A-WXt" secondAttribute="leading" id="Iw6-Ln-ONz"/>
+                            <constraint firstItem="6o5-fX-0rS" firstAttribute="trailing" secondItem="ctj-2A-WXt" secondAttribute="trailing" id="PEx-Lt-bib"/>
+                            <constraint firstItem="AWt-0Y-OZH" firstAttribute="leading" secondItem="ctj-2A-WXt" secondAttribute="leading" constant="30" id="beM-IT-guq"/>
+                            <constraint firstItem="ctj-2A-WXt" firstAttribute="bottom" secondItem="AWt-0Y-OZH" secondAttribute="bottom" constant="100" id="oAl-C6-Pcm"/>
+                            <constraint firstItem="ctj-2A-WXt" firstAttribute="trailing" secondItem="AWt-0Y-OZH" secondAttribute="trailing" constant="30" id="oBb-ts-KyM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ctj-2A-WXt"/>
                     </view>

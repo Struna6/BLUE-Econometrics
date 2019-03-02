@@ -65,8 +65,8 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         let bottomEnd = low - (1.5*(high-low))
         let maxValue = [max(numbers),topEnd]
         let minValue = [min(numbers),bottomEnd]
-        chartView.leftAxis.axisMaximum = max(maxValue)+20
-        chartView.leftAxis.axisMinimum = min(minValue)-20
+        chartView.leftAxis.axisMaximum = max(maxValue) + abs(0.1*max(minValue))
+        chartView.leftAxis.axisMinimum = min(minValue) - abs(0.1*min(minValue))
         let dataEntry = CandleChartDataEntry(x: 1, shadowH: topEnd, shadowL: bottomEnd, open: high, close: low)
         let dataEntriesSet = CandleChartDataSet(values: [dataEntry], label: headers[chosenVariable])
         

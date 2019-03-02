@@ -200,7 +200,6 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
     @objc @IBAction func editButtonPressed(_ sender: Any) {
         self.view.bringSubviewToFront(viewToBlur)
         self.view.addSubview(popUpView)
-        imgViewBeforeEdit.removeFromSuperview()
         popUpView.alpha = 0
         popUpView.center = self.view.center
         popUpView.transform = CGAffineTransform(translationX: 0.0, y: 300)
@@ -224,6 +223,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             self.popUpView.removeFromSuperview()
         }
         if !chosenZHeader.isEmpty && !chosenZInstrumentsHeader.isEmpty{
+            imgViewBeforeEdit.removeFromSuperview()
+            self.tableView.isHidden = false
+            self.topLabel.isHidden = false
             if isLogitProbit{
                 if isProbit{
                     probitCalculate()
@@ -234,7 +236,12 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             }else{
                instrumentsCalculate()
             }
-            
+        }else{
+            self.tableView.isHidden = true
+            self.topLabel.isHidden = true
+            if !self.view.subviews.contains(self.imgViewBeforeEdit){
+                self.view.addSubview(self.imgViewBeforeEdit)
+            }
         }
     }
     
@@ -335,6 +342,11 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         for i in 0..<nGroupTest.count{
             let test = successTest[i]/nGroupTest[i]
             if test < 0.0 || test > 1.0{
+                self.tableView.isHidden = true
+                self.topLabel.isHidden = true
+                if !self.view.subviews.contains(self.imgViewBeforeEdit){
+                    self.view.addSubview(self.imgViewBeforeEdit)
+                }
                 playErrorScreen(msg: "Cannot build model! Probability lower than 0 or greater than 1", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
                 topLabel.text = "Error"
                 return
@@ -385,8 +397,6 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             self.topLabel.text = "Regressand: \(self.chosenZHeader[0]) / \(self.chosenZInstrumentsHeader[0])\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)"
             self.tableView.reloadData()
         }, mainView: self.view)
-        
-        playShortAnimationOnce(mainViewController: self)
     }
     
     private func probitCalculate(){
@@ -412,6 +422,11 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         for i in 0..<nGroupTest.count{
             let test = successTest[i]/nGroupTest[i]
             if test < 0.0 || test > 1.0{
+                self.tableView.isHidden = true
+                self.topLabel.isHidden = true
+                if !self.view.subviews.contains(self.imgViewBeforeEdit){
+                    self.view.addSubview(self.imgViewBeforeEdit)
+                }
                 playErrorScreen(msg: "Cannot build model! Probability lower than 0 or greater than 1", blurView: self.viewToBlur, mainViewController: self, alertToDismiss: nil)
                 topLabel.text = "Error"
                 return

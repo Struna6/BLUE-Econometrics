@@ -62,8 +62,9 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
             target.model = modelFromFile
             target.newModel = false
             target.openedFileName = fileName
+            
             let path : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let name = fileName + ".plist"
+            let name = "/Saved Models/" + fileName + ".plist"
             let url = path.appendingPathComponent(name)
             target.openedFilePath = url.path
         }
@@ -92,9 +93,6 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
                 filesTab = getListOfFiles()
             }else{
                 filesTab = getListOfFiles()
-                if !filesTab.contains("Screenshots"){
-                    createDirectories()
-                }
             }
         }else{
             defaults.set(true, forKey: "firstOpen")
@@ -102,6 +100,7 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
             defaults.set(true, forKey: "animations")
             createDirectories()
             filesTab = getListOfFiles()
+            copyBundleSampleModels()
         }
     }
     
@@ -115,7 +114,6 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         }catch {
             fatalError("unable to create")
         }
-        copyBundleSampleModels()
     }
     
     func copyBundleSampleModels(){
