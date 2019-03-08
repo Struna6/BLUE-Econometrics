@@ -23,12 +23,15 @@ class IntroVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.alpha = 0
-        appIcon.showHint(text: "Thank you for downloading our application!")
         if !defaults.bool(forKey: "firstIntroLoad"){
             multiplier = 2.0
             defaults.set(true, forKey: "firstIntroLoad")
         }
         load()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        appIcon.showHint(text: "Thank you for downloading our application!")
     }
     
     func load(){

@@ -204,8 +204,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             premiumLabel.isHidden = true
             premiumLabel2.isHidden = true
         }
-        
-        addButton.showHint(text: "Here you can import data", viewController: self)
+       
         playButton.layer.cornerRadius = 10.0
         
         if model.squareR.isNaN{
@@ -364,6 +363,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
         documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
         documentPicker.modalPresentationStyle = .formSheet
         present(documentPicker, animated: true, completion:  nil)
     }
@@ -458,8 +458,10 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
             //other hint?
             topLabel.showHint(text: "Long press to activate saving option, then press the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
+            self.view.layoutIfNeeded()
             if defaults.bool(forKey: "firstChecker"){
                 topTableView.showHint(text: "Remember test values shown here are p-values. Tap on parameter to show details")
+                self.view.layoutIfNeeded()
             }else{
                 defaults.set(true, forKey: "firstChecker")
             }

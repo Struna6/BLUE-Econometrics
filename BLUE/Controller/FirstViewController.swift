@@ -31,14 +31,17 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         tableView.layer.cornerRadius = 5.0
         newButton.layer.borderWidth = 0.0
         tableView.layer.borderWidth = 0.5
-        
-        newButton.showHint(text: "Press here to make new model")
-        tableView.showHint(text: "Here will be displayed list of your saved models")
-        helpView.showHint(text: "Here you can proceed to tutorials about this application and econometrics")
-        
+  
         rootCatalogue = getListOfFilesRoot()
         checkIfFirstLoad()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        newButton.showHint(text: "Press here to make new model")
+        tableView.showHint(text: "Here will be displayed list of your saved models")
+        helpView.showHint(text: "Here you can proceed to tutorials about this application and econometrics")
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMain"{
             let index = Int(tableView.indexPathForSelectedRow!.row)

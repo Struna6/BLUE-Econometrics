@@ -162,7 +162,6 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     @IBOutlet weak var spreedsheet: SpreadsheetView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        spreedsheet.showHint(text: "Tap to choose cell, then click edit on the top bar")
         spreedsheet.register(TextCell.self, forCellWithReuseIdentifier: "TextCell")
         spreedsheet.register(HeaderCell.self, forCellWithReuseIdentifier: "HeaderCell")
         spreedsheet.delegate = self
@@ -191,6 +190,10 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         if isNormalizeOpenedOnStart{
             loadNormObservationsView()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        spreedsheet.showHint(text: "Tap to choose cell, then click edit on the top bar")
     }
     
     @IBAction func addObsButtonPressed(_ sender: UIBarButtonItem) {
@@ -287,7 +290,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             action in
             alert.removeFromParent()
             self.showPopOverAcceptWindow(name: "Delete Column", toDo: {
-                let tmpCol = self.observationsLabeled ? self.selectedCol! + 1 : self.selectedCol
+                let tmpCol = self.observationsLabeled ? self.selectedCol! - 1 : self.selectedCol
                 self.headers.remove(at: tmpCol!)
                 for i in 0..<self.observations.count{
                     self.observations[i].observationArray.remove(at: tmpCol!)

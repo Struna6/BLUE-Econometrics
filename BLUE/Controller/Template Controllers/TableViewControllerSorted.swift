@@ -183,10 +183,12 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
         if isHiddenPicker{
             pickerView.isHidden = true
         }else{
-            pickerView.showHint(text: "Choose variable")
+//            pickerView.showHint(text: "Choose variable")
+//            self.view.layoutIfNeeded()
         }
         if isShortParameters{
-            helpImage.showHint(text: "Press to see more information about group of variables")
+//            helpImage.showHint(text: "Press to see more information about group of variables")
+//            self.view.layoutIfNeeded()
         }
         
         let defaults = UserDefaults.standard
@@ -211,6 +213,17 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
             helpImage.isUserInteractionEnabled = false
             helpImage.isHidden = true
             isShortParameters = false
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !isHiddenPicker{
+            pickerView.showHint(text: "Choose variable")
+            self.view.layoutIfNeeded()
+        }
+        if isShortParameters{
+            helpImage.showHint(text: "Press to see more information about group of variables")
+            self.view.layoutIfNeeded()
         }
     }
     
