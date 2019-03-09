@@ -696,6 +696,9 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
 extension ViewController{
     
     func loadParametersView(item : ModelParameters){
+        if defaults.bool(forKey: "premium"){
+            premiumLabel.isHidden = true
+        }
         parametersViewTitle.text = item.name
         parametersViewDetails.text = item.description
         parametersViewImage.image = UIImage(named: item.imageName)
