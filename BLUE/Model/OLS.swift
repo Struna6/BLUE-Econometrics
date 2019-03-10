@@ -705,8 +705,10 @@ extension OLSTestable where Self==Model{
     var parametersT : [Double]{
         get{
             var tmp = [Double]()
+            let OLSCalc = getOLSRegressionEquation()
+            let SEBCalc = SEB
             for i in 0..<SEB.count{
-                var T = getOLSRegressionEquation()[i]/SEB[i]
+                var T = OLSCalc[i]/SEBCalc[i]
                 T = T.magnitude
                 if tvalueLastCalculated.count == k+1{
                     if tvalueLastCalculated[i] == T{
@@ -826,10 +828,11 @@ struct OLSTestsAdvanced : Statisticable{
         model2.chosenX.remove(at: 0)
         model2.n = model2.n - 1
         model2.k = model2.k + 1
-        model2.flatY = model1.estimatedY
+        let tmp1estimatedY = model1.estimatedY
+        model2.flatY = tmp1estimatedY
     
         for i in 0..<model2.chosenX.count{
-            model2.chosenX[i].append(model1.estimatedY[i])
+            model2.chosenX[i].append(tmp1estimatedY[i])
         }
         let R = model2.squareR
         

@@ -199,6 +199,7 @@ extension PlayableLoadingScreen{
         mainView.addSubview(animationView)
         animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 400, height: 400)
         animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
+        UIApplication.shared.beginIgnoringInteractionEvents()
         animationView.play()
         Dispatch.DispatchQueue.global(qos: .utility).async {
             tasksToDoAsync()
@@ -209,6 +210,7 @@ extension PlayableLoadingScreen{
                 visualViewToBlur.removeFromSuperview()
                 tasksToMainBack()
                 animationView.stop()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 animationView.removeFromSuperview()
             }
         }
@@ -235,13 +237,14 @@ extension PlayableLoadingScreen{
             animationView.clipsToBounds = true
             animationView.animationSpeed = 1.5
             animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
-            
+            UIApplication.shared.beginIgnoringInteractionEvents()
             animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
                 animationView.stop()
                 UIView.animate(withDuration: 0.05) {
                     visualViewToBlur.isHidden = true
                     visualViewToBlur.removeFromSuperview()
                     animationView.removeFromSuperview()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
             })
         }
