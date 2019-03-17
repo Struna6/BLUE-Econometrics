@@ -353,7 +353,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             targetVC.sendBackSpreedVCDelegate = self
         }
         if segue.identifier == "back"{
-            //dismissAllViews()
+            self.removeFromParent()
         }
     }
     
@@ -470,6 +470,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             topLabel.isHidden = true
             topTableView.isHidden = true
             if !self.view.subviews.contains(self.imgViewBeforeEdit){
+                imgViewBeforeEdit.center = self.view.center
                 self.view.addSubview(self.imgViewBeforeEdit)
             }
         }

@@ -47,7 +47,7 @@ extension MatrixView : SpreadsheetViewDelegate{
 extension MatrixView : SpreadsheetViewDataSource{
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
         if toCompare{
-            return 50
+            return (spreadsheetView.frame.height/10) - 15
         }else{
             let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data.count + 1) - 5
             if sample < CGFloat(spreadSheetView.frame.width) / 8{
@@ -59,7 +59,7 @@ extension MatrixView : SpreadsheetViewDataSource{
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
         if toCompare{
-            return 200
+            return (spreadsheetView.frame.width/3) - 5
         }else{
             let sample = CGFloat(spreadSheetView.frame.width) / CGFloat(data[0].count + 1) - 5
             if sample < CGFloat(spreadSheetView.frame.width) / 8{

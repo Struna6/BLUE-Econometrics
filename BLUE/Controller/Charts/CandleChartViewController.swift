@@ -43,6 +43,7 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         chartView.doubleTapToZoomEnabled = true
         chartView.scaleXEnabled = true
         chartView.scaleYEnabled = true
+        chartView.xAxis.drawLabelsEnabled = false
     }
     
     override func viewDidAppear(_ animated: Bool) {

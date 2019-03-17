@@ -34,11 +34,12 @@ class restsChartsViewController: UIViewController{
         
         barChartDataSet.axisDependency = .left
         barChartDataSet.colors = [UIColor.blue]
+        barChartDataSet.drawValuesEnabled = false
         
         let data = BarChartData(dataSet: barChartDataSet)
         viewBarChart.data = data
         viewBarChart.notifyDataSetChanged()
-        viewBarChart.drawValueAboveBarEnabled = true
+        //viewBarChart.drawValueAboveBarEnabled = false
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
@@ -55,5 +56,6 @@ class restsChartsViewController: UIViewController{
         viewBarChart.highlightPerTapEnabled = false
         viewBarChart.scaleXEnabled = true
         viewBarChart.scaleYEnabled = true
+        viewBarChart.xAxis.drawLabelsEnabled = true
     }
 }

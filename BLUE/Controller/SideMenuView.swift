@@ -111,7 +111,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         case 31:
             performSegue(withIdentifier: "toTesting", sender: self)
         case 40:
-            toCompare()
+            present(docPicker, animated: true)
         case 50:
             performSegue(withIdentifier: "toOther", sender: self)
         case 51:
@@ -290,7 +290,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             target.textTopLabel = "Untypical"
             target.data = Array(repeating: Array(repeating: "", count: 3), count: model.n)
             
-            for i in 0..<self.model.n{
+            for i in 1..<self.model.n{
                 target.leftHeaders.append(String(i))
             }
             
@@ -336,9 +336,18 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             }
             
             target.leftHeaders = ["n", "k", "Test F", "R\u{00B2}", "Test t var failed", "RESET test", "JB test", "LM test", "White test"]
-            
+
             models.forEach(){
-                target.headers.append($0.name!)
+                if let modelName = $0.name{
+                    target.headers.append(modelName)
+                }else{
+                    let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+                    visualViewToBlur.frame = self.view.frame
+                    visualViewToBlur.isHidden = true
+                    self.view.addSubview(visualViewToBlur)
+                    playErrorScreen(msg: "Choose models correctly!", blurView: visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                    return
+                }
             }
             
             target.data = Array(repeating: Array(repeating: "", count: modelsNum), count: target.leftHeaders.count)
@@ -387,12 +396,16 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
     }
     
     func toCompare(){
-        present(docPicker, animated: true){
-            if self.paths.count > 1{
-                self.performSegue(withIdentifier: "toCompare", sender: self)
-            }else{
-                //error
-            }
+        let plists = self.paths.filter{$0.contains(".plist")}.count
+        if self.paths.count > 1 && plists == self.paths.count{
+            self.performSegue(withIdentifier: "toCompare", sender: self)
+        }else{
+            let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+            visualViewToBlur.frame = self.view.frame
+            visualViewToBlur.isHidden = true
+            self.view.addSubview(visualViewToBlur)
+
+            self.playErrorScreen(msg: "Choose models correctly!", blurView: visualViewToBlur, mainViewController: self, alertToDismiss: nil)
         }
     }
 }

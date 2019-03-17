@@ -436,12 +436,18 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
             }
         })
         alertInput.addAction(alertInputOK)
+
+        let clipboard = UIAlertAction(title: "Copy to Clipboard", style: .default) { alert in
+            self.copyToClipboard(image)
+        }
+        alertInput.addAction(clipboard)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { alert in
-            self.copyToClipboard(image)
+            self.targetViewController?.dismiss(animated: true, completion: nil)
         })
         alertInput.addAction(cancelAction)
-        
+
+        targetViewController?.modalPresentationStyle = .formSheet
         targetViewController!.present(alertInput,animated: true, completion: nil)
     }
     
