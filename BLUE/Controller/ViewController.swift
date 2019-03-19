@@ -164,12 +164,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     var chosenParameters : ModelParameters?
     
-    @IBAction func goToFirstView(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: {
-            self.navigationController?.popToRootViewController(animated: true)
-        })
-    }
-    
     let imgViewBeforeImport = UIImageView.init(image: UIImage(named: "importData"))
     let imgViewBeforeEdit = UIImageView.init(image: UIImage(named: "editChoose"))
     
@@ -332,10 +326,19 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         present(alertPopOver, animated: true)
     }
     
-    //unused
-//    func autosave(){
-//        self.save(object: self.model, pathExternal: self.openedFilePath)
-//    }
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Close model", message: "Are you sure? All unsaved data will be lost", preferredStyle: .alert)
+
+        let yes = UIAlertAction(title: "Yes", style: .destructive) { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
+        let no = UIAlertAction(title: "No", style: .cancel) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(yes)
+        alertController.addAction(no)
+        present(alertController, animated: true)
+    }
     
     // MARK: Prepare of segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

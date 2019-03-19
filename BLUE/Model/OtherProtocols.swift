@@ -443,7 +443,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
         alertInput.addAction(clipboard)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { alert in
-            self.targetViewController?.dismiss(animated: true, completion: nil)
+            alertInput.dismiss(animated: true, completion: nil)
         })
         alertInput.addAction(cancelAction)
 

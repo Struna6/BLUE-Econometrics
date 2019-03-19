@@ -10,10 +10,11 @@ import UIKit
 
 import Surge
 import Tutti
+import SafariServices
 
 class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, ErrorScreenPlayable {
-    @IBOutlet weak var helpView: UIImageView!
     
+
     @IBOutlet weak var newModel: UIButton!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -35,11 +36,16 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
         rootCatalogue = getListOfFilesRoot()
         checkIfFirstLoad()
     }
-    
+
+    @IBAction func helpWebViewOpen(_ sender: Any) {
+        let url = "http://www.youtube.com/watch?v=y5FjYiNqNOg&list=PLFbS5e-2_vUNPRzsjWFqR46rJNTgVEWuL"
+        let safariVC = SFSafariViewController(url: URL(string: url)!)
+        present(safariVC, animated: true)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         newButton.showHint(text: "Press here to make new model")
         tableView.showHint(text: "Here will be displayed list of your saved models")
-        helpView.showHint(text: "Here you can proceed to tutorials about this application and econometrics")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
