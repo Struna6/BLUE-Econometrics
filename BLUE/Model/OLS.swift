@@ -275,7 +275,7 @@ extension OLSCalculable where Self==Model{
     var estimatedY: [Double]{
         get{
             var returnTmp = [Double]()
-            let X = Matrix<Double>(chosenX)
+            let X = Matrix<Double>(self.chosenX)
             var tmpY = [[Double]]()
             tmpY.append(getOLSRegressionEquation())
             let Y = Matrix<Double>(tmpY)
@@ -291,8 +291,8 @@ extension OLSCalculable where Self==Model{
     var S : [Double]{
         get{
             var tmp = [Double]()
-            for i in 0..<flatY.count{
-                tmp.append(flatY[i]-estimatedY[i])
+            for i in 0..<self.flatY.count{
+                tmp.append(self.flatY[i]-estimatedY[i])
             }
             return tmp
         }
@@ -301,8 +301,8 @@ extension OLSCalculable where Self==Model{
     var SR : [Double]{
         get{
             var tmp = [Double]()
-            for i in 0..<flatY.count{
-                tmp.append(pow((flatY[i]-estimatedY[i]), 2.0))
+            for i in 0..<self.flatY.count{
+                tmp.append(pow((self.flatY[i]-estimatedY[i]), 2.0))
             }
             return tmp
         }
@@ -315,8 +315,8 @@ extension OLSCalculable where Self==Model{
     var SSE : Double{
         get{
             var tmp = [Double]()
-            let meanY = mean(flatY)
-            for i in 0..<n{
+            let meanY = mean(self.flatY)
+            for i in 0..<self.n{
                 tmp.append(pow((estimatedY[i]-meanY),2.0))
             }
             return sum(tmp)
@@ -325,16 +325,16 @@ extension OLSCalculable where Self==Model{
     var SST : Double{
         get{
             var tmp = [Double]()
-            let meanY = mean(flatY)
-            for i in 0..<flatY.count{
-                tmp.append(pow((flatY[i]-meanY),2.0))
+            let meanY = mean(self.flatY)
+            for i in 0..<self.flatY.count{
+                tmp.append(pow((self.flatY[i]-meanY),2.0))
             }
             return sum(tmp)
         }
     }
     var se : Double{
         get{
-            return sqrt(1.0/((Double(n)-Double(k)-1.0))*SSR)
+            return sqrt(1.0/((Double(self.n)-Double(self.k)-1.0))*SSR)
         }
     }
     var squareR : Double{
@@ -350,15 +350,15 @@ extension OLSCalculable where Self==Model{
     var MAE : Double{
         get{
             var tmp = [Double]()
-            for i in 0..<flatY.count{
-                tmp.append(abs(flatY[i]-estimatedY[i]))
+            for i in 0..<self.flatY.count{
+                tmp.append(abs(self.flatY[i]-estimatedY[i]))
             }
             return mean(tmp)
         }
     }
     var SEB : [Double] {
         get{
-            let X = Matrix<Double>(chosenX)
+            let X = Matrix<Double>(self.chosenX)
             let XT = transpose(X)
             let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
             var result = [Double]()
@@ -374,11 +374,11 @@ extension OLSCalculable where Self==Model{
         get{
             var tmp = [Double]()
             var means = [Double]()
-            let avgY = mean(flatY)
+            let avgY = mean(self.flatY)
             
             for i in 1..<SEB.count{
                 var avg = [Double]()
-                chosenX[i].forEach({
+                self.chosenX[i].forEach({
                     avg.append($0)
                 })
                 means.append(mean(avg))
@@ -395,10 +395,10 @@ extension OLSCalculable where Self==Model{
     var leverageObservations : [Double]{
         get{
             var result = [Double]()
-            let X = Matrix(chosenX)
+            let X = Matrix(self.chosenX)
             let H = mul(X, y: mul(myInv(mul(transpose(X), y: X)),y : transpose(X)))
             
-            for i in 0..<n{
+            for i in 0..<self.n{
                 H.forEach { (slice) in
                     let start = slice.startIndex
                     result.append(slice[start + i])
@@ -412,7 +412,7 @@ extension OLSCalculable where Self==Model{
         var result = [Double]()
         var DFFITS = [Double]()
         
-        for i in 0..<n-1{
+        for i in 0..<self.n-1{
             let y0 = estimatedY[i]
             var tmpModel = self
             tmpModel.chosenX.remove(at: i)
@@ -442,8 +442,8 @@ extension OLSCalculable where Self==Model{
     
     func getOLSRegressionEquation() -> [Double]{
         var equation = [Double]()
-        let X = Matrix<Double>(chosenX)
-        let Y = Matrix<Double>(chosenY)
+        let X = Matrix<Double>(self.chosenX)
+        let Y = Matrix<Double>(self.chosenY)
         let result = (mul((myInv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
         result.forEach({ (slice) in
             equation.append(Array(slice)[0])
@@ -476,12 +476,12 @@ extension CoreDataAnalysable where Self==Model{
     var avarage : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var sum = 0.0
-                for row in 0..<allObservations.count{
-                    sum = sum + allObservations[row].observationArray[col]
+                for row in 0..<self.allObservations.count{
+                    sum = sum + self.allObservations[row].observationArray[col]
                 }
-                result.append(sum/Double(n))
+                result.append(sum/Double(self.n))
             }
             return result
         }
@@ -494,12 +494,12 @@ extension CoreDataAnalysable where Self==Model{
     var Var : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var sum = 0.0
-                for row in 0..<allObservations.count{
-                    sum = sum + pow((allObservations[row].observationArray[col])-avarage[col],2.0)
+                for row in 0..<self.allObservations.count{
+                    sum = sum + pow((self.allObservations[row].observationArray[col])-avarage[col],2.0)
                 }
-                result.append(sum/Double(n))
+                result.append(sum/Double(self.n))
             }
             return result
         }
@@ -507,7 +507,7 @@ extension CoreDataAnalysable where Self==Model{
     var Ve : [Double]{
         get{
             var result = [Double]()
-            for i in 0..<allObservations[0].observationArray.count{
+            for i in 0..<self.allObservations[0].observationArray.count{
                 result.append(SeCore[i]/avarage[i])
             }
             return result
@@ -516,10 +516,10 @@ extension CoreDataAnalysable where Self==Model{
     var Me : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(quantile(n: 0.5, tmp))
             }
@@ -529,10 +529,10 @@ extension CoreDataAnalysable where Self==Model{
     var Q1 : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(quantile(n: 0.25, tmp))
             }
@@ -542,10 +542,10 @@ extension CoreDataAnalysable where Self==Model{
     var Q3 : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(quantile(n: 0.75, tmp))
             }
@@ -555,7 +555,7 @@ extension CoreDataAnalysable where Self==Model{
     var Qdifference : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 result.append((Q3[col]-Q1[col])/2)
             }
             return result
@@ -564,12 +564,12 @@ extension CoreDataAnalysable where Self==Model{
     var kurtosis : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var sum = 0.0
-                for row in 0..<allObservations.count{
-                    sum = sum + pow((allObservations[row].observationArray[col])-avarage[col],4.0)
+                for row in 0..<self.allObservations.count{
+                    sum = sum + pow((self.allObservations[row].observationArray[col])-avarage[col],4.0)
                 }
-                result.append((sum/Double(n)/pow(SeCore[col], 4.0))-3)
+                result.append((sum/Double(self.n)/pow(SeCore[col], 4.0))-3)
             }
             return result
         }
@@ -577,7 +577,7 @@ extension CoreDataAnalysable where Self==Model{
     var skewness : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 result.append(3*(avarage[col]-Me[col])/SeCore[col])
             }
             return result
@@ -586,7 +586,7 @@ extension CoreDataAnalysable where Self==Model{
     var skewnessQ : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 result.append(((Q1[col] + Q3[col]) - 2 * Me[col]) / (2*Qdifference[col]))
             }
             return result
@@ -595,10 +595,10 @@ extension CoreDataAnalysable where Self==Model{
     var range : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(max(tmp) - min(tmp))
             }
@@ -608,10 +608,10 @@ extension CoreDataAnalysable where Self==Model{
     var minCore : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(min(tmp))
             }
@@ -621,10 +621,10 @@ extension CoreDataAnalysable where Self==Model{
     var maxCore : [Double]{
         get{
             var result = [Double]()
-            for col in 0..<allObservations[0].observationArray.count{
+            for col in 0..<self.allObservations[0].observationArray.count{
                 var tmp = [Double]()
-                for row in 0..<allObservations.count{
-                    tmp.append(allObservations[row].observationArray[col])
+                for row in 0..<self.allObservations.count{
+                    tmp.append(self.allObservations[row].observationArray[col])
                 }
                 result.append(max(tmp))
             }
@@ -633,7 +633,7 @@ extension CoreDataAnalysable where Self==Model{
     }
     
     func makeCorrelationsArray2D() -> [[String]]{
-        let nCols = allObservations[0].observationArray.count
+        let nCols = self.allObservations[0].observationArray.count
         var tmp = Array(repeating: Array(repeating: "-", count: nCols), count: nCols)
         for row in 0..<nCols{
             for col in 0..<nCols{
@@ -644,7 +644,7 @@ extension CoreDataAnalysable where Self==Model{
                     var meanY : Double = 0
                     var vectorX = [Double]()
                     var vectorY = [Double]()
-                    allObservations.forEach { (i) in
+                    self.allObservations.forEach { (i) in
                         vectorX.append(i.observationArray[row])
                         vectorY.append(i.observationArray[col])
                     }
@@ -686,7 +686,7 @@ protocol OLSTestable: OLSCalculable, Statisticable{
 extension OLSTestable where Self==Model{
     var parametersF : Double{
         get{
-            let F1 = ((n-k-1)/k)
+            let F1 = ((self.n-self.k-1)/self.k)
             let F2 = (squareR/(1-squareR))
             let F = Double(F1) * F2
             
@@ -695,7 +695,7 @@ extension OLSTestable where Self==Model{
             }else{
 
                 fvalueLastCalculated = F
-                let result = 1 - FSnedeccorCDF(f: F, d1: Double(k), d2: Double(n-k-1))
+                let result = 1 - FSnedeccorCDF(f: F, d1: Double(self.k), d2: Double(self.n-self.k-1))
                 fTestvalueLastCalculated = result
                 fvalueLastCalculated = F
                 return result
@@ -710,17 +710,17 @@ extension OLSTestable where Self==Model{
             for i in 0..<SEB.count{
                 var T = OLSCalc[i]/SEBCalc[i]
                 T = T.magnitude
-                if tvalueLastCalculated.count == k+1{
+                if tvalueLastCalculated.count == self.k+1{
                     if tvalueLastCalculated[i] == T{
                         tmp.append(tTestvalueLastCalculated[i])
                     }else{
-                        let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(n-k-1)))
+                        let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(self.n-self.k-1)))
                         tvalueLastCalculated[i] = T
                         tTestvalueLastCalculated[i] = calculatedT
                         tmp.append(calculatedT)
                     }
                 }else{
-                    let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(n-k-1)))
+                    let calculatedT = 2 * (1 - TStudentCDF(t: T, v: Double(self.n-self.k-1)))
                     tvalueLastCalculated.append(T)
                     tTestvalueLastCalculated.append(calculatedT)
                     tmp.append(calculatedT)
@@ -731,18 +731,18 @@ extension OLSTestable where Self==Model{
     }
     var JBtest : Double{
         get{
-            let se = sqrt(1 / Double(n) * sum(SR))
+            let se = sqrt(1 / Double(self.n) * sum(SR))
             var tmp3 = [Double]()
-            for i in 0..<flatY.count{
-                tmp3.append(pow((flatY[i]-estimatedY[i]), 3.0))
+            for i in 0..<self.flatY.count{
+                tmp3.append(pow((self.flatY[i]-estimatedY[i]), 3.0))
             }
             var tmp4 = [Double]()
-            for i in 0..<flatY.count{
-                tmp4.append(pow((flatY[i]-estimatedY[i]), 4.0))
+            for i in 0..<self.flatY.count{
+                tmp4.append(pow((self.flatY[i]-estimatedY[i]), 4.0))
             }
-            let beta1 = ((1 / Double(n)) * sum(tmp3)) / pow(se, 3.0)
-            let beta2 = ((1 / Double(n)) * sum(tmp4)) / pow(se, 4.0)
-            let x = Double(n) * ((beta1 / 6) + (pow(beta2 - 3, 2.0) / 24))
+            let beta1 = ((1 / Double(self.n)) * sum(tmp3)) / pow(se, 3.0)
+            let beta2 = ((1 / Double(self.n)) * sum(tmp4)) / pow(se, 4.0)
+            let x = Double(self.n) * ((beta1 / 6) + (pow(beta2 - 3, 2.0) / 24))
             
             if x == chivalueLastCalculated{
                 return chiTestvalueLastCalculated

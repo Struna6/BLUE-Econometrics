@@ -23,8 +23,8 @@ protocol IVCalculable{
 extension IVCalculable where Self==Model{
     func SRIV(Z: [[Double]]) -> [Double]{
         var tmp = [Double]()
-        for i in 0..<flatY.count{
-            tmp.append(pow((flatY[i]-IVestimatedY(Z: Z)[i]), 2.0))
+        for i in 0..<self.flatY.count{
+            tmp.append(pow((self.flatY[i]-IVestimatedY(Z: Z)[i]), 2.0))
         }
         return tmp
     }
@@ -32,11 +32,11 @@ extension IVCalculable where Self==Model{
         return sum(SRIV(Z: Z))
     }
     func seIV(Z: [[Double]]) -> Double{
-            return sqrt(1.0/((Double(n)-Double(Z[0].count)-1.0))*SSRIV(Z: Z))
+            return sqrt(1.0/((Double(self.n)-Double(Z[0].count)-1.0))*SSRIV(Z: Z))
     }
     func IVestimatedY(Z: [[Double]]) -> [Double]{
         var returnTmp = [Double]()
-        let X = Matrix<Double>(chosenX)
+        let X = Matrix<Double>(self.chosenX)
         var tmpY = [[Double]]()
         tmpY.append(getGIVRegressionEquation(Z: Z))
         let Y = Matrix<Double>(tmpY)
@@ -61,9 +61,9 @@ extension IVCalculable where Self==Model{
     }
     
     func getGIVRegressionEquation(Z : [[Double]]) -> [Double]{
-        let X = Matrix(chosenX)
+        let X = Matrix(self.chosenX)
         let Z = Matrix(Z)
-        let Y = Matrix(chosenY)
+        let Y = Matrix(self.chosenY)
         
         let X2 = mul(mul(Z, y: myInv(mul(transpose(Z), y: Z))), y: mul(transpose(Z),y: X))
         let b = mul(myInv(mul(transpose(X2), y: X2)), y: mul(transpose(X2), y: Y))
@@ -97,8 +97,8 @@ private var FTestValue = 0.0
 extension IVTestable where Self==Model{
     
     func HausmannTest(Z: [[Double]]) -> Double{
-        let bOLS = getOLSRegressionEquation()
-        let bGIV = getGIVRegressionEquation(Z: Z)
+        let bOLS = self.getOLSRegressionEquation()
+        let bGIV = self.getGIVRegressionEquation(Z: Z)
         
         var bOt = Array(repeating: Array(repeating: 0.0, count: 1), count: bOLS.count)
         var bGt = Array(repeating: Array(repeating: 0.0, count: 1), count: bGIV.count)
@@ -111,8 +111,8 @@ extension IVTestable where Self==Model{
         let bG = Matrix(bGt)
         let q = add(bO, y: bG)
         
-        let sbO = SEB
-        let sbG = SEBIV(Z: Z)
+        let sbO = self.SEB
+        let sbG = self.SEBIV(Z: Z)
         let sbOMean = mean(sbO)
         let sbGMean = mean(sbG)
         
@@ -142,7 +142,7 @@ extension IVTestable where Self==Model{
             return hTestValue
         }else{
             hValue = H
-            let result = 1 - chiICDF(x: H, k: Double(Z[0].count-chosenX[0].count))
+            let result = 1 - chiICDF(x: H, k: Double(Z[0].count-self.chosenX[0].count))
             hTestValue = result
             return result
         }
@@ -150,7 +150,7 @@ extension IVTestable where Self==Model{
     func SarganTest(instruments : [[Double]], p : Double) -> Double{
         var model2 = self
         model2.flatY = self.S
-        for i in 0..<n{
+        for i in 0..<self.n{
             model2.chosenY[i][0] = self.S[i]
         }
         model2.chosenX = instruments
@@ -168,7 +168,7 @@ extension IVTestable where Self==Model{
     }
     func FTestInstruments(instruments : [[Double]]) -> Double{
         var model2 = self
-        for i in 0..<n{
+        for i in 0..<self.n{
             instruments[i].forEach(){
               model2.chosenX[i].append($0)
             }
@@ -176,7 +176,7 @@ extension IVTestable where Self==Model{
         let ei = self.SSR
         let ui = model2.SSR
         let p = Double(instruments[0].count)
-        let bottom = Double(n-k-1-Int(p))
+        let bottom = Double(self.n-self.k-1-Int(p))
         
         let F = ((ei - ui) / p) / (ui / bottom)
         

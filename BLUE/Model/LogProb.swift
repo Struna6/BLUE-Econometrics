@@ -32,7 +32,7 @@ extension LogProb where Self==Model{
         var tmpY = [[Double]]()
         tmpY.append(getLogitEquation(nGroup: nGroup, success: success, X: X))
         let Y = Matrix<Double>(tmpY)
-        let X = Matrix<Double>(chosenX)
+        let X = Matrix<Double>(self.chosenX)
         let result = mul(X, y: Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
@@ -44,7 +44,7 @@ extension LogProb where Self==Model{
         var tmpY = [[Double]]()
         tmpY.append(getProbitEquation(nGroup: nGroup, success: success, X: X))
         let Y = Matrix<Double>(tmpY)
-        let X = Matrix<Double>(chosenX)
+        let X = Matrix<Double>(self.chosenX)
         let result = mul(X, y: Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
@@ -64,7 +64,7 @@ extension LogProb where Self==Model{
             }
         }
         
-        for i in 0..<flatY.count{
+        for i in 0..<self.flatY.count{
             tmp.append(pow((logFlatY[i]-logEstimatedY(nGroup: nGroup, success: success, X: X)[i]), 2.0))
         }
         return tmp
@@ -73,11 +73,11 @@ extension LogProb where Self==Model{
         return sum(logSR(nGroup: nGroup, success: success, X: X))
     }
     func logSe(nGroup : [Double], success : [Double], X : [[Double]]) -> Double{
-        return sqrt(1.0/((Double(n)-Double(k)-1.0))*logSSR(nGroup: nGroup, success: success, X: X))
+        return sqrt(1.0/((Double(self.n)-Double(self.k)-1.0))*logSSR(nGroup: nGroup, success: success, X: X))
     }
     func logSEB(nGroup : [Double], success : [Double], X : [[Double]]) -> [Double] {
         let se = logSe(nGroup: nGroup, success: success, X: X)
-        let X = Matrix<Double>(chosenX)
+        let X = Matrix<Double>(self.chosenX)
         let XT = transpose(X)
         let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
         var result = [Double]()

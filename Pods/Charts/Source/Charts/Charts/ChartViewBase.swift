@@ -323,7 +323,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
                 text: noDataText,
                 point: CGPoint(x: frame.width / 2.0, y: frame.height / 2.0),
                 attributes:
-                [.font: noDataFont,
+                [.font: noDataFont as Any,
                  .foregroundColor: noDataTextColor,
                  .paragraphStyle: paragraphStyle],
                 constrainedToSize: self.bounds.size,
@@ -884,7 +884,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
     
     @objc open func removeViewportJob(_ job: ViewPortJob)
     {
-        if let index = _viewportJobs.index(where: { $0 === job })
+        if let index = _viewportJobs.firstIndex(where: { $0 === job })
         {
             _viewportJobs.remove(at: index)
         }

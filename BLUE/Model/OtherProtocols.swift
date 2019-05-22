@@ -32,9 +32,9 @@ protocol oddObservationQuantileSpotter : QuantileCalculable {
 extension oddObservationQuantileSpotter where Self==Model {
     func calculateNumberOfOddObservations() -> Int{
         var sum = 0
-        for i in 0..<allObservations[0].observationArray.count{
+        for i in 0..<self.allObservations[0].observationArray.count{
             var tmp = [Double]()
-            allObservations.forEach { (obs) in
+            self.allObservations.forEach { (obs) in
                 tmp.append(obs.observationArray[i])
             }
             let q1=quantile(n: 0.25, tmp)
