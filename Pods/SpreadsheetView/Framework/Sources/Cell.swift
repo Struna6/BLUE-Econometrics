@@ -61,7 +61,7 @@ open class Cell: UIView {
             return gridlines
         }
         set {
-            gridlines = grids
+            gridlines = newValue
         }
     }
     public var borders = Borders(top: .none, bottom: .none, left: .none, right: .none) {

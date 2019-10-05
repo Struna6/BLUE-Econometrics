@@ -49,9 +49,13 @@ public final class CellRange {
 }
 
 extension CellRange: Hashable {
-    public var hashValue: Int {
-        return from.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(from.hashValue)
     }
+
+//    public var hashValue: Int {
+//        return from.hashValue
+//    }
 
     public static func ==(lhs: CellRange, rhs: CellRange) -> Bool {
         return lhs.from == rhs.from

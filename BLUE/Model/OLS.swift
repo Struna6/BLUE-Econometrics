@@ -693,7 +693,6 @@ extension OLSTestable where Self==Model{
             if F == fvalueLastCalculated{
                 return fTestvalueLastCalculated
             }else{
-
                 fvalueLastCalculated = F
                 let result = 1 - FSnedeccorCDF(f: F, d1: Double(self.k), d2: Double(self.n-self.k-1))
                 fTestvalueLastCalculated = result
@@ -747,7 +746,7 @@ extension OLSTestable where Self==Model{
             if x == chivalueLastCalculated{
                 return chiTestvalueLastCalculated
             }else{
-                let chiResult =  1 - chiICDF(x: x, k: 2)
+                let chiResult =  1 - chiCDF(x: x, k: 2)
                 chivalueLastCalculated = x
                 chiTestvalueLastCalculated = chiResult
                 return chiResult
@@ -840,7 +839,7 @@ struct OLSTestsAdvanced : Statisticable{
         if chi.rounded() == LMvalueLast.rounded(){
             return LMtestValueLast
         }else{
-            let result = 1 - chiICDF(x: chi, k: 1)
+            let result = 1 - chiCDF(x: chi, k: 1)
             LMvalueLast = chi
             LMtestValueLast = result
             return result
@@ -874,7 +873,7 @@ struct OLSTestsAdvanced : Statisticable{
         if chi.rounded() == WhiteValueLast.rounded(){
             return WhiteTestValueLast
         }else{
-            let result =  1 - chiICDF(x: chi, k: Double(degrees))
+            let result =  1 - chiCDF(x: chi, k: Double(degrees))
             WhiteValueLast = chi
             WhiteTestValueLast  = result
             return result

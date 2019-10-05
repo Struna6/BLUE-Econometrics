@@ -226,7 +226,7 @@ extension LogProb where Self==Model{
         
         var om = Array(repeating: Array(repeating: 0.0, count: p.count), count: p.count)
         for i in 0..<om.count{
-            om[i][i] = 1 / nGroup[i] * p[i] * (1 - p[i])
+            om[i][i] = 1 / (nGroup[i] * p[i] * (1 - p[i]))
         }
         
         let omega = Matrix(om)
@@ -266,7 +266,7 @@ extension LogProb where Self==Model{
         
         var om = Array(repeating: Array(repeating: 0.0, count: p.count), count: p.count)
         for i in 0..<om.count{
-            om[i][i] = p[i] * (1-p[i]) * pow(normalInverseCDF(p: p[i]),2.0) / nGroup[i]
+            om[i][i] = (p[i] * (1-p[i]) * pow(normalInverseCDF(p: p[i]),2.0)) / nGroup[i]
         }
         
         let omega = Matrix(om)

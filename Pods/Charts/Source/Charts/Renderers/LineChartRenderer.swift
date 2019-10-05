@@ -510,7 +510,7 @@ open class LineChartRenderer: LineRadarRenderer
 
         if isDrawingValuesAllowed(dataProvider: dataProvider)
         {
-            var dataSets = lineData.dataSets
+            let dataSets = lineData.dataSets
             
             let phaseY = animator.phaseY
             

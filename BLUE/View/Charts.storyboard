@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,13 +10,13 @@
         <!--Chart-->
         <scene sceneID="igc-y7-5it">
             <objects>
-                <viewController storyboardIdentifier="UIViewController-WGO-3D-cXx" id="WGO-3D-cXx" customClass="restsChartsViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIViewController-WGO-3D-cXx" modalPresentationStyle="fullScreen" id="WGO-3D-cXx" customClass="restsChartsViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DwJ-v2-Tgy">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar chart of rests of the estimation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpk-hz-BN4">
-                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
+                                <rect key="frame" x="0.0" y="30" width="768" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="doW-id-TGw"/>
                                 </constraints>
@@ -28,7 +25,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pn-X6-fKM" userLabel="Chart View" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="30" y="110" width="708" height="814"/>
+                                <rect key="frame" x="30" y="90" width="708" height="834"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -56,13 +53,13 @@
         <!--Chart-->
         <scene sceneID="nJ5-7T-5hi">
             <objects>
-                <viewController storyboardIdentifier="UIViewController-GG5-5I-TfG" id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIViewController-GG5-5I-TfG" modalPresentationStyle="fullScreen" id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eGH-P6-x7e">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Candle chart of" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAl-tz-Tix">
-                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
+                                <rect key="frame" x="0.0" y="30" width="768" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="t9l-CQ-WRv"/>
                                 </constraints>
@@ -71,7 +68,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJS-aR-HwO" userLabel="Chart View" customClass="CandleStickChartView" customModule="Charts">
-                                <rect key="frame" x="30" y="110" width="708" height="568"/>
+                                <rect key="frame" x="30" y="90" width="708" height="588"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <pickerView tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Tz-gY-fx6">
@@ -112,17 +109,17 @@
         <!--Chart View-->
         <scene sceneID="bUU-0n-F9U">
             <objects>
-                <viewController storyboardIdentifier="toPlots" id="fTl-ux-ahd" customClass="ChartView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toPlots" modalPresentationStyle="fullScreen" id="fTl-ux-ahd" customClass="ChartView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KSd-Jv-9I4">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWt-0Y-OZH" customClass="CombinedChartView" customModule="Charts">
-                                <rect key="frame" x="30" y="130" width="708" height="794"/>
+                                <rect key="frame" x="30" y="110" width="708" height="814"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chart of estimated Y and real observation values" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o5-fX-0rS">
-                                <rect key="frame" x="0.0" y="50" width="768" height="50"/>
+                                <rect key="frame" x="0.0" y="30" width="768" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8kT-E1-Bzj"/>
                                 </constraints>

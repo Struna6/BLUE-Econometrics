@@ -51,7 +51,7 @@ extension oddObservationQuantileSpotter where Self==Model {
 
 protocol Statisticable{
     func incompleteGammaF(s : Double, z : Double) -> Double
-    func chiICDF(x : Double, k : Double) -> Double
+    func chiCDF(x : Double, k : Double) -> Double
     func betaValue(x : Double, a : Double, b : Double) -> Double
     func betaIncomplete(x : Double, a : Double, b : Double) -> Double
     func betaComplete(a : Double, b : Double) -> Double
@@ -89,7 +89,8 @@ extension Statisticable{
         return sum * sc
     }
     
-    func chiICDF(x : Double, k : Double) -> Double{
+    func chiCDF(x : Double, k : Double) -> Double{
+        guard k > 0 else {return Double.nan}
         let upper = incompleteGammaF(s: k/2, z: x/2)
         let result = upper/tgamma(k/2)
         return result > 1 ? 1 : result
@@ -119,6 +120,7 @@ extension Statisticable{
     }
     
     func FSnedeccorCDF(f : Double, d1 : Double, d2 : Double) -> Double{
+        guard d1 > 0 && d2 > 0 else {return Double.nan}
         let x = (d1*f)/((d1*f)+d2)
         let result = betaRegularizedIncomplete(x: x, a: d1/2, b: d2/2)
         return result > 1 ? 1 : result
@@ -199,7 +201,8 @@ extension PlayableLoadingScreen{
         mainView.addSubview(animationView)
         animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 400, height: 400)
         animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
-        UIApplication.shared.beginIgnoringInteractionEvents()
+        mainView.isUserInteractionEnabled = false
+        //UIApplication.shared.beginIgnoringInteractionEvents()
         animationView.play()
         Dispatch.DispatchQueue.global(qos: .utility).async {
             tasksToDoAsync()
@@ -210,7 +213,8 @@ extension PlayableLoadingScreen{
                 visualViewToBlur.removeFromSuperview()
                 tasksToMainBack()
                 animationView.stop()
-                UIApplication.shared.endIgnoringInteractionEvents()
+                mainView.isUserInteractionEnabled = true
+                //UIApplication.shared.endIgnoringInteractionEvents()
                 animationView.removeFromSuperview()
             }
         }
@@ -237,14 +241,16 @@ extension PlayableLoadingScreen{
             animationView.clipsToBounds = true
             animationView.animationSpeed = 1.5
             animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
-            UIApplication.shared.beginIgnoringInteractionEvents()
+            mainViewController.view.isUserInteractionEnabled = false
+            //UIApplication.shared.beginIgnoringInteractionEvents()
             animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
                 animationView.stop()
                 UIView.animate(withDuration: 0.05) {
                     visualViewToBlur.isHidden = true
                     visualViewToBlur.removeFromSuperview()
                     animationView.removeFromSuperview()
-                    UIApplication.shared.endIgnoringInteractionEvents()
+                    mainViewController.view.isUserInteractionEnabled = true
+                    //UIApplication.shared.endIgnoringInteractionEvents()
                 }
             })
         }

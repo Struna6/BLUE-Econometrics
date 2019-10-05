@@ -213,7 +213,7 @@ open class YAxisRendererRadarChart: YAxisRenderer
             let data = chart.data
             else { return }
         
-        var limitLines = yAxis.limitLines
+        let limitLines = yAxis.limitLines
         
         if limitLines.count == 0
         {

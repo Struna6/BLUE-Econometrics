@@ -142,7 +142,7 @@ extension IVTestable where Self==Model{
             return hTestValue
         }else{
             hValue = H
-            let result = 1 - chiICDF(x: H, k: Double(Z[0].count-self.chosenX[0].count))
+            let result = 1 - chiCDF(x: H, k: Double(Z[0].count-self.chosenX[0].count))
             hTestValue = result
             return result
         }
@@ -161,7 +161,7 @@ extension IVTestable where Self==Model{
             return SarganTestValue
         }else{
             SarganValue = S
-            let result = 1 - chiICDF(x: S, k: p)
+            let result = 1 - chiCDF(x: S, k: p)
             SarganTestValue = result
             return result
         }

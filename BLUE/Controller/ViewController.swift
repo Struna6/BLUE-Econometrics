@@ -362,7 +362,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     // MARK: New import
     @objc @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        
         dismissAllViews()
         saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
