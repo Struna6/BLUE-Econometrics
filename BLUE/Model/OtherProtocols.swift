@@ -369,7 +369,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
     @objc func saveFromLabel(){
         inputPopUp {
             let label = self.object as! UILabel
-            label.backgroundColor = UIColor.white
+            label.backgroundColor = .systemBackground
             label.alpha = 1.0
             label.layer.opacity = 1.0
             label.layer.borderWidth = 0.0
@@ -381,7 +381,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
     @objc func saveFromTable(){
         inputPopUp {
             let tableView = self.object as! UITableView
-            tableView.backgroundColor = UIColor.white
+            tableView.backgroundColor = .systemBackground
             tableView.alpha = 1.0
             tableView.layer.opacity = 1.0
             tableView.layer.borderWidth = 0.0
@@ -396,7 +396,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
     @objc func saveFromSpreadsheet(){
         inputPopUp {
             let sp = self.object as! SpreadsheetView
-            sp.backgroundColor = UIColor.white
+            sp.backgroundColor = .systemBackground
             sp.deselectItem(at: sp.indexPathForSelectedItem!, animated: false)
             sp.alpha = 1.0
             sp.layer.opacity = 1.0
@@ -409,7 +409,7 @@ class LongTappableToSaveContext : NSObject, Storage, ErrorScreenPlayable, Playab
     @objc func saveFromChart(){
         inputPopUp {
             let chart = self.object as! UIView
-            chart.backgroundColor = UIColor.white
+            chart.backgroundColor = .systemBackground
             chart.alpha = 1.0
             chart.layer.opacity = 1.0
             let picker = chart.viewWithTag(2)

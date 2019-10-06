@@ -11,6 +11,7 @@
 		F90D8322221744A90068D58E /* LogProb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D8321221744A90068D58E /* LogProb.swift */; };
 		F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */; };
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
+		F9187752234A499A006363CC /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9187751234A499A006363CC /* HealthKit.framework */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
@@ -59,6 +60,7 @@
 		F90D8321221744A90068D58E /* LogProb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogProb.swift; sourceTree = "<group>"; };
 		F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestsChartsViewController.swift; sourceTree = "<group>"; };
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		F9187751234A499A006363CC /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
@@ -79,7 +81,6 @@
 		F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleChartViewController.swift; sourceTree = "<group>"; };
 		F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
-		F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BLUE.entitlements; sourceTree = "<group>"; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		F9D1122F2222DA2B00F28BF8 /* tTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = tTest.m4v; sourceTree = "<group>"; };
 		F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = WhiteHomo.m4v; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66218F66FBBAEBC07819F0FF /* Pods_BLUE.framework in Frameworks */,
+				F9187752234A499A006363CC /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +155,7 @@
 		F9687EBEFCF04934C98ECBA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9187751234A499A006363CC /* HealthKit.framework */,
 				BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */,
 			);
 			name = Frameworks;
@@ -223,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */,
-				F9C7557A21C5171700A0F8A3 /* BLUE.entitlements */,
 				F99DF53921A0691200C81AC5 /* View */,
 				F99DF53821A068F300C81AC5 /* Controller */,
 				F925852F21A029FB00920E33 /* Model */,
@@ -488,7 +490,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -543,7 +545,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -562,7 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 24C92L3HM3;
 				INFOPLIST_FILE = BLUE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,7 +585,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 24C92L3HM3;
 				INFOPLIST_FILE = BLUE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

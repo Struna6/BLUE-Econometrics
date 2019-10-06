@@ -219,13 +219,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             var tmpEq = String()
             for i in 0..<model.getOLSRegressionEquation().count{
                 if i==0{
-                    tmpEq = tmpEq + String(format:"%.2f",model.getOLSRegressionEquation()[0])
+                    tmpEq = tmpEq + " " + String(format:"%.2f",model.getOLSRegressionEquation()[0])
                 }else{
                     let num = model.getOLSRegressionEquation()[i]
                     if num>=0{
                         tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -430,13 +430,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             var tmpEq = String()
             for i in 0..<model.getOLSRegressionEquation().count{
                 if i==0{
-                    tmpEq = tmpEq + String(format:"%.2f",model.getOLSRegressionEquation()[0])
+                    tmpEq = tmpEq + " " + String(format:"%.2f",model.getOLSRegressionEquation()[0])
                 }else{
                     let num = model.getOLSRegressionEquation()[i]
                     if num>=0{
                         tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -523,7 +523,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.clipsToBounds = true
         button.center = self.topTableView.center
-        button.backgroundColor = .white
+        button.backgroundColor = .systemBackground
         button.alpha = 0.9
         button.layer.borderWidth = 0.1
         let image = UIImage.init(named: "upload")
@@ -573,9 +573,14 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     // MARK: File Browser Window
 extension ViewController : UIDocumentPickerDelegate{
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
-        controller.allowsMultipleSelection = false
+        let url = urls[0]
+        let isSecuredURL = url.startAccessingSecurityScopedResource() == true
         editButton.isEnabled = true
-        self.newPath = (urls.first?.path)!
+        self.newPath = url.path
+
+        if (isSecuredURL) {
+            url.stopAccessingSecurityScopedResource()
+        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

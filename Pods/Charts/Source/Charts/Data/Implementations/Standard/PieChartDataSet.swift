@@ -23,7 +23,11 @@ open class PieChartDataSet: ChartDataSet, IPieChartDataSet
 
     private func initialize()
     {
-        self.valueTextColor = NSUIColor.white
+        if #available(iOS 13.0, *) {
+            self.valueTextColor = .systemBackground
+        } else {
+            self.valueTextColor = .white
+        }
         self.valueFont = NSUIFont.systemFont(ofSize: 13.0)
     }
 

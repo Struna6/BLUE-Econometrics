@@ -24,13 +24,15 @@ protocol ImportableFromTextFile{
 }
 extension ImportableFromTextFile where Self==Model{
     func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) throws -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool){
-        //let path = Bundle.main.path(forResource: "test1", ofType: "txt")
         var text = ""
+        let url = URL(fileURLWithPath: path)
         do {
-            text = try String(contentsOfFile: path, encoding: String.Encoding.macOSRoman)
+            text = try String(contentsOf: url)
         } catch  {
+            print(error)
             throw ImportError.readingFileError
         }
+        url.stopAccessingSecurityScopedResource()
         if let range = text.range(of: "f0\\fs24 \\cf0"){
             text = String(text[range.upperBound...])
         }

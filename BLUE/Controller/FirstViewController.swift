@@ -140,6 +140,11 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
 
 extension FirstViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filesTab.count == 0{
+            tableView.separatorStyle = .none
+        }else{
+            tableView.separatorStyle = .singleLine
+        }
         return filesTab.count
     }
     

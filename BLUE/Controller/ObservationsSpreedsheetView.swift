@@ -112,7 +112,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             if observationsLabeled && indexPath.column == 0{
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
                     cell.backgroundColor = UIColor.blue
-                    cell.label.textColor = .white
+                    cell.label.textColor = .systemBackground
                 }
                 return cell
             }
@@ -120,14 +120,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 cell.label.text = String(headers[indexPath.column-1])
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
                     cell.backgroundColor = UIColor.blue
-                    cell.label.textColor = .white
+                    cell.label.textColor = .systemBackground
                 }
                 return cell
             }
             cell.label.text = String(headers[indexPath.column])
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
                 cell.backgroundColor = UIColor.blue
-                cell.label.textColor = .white
+                cell.label.textColor = .systemBackground
             }
             return cell
         }
@@ -136,7 +136,7 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             if observationsLabeled && indexPath.column == 0{
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
                     cell.backgroundColor = UIColor.blue
-                    cell.label.textColor = .white
+                    cell.label.textColor = .systemBackground
                 }
                 return cell
             }
@@ -144,14 +144,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
                 cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column-1])
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
                     cell.backgroundColor = UIColor.blue
-                    cell.label.textColor = .white
+                    cell.label.textColor = .systemBackground
                 }
                 return cell
             }
             cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column])
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
                 cell.backgroundColor = UIColor.blue
-                cell.label.textColor = .white
+                cell.label.textColor = .systemBackground
             }
             return cell
         }
