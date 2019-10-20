@@ -1023,16 +1023,15 @@
         <!--SettingsVC-->
         <scene sceneID="ErI-b3-8NY">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" id="JPp-qZ-OdV" customClass="SettingsVC" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="JPp-qZ-OdV" customClass="SettingsVC" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="iC9-da-UOG">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z9E-Td-fOs">
-                                <rect key="frame" x="-29" y="-19" width="769" height="1022"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="xJZ-cW-POe">
-                                    <rect key="frame" x="0.0" y="0.0" width="769" height="1022"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9E-Td-fOs">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xJZ-cW-POe">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1040,6 +1039,12 @@
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nrJ-U3-FLo" firstAttribute="trailing" secondItem="z9E-Td-fOs" secondAttribute="trailing" id="8Ma-9e-gyr"/>
+                            <constraint firstItem="nrJ-U3-FLo" firstAttribute="bottom" secondItem="z9E-Td-fOs" secondAttribute="bottom" id="Dtk-IW-HIt"/>
+                            <constraint firstItem="z9E-Td-fOs" firstAttribute="top" secondItem="iC9-da-UOG" secondAttribute="top" id="MZp-c0-RJ4"/>
+                            <constraint firstItem="z9E-Td-fOs" firstAttribute="leading" secondItem="iC9-da-UOG" secondAttribute="leading" id="biE-gf-Ysj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="nrJ-U3-FLo"/>
                     </view>
                     <connections>

@@ -33,7 +33,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
                     }
                 }
                 let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-                visualViewToBlur.frame = self.view.frame
+                visualViewToBlur.frame = self.view.bounds
                 visualViewToBlur.isHidden = true
                 self.view.addSubview(visualViewToBlur)
                 
