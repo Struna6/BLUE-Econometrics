@@ -303,7 +303,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             target.textTopLabel = "Untypical"
             target.data = Array(repeating: Array(repeating: "", count: 3), count: model.n)
             
-            for i in 1..<self.model.n{
+            for i in 1..<self.model.n + 1{
                 target.leftHeaders.append(String(i))
             }
             

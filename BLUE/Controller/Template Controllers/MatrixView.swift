@@ -30,6 +30,7 @@ class MatrixView: UIViewController {
         topLabel?.text = textTopLabel
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualViewToBlur.backgroundColor = .systemBackground
         visualViewToBlur.frame = self.view.frame
         visualViewToBlur.isHidden = true
         self.view.addSubview(visualViewToBlur)
@@ -89,11 +90,13 @@ extension MatrixView : SpreadsheetViewDataSource{
         if indexPath.row == 0 && indexPath.column == 0{
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
             cell.label.text = ""
+            cell.contentView.backgroundColor = .systemBackground
             return cell
         }else{
             if indexPath.row == 0{
                 let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
                 cell.label.text = headers[indexPath.column-1]
+                cell.contentView.backgroundColor = .systemBackground
                 return cell
             }else if indexPath.column == 0{
                 let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
@@ -102,11 +105,13 @@ extension MatrixView : SpreadsheetViewDataSource{
                 }else{
                     cell.label.text = leftHeaders[indexPath.row-1]
                 }
+                cell.contentView.backgroundColor = .systemBackground
                 return cell
             }
             else{
                 let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
                 cell.label.text = data[indexPath.row - 1][indexPath.column - 1]
+                cell.contentView.backgroundColor = .systemBackground
                 return cell
             }
         }
