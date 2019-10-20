@@ -32,7 +32,6 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
     var docPicker = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .open)
     var paths = [String]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         docPicker.delegate = self
@@ -123,6 +122,20 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
         default: break
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let placeForRows = view.frame.height - (CGFloat(self.sections.count) * 40.0) - 80
+        var numRows = 0
+        for o in options{
+            numRows += o.value.count
+        }
+        return placeForRows / CGFloat(numRows)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toCharts"{
             let target = segue.destination as! ChartView
