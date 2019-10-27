@@ -167,8 +167,19 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
                 }
                 target.observations = tmp
             }
-            target.headers = model.headers
             target.observationsLabeled = model.observationLabeled
+            if !model.observationLabeled{
+                var newObservations = [Observation]()
+                for (i,row) in model.allObservations.enumerated(){
+                    var obs = Observation()
+                    obs.observationArray = row.observationArray
+                    obs.label = String(i+1)
+                    newObservations.append(obs)
+                }
+                target.observations = newObservations
+                target.observationsLabeled = true
+            }
+            target.headers = model.headers
             if isGoToAddVariable{
                 target.isAddVariableOpenedOnStart = true
             }
@@ -182,7 +193,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             target.observations = model.allObservations
         }
         else if segue.identifier == "toRestsChart"{
-            let target = segue.destination as! restsChartsViewController
+            let target = segue.destination as! RestsChartsViewController
             target.e = model.S
             target.labels = model.labels
         }

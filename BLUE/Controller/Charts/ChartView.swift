@@ -15,6 +15,7 @@ import Surge
 class ChartView: UIViewController{
     @IBOutlet weak var chartView: CombinedChartView!
     
+    @IBOutlet weak var bottomLabel: UILabel!
     //MARK: Scatter
     var scatterX : [[Double]]?
     var scatterY : [Double]?
@@ -52,6 +53,7 @@ class ChartView: UIViewController{
         super.viewDidLoad()
         lineX.removeAll()
         combinedLinAndScateerUpdate()
+        bottomLabel.text = "X:\nY:"
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
@@ -123,6 +125,7 @@ class ChartView: UIViewController{
         combinedData.scatterData = scatterData
         
         chartView.data = combinedData
+        chartView.delegate = self
         chartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
         chartView.xAxis.axisMinimum = Double(min) - 2.0
         chartView.xAxis.axisMaximum = Double(max) + 2.0
@@ -130,4 +133,8 @@ class ChartView: UIViewController{
     }
 }
 
-
+extension ChartView : ChartViewDelegate{
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        bottomLabel.text = "X: " + String(format: "%.3f", entry.x) + "\nY: " + String(format: "%.3f", entry.y)
+    }
+}

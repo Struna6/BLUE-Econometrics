@@ -99,19 +99,22 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         if indexPath.column == 0 && observationsLabeled{
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
+            cell.contentView.backgroundColor = .systemBackground
+            cell.label.text = ""
             if indexPath.row != 0{
                 cell.label.text = observations[indexPath.row-1].label
             }
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                cell.backgroundColor = UIColor.blue
+                cell.contentView.backgroundColor = .systemBlue
             }
             return cell
         }
         if indexPath.row == 0 {
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "HeaderCell", for: indexPath) as! HeaderCell
+            cell.contentView.backgroundColor = .systemBackground
             if observationsLabeled && indexPath.column == 0{
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                    cell.backgroundColor = UIColor.blue
+                    cell.contentView.backgroundColor = .systemBlue
                     cell.label.textColor = .systemBackground
                 }
                 return cell
@@ -119,23 +122,24 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             if observationsLabeled{
                 cell.label.text = String(headers[indexPath.column-1])
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                    cell.backgroundColor = UIColor.blue
+                    cell.contentView.backgroundColor = .systemBlue
                     cell.label.textColor = .systemBackground
                 }
                 return cell
             }
             cell.label.text = String(headers[indexPath.column])
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                cell.backgroundColor = UIColor.blue
+                cell.contentView.backgroundColor = .systemBlue
                 cell.label.textColor = .systemBackground
             }
             return cell
         }
         else{
             let cell = spreedsheet.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! TextCell
+            cell.contentView.backgroundColor = .systemBackground
             if observationsLabeled && indexPath.column == 0{
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                    cell.backgroundColor = UIColor.blue
+                    cell.contentView.backgroundColor = .systemBlue
                     cell.label.textColor = .systemBackground
                 }
                 return cell
@@ -143,14 +147,14 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
             if observationsLabeled{
                 cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column-1])
                 if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                    cell.backgroundColor = UIColor.blue
+                    cell.contentView.backgroundColor = .systemBlue
                     cell.label.textColor = .systemBackground
                 }
                 return cell
             }
             cell.label.text = String(format: "%.2f",observations[indexPath.row-1].observationArray[indexPath.column])
             if selectedRow == indexPath.row && selectedCol == indexPath.column{
-                cell.backgroundColor = UIColor.blue
+                cell.contentView.backgroundColor = .systemBlue
                 cell.label.textColor = .systemBackground
             }
             return cell
@@ -178,6 +182,9 @@ class ObservationsSpreedsheetView: UIViewController, SpreadsheetViewDataSource, 
         viewToBlur.isHidden = true
         normalizationChosen = normalizationOptions[0]
         normVarChosen = "All"
+        spreedsheet.backgroundColor = .systemBackground
+        spreedsheet.alwaysBounceHorizontal = false
+        spreedsheet.alwaysBounceVertical = false
         
         selectObjectForSP = LongTappableToSaveContext(newObject: self.spreedsheet, toBlur: viewToBlur, targetViewController: self)
         

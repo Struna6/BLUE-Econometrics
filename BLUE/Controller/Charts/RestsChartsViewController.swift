@@ -10,8 +10,9 @@ import UIKit
 import Charts
 import Surge
 
-class restsChartsViewController: UIViewController{
+class RestsChartsViewController: UIViewController{
 
+    @IBOutlet weak var bottomLabel: UILabel!
     @IBOutlet weak var viewBarChart: BarChartView!
     var e = [Double]()
     var labels : [String]?
@@ -53,9 +54,16 @@ class restsChartsViewController: UIViewController{
         
         viewBarChart.pinchZoomEnabled = true
         viewBarChart.doubleTapToZoomEnabled = true
-        viewBarChart.highlightPerTapEnabled = false
+        //viewBarChart.highlightPerTapEnabled = false
         viewBarChart.scaleXEnabled = true
         viewBarChart.scaleYEnabled = true
         viewBarChart.xAxis.drawLabelsEnabled = true
+        viewBarChart.delegate = self
+    }
+}
+
+extension RestsChartsViewController : ChartViewDelegate{
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        bottomLabel.text = "Selected observation: " + String(Int(entry.x)) + "\nValue: " + String(format: "%.3f", entry.y)
     }
 }
