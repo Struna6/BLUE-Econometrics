@@ -524,31 +524,59 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         }
     }
     
+    @objc private func hidePlayBack(_ tap : UIGestureRecognizer ){
+        let player = tap.view?.viewController as! AVPlayerViewController
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+            UIView.animate(withDuration: 1.0, animations: {
+                player.view.alpha = 0.0
+            }) { (_) in
+                player.view.removeGestureRecognizer(tap)
+                player.view.removeFromSuperview()
+                player.removeFromParent()
+                let alertController = UIAlertController.init(title: "Error", message: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", preferredStyle: .alert)
+                self.present(alertController,animated: true,completion: {
+                    sleep(3)
+                    alertController.dismiss(animated: true)
+                })
+            }
+        }
+    }
+    
     @objc func imageTapped(){
         if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video
-            present(videoPlayer, animated: true, completion: {
-                video.play()
-            })
-            
             let defaults = UserDefaults.standard
+            
             if !defaults.bool(forKey: "premium"){
+                self.addChild(videoPlayer)
+                videoPlayer.player = video
+                let tap = UITapGestureRecognizer(target: self, action: #selector(self.hidePlayBack))
+                videoPlayer.view.addGestureRecognizer(tap)
                 videoPlayer.showsPlaybackControls = false
                 videoPlayer.setValue(true, forKey: "requiresLinearPlayback")
-                Dispatch.DispatchQueue.global(qos: .background).async {
-                    sleep(60)
-                    DispatchQueue.main.async {
-                        videoPlayer.dismiss(animated: true, completion: {
-                            let alertController = UIAlertController.init(title: "Error", message: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", preferredStyle: .alert)
-                            self.present(alertController,animated: true,completion: {
-                                sleep(1)
-                                alertController.dismiss(animated: true)
-                            })
+                
+                self.view.addSubview(videoPlayer.view)
+                video.play()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+                    UIView.animate(withDuration: 1.0, animations: {
+                        videoPlayer.view.alpha = 0.0
+                    }) { (_) in
+                        videoPlayer.view.removeGestureRecognizer(tap)
+                        videoPlayer.view.removeFromSuperview()
+                        videoPlayer.removeFromParent()
+                        let alertController = UIAlertController.init(title: "Error", message: "Only VIP account can see full video, free account is limited to playing 60 seconds of tutorial. Please buy VIP account!", preferredStyle: .alert)
+                        self.present(alertController,animated: true,completion: {
+                            sleep(3)
+                            alertController.dismiss(animated: true)
                         })
                     }
                 }
+            }else{
+                present(videoPlayer, animated: true, completion: {
+                    video.play()
+                })
             }
         }
     }
