@@ -36,8 +36,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPG-Fv-dIy" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="1032" width="834" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="eLP-hV-1WO"/>
+                                </constraints>
+                            </view>
                             <tableView opaque="NO" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-BL-yPz">
-                                <rect key="frame" x="100" y="280" width="634" height="758"/>
+                                <rect key="frame" x="100" y="280" width="634" height="732"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <prototypes>
@@ -63,14 +70,17 @@
                             <constraint firstItem="Oir-BL-yPz" firstAttribute="top" secondItem="hec-yE-haM" secondAttribute="bottom" constant="20" id="0vc-2a-BaL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Oir-BL-yPz" secondAttribute="trailing" constant="100" id="1o0-Xd-dGo"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="262-xJ-Hh3"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Oir-BL-yPz" secondAttribute="bottom" constant="74" id="4Zv-BU-hjR"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8xx-YW-M3M"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="9RT-Rp-eTd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hec-yE-haM" secondAttribute="trailing" constant="100" id="Qjl-8l-zHK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FPG-Fv-dIy" secondAttribute="trailing" id="QtU-d0-b8i"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YF6-Fe-0T0"/>
+                            <constraint firstItem="FPG-Fv-dIy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bC2-3U-Htj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FPG-Fv-dIy" secondAttribute="bottom" id="ctE-qU-F92"/>
                             <constraint firstItem="Oir-BL-yPz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="ctG-1I-nJ4"/>
                             <constraint firstItem="hec-yE-haM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="eNB-5r-asm"/>
                             <constraint firstItem="hec-yE-haM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="jac-zl-c9D"/>
+                            <constraint firstItem="FPG-Fv-dIy" firstAttribute="top" secondItem="Oir-BL-yPz" secondAttribute="bottom" constant="20" id="lKv-sT-OPH"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="rU3-Ag-N1T"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tCj-Z6-1vK"/>
                             <constraint firstItem="H6U-Nq-OA7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ukf-ek-hNr"/>
@@ -111,6 +121,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="adView" destination="FPG-Fv-dIy" id="ZFO-Na-LlP"/>
                         <outlet property="addButton" destination="6Yq-Yc-YD1" id="LN5-Fr-EpE"/>
                         <outlet property="chooseXTableView" destination="LVi-rY-068" id="VEG-PW-SI9"/>
                         <outlet property="chooseXYView" destination="ulz-n8-5eh" id="fTr-3q-FD9"/>
@@ -442,7 +453,7 @@
                     <viewLayoutGuide key="safeArea" id="f8C-UA-i5b"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1667.96875" y="133.0078125"/>
+            <point key="canvasLocation" x="1667.6258992805756" y="132.73381294964028"/>
         </scene>
         <!--IntroVC-->
         <scene sceneID="yxe-2m-29h">

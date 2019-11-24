@@ -12,12 +12,14 @@ import MobileCoreServices
 import SideMenu
 import AVKit
 import Tutti
+import Firebase
 
 // MARK: Protocol for Transponating Arrays
 
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
     //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     
+    @IBOutlet weak var adView: GADBannerView!
     @IBOutlet weak var playButton: UIView!
     @IBOutlet weak var sideMenu: UIBarButtonItem!
     @IBOutlet weak var premiumLabel: UIStackView!
@@ -187,6 +189,11 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
         
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.viewController = self
+        if !defaults.bool(forKey: "premium"){
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.initiateAds()
+        }
+        
         let tapOnImgBeforeImport = UITapGestureRecognizer(target: self, action: #selector(self.addButtonPressed(_:)))
         imgViewBeforeImport.addGestureRecognizer(tapOnImgBeforeImport)
         imgViewBeforeImport.isUserInteractionEnabled = true
@@ -253,11 +260,26 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         topTableView.addGestureRecognizer(longTapOnTableView)
     }
     
+    var first = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !first{
+            first = true
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        }else{
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.createNewAd()
+        }
+    }
+    
     var selectObjectForTableView = LongTappableToSaveContext()
     var selectObjectForTopLabel = LongTappableToSaveContext()
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
+        if !defaults.bool(forKey: "premium"){
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        }
         //MARK: Edit file name resticition/alerts
         let alertPopOver = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
         alertPopOver.popoverPresentationController?.barButtonItem = sender
@@ -363,16 +385,23 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     // MARK: New import
     @objc @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
-        saveButton.isEnabled = false
+        if !defaults.bool(forKey: "premium"){
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        }
+        
+        self.saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         documentPicker.modalPresentationStyle = .formSheet
-        present(documentPicker, animated: true, completion:  nil)
+        self.present(documentPicker, animated: true, completion:  nil)
     }
     
     // MARK: Window pop up for chosing X and Y
     @IBAction func choosingXYDone(_ sender: UIButton) {
+        if !defaults.bool(forKey: "premium"){
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        }
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
@@ -478,6 +507,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         }
     }
     @objc @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
+        if !defaults.bool(forKey: "premium"){
+            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        }
         if defaults.bool(forKey: "premium"){
             premiumLabel.isHidden = true
         }
@@ -827,4 +859,3 @@ extension ViewController{
         }
     }
 }
-

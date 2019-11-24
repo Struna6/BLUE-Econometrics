@@ -13,4 +13,6 @@ target 'BLUE' do
     pod 'CSV.swift'
     pod 'lottie-ios'
     pod 'Tutti'
+    pod 'Firebase'
+    pod 'Firebase/AdMob'
 end

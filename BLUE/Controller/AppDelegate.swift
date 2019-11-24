@@ -9,14 +9,23 @@
 import UIKit
 import CoreData
 import Tutti
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var adProvider = AdsProvider()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         loadApperanceOfTutorial()
+        
+        FirebaseApp.configure()
+        //GADMobileAds.configure(withApplicationID: "ca-app-pub-3085132668483251~3609700072")
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADMobileAds.disableAutomatedInAppPurchaseReporting()
+        GADMobileAds.disableSDKCrashReporting()
+        
         return true
     }
     
