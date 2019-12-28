@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1a8-Om-UOo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1a8-Om-UOo">
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -458,7 +458,7 @@
         <!--IntroVC-->
         <scene sceneID="yxe-2m-29h">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="1a8-Om-UOo" customClass="IntroVC" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="1a8-Om-UOo" customClass="IntroVC" customModule="Econometrics" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1bP-od-fs1">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -491,37 +491,11 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconAsView" translatesAutoresizingMaskIntoConstraints="NO" id="RoQ-Qb-pfh">
                                         <rect key="frame" x="28" y="28" width="370" height="612"/>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="a7a-me-7Dn">
-                                        <rect key="frame" x="52" y="438" width="168" height="133"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTh-yF-0ci">
-                                                <rect key="frame" x="0.0" y="0.0" width="49.5" height="29.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Linear" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxL-Uz-DrU">
-                                                <rect key="frame" x="0.0" y="34.5" width="65.5" height="29.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unbised" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2li-dT-yab">
-                                                <rect key="frame" x="0.0" y="69" width="89" height="29.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXt-Bj-HFc">
-                                                <rect key="frame" x="0.0" y="103.5" width="102" height="29.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your econometric tool" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQA-l4-0GK">
-                                        <rect key="frame" x="75.5" y="595.5" width="275" height="32.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your econometrics calculations tool" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQA-l4-0GK">
+                                        <rect key="frame" x="87" y="476" width="258" height="112"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="112" id="HYg-Il-MQK"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="27"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -531,13 +505,11 @@
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="RoQ-Qb-pfh" secondAttribute="trailing" constant="20" id="3tJ-IY-Z0J"/>
                                     <constraint firstItem="RoQ-Qb-pfh" firstAttribute="leading" secondItem="gG6-j9-Wha" secondAttribute="leadingMargin" constant="20" id="9kV-B4-QfY"/>
-                                    <constraint firstItem="a7a-me-7Dn" firstAttribute="leading" secondItem="gG6-j9-Wha" secondAttribute="leading" constant="52" id="GYk-Nb-ayl"/>
-                                    <constraint firstAttribute="bottom" secondItem="QQA-l4-0GK" secondAttribute="bottom" constant="40" id="P0Q-ql-wXB"/>
-                                    <constraint firstItem="QQA-l4-0GK" firstAttribute="centerX" secondItem="gG6-j9-Wha" secondAttribute="centerX" id="anB-pT-ckI"/>
-                                    <constraint firstItem="QQA-l4-0GK" firstAttribute="top" secondItem="a7a-me-7Dn" secondAttribute="bottom" constant="24.5" id="gqX-Mb-Xwr"/>
+                                    <constraint firstAttribute="bottom" secondItem="QQA-l4-0GK" secondAttribute="bottom" constant="80" id="P0Q-ql-wXB"/>
+                                    <constraint firstItem="QQA-l4-0GK" firstAttribute="centerX" secondItem="gG6-j9-Wha" secondAttribute="centerX" constant="3" id="anB-pT-ckI"/>
                                     <constraint firstItem="RoQ-Qb-pfh" firstAttribute="top" secondItem="gG6-j9-Wha" secondAttribute="topMargin" constant="20" id="k7W-ZW-poG"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="RoQ-Qb-pfh" secondAttribute="bottom" constant="20" id="lWQ-Co-e95"/>
-                                    <constraint firstAttribute="trailing" secondItem="a7a-me-7Dn" secondAttribute="trailing" constant="206" id="xTh-zU-6dW"/>
+                                    <constraint firstItem="QQA-l4-0GK" firstAttribute="width" secondItem="RoQ-Qb-pfh" secondAttribute="width" multiplier="0.697297" id="xww-5S-ivM"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -558,23 +530,18 @@
                         <outlet property="appIcon" destination="RoQ-Qb-pfh" id="qGl-M5-Xxx"/>
                         <outlet property="blurView" destination="bCO-wm-AqV" id="hix-QV-H2I"/>
                         <outlet property="bottomLabel" destination="QQA-l4-0GK" id="2B0-rQ-PnD"/>
-                        <outlet property="labels" destination="a7a-me-7Dn" id="tHU-uP-qtc"/>
                         <outlet property="mainView" destination="gG6-j9-Wha" id="g60-sp-KI5"/>
-                        <outletCollection property="labelsCollection" destination="2li-dT-yab" collectionClass="NSMutableArray" id="bbM-je-M8z"/>
-                        <outletCollection property="labelsCollection" destination="WxL-Uz-DrU" collectionClass="NSMutableArray" id="KKd-LB-hCW"/>
-                        <outletCollection property="labelsCollection" destination="UTh-yF-0ci" collectionClass="NSMutableArray" id="1dy-fV-E2j"/>
-                        <outletCollection property="labelsCollection" destination="SXt-Bj-HFc" collectionClass="NSMutableArray" id="gaf-ax-Xzq"/>
                         <segue destination="UWu-TN-I8M" kind="show" identifier="toFirst" id="Guq-qD-JDr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VTs-Ph-Y32" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-622.65625" y="130.6640625"/>
+            <point key="canvasLocation" x="-623.02158273381303" y="130.57553956834533"/>
         </scene>
         <!--First View Controller-->
         <scene sceneID="KjE-0F-gz8">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="UWu-TN-I8M" customClass="FirstViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="UWu-TN-I8M" customClass="FirstViewController" customModule="Econometrics" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QQf-IT-ERs">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
