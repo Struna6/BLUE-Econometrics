@@ -251,7 +251,7 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
             imageHelpWindow.image = UIImage(named: (parametersCategorized[selectedParameterSection][selectedParameterPosition].imageName))
             chosenParameter = parametersCategorized[selectedParameterSection][selectedParameterPosition]
             if (chosenParameter?.videoName != nil){
-                if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v") == nil{
+                if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "mov") == nil{
                     playButton.isHidden = true
                 }
             }else{
@@ -293,7 +293,7 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
     
     //change name of video
     @objc func imageTappedtoPlay(){
-        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v"){
+        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "mov"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video

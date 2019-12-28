@@ -750,7 +750,7 @@ extension ViewController{
         parametersView.transform = CGAffineTransform(translationX: 0.0, y: 300)
         chosenParameters = item
         if (chosenParameters?.videoName != nil){
-            if Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "m4v") == nil{
+            if Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "mov") == nil{
                 playButton.isHidden = true
             }
         }else{
@@ -797,15 +797,14 @@ extension ViewController{
     //MARK: Gesture Recognizer for Image- Play Video
     //change name of video
     @objc func imageTapped(){
-        UIView.animate(withDuration: 0.4) {
-            self.playButton.backgroundColor = UIColor.blue
+        UIView.animate(withDuration: 0.4, animations: {
             self.playButton.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+        }) { (_) in
+            UIView.animate(withDuration: 0.4) {
+                self.playButton.transform = CGAffineTransform.identity
+            }
         }
-        UIView.animate(withDuration: 0.4) {
-            self.playButton.backgroundColor = UIColor.lightGray
-            self.playButton.transform = CGAffineTransform.identity
-        }
-        if let path = Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "m4v"){
+        if let path = Bundle.main.path(forResource: chosenParameters!.videoName!, ofType: "mov"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video

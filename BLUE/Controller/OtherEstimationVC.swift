@@ -471,9 +471,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             dict.forEach { (arg0) in
                 let (key, value) = arg0
                 if key.contains("%"){
-                    self.parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                    self.parametersResults.append(ModelParameters(name: key, isLess: true, criticalFloor: 0.5, warningFloor: 0.75, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: nil, variable: nil))
                 }else{
-                    self.parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: "sampleVideo", variable: nil))
+                    self.parametersResults.append(ModelParameters(name: key, isLess: nil, criticalFloor: nil, warningFloor: nil, value: value, description: "In statistics, a probit model is a type of regression where the dependent variable can take only two values, for example married or not married. The word is a portmanteau, coming from probability + unit. The purpose of the model is to estimate the probability that an observation with particular characteristics will fall into a specific one of the categories; moreover, classifying observations based on their predicted probabilities is a type of binary classification model.A probit model is a popular specification for an ordinal or a binary response model. As such it treats the same set of problems as does logistic regression using similar techniques. The probit model, which employs a probit link function, is most often estimated using the standard maximum likelihood procedure, such an estimation being called a probit regression.", imageName: "logit", videoName: nil, variable: nil))
                 }
             }
         }, tasksToMainBack: {
@@ -483,6 +483,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         
         playShortAnimationOnce(mainViewController: self)
     }
+    
     
     var chosenParameter : ModelParameters?
     
@@ -504,7 +505,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         }
         chosenParameter = item
         if (chosenParameter?.videoName != nil){
-            if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v") == nil{
+            if Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "mov") == nil{
                 playButton.isHidden = true
             }
         }else{
@@ -543,7 +544,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
     }
     
     @objc func imageTapped(){
-        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "m4v"){
+        if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "mov"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video

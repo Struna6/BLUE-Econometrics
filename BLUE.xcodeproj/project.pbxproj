@@ -12,6 +12,17 @@
 		F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */; };
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
 		F9187752234A499A006363CC /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9187751234A499A006363CC /* HealthKit.framework */; };
+		F91FAEE023B8099E00797227 /* squereR.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED523B8099C00797227 /* squereR.mov */; };
+		F91FAEE123B8099E00797227 /* RESET.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED623B8099D00797227 /* RESET.mov */; };
+		F91FAEE223B8099E00797227 /* weakF.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED723B8099D00797227 /* weakF.mov */; };
+		F91FAEE323B8099E00797227 /* tTest.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED823B8099D00797227 /* tTest.mov */; };
+		F91FAEE423B8099E00797227 /* fTest.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED923B8099D00797227 /* fTest.mov */; };
+		F91FAEE523B8099E00797227 /* quantileOdd.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDA23B8099D00797227 /* quantileOdd.mov */; };
+		F91FAEE623B8099E00797227 /* Sargan.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDB23B8099D00797227 /* Sargan.mov */; };
+		F91FAEE723B8099E00797227 /* JBtest.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDC23B8099D00797227 /* JBtest.mov */; };
+		F91FAEE823B8099E00797227 /* LMtest.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDD23B8099D00797227 /* LMtest.mov */; };
+		F91FAEE923B8099E00797227 /* WhiteHomo.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDE23B8099D00797227 /* WhiteHomo.mov */; };
+		F91FAEEA23B8099E00797227 /* Hausmann.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDF23B8099E00797227 /* Hausmann.mov */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
@@ -32,18 +43,7 @@
 		F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */; };
 		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
-		F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D1122F2222DA2B00F28BF8 /* tTest.m4v */; };
-		F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */; };
-		F9D112392222DA4000F28BF8 /* fTest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112312222DA3100F28BF8 /* fTest.m4v */; };
-		F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112322222DA3600F28BF8 /* RESET.m4v */; };
-		F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112332222DA3900F28BF8 /* squereR.m4v */; };
-		F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112342222DA3A00F28BF8 /* LMtest.m4v */; };
-		F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */; };
-		F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D112362222DA4000F28BF8 /* JBtest.m4v */; };
 		F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */; };
-		F9D11244222326B200F28BF8 /* weakF.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11241222326AF00F28BF8 /* weakF.m4v */; };
-		F9D11245222326B200F28BF8 /* Sargan.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11242222326B000F28BF8 /* Sargan.m4v */; };
-		F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F9D11243222326B200F28BF8 /* Hausmann.m4v */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */; };
@@ -63,6 +63,17 @@
 		F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestsChartsViewController.swift; sourceTree = "<group>"; };
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		F9187751234A499A006363CC /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		F91FAED523B8099C00797227 /* squereR.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = squereR.mov; sourceTree = "<group>"; };
+		F91FAED623B8099D00797227 /* RESET.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = RESET.mov; sourceTree = "<group>"; };
+		F91FAED723B8099D00797227 /* weakF.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = weakF.mov; sourceTree = "<group>"; };
+		F91FAED823B8099D00797227 /* tTest.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = tTest.mov; sourceTree = "<group>"; };
+		F91FAED923B8099D00797227 /* fTest.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = fTest.mov; sourceTree = "<group>"; };
+		F91FAEDA23B8099D00797227 /* quantileOdd.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = quantileOdd.mov; sourceTree = "<group>"; };
+		F91FAEDB23B8099D00797227 /* Sargan.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Sargan.mov; sourceTree = "<group>"; };
+		F91FAEDC23B8099D00797227 /* JBtest.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = JBtest.mov; sourceTree = "<group>"; };
+		F91FAEDD23B8099D00797227 /* LMtest.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LMtest.mov; sourceTree = "<group>"; };
+		F91FAEDE23B8099D00797227 /* WhiteHomo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = WhiteHomo.mov; sourceTree = "<group>"; };
+		F91FAEDF23B8099E00797227 /* Hausmann.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Hausmann.mov; sourceTree = "<group>"; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
@@ -86,18 +97,7 @@
 		F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
-		F9D1122F2222DA2B00F28BF8 /* tTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = tTest.m4v; sourceTree = "<group>"; };
-		F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = WhiteHomo.m4v; sourceTree = "<group>"; };
-		F9D112312222DA3100F28BF8 /* fTest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = fTest.m4v; sourceTree = "<group>"; };
-		F9D112322222DA3600F28BF8 /* RESET.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = RESET.m4v; sourceTree = "<group>"; };
-		F9D112332222DA3900F28BF8 /* squereR.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = squereR.m4v; sourceTree = "<group>"; };
-		F9D112342222DA3A00F28BF8 /* LMtest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = LMtest.m4v; sourceTree = "<group>"; };
-		F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = quantileOdd.m4v; sourceTree = "<group>"; };
-		F9D112362222DA4000F28BF8 /* JBtest.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = JBtest.m4v; sourceTree = "<group>"; };
 		F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F9D11241222326AF00F28BF8 /* weakF.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = weakF.m4v; sourceTree = "<group>"; };
-		F9D11242222326B000F28BF8 /* Sargan.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sargan.m4v; sourceTree = "<group>"; };
-		F9D11243222326B200F28BF8 /* Hausmann.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hausmann.m4v; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "USA GDP 2005-2018.csv"; sourceTree = "<group>"; };
@@ -203,17 +203,17 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
-				F9D11243222326B200F28BF8 /* Hausmann.m4v */,
-				F9D11242222326B000F28BF8 /* Sargan.m4v */,
-				F9D11241222326AF00F28BF8 /* weakF.m4v */,
-				F9D112312222DA3100F28BF8 /* fTest.m4v */,
-				F9D112362222DA4000F28BF8 /* JBtest.m4v */,
-				F9D112342222DA3A00F28BF8 /* LMtest.m4v */,
-				F9D112352222DA3C00F28BF8 /* quantileOdd.m4v */,
-				F9D112322222DA3600F28BF8 /* RESET.m4v */,
-				F9D112332222DA3900F28BF8 /* squereR.m4v */,
-				F9D1122F2222DA2B00F28BF8 /* tTest.m4v */,
-				F9D112302222DA2D00F28BF8 /* WhiteHomo.m4v */,
+				F91FAED923B8099D00797227 /* fTest.mov */,
+				F91FAEDF23B8099E00797227 /* Hausmann.mov */,
+				F91FAEDC23B8099D00797227 /* JBtest.mov */,
+				F91FAEDD23B8099D00797227 /* LMtest.mov */,
+				F91FAEDA23B8099D00797227 /* quantileOdd.mov */,
+				F91FAED623B8099D00797227 /* RESET.mov */,
+				F91FAEDB23B8099D00797227 /* Sargan.mov */,
+				F91FAED523B8099C00797227 /* squereR.mov */,
+				F91FAED823B8099D00797227 /* tTest.mov */,
+				F91FAED723B8099D00797227 /* weakF.mov */,
+				F91FAEDE23B8099D00797227 /* WhiteHomo.mov */,
 				F9F26F5E222B211A00F17C83 /* Cars Data.csv */,
 				F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */,
 				F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */,
@@ -325,28 +325,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9D11244222326B200F28BF8 /* weakF.m4v in Resources */,
-				F9D11245222326B200F28BF8 /* Sargan.m4v in Resources */,
-				F9D11246222326B200F28BF8 /* Hausmann.m4v in Resources */,
+				F91FAEE523B8099E00797227 /* quantileOdd.mov in Resources */,
+				F91FAEE323B8099E00797227 /* tTest.mov in Resources */,
 				F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */,
 				F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */,
-				F9D112372222DA4000F28BF8 /* tTest.m4v in Resources */,
-				F9D112382222DA4000F28BF8 /* WhiteHomo.m4v in Resources */,
-				F9D112392222DA4000F28BF8 /* fTest.m4v in Resources */,
+				F91FAEE023B8099E00797227 /* squereR.mov in Resources */,
 				F9F26F59222B178B00F17C83 /* City Riders Info.csv in Resources */,
 				F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */,
-				F9D1123A2222DA4000F28BF8 /* RESET.m4v in Resources */,
-				F9D1123B2222DA4000F28BF8 /* squereR.m4v in Resources */,
+				F91FAEE723B8099E00797227 /* JBtest.mov in Resources */,
 				F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */,
 				F9F26F5B222B1DF700F17C83 /* Life expectancy.csv in Resources */,
-				F9D1123C2222DA4000F28BF8 /* LMtest.m4v in Resources */,
-				F9D1123D2222DA4000F28BF8 /* quantileOdd.m4v in Resources */,
-				F9D1123E2222DA4000F28BF8 /* JBtest.m4v in Resources */,
+				F91FAEE123B8099E00797227 /* RESET.mov in Resources */,
+				F91FAEE823B8099E00797227 /* LMtest.mov in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F9885A63238AB83600AAC8B8 /* GoogleService-Info.plist in Resources */,
+				F91FAEE223B8099E00797227 /* weakF.mov in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */,
+				F91FAEE623B8099E00797227 /* Sargan.mov in Resources */,
+				F91FAEE923B8099E00797227 /* WhiteHomo.mov in Resources */,
+				F91FAEE423B8099E00797227 /* fTest.mov in Resources */,
+				F91FAEEA23B8099E00797227 /* Hausmann.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
