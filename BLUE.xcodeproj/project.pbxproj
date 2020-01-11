@@ -35,15 +35,16 @@
 		F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */; };
 		F97E417121BC19E400883010 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F97E417021BC19E400883010 /* Main.storyboard */; };
 		F9885A61238AB08F00AAC8B8 /* AdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9885A60238AB08F00AAC8B8 /* AdProvider.swift */; };
-		F9885A63238AB83600AAC8B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9885A62238AB83600AAC8B8 /* GoogleService-Info.plist */; };
 		F99B87F321B1F1EB00779422 /* OLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99B87F221B1F1EB00779422 /* OLS.swift */; };
 		F9AA8E512199B7A200562A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AA8E502199B7A200562A1F /* AppDelegate.swift */; };
 		F9AA8E532199B7A200562A1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AA8E522199B7A200562A1F /* ViewController.swift */; };
 		F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9AA8E5C2199B7A400562A1F /* LaunchScreen.storyboard */; };
 		F9AC339C21D0294800EF7F94 /* CandleChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */; };
 		F9B68DA1221AD5D8008CB85E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */; };
+		F9C9B13D23C9D66600E9C959 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C9B13C23C9D66600E9C959 /* CloudKit.framework */; };
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
 		F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */; };
+		F9D652AA23C9F3C1005E0F31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */; };
@@ -86,7 +87,6 @@
 		F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationsSpreedsheetView.swift; sourceTree = "<group>"; };
 		F97E417021BC19E400883010 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F9885A60238AB08F00AAC8B8 /* AdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdProvider.swift; sourceTree = "<group>"; };
-		F9885A62238AB83600AAC8B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F99B87F221B1F1EB00779422 /* OLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLS.swift; sourceTree = "<group>"; };
 		F9AA8E4D2199B7A200562A1F /* Econometrics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Econometrics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA8E502199B7A200562A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,8 +96,10 @@
 		F9AC339B21D0294800EF7F94 /* CandleChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleChartViewController.swift; sourceTree = "<group>"; };
 		F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		F9C7557821C50A6E00A0F8A3 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = SOURCE_ROOT; };
+		F9C9B13C23C9D66600E9C959 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "USA GDP 2005-2018.csv"; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9C9B13D23C9D66600E9C959 /* CloudKit.framework in Frameworks */,
 				66218F66FBBAEBC07819F0FF /* Pods_BLUE.framework in Frameworks */,
 				F9187752234A499A006363CC /* HealthKit.framework in Frameworks */,
 			);
@@ -159,6 +162,7 @@
 		F9687EBEFCF04934C98ECBA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9C9B13C23C9D66600E9C959 /* CloudKit.framework */,
 				F9187751234A499A006363CC /* HealthKit.framework */,
 				BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */,
 			);
@@ -219,7 +223,7 @@
 				F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */,
 				F9F26F58222B178B00F17C83 /* City Riders Info.csv */,
 				F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */,
-				F9885A62238AB83600AAC8B8 /* GoogleService-Info.plist */,
+				F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -339,12 +343,12 @@
 				F91FAEE823B8099E00797227 /* LMtest.mov in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
-				F9885A63238AB83600AAC8B8 /* GoogleService-Info.plist in Resources */,
 				F91FAEE223B8099E00797227 /* weakF.mov in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */,
 				F91FAEE623B8099E00797227 /* Sargan.mov in Resources */,
 				F91FAEE923B8099E00797227 /* WhiteHomo.mov in Resources */,
+				F9D652AA23C9F3C1005E0F31 /* GoogleService-Info.plist in Resources */,
 				F91FAEE423B8099E00797227 /* fTest.mov in Resources */,
 				F91FAEEA23B8099E00797227 /* Hausmann.mov in Resources */,
 			);
@@ -561,14 +565,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BLUE/BLUE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24C92L3HM3;
+				CURRENT_PROJECT_VERSION = 10;
+				DEVELOPMENT_TEAM = HK6SRYFGZG;
 				INFOPLIST_FILE = BLUE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.struna.BLUEApp;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dodocode.EconometricsApp;
 				PRODUCT_NAME = Econometrics;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -582,14 +588,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BLUE/BLUE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24C92L3HM3;
+				CURRENT_PROJECT_VERSION = 10;
+				DEVELOPMENT_TEAM = HK6SRYFGZG;
 				INFOPLIST_FILE = BLUE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.struna.BLUEApp;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dodocode.EconometricsApp;
 				PRODUCT_NAME = Econometrics;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;

@@ -189,10 +189,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         parametersView.layer.cornerRadius = 10
         visualViewToBlur.effect = nil
         
+        createDirectory()
         (UIApplication.shared.delegate as! AppDelegate).adProvider.viewController = self
-        if !defaults.bool(forKey: "premium"){
-            (UIApplication.shared.delegate as! AppDelegate).adProvider.initiateAds()
-        }
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.initiateAds()
         
         let tapOnImgBeforeImport = UITapGestureRecognizer(target: self, action: #selector(self.addButtonPressed(_:)))
         imgViewBeforeImport.addGestureRecognizer(tapOnImgBeforeImport)
@@ -202,7 +201,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         imgViewBeforeEdit.addGestureRecognizer(tapOnImgBeforeEdit)
         imgViewBeforeEdit.isUserInteractionEnabled = true
         
-        if defaults.bool(forKey: "premium"){
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumLabel.isHidden = true
             premiumLabel2.isHidden = true
         }
@@ -277,9 +276,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
-        if !defaults.bool(forKey: "premium"){
-            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
-        }
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        
         //MARK: Edit file name resticition/alerts
         let alertPopOver = UIAlertController(title: "Choose option", message: "", preferredStyle: .actionSheet)
         alertPopOver.popoverPresentationController?.barButtonItem = sender
@@ -288,12 +286,13 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             let alertSureController = UIAlertController(title: "Override", message: "Are you sure you want override current model?", preferredStyle: .alert)
             let yes = UIAlertAction.init(title: "Yes", style: UIAlertAction.Style.destructive, handler: { (alert) in
                 do{
-                try self.save(object: self.model, pathExternal: self.openedFilePath + ".plist")
+                    try self.save(object: self.model, pathExternal: self.openedFilePath + ".plist")
+                    self.copyDocumentsToiCloudDirectory()
                     self.playShortAnimationOnce(mainViewController: self)
-            }catch let er as SavingErrors{
-                self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
-            }catch{}
-            }
+                }catch let er as SavingErrors{
+                    self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
+                }catch{}
+                }
         )
             let no = UIAlertAction.init(title: "No", style: UIAlertAction.Style.cancel){ (alert) in
                 alertSureController.dismiss(animated: true, completion: nil)
@@ -302,6 +301,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             alertSureController.addAction(no)
             self.present(alertSureController,animated: true)
         }
+        
         let saveLocallyOption = UIAlertAction(title: "Save", style: .default) { (alert) in
             alertPopOver.removeFromParent()
                 let alertController = UIAlertController.init(title: "Model name", message: "Choose name for model saving", preferredStyle: .alert)
@@ -317,6 +317,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                                 self.model.name = text
                                 do{
                                     try self.save(object: self.model, fileName: text)
+                                    self.copyDocumentsToiCloudDirectory()
                                 }catch let er as SavingErrors{
                                     self.playErrorScreen(msg: er.rawValue, blurView: self.visualViewToBlur, mainViewController: self, alertToDismiss: nil)
                                 }catch{
@@ -345,7 +346,50 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         if openedFileName != ""{
             alertPopOver.addAction(overrideOption)
         }
+        
+        
+        
         present(alertPopOver, animated: true)
+    }
+    
+    private func createDirectory(){
+        if let iCloudDocumentsURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
+            if (!FileManager.default.fileExists(atPath: iCloudDocumentsURL.path, isDirectory: nil)) {
+                do {
+                    try FileManager.default.createDirectory(at: iCloudDocumentsURL, withIntermediateDirectories: true, attributes: nil)
+                }
+                catch {
+                    print("Error in creating doc")
+                }
+            }
+        }
+    }
+    
+    private func copyDocumentsToiCloudDirectory() {
+        guard UserDefaults.standard.bool(forKey: "icloudSave") else {return}
+        guard let localDocumentsURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask).last else { return }
+        
+        guard let iCloudDocumentsURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") else { return }
+        
+        var isDir:ObjCBool = false
+        
+        if FileManager.default.fileExists(atPath: iCloudDocumentsURL.path, isDirectory: &isDir) {
+            do {
+                try FileManager.default.removeItem(at: iCloudDocumentsURL)
+            }
+            catch {
+                //Error handling
+                print("Error in remove item")
+            }
+        }
+        
+        do {
+            try FileManager.default.copyItem(at: localDocumentsURL, to: iCloudDocumentsURL)
+        }
+        catch {
+            //Error handling
+            print("Error in copy item")
+        }
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
@@ -385,9 +429,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     // MARK: New import
     @objc @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         dismissAllViews()
-        if !defaults.bool(forKey: "premium"){
-            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
-        }
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
         
         self.saveButton.isEnabled = false
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .open)
@@ -399,9 +441,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     // MARK: Window pop up for chosing X and Y
     @IBAction func choosingXYDone(_ sender: UIButton) {
-        if !defaults.bool(forKey: "premium"){
-            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
-        }
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
@@ -507,10 +547,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         }
     }
     @objc @IBAction func chooseXYButtonPressed(_ sender: UIBarButtonItem) {
-        if !defaults.bool(forKey: "premium"){
-            (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
-        }
-        if defaults.bool(forKey: "premium"){
+        (UIApplication.shared.delegate as! AppDelegate).adProvider.showFullScreenAd()
+        
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumLabel.isHidden = true
         }
         self.view.bringSubviewToFront(visualViewToBlur)
@@ -699,7 +738,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
                     self.chosenY.removeAll()
                 }
             }
-            if defaults.bool(forKey: "premium"){
+            if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 if tableView == self.chooseXTableView{
                     if cell?.accessoryType == UITableViewCell.AccessoryType.none{
                         cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -737,7 +776,7 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
 extension ViewController{
     
     func loadParametersView(item : ModelParameters){
-        if defaults.bool(forKey: "premium"){
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumLabel.isHidden = true
         }
         parametersViewTitle.text = item.name
@@ -809,7 +848,7 @@ extension ViewController{
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video
             
-            if !defaults.bool(forKey: "premium"){
+            if (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 self.addChild(videoPlayer)
                 videoPlayer.player = video
                 let tap = UITapGestureRecognizer(target: self, action: #selector(self.hidePlayBack))

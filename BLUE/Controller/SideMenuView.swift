@@ -63,7 +63,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             cell.isUserInteractionEnabled = false
         }
         
-        if !defaults.bool(forKey: "premium"){
+        if (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             let num = "\(indexPath.section)\(indexPath.row)"
             
             if !notPremiumIndexes.contains(num){

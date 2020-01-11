@@ -14,7 +14,6 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     @IBOutlet weak var isPremium: UILabel!
     @IBOutlet var pickers: [UISwitch]!
     @IBOutlet weak var buyPremiumButton: UIButton!
-    
     @IBOutlet weak var premiumImage: UIImageView!
     var chosenDirectory = String(){
         didSet{
@@ -57,7 +56,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             self.popUpView.alpha = 1
             self.popUpView.transform = CGAffineTransform.identity
         }
-        if defaults.bool(forKey: "premium"){
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             isPremium.text = "premium"
             buyPremiumButton.isEnabled = false
             buyPremiumButton.backgroundColor = UIColor.gray
@@ -65,7 +64,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
         }else{
             isPremium.text = "normal"
             pickers.forEach(){
-                if $0.tag == 0{
+                if $0.tag == 0 || $0.tag == 2{
                     $0.isEnabled = false
                     $0.setOn(false, animated: false)
                     $0.isOn = false
@@ -75,7 +74,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
         }
         
         pickers.forEach(){
-            if $0.tag == 0 && defaults.bool(forKey: "premium"){
+            if $0.tag == 0 && !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 if let val = defaults.bool(forKey: "longPress") as Bool?{
                     $0.isOn = val
                 }else{
@@ -111,28 +110,19 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     
     //ADD documentPickerForAutoSaving
     @IBAction func switchPressed(_ sender: UISwitch) {
-        if sender.tag == 0 && defaults.bool(forKey: "premium"){
+        if sender.tag == 0 && !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             defaults.set(sender.isOn, forKey: "longPress")
         }else if sender.tag == 1{
             defaults.set(sender.isOn, forKey: "animations")
         }else if sender.tag == 2{
-            defaults.set(sender.isOn, forKey: "autoSave")
-            if sender.isOn{
-                let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
-                documentPicker.delegate = self
-                documentPicker.modalPresentationStyle = .formSheet
-                present(documentPicker, animated: true, completion:  nil)
-            }else{
-                defaults.removeObject(forKey: "externalPathToAutoSave")
-                defaults.removeObject(forKey: "autoSave")
-                defaults.synchronize()
-            }
+            defaults.set(sender.isOn, forKey: "icloudSave")
         }
     }
     
     //add premium functionality
     @IBAction func buyPremium(_ sender: UIButton) {
-        defaults.set(true, forKey: "premium")
+        //TODO PURCHASE
+        //defaults.set(true, forKey: "premium")
         defaults.set(true, forKey: "longPress")
         self.dismiss(animated: true, completion: nil)
     }

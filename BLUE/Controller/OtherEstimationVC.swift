@@ -113,7 +113,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
         super.viewDidLoad()
         
         let defaults = UserDefaults.standard
-        if defaults.bool(forKey: "premium"){
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumButton.isHidden = true
         }
         
@@ -550,7 +550,7 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             videoPlayer.player = video
             let defaults = UserDefaults.standard
             
-            if !defaults.bool(forKey: "premium"){
+            if (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 self.addChild(videoPlayer)
                 videoPlayer.player = video
                 let tap = UITapGestureRecognizer(target: self, action: #selector(self.hidePlayBack))

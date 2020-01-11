@@ -17,15 +17,29 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3774653118074483~4173056210</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>com.dodocode.EconometricsApp.Econometrics</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>Econometrics</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string></string>
+		</dict>
+	</dict>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -48,7 +62,5 @@
 	</array>
 	<key>UISupportsDocumentBrowser</key>
 	<true/>
-    <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-3085132668483251~2185357592</string>
 </dict>
 </plist>

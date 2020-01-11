@@ -170,29 +170,21 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
     }
     
     var isHiddenPicker = false
-    // IF Complete Parameters
     
     var textTopLabel = String()
     
     var selectObjectForTableView = LongTappableToSaveContext()
     
     @IBOutlet weak var playButton: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         popUpWindow.layer.cornerRadius = 10
         if isHiddenPicker{
             pickerView.isHidden = true
-        }else{
-//            pickerView.showHint(text: "Choose variable")
-//            self.view.layoutIfNeeded()
-        }
-        if isShortParameters{
-//            helpImage.showHint(text: "Press to see more information about group of variables")
-//            self.view.layoutIfNeeded()
         }
         
-        let defaults = UserDefaults.standard
-        if defaults.bool(forKey: "premium"){
+        if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumLabel.isHidden = true
         }
         
@@ -297,9 +289,8 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video
-            let defaults = UserDefaults.standard
             
-            if !defaults.bool(forKey: "premium"){
+            if (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 self.addChild(videoPlayer)
                 videoPlayer.player = video
                 let tap = UITapGestureRecognizer(target: self, action: #selector(self.hidePlayBack))
