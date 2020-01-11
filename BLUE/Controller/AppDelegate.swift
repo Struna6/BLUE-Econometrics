@@ -10,15 +10,27 @@ import UIKit
 import CoreData
 import Tutti
 import Firebase
+import KeychainSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var adProvider = AdsProvider()
+    var product : SKProduct?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         loadApperanceOfTutorial()
+        
+        IAPManager.shared.getProducts { (result) in
+            self.product = try? result.get().first
+        }
+        IAPManager.shared.startObserving()
+        
+        let keychain = KeychainSwift()
+        if let val = keychain.getBool("premium"), val{
+            adProvider.adsShouldBeVisible = false
+        }
         
         FirebaseApp.configure()
         //GADMobileAds.configure(withApplicationID: "ca-app-pub-3085132668483251~3609700072")
@@ -56,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        IAPManager.shared.stopObserving()
         self.saveContext()
     }
 

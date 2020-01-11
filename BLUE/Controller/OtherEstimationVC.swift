@@ -112,7 +112,6 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
         if !(UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
             premiumButton.isHidden = true
         }
@@ -548,7 +547,6 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
             let video = AVPlayer(url: URL(fileURLWithPath: path))
             let videoPlayer = AVPlayerViewController()
             videoPlayer.player = video
-            let defaults = UserDefaults.standard
             
             if (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible{
                 self.addChild(videoPlayer)

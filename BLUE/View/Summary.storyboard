@@ -10,7 +10,7 @@
         <!--Summary-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController restorationIdentifier="summaryVC" storyboardIdentifier="summaryVC" modalPresentationStyle="overCurrentContext" id="BYZ-38-t0r" customClass="ViewController" customModule="Econometrics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="summaryVC" storyboardIdentifier="summaryVC" modalPresentationStyle="overCurrentContext" id="BYZ-38-t0r" customClass="ViewController" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -458,7 +458,7 @@
         <!--IntroVC-->
         <scene sceneID="yxe-2m-29h">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="1a8-Om-UOo" customClass="IntroVC" customModule="Econometrics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="1a8-Om-UOo" customClass="IntroVC" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1bP-od-fs1">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -541,7 +541,7 @@
         <!--First View Controller-->
         <scene sceneID="KjE-0F-gz8">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="UWu-TN-I8M" customClass="FirstViewController" customModule="Econometrics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="UWu-TN-I8M" customClass="FirstViewController" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QQf-IT-ERs">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -693,7 +693,7 @@
         <image name="iconAsView" width="320" height="520"/>
         <image name="menu" width="25" height="25"/>
         <image name="nan" width="96" height="96"/>
-        <image name="play" width="100" height="100"/>
+        <image name="play" width="512" height="512"/>
         <image name="pro" width="512" height="512"/>
         <image name="save" width="512" height="512"/>
     </resources>

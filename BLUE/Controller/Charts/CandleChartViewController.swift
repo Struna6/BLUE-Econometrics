@@ -72,7 +72,7 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         chartView.leftAxis.axisMaximum = max(maxValue) + abs(0.1*max(minValue))
         chartView.leftAxis.axisMinimum = min(minValue) - abs(0.1*min(minValue))
         let dataEntry = CandleChartDataEntry(x: 1, shadowH: topEnd, shadowL: bottomEnd, open: high, close: low)
-        let dataEntriesSet = CandleChartDataSet(values: [dataEntry], label: headers[chosenVariable])
+        let dataEntriesSet = CandleChartDataSet(entries: [dataEntry], label: headers[chosenVariable])
         
         dataEntriesSet.axisDependency = .left
         dataEntriesSet.colors = [UIColor.blue]
@@ -94,8 +94,8 @@ class CandleChartViewController: UIViewController,QuantileCalculable {
         chartView.leftAxis.limitLines[2].lineDashLengths = [2.0,2.0]
         chartView.leftAxis.limitLines[3].lineDashPhase = 1.0
         chartView.leftAxis.limitLines[3].lineDashLengths = [2.0,2.0]
-        chartView.leftAxis.limitLines[2].labelPosition = .rightBottom
-        chartView.leftAxis.limitLines[3].labelPosition = .rightTop
+        chartView.leftAxis.limitLines[2].labelPosition = .bottomRight
+        chartView.leftAxis.limitLines[3].labelPosition = .topRight
         
         chartView.leftAxis.limitLines[0].lineWidth = 3.0
         chartView.leftAxis.limitLines[1].lineWidth = 3.0

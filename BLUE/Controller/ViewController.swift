@@ -38,6 +38,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     
     var openedFileName = ""
     var openedFilePath = ""
+    var blurWhenMenuPresented: UIVisualEffectView?
     
     func parametersResultsLoad(){
         if newModel{
@@ -411,12 +412,15 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         if segue.identifier == "toSideMenu"{
             dismissAllViews()
             self.view.sendSubviewToBack(visualViewToBlur)
-            let target = segue.destination as! UISideMenuNavigationController
-            target.sideMenuManager.menuPresentMode = .menuSlideIn
-            target.sideMenuManager.menuPushStyle = .popWhenPossible
-            target.sideMenuManager.menuWidth = 300
-            target.sideMenuManager.menuAnimationFadeStrength = 0.6
-            target.sideMenuManager.menuBlurEffectStyle = UIBlurEffect.Style.light
+            let target = segue.destination as! SideMenuNavigationController
+            target.presentationStyle = .menuSlideIn
+            target.pushStyle = .popWhenPossible
+            target.menuWidth = 300
+            target.dismissOnPresent = true
+            target.enableTapToDismissGesture = true
+            target.blurEffectStyle = UIBlurEffect.Style.dark
+            target.sideMenuDelegate = self
+            //target.menuBlurEffectStyle = UIBlurEffect.Style.light
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
             targetVC.sendBackSpreedVCDelegate = self
@@ -894,6 +898,28 @@ extension ViewController{
                     view.removeFromSuperview()
                 }
             }
+        }
+    }
+}
+
+extension ViewController: SideMenuNavigationControllerDelegate{
+    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+        blurWhenMenuPresented = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurWhenMenuPresented?.frame = view.frame
+        blurWhenMenuPresented?.center = view.center
+        blurWhenMenuPresented?.alpha = 0.0
+        guard blurWhenMenuPresented != nil else {return}
+        view.addSubview(blurWhenMenuPresented!)
+        UIView.animate(withDuration: 0.5) {
+            self.blurWhenMenuPresented?.alpha = 1.0
+        }
+    }
+    
+    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.blurWhenMenuPresented?.alpha = 0.0
+        }) { (_) in
+            self.blurWhenMenuPresented?.removeFromSuperview()
         }
     }
 }

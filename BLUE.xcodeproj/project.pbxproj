@@ -31,6 +31,8 @@
 		F968AE6D221EBCFA00EF76DB /* IntroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F968AE6C221EBCFA00EF76DB /* IntroVC.swift */; };
 		F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F972F0E2220723DF001F3B3A /* Charts.storyboard */; };
 		F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */; };
+		F9762DA823CA278600FBC614 /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F9762DA723CA278500FBC614 /* done.json */; };
+		F9762DAA23CA2C3B00FBC614 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = F9762DA923CA2C3B00FBC614 /* loading.json */; };
 		F97AB3432211D23D001917D3 /* IV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97AB3422211D23D001917D3 /* IV.swift */; };
 		F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */; };
 		F97E417121BC19E400883010 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F97E417021BC19E400883010 /* Main.storyboard */; };
@@ -45,6 +47,7 @@
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
 		F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */; };
 		F9D652AA23C9F3C1005E0F31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */; };
+		F9D652AC23C9FF07005E0F31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D652AB23C9FF07005E0F31 /* StoreKit.framework */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
 		F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */; };
@@ -52,6 +55,7 @@
 		F9F26F5B222B1DF700F17C83 /* Life expectancy.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */; };
 		F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */; };
 		F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5E222B211A00F17C83 /* Cars Data.csv */; };
+		F9FBA41023CA19EB004F3A0D /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
 		F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FC4BDD22060A270067A468 /* MatrixView.swift */; };
 /* End PBXBuildFile section */
@@ -83,12 +87,14 @@
 		F968AE6C221EBCFA00EF76DB /* IntroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVC.swift; sourceTree = "<group>"; };
 		F972F0E2220723DF001F3B3A /* Charts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Charts.storyboard; sourceTree = "<group>"; };
 		F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerSorted.swift; sourceTree = "<group>"; };
+		F9762DA723CA278500FBC614 /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = done.json; path = BLUE/Assets.xcassets/done.dataset/done.json; sourceTree = "<group>"; };
+		F9762DA923CA2C3B00FBC614 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		F97AB3422211D23D001917D3 /* IV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IV.swift; sourceTree = "<group>"; };
 		F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationsSpreedsheetView.swift; sourceTree = "<group>"; };
 		F97E417021BC19E400883010 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F9885A60238AB08F00AAC8B8 /* AdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdProvider.swift; sourceTree = "<group>"; };
 		F99B87F221B1F1EB00779422 /* OLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLS.swift; sourceTree = "<group>"; };
-		F9AA8E4D2199B7A200562A1F /* Econometrics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Econometrics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9AA8E4D2199B7A200562A1F /* Econometrics!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Econometrics!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA8E502199B7A200562A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9AA8E522199B7A200562A1F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F9AA8E5D2199B7A400562A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F9D652AB23C9FF07005E0F31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
 		F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "USA GDP 2005-2018.csv"; sourceTree = "<group>"; };
@@ -107,6 +114,7 @@
 		F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Life expectancy.csv"; sourceTree = "<group>"; };
 		F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "1930-2001 Investment Data.csv"; sourceTree = "<group>"; };
 		F9F26F5E222B211A00F17C83 /* Cars Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cars Data.csv"; sourceTree = "<group>"; };
+		F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 		F9FC4BDD22060A270067A468 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +127,7 @@
 				F9C9B13D23C9D66600E9C959 /* CloudKit.framework in Frameworks */,
 				66218F66FBBAEBC07819F0FF /* Pods_BLUE.framework in Frameworks */,
 				F9187752234A499A006363CC /* HealthKit.framework in Frameworks */,
+				F9D652AC23C9FF07005E0F31 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +171,7 @@
 		F9687EBEFCF04934C98ECBA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9D652AB23C9FF07005E0F31 /* StoreKit.framework */,
 				F9C9B13C23C9D66600E9C959 /* CloudKit.framework */,
 				F9187751234A499A006363CC /* HealthKit.framework */,
 				BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */,
@@ -172,6 +182,7 @@
 		F9885A5F238AB07900AAC8B8 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */,
 				F9885A60238AB08F00AAC8B8 /* AdProvider.swift */,
 			);
 			path = Providers;
@@ -207,6 +218,8 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
+				F9762DA723CA278500FBC614 /* done.json */,
+				F9762DA923CA2C3B00FBC614 /* loading.json */,
 				F91FAED923B8099D00797227 /* fTest.mov */,
 				F91FAEDF23B8099E00797227 /* Hausmann.mov */,
 				F91FAEDC23B8099D00797227 /* JBtest.mov */,
@@ -234,7 +247,7 @@
 		F9AA8E4E2199B7A200562A1F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F9AA8E4D2199B7A200562A1F /* Econometrics.app */,
+				F9AA8E4D2199B7A200562A1F /* Econometrics!.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,7 +295,7 @@
 			);
 			name = BLUE;
 			productName = BLUE;
-			productReference = F9AA8E4D2199B7A200562A1F /* Econometrics.app */;
+			productReference = F9AA8E4D2199B7A200562A1F /* Econometrics!.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -331,6 +344,7 @@
 			files = (
 				F91FAEE523B8099E00797227 /* quantileOdd.mov in Resources */,
 				F91FAEE323B8099E00797227 /* tTest.mov in Resources */,
+				F9762DAA23CA2C3B00FBC614 /* loading.json in Resources */,
 				F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */,
 				F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */,
 				F91FAEE023B8099E00797227 /* squereR.mov in Resources */,
@@ -342,6 +356,7 @@
 				F91FAEE123B8099E00797227 /* RESET.mov in Resources */,
 				F91FAEE823B8099E00797227 /* LMtest.mov in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
+				F9762DA823CA278600FBC614 /* done.json in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F91FAEE223B8099E00797227 /* weakF.mov in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
@@ -412,6 +427,7 @@
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
 				F9885A61238AB08F00AAC8B8 /* AdProvider.swift in Sources */,
 				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
+				F9FBA41023CA19EB004F3A0D /* IAPManager.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
 				F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */,
 				F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */,
@@ -575,7 +591,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodocode.EconometricsApp;
-				PRODUCT_NAME = Econometrics;
+				PRODUCT_NAME = "Econometrics!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -598,7 +614,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodocode.EconometricsApp;
-				PRODUCT_NAME = Econometrics;
+				PRODUCT_NAME = "Econometrics!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};

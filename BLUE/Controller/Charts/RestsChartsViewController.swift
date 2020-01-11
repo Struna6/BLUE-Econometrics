@@ -31,7 +31,7 @@ class RestsChartsViewController: UIViewController{
         for i in 0..<e.count{
             barChartEntries.append(BarChartDataEntry(x: Double(0+i), y: e[i]))
         }
-        let barChartDataSet = BarChartDataSet(values: barChartEntries, label: "Rests of estimation")
+        let barChartDataSet = BarChartDataSet(entries: barChartEntries, label: "Rests of estimation")
         
         barChartDataSet.axisDependency = .left
         barChartDataSet.colors = [UIColor.blue]

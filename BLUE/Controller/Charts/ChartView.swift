@@ -101,7 +101,7 @@ class ChartView: UIViewController{
             let tmp = ChartDataEntry(x: lineX[i], y: lineY![i])
             lineEntries.append(tmp)
         }
-        let lineDataSet = LineChartDataSet(values: lineEntries, label: "Estimated Values")
+        let lineDataSet = LineChartDataSet(entries: lineEntries, label: "Estimated Values")
         let lineData = LineChartData(dataSet: lineDataSet)
         lineDataSet.drawCirclesEnabled = false
         lineDataSet.drawValuesEnabled = false
@@ -113,7 +113,7 @@ class ChartView: UIViewController{
             let tmp = ChartDataEntry(x: scatterX![i][chosenX+1], y: scatterY![i])
             scatterEntries.append(tmp)
         }
-        let scatterDataSet = ScatterChartDataSet(values: scatterEntries, label: "True Values")
+        let scatterDataSet = ScatterChartDataSet(entries: scatterEntries, label: "True Values")
         let scatterData = ScatterChartData(dataSet: scatterDataSet)
         scatterDataSet.setScatterShape(.circle)
         scatterDataSet.setColor(NSUIColor.init(red: 0, green: 0, blue: 1, alpha: 1))

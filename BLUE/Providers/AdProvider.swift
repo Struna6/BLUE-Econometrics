@@ -67,7 +67,10 @@ class AdsProvider : NSObject{
     }
     
     func createNewAd(){
-        guard adsShouldBeVisible else {return}
+        guard adsShouldBeVisible else {
+            viewController.adView.isHidden = true
+            return
+        }
         viewController.adView.delegate = nil
         print("new AD!")
         viewController.adView.load(GADRequest())

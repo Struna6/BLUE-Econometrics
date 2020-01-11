@@ -191,8 +191,8 @@ extension PlayableLoadingScreen{
         visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
         mainView.addSubview(visualViewToBlur)
         
-        let animationView = LOTAnimationView(name: "loading")
-        animationView.loopAnimation = true
+        let animationView = AnimationView(animation: Animation.named("loading"))
+        animationView.loopMode = .loop
         animationView.sizeToFit()
         animationView.layer.cornerRadius = 18.0
         animationView.clipsToBounds = true
@@ -232,18 +232,17 @@ extension PlayableLoadingScreen{
                 mainViewController.view.addSubview(visualViewToBlur)
             }
             
-            let animationView = LOTAnimationView(name: animationName!)
+            let animationView = AnimationView(animation: Animation.named(animationName!))
             mainViewController.view.addSubview(animationView)
-            animationView.loopAnimation = false
+            animationView.loopMode = .playOnce
             animationView.sizeToFit()
             animationView.layer.cornerRadius = 18.0
-            animationView.autoReverseAnimation = false
             animationView.clipsToBounds = true
             animationView.animationSpeed = 1.5
             animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
             mainViewController.view.isUserInteractionEnabled = false
             //UIApplication.shared.beginIgnoringInteractionEvents()
-            animationView.play(fromProgress: 0.0, toProgress: 0.7, withCompletion: { (complete: Bool) in
+            animationView.play(fromProgress: 0.0, toProgress: 0.7, completion: { (complete: Bool) in
                 animationView.stop()
                 UIView.animate(withDuration: 0.05) {
                     visualViewToBlur.isHidden = true
