@@ -11,7 +11,6 @@ import Darwin
 import Surge
 
 class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, ErrorScreenPlayable{
-    
     var model = Model()
     let sections = ["Observations", "Plots", "Data Analysis","Regression", "Comparing", "Other Models", "Settings"]
     let options =
@@ -31,6 +30,7 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
     var isGoToNormalize = false
     var docPicker = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .open)
     var paths = [String]()
+    weak var viewController : ViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -416,6 +416,10 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
             target.model = self.model
             target.isLogitProbit = true
             target.isProbit = true
+        }
+        else if segue.identifier == "toSettings"{
+            let target = segue.destination as! SettingsVC
+            target.delegate = viewController
         }
     }
     

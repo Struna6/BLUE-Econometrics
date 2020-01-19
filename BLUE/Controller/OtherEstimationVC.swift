@@ -300,9 +300,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
                 }else{
                     let num = eq[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + "×" + self.model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: " -") + "×" + self.model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -377,9 +377,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
                 }else{
                     let num = eq[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + "×" + self.model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: " -") + "×" + self.model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -454,9 +454,9 @@ class OtherEstimationVC: UIViewController, PlayableLoadingScreen, ErrorScreenPla
                 }else{
                     let num = eq[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + "×" + self.model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num) + self.model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: " -") + "×" + self.model.chosenXHeader[i-1]
                     }
                 }
             }

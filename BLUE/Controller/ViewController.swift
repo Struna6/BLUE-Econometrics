@@ -229,9 +229,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 }else{
                     let num = model.getOLSRegressionEquation()[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + "×" + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + "×" + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -406,6 +406,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             let targetVC = target.topViewController as! SideMenuView
             targetVC.model = model
             targetVC.sendBackSpreedVCDelegate = self
+            targetVC.viewController = self
         }
         if segue.identifier == "back"{
             self.removeFromParent()
@@ -485,9 +486,9 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 }else{
                     let num = model.getOLSRegressionEquation()[i]
                     if num>=0{
-                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " + " + String(format:"%.2f",num) + "×" + model.chosenXHeader[i-1]
                     }else{
-                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + model.chosenXHeader[i-1]
+                        tmpEq = tmpEq + " " + String(format:"%.2f",num).replacingOccurrences(of: "-", with: "- ") + "×" + model.chosenXHeader[i-1]
                     }
                 }
             }
@@ -892,5 +893,12 @@ extension ViewController: SideMenuNavigationControllerDelegate{
         }) { (_) in
             self.blurWhenMenuPresented?.removeFromSuperview()
         }
+    }
+}
+
+extension ViewController: SettingsVCDelegate{
+    func removeAds() {
+        self.adView.isHidden = true
+        self.adView.delegate = nil
     }
 }
