@@ -25,13 +25,14 @@
 		F91FAEEA23B8099E00797227 /* Hausmann.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAEDF23B8099E00797227 /* Hausmann.mov */; };
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
+		F92CB80823D4ABA900799C9C /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F92CB80723D4ABA900799C9C /* done.json */; };
+		F92CB80C23D4ABF900799C9C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
 		F968AE6D221EBCFA00EF76DB /* IntroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F968AE6C221EBCFA00EF76DB /* IntroVC.swift */; };
 		F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F972F0E2220723DF001F3B3A /* Charts.storyboard */; };
 		F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */; };
-		F9762DA823CA278600FBC614 /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F9762DA723CA278500FBC614 /* done.json */; };
 		F9762DAA23CA2C3B00FBC614 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = F9762DA923CA2C3B00FBC614 /* loading.json */; };
 		F97AB3432211D23D001917D3 /* IV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97AB3422211D23D001917D3 /* IV.swift */; };
 		F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */; };
@@ -46,7 +47,6 @@
 		F9C9B13D23C9D66600E9C959 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C9B13C23C9D66600E9C959 /* CloudKit.framework */; };
 		F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CE04F1221C8AD300242F3C /* Tutorial.swift */; };
 		F9D112402222FA0A00F28BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */; };
-		F9D652AA23C9F3C1005E0F31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */; };
 		F9D652AC23C9FF07005E0F31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D652AB23C9FF07005E0F31 /* StoreKit.framework */; };
 		F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */; };
 		F9E584C721D0FEFF0063ABFE /* OtherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */; };
@@ -81,13 +81,14 @@
 		F91FAEDF23B8099E00797227 /* Hausmann.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Hausmann.mov; sourceTree = "<group>"; };
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F92CB80723D4ABA900799C9C /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = done.json; sourceTree = "<group>"; };
+		F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
 		F968AE6C221EBCFA00EF76DB /* IntroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVC.swift; sourceTree = "<group>"; };
 		F972F0E2220723DF001F3B3A /* Charts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Charts.storyboard; sourceTree = "<group>"; };
 		F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerSorted.swift; sourceTree = "<group>"; };
-		F9762DA723CA278500FBC614 /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = done.json; path = BLUE/Assets.xcassets/done.dataset/done.json; sourceTree = "<group>"; };
 		F9762DA923CA2C3B00FBC614 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		F97AB3422211D23D001917D3 /* IV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IV.swift; sourceTree = "<group>"; };
 		F97E416A21BBF58300883010 /* ObservationsSpreedsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationsSpreedsheetView.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		F9C9B13C23C9D66600E9C959 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F9CE04F1221C8AD300242F3C /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		F9D1123F2222FA0A00F28BF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9D652AB23C9FF07005E0F31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F9DDFECA21CE650E00F9C91F /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		F9E584C621D0FEFF0063ABFE /* OtherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProtocols.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		F9AA8E442199B7A200562A1F = {
 			isa = PBXGroup;
 			children = (
-				F9762DA723CA278500FBC614 /* done.json */,
+				F92CB80723D4ABA900799C9C /* done.json */,
 				F9762DA923CA2C3B00FBC614 /* loading.json */,
 				F91FAED923B8099D00797227 /* fTest.mov */,
 				F91FAEDF23B8099E00797227 /* Hausmann.mov */,
@@ -236,7 +236,7 @@
 				F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */,
 				F9F26F58222B178B00F17C83 /* City Riders Info.csv */,
 				F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */,
-				F9D652A923C9F3C0005E0F31 /* GoogleService-Info.plist */,
+				F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -349,6 +349,7 @@
 				F9F26F57222B137E00F17C83 /* USA GDP 2005-2018.csv in Resources */,
 				F91FAEE023B8099E00797227 /* squereR.mov in Resources */,
 				F9F26F59222B178B00F17C83 /* City Riders Info.csv in Resources */,
+				F92CB80823D4ABA900799C9C /* done.json in Resources */,
 				F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */,
 				F91FAEE723B8099E00797227 /* JBtest.mov in Resources */,
 				F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */,
@@ -356,14 +357,13 @@
 				F91FAEE123B8099E00797227 /* RESET.mov in Resources */,
 				F91FAEE823B8099E00797227 /* LMtest.mov in Resources */,
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
-				F9762DA823CA278600FBC614 /* done.json in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F91FAEE223B8099E00797227 /* weakF.mov in Resources */,
+				F92CB80C23D4ABF900799C9C /* GoogleService-Info.plist in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */,
 				F91FAEE623B8099E00797227 /* Sargan.mov in Resources */,
 				F91FAEE923B8099E00797227 /* WhiteHomo.mov in Resources */,
-				F9D652AA23C9F3C1005E0F31 /* GoogleService-Info.plist in Resources */,
 				F91FAEE423B8099E00797227 /* fTest.mov in Resources */,
 				F91FAEEA23B8099E00797227 /* Hausmann.mov in Resources */,
 			);
