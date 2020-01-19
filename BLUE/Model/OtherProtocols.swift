@@ -225,7 +225,6 @@ extension PlayableLoadingScreen{
             let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
             visualViewToBlur.frame = mainViewController.view.frame
             visualViewToBlur.isHidden = true
-            //visualViewToBlur.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.2)
             
             UIView.animate(withDuration: 0.05) {
                 visualViewToBlur.isHidden = false
@@ -241,7 +240,6 @@ extension PlayableLoadingScreen{
             animationView.animationSpeed = 1.5
             animationView.center = CGPoint(x: mainViewController.view.bounds.midX, y: mainViewController.view.bounds.midY)
             mainViewController.view.isUserInteractionEnabled = false
-            //UIApplication.shared.beginIgnoringInteractionEvents()
             animationView.play(fromProgress: 0.0, toProgress: 0.7, completion: { (complete: Bool) in
                 animationView.stop()
                 UIView.animate(withDuration: 0.05) {
@@ -249,7 +247,6 @@ extension PlayableLoadingScreen{
                     visualViewToBlur.removeFromSuperview()
                     animationView.removeFromSuperview()
                     mainViewController.view.isUserInteractionEnabled = true
-                    //UIApplication.shared.endIgnoringInteractionEvents()
                 }
             })
         }
@@ -475,8 +472,7 @@ extension UIImage {
     func save(_ name: String){
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let url = URL(fileURLWithPath: path).appendingPathComponent("/Saved Models/Screenshots/" + name)
-        try! self.pngData()?.write(to: url)
-        print("saved image at \(url)")
+        try? self.pngData()?.write(to: url)
     }
 }
 

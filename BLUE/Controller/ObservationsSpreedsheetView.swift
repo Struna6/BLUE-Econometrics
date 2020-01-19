@@ -538,7 +538,6 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    //ADD ERROR
     func addVariableFunction(f: (Double) -> Double){
         var tmp = [Double]()
         observations.forEach { (obs) in
@@ -549,6 +548,7 @@ extension ObservationsSpreedsheetView : UIPickerViewDelegate, UIPickerViewDataSo
         }
         headers.append(choosenFunction + "_" + (headers[choosenVariable]))
     }
+    
     func addVariableFunction(f: (Double,Double) -> Double, n: Double){
         var tmp = [Double]()
         observations.forEach { (obs) in

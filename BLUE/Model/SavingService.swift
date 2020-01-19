@@ -47,7 +47,6 @@ extension Storage{
             let name = "/Saved Models/" + fileName! + ".plist"
             url = path.appendingPathComponent(name)
         }
-        print(url)
         let encoder = PropertyListEncoder()
         do {
             let data = try encoder.encode(object)
@@ -67,7 +66,6 @@ extension Storage{
         if let toPath = defaults.url(forKey: "externalPathToAutoSave"){
             let fileMenager = FileManager.default
             let loc1 = path
-            //let loc1 = path.appendingPathComponent("/Saved Models")
             let loc2 = toPath.appendingPathComponent("/BLUE Documents")
             if fileMenager.fileExists(atPath: loc2.path){
                 do{
@@ -122,11 +120,7 @@ extension Storage{
         }
     }
     func remove(path : URL){
-        do{
-            try FileManager.default.removeItem(at: path)
-        }catch{
-            print("cannot remove")
-        }
+        try? FileManager.default.removeItem(at: path)
     }
     func exists(fileName : String) -> Bool{
         let name = fileName + ".plist"

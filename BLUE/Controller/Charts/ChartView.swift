@@ -83,8 +83,6 @@ class ChartView: UIViewController{
             tmp.append(el)
             tmpX.append(tmp)
         }
-        print(tmpX)
-        print(equation)
         let X = Matrix<Double>(tmpX)
         let Y = Matrix<Double>([equation])
         let result = mul(X, y: Surge.transpose(Y))

@@ -17,7 +17,6 @@ import Firebase
 // MARK: Protocol for Transponating Arrays
 
 class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBackSpreedSheetView, PlayableLoadingScreen, ErrorScreenPlayable{
-    //var model = Model(withHeaders: false, observationLabeled: false, path: Bundle.main.path(forResource: "test1", ofType: "txt")!)
     
     @IBOutlet weak var adView: GADBannerView!
     @IBOutlet weak var playButton: UIView!
@@ -356,12 +355,7 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     private func createDirectory(){
         if let iCloudDocumentsURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
             if (!FileManager.default.fileExists(atPath: iCloudDocumentsURL.path, isDirectory: nil)) {
-                do {
-                    try FileManager.default.createDirectory(at: iCloudDocumentsURL, withIntermediateDirectories: true, attributes: nil)
-                }
-                catch {
-                    print("Error in creating doc")
-                }
+                try? FileManager.default.createDirectory(at: iCloudDocumentsURL, withIntermediateDirectories: true, attributes: nil)
             }
         }
     }
@@ -375,22 +369,10 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         var isDir:ObjCBool = false
         
         if FileManager.default.fileExists(atPath: iCloudDocumentsURL.path, isDirectory: &isDir) {
-            do {
-                try FileManager.default.removeItem(at: iCloudDocumentsURL)
-            }
-            catch {
-                //Error handling
-                print("Error in remove item")
-            }
+            try? FileManager.default.removeItem(at: iCloudDocumentsURL)
         }
         
-        do {
-            try FileManager.default.copyItem(at: localDocumentsURL, to: iCloudDocumentsURL)
-        }
-        catch {
-            //Error handling
-            print("Error in copy item")
-        }
+        try? FileManager.default.copyItem(at: localDocumentsURL, to: iCloudDocumentsURL)
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
@@ -490,12 +472,8 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             
             
             model.chosenX = tmp
-            //model.chosenX = transposeArray(array: tmpX, rows: i+1, cols: self.model.n)
             model.chosenXHeader = self.chosenX
             model.chosenYHeader = self.chosenY
-            //let _ = parametersResults
-            //topTableView.reloadData()
-            //topTableView.isHidden = false
             var tmpXText = String()
             model.chosenXHeader.forEach { (str) in
                 tmpXText = tmpXText + " " + str
@@ -519,9 +497,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
             saveButton.isEnabled = true
             
             self.topTableView.isHidden = true
-//            UIView.animate(withDuration: 0.4) {
-//                self.visualViewToBlur.backgroundColor = UIColor(red:0.14, green:0.14, blue:0.14, alpha:1.00)
-//            }
             playLoadingAsync(tasksToDoAsync: {
                 self.updateParametersResults = true
             }, tasksToMainBack: {
@@ -532,7 +507,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 self.topTableView.reloadData()
             }, mainView: self.view)
             topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
-            //other hint?
             topLabel.showHint(text: "Long press to activate saving option, then press the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
             self.view.layoutIfNeeded()
             if defaults.bool(forKey: "firstChecker"){
@@ -570,7 +544,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
     }
     
     @IBAction func closeChooseXY(_ sender: Any) {
-        //self.topTableView.isHidden = true
         UIView.animate(withDuration: 0.4, animations: {
             self.chooseXYView.transform = CGAffineTransform(translationX: 0.0, y: 300)
             self.chooseXYView.alpha = 0
@@ -606,7 +579,6 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
         button.setImage(image, for: .normal)
         button.setImage(imageFilled, for: .selected)
         button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 25, right: 20)
-        //button.imageView?.contentMode = UIView.ContentMode.center
         
         if sender.state == .ended{
             Dispatch.DispatchQueue.global(qos: .background).async {
@@ -838,7 +810,6 @@ extension ViewController{
     }
     
     //MARK: Gesture Recognizer for Image- Play Video
-    //change name of video
     @objc func imageTapped(){
         UIView.animate(withDuration: 0.4, animations: {
             self.playButton.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)

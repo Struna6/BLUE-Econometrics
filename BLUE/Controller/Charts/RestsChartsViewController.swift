@@ -40,7 +40,6 @@ class RestsChartsViewController: UIViewController{
         let data = BarChartData(dataSet: barChartDataSet)
         viewBarChart.data = data
         viewBarChart.notifyDataSetChanged()
-        //viewBarChart.drawValueAboveBarEnabled = false
         
         let visualViewToBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         visualViewToBlur.frame = self.view.frame
@@ -54,7 +53,6 @@ class RestsChartsViewController: UIViewController{
         
         viewBarChart.pinchZoomEnabled = true
         viewBarChart.doubleTapToZoomEnabled = true
-        //viewBarChart.highlightPerTapEnabled = false
         viewBarChart.scaleXEnabled = true
         viewBarChart.scaleYEnabled = true
         viewBarChart.xAxis.drawLabelsEnabled = true

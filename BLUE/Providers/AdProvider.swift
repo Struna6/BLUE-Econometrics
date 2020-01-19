@@ -72,7 +72,6 @@ class AdsProvider : NSObject{
             return
         }
         viewController.adView.delegate = nil
-        print("new AD!")
         viewController.adView.load(GADRequest())
     }
 }

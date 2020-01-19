@@ -131,8 +131,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             defaults.set(sender.isOn, forKey: "icloudSave")
         }
     }
-    
-    //add premium functionality
+
     @IBAction func buyPremium(_ sender: UIButton) {
         guard let product = (UIApplication.shared.delegate as? AppDelegate)?.product else {return}
         IAPManager.shared.buy(product: product) {[weak self] (result) in

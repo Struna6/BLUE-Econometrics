@@ -105,7 +105,6 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
             }
         }else{
             defaults.set(true, forKey: "firstOpen")
-            //defaults.set(false, forKey: "longPress")
             defaults.set(true, forKey: "animations")
             createDirectories()
             filesTab = getListOfFiles()
@@ -126,15 +125,11 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
     }
     
     func copyBundleSampleModels(){
-        do{
-            try copySampleModels(name: "City Riders Info", type: ".csv")
-            try copySampleModels(name: "USA GDP 2005-2018", type: ".csv")
-            try copySampleModels(name: "Life expectancy", type: ".csv")
-            try copySampleModels(name: "1930-2001 Investment Data", type: ".csv")
-            try copySampleModels(name: "Cars Data", type: ".csv")
-        }catch let er as SavingErrors{
-            print(er)
-        }catch{}
+            try? copySampleModels(name: "City Riders Info", type: ".csv")
+            try? copySampleModels(name: "USA GDP 2005-2018", type: ".csv")
+            try? copySampleModels(name: "Life expectancy", type: ".csv")
+            try? copySampleModels(name: "1930-2001 Investment Data", type: ".csv")
+            try? copySampleModels(name: "Cars Data", type: ".csv")
     }
 }
 
@@ -156,12 +151,7 @@ extension FirstViewController : UITableViewDelegate, UITableViewDataSource{
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MMM-yyyy HH:mm"
         var date = String()
-        do{
-            try date = formatter.string(from: fileModificationDate(name: filesTab[indexPath.row]))
-        }
-        catch let er as SavingErrors{
-            print(er)
-        }catch{}
+        try? date = formatter.string(from: fileModificationDate(name: filesTab[indexPath.row]))
         cell.detailTextLabel?.text = "Last save time: " + date
         return cell
     }

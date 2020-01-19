@@ -283,7 +283,6 @@ class TableViewControllerSorted: UIViewController, ErrorScreenPlayable {
         }
     }
     
-    //change name of video
     @objc func imageTappedtoPlay(){
         if let path = Bundle.main.path(forResource: chosenParameter!.videoName!, ofType: "mov"){
             let video = AVPlayer(url: URL(fileURLWithPath: path))

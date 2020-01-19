@@ -26,12 +26,7 @@ extension ImportableFromTextFile where Self==Model{
     func importFromTextFile(withHeaders : Bool, observationLabeled : Bool, path : String) throws -> (header: [String]?,  n : Int, observations : [Observation], labeled : Bool, headered : Bool){
         var text = ""
         let url = URL(fileURLWithPath: path)
-        do {
-            text = try String(contentsOf: url)
-        } catch  {
-            print(error)
-            throw ImportError.readingFileError
-        }
+        text = (try? String(contentsOf: url)) ?? ""
         url.stopAccessingSecurityScopedResource()
         if let range = text.range(of: "f0\\fs24 \\cf0"){
             text = String(text[range.upperBound...])
@@ -52,9 +47,7 @@ extension ImportableFromTextFile where Self==Model{
         if firstRow.count < 2{
             throw ImportError.wrongValue
         }
-//        if firstRow.count < 2{
-//            fatalError("Minimim column number: 2")
-//        }
+
         if firstRow[0] == ""{
             //[0,0] is blank
             labeled = true
