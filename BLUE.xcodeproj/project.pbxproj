@@ -55,7 +55,6 @@
 		F9F26F5B222B1DF700F17C83 /* Life expectancy.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */; };
 		F9F26F5D222B1F9100F17C83 /* 1930-2001 Investment Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */; };
 		F9F26F5F222B211B00F17C83 /* Cars Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = F9F26F5E222B211A00F17C83 /* Cars Data.csv */; };
-		F9FBA41023CA19EB004F3A0D /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */; };
 		F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FC2E7A21CED9D900A64599 /* Summary.storyboard */; };
 		F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FC4BDD22060A270067A468 /* MatrixView.swift */; };
 /* End PBXBuildFile section */
@@ -114,7 +113,6 @@
 		F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Life expectancy.csv"; sourceTree = "<group>"; };
 		F9F26F5C222B1F9100F17C83 /* 1930-2001 Investment Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "1930-2001 Investment Data.csv"; sourceTree = "<group>"; };
 		F9F26F5E222B211A00F17C83 /* Cars Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cars Data.csv"; sourceTree = "<group>"; };
-		F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		F9FC2E7A21CED9D900A64599 /* Summary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 		F9FC4BDD22060A270067A468 /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,7 +180,6 @@
 		F9885A5F238AB07900AAC8B8 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				F9FBA40F23CA19EB004F3A0D /* IAPManager.swift */,
 				F9885A60238AB08F00AAC8B8 /* AdProvider.swift */,
 			);
 			path = Providers;
@@ -427,7 +424,6 @@
 				F925853321A02B4A00920E33 /* Model.swift in Sources */,
 				F9885A61238AB08F00AAC8B8 /* AdProvider.swift in Sources */,
 				F9DDFECB21CE650E00F9C91F /* SideMenuView.swift in Sources */,
-				F9FBA41023CA19EB004F3A0D /* IAPManager.swift in Sources */,
 				F925853121A02A1600920E33 /* Observation.swift in Sources */,
 				F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */,
 				F9CE04F2221C8AD300242F3C /* Tutorial.swift in Sources */,

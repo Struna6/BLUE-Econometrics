@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,7 +10,7 @@
         <!--Chart-->
         <scene sceneID="igc-y7-5it">
             <objects>
-                <viewController storyboardIdentifier="UIViewController-WGO-3D-cXx" modalPresentationStyle="fullScreen" id="WGO-3D-cXx" customClass="RestsChartsViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIViewController-WGO-3D-cXx" modalPresentationStyle="fullScreen" id="WGO-3D-cXx" customClass="RestsChartsViewController" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DwJ-v2-Tgy">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,7 +66,7 @@
         <!--Chart-->
         <scene sceneID="nJ5-7T-5hi">
             <objects>
-                <viewController storyboardIdentifier="UIViewController-GG5-5I-TfG" modalPresentationStyle="fullScreen" id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIViewController-GG5-5I-TfG" modalPresentationStyle="fullScreen" id="GG5-5I-TfG" customClass="CandleChartViewController" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eGH-P6-x7e">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,7 +122,7 @@
         <!--Chart View-->
         <scene sceneID="bUU-0n-F9U">
             <objects>
-                <viewController storyboardIdentifier="toPlots" modalPresentationStyle="fullScreen" id="fTl-ux-ahd" customClass="ChartView" customModule="BLUE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toPlots" modalPresentationStyle="fullScreen" id="fTl-ux-ahd" customClass="ChartView" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KSd-Jv-9I4">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

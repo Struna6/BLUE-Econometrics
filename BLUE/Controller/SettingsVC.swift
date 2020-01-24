@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KeychainSwift
+import Purchases
 
 protocol SettingsVCDelegate : class {
     func removeAds()
@@ -73,8 +73,8 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             buyPremiumButton.isHidden = true
             restoreButton.isHidden = true
         }else{
-            if let product = (UIApplication.shared.delegate as? AppDelegate)?.product{
-                let title = product.localizedTitle + " for " + (IAPManager.shared.getPriceFormatted(for: product) ?? "Unavailable")
+            if let product = (UIApplication.shared.delegate as? AppDelegate)?.offer{
+                let title = product.product.localizedTitle + " for " + product.localizedPriceString
                 buyPremiumButton.setTitle(title, for: .normal)
             }else{
                 buyPremiumButton.isEnabled = false
@@ -141,12 +141,15 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
 
     @IBAction func buyPremium(_ sender: UIButton) {
         showBlur()
-        guard let product = (UIApplication.shared.delegate as? AppDelegate)?.product else {return}
-        IAPManager.shared.buy(product: product) {[weak self] (result) in
-            switch result{
-            case .success(_):
+        guard let product = (UIApplication.shared.delegate as? AppDelegate)?.offer else {
+            purchaseInfo(title: "Failed!", subtitle: "No subscription options are available now, please try again later", success: false)
+            return
+        }
+        
+        Purchases.shared.purchasePackage(product) {[weak self] (transaction, purchaserInfo, error, userCancelled) in
+            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true{
                 self?.purchaseInfo(title: "Succed!", subtitle: "Thank you for making a purchase!", success: true)
-            case .failure(_):
+            }else{
                 self?.purchaseInfo(title: "Failed!", subtitle: "Unable to proceed your purchase", success: false)
             }
         }
@@ -154,11 +157,11 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
     
     @IBAction func restoreButtonPressed(_ sender: Any) {
         showBlur()
-        IAPManager.shared.restorePurchases {[weak self] (result) in
-            switch result{
-            case .success(_):
+        
+        Purchases.shared.restoreTransactions { [weak self] (purchaserInfo, error) in
+            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true{
                 self?.purchaseInfo(title: "Succed!", subtitle: "Product restored!", success: true)
-            case .failure(_):
+            }else{
                 self?.purchaseInfo(title: "Failed!", subtitle: "No products to be restored", success: false)
             }
         }
@@ -193,8 +196,6 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             self?.dismiss(animated: true, completion: nil)
             if success{
                 (UIApplication.shared.delegate as! AppDelegate).adProvider.adsShouldBeVisible = false
-                let keychain = KeychainSwift()
-                keychain.set(true, forKey: "premium")
                 self?.defaults.set(true, forKey: "longPress")
                 self?.delegate?.removeAds()
                 self?.hideBlur()

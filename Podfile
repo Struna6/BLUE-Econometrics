@@ -16,4 +16,5 @@ target 'BLUE' do
     pod 'Tutti'
     pod 'Firebase'
     pod 'Firebase/AdMob'
+    pod 'Purchases'
 end

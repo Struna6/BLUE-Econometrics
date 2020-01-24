@@ -13,8 +13,6 @@ import Tutti
 import SafariServices
 
 class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, ErrorScreenPlayable {
-    
-
     @IBOutlet weak var newModel: UIButton!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var tableView: UITableView!

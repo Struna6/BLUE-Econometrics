@@ -10,26 +10,31 @@ import UIKit
 import CoreData
 import Tutti
 import Firebase
-import KeychainSwift
+import Purchases
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var adProvider = AdsProvider()
-    var product : SKProduct?
+    var offer : Purchases.Package?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         loadApperanceOfTutorial()
         
-        IAPManager.shared.getProducts { (result) in
-            self.product = try? result.get().first
-        }
-        IAPManager.shared.startObserving()
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(withAPIKey: "MEIbqeBzkzoXFMfBTrQDzgGGQdtylaiy")
         
-        let keychain = KeychainSwift()
-        if let val = keychain.getBool("premium"), val{
-            adProvider.adsShouldBeVisible = false
+        Purchases.shared.offerings { (offers, error) in
+            if offers != nil{
+                self.offer = offers?.current?.availablePackages.first
+            }
+        }
+        
+        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true {
+                self.adProvider.adsShouldBeVisible = false
+            }
         }
         
         FirebaseApp.configure()
@@ -68,7 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        IAPManager.shared.stopObserving()
     }
 }
 
