@@ -32,7 +32,7 @@ class AdsProvider : NSObject{
     }
     
     var showFullScreen : Bool{
-        return counter % 3 == 0
+        return counter % 5 == 0
     }
     
     weak var viewController : ViewController!

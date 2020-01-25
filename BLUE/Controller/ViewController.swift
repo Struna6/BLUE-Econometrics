@@ -235,7 +235,26 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                     }
                 }
             }
-            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
+            let boldAttr: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)]
+            let text1 = NSAttributedString(string: "Regressand: ", attributes: boldAttr)
+            let text2 = NSAttributedString(string: "\(model.chosenYHeader)")
+            let text3 = NSAttributedString(string: "\nRegressor: ", attributes: boldAttr)
+            let text4 = NSAttributedString(string: "\(tmpXText)")
+            let text5 = NSAttributedString(string: "\nEquation: ", attributes: boldAttr)
+            let text6 = NSAttributedString(string: "\(tmpEq)")
+            let text7 = NSAttributedString(string: "\nObservations: ", attributes: boldAttr)
+            let text8 = NSAttributedString(string: "\(model.n)")
+            let text = NSMutableAttributedString()
+            text.append(text1)
+            text.append(text2)
+            text.append(text3)
+            text.append(text4)
+            text.append(text5)
+            text.append(text6)
+            text.append(text7)
+            text.append(text8)
+            topLabel.attributedText = text
+            //topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor: \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
         }
         if !newModel{
             loadSavedModel()
@@ -507,7 +526,26 @@ class ViewController: UIViewController, Storage, BackUpdatedObservations, SendBa
                 }
                 self.topTableView.reloadData()
             }, mainView: self.view)
-            topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
+            let boldAttr: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)]
+            let text1 = NSAttributedString(string: "Regressand: ", attributes: boldAttr)
+            let text2 = NSAttributedString(string: "\(model.chosenYHeader)")
+            let text3 = NSAttributedString(string: "\nRegressor: ", attributes: boldAttr)
+            let text4 = NSAttributedString(string: "\(tmpXText)")
+            let text5 = NSAttributedString(string: "\nEquation: ", attributes: boldAttr)
+            let text6 = NSAttributedString(string: "\(tmpEq)")
+            let text7 = NSAttributedString(string: "\nObservations: ", attributes: boldAttr)
+            let text8 = NSAttributedString(string: "\(model.n)")
+            let text = NSMutableAttributedString()
+            text.append(text1)
+            text.append(text2)
+            text.append(text3)
+            text.append(text4)
+            text.append(text5)
+            text.append(text6)
+            text.append(text7)
+            text.append(text8)
+            topLabel.attributedText = text
+            //topLabel.text = "Regressand: \(model.chosenYHeader)\nRegressor:   \(tmpXText)\nEquation: \(tmpEq)\nObservations: \(model.n)"
             topLabel.showHint(text: "Long press to activate saving option, then press the button that will be shown. This will work on every element in application like text, tables, charts! [VIP]")
             self.view.layoutIfNeeded()
             if defaults.bool(forKey: "firstChecker"){
@@ -666,12 +704,25 @@ extension ViewController :  UITableViewDelegate, UITableViewDataSource{
         }
         
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 45.0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID")! as UITableViewCell
+        
         if tableView == topTableView{
             let par = parametersCategorized[indexPath.section][indexPath.row]
-            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
             
+            let boldAttr: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)]
+            let text1 = NSAttributedString(string: par.name + " = ")
+            let text2 = NSAttributedString(string: String(format:"%.2f",Double(par.value)), attributes: boldAttr)
+            let text = NSMutableAttributedString()
+            text.append(text1)
+            text.append(text2)
+            cell.textLabel?.attributedText = text
+            cell.textLabel?.numberOfLines = 0
             switch indexPath.section{
                 case 0:
                     cell.imageView?.image = UIImage.init(named: "critical")
