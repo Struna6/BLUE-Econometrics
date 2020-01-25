@@ -85,7 +85,7 @@ class ChartView: UIViewController{
         }
         let X = Matrix<Double>(tmpX)
         let Y = Matrix<Double>([equation])
-        let result = mul(X, y: Surge.transpose(Y))
+        let result = mul(X, Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
         })

@@ -41,7 +41,7 @@ extension IVCalculable where Self==Model{
         tmpY.append(getGIVRegressionEquation(Z: Z))
         let Y = Matrix<Double>(tmpY)
         
-        let result = mul(X, y: Surge.transpose(Y))
+        let result = mul(X, Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
         })
@@ -50,7 +50,7 @@ extension IVCalculable where Self==Model{
     func SEBIV(Z: [[Double]]) -> [Double]{
         let Z0 = Matrix<Double>(Z)
         let ZT = transpose(Z0)
-        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), x: myInv(mul(ZT, y: Z0)))
+        let matrix = mul((seIV(Z:Z)*seIV(Z:Z)), myInv(mul(ZT, Z0)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -65,8 +65,8 @@ extension IVCalculable where Self==Model{
         let Z = Matrix(Z)
         let Y = Matrix(self.chosenY)
         
-        let X2 = mul(mul(Z, y: myInv(mul(transpose(Z), y: Z))), y: mul(transpose(Z),y: X))
-        let b = mul(myInv(mul(transpose(X2), y: X2)), y: mul(transpose(X2), y: Y))
+        let X2 = mul(mul(Z, myInv(mul(transpose(Z), Z))), mul(transpose(Z),X))
+        let b = mul(myInv(mul(transpose(X2), X2)), mul(transpose(X2), Y))
         
         var result = [Double]()
         b.forEach { (array) in
@@ -109,7 +109,7 @@ extension IVTestable where Self==Model{
         }
         let bO = Matrix(bOt)
         let bG = Matrix(bGt)
-        let q = add(bO, y: bG)
+        let q = add(bO, bG)
         
         let sbO = self.SEB
         let sbG = self.SEBIV(Z: Z)
@@ -132,7 +132,7 @@ extension IVTestable where Self==Model{
         let s0 = sumSbG - sumSbO
         let s = 1/s0
         
-        let H0 = mul(s, x: (mul(transpose(q), y:q)))
+        let H0 = mul(s, (mul(transpose(q), q)))
         var H = 0.0
         H0.forEach { (row) in
             H = row[0]

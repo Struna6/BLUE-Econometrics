@@ -71,6 +71,10 @@ class SideMenuView: UITableViewController, PlayableLoadingScreen, Storage, Error
                 cell.alpha = 0.8
                 cell.imageView?.image = UIImage(named: "pro")
             }
+        }else{
+            cell.isUserInteractionEnabled = true
+            cell.alpha = 1.0
+            cell.imageView?.image = nil
         }
         return cell
     }

@@ -33,7 +33,7 @@ extension LogProb where Self==Model{
         tmpY.append(getLogitEquation(nGroup: nGroup, success: success, X: X))
         let Y = Matrix<Double>(tmpY)
         let X = Matrix<Double>(self.chosenX)
-        let result = mul(X, y: Surge.transpose(Y))
+        let result = mul(X, Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
         })
@@ -45,7 +45,7 @@ extension LogProb where Self==Model{
         tmpY.append(getProbitEquation(nGroup: nGroup, success: success, X: X))
         let Y = Matrix<Double>(tmpY)
         let X = Matrix<Double>(self.chosenX)
-        let result = mul(X, y: Surge.transpose(Y))
+        let result = mul(X, Surge.transpose(Y))
         result.forEach({ (slice) in
             returnTmp.append(Array(slice)[0])
         })
@@ -79,7 +79,7 @@ extension LogProb where Self==Model{
         let se = logSe(nGroup: nGroup, success: success, X: X)
         let X = Matrix<Double>(self.chosenX)
         let XT = transpose(X)
-        let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
+        let matrix = mul((se*se), myInv(mul(XT, X)))
         var result = [Double]()
         var i = 0
         matrix.forEach { (row) in
@@ -232,7 +232,7 @@ extension LogProb where Self==Model{
         let omega = Matrix(om)
         let X = Matrix(X)
         
-        let b = mul(mul(mul(myInv(mul(mul(transpose(X), y: myInv(omega)),y: X)),y:transpose(X)),y:myInv(omega)),y: L)
+        let b = mul(mul(mul(myInv(mul(mul(transpose(X), myInv(omega)),X)),transpose(X)),myInv(omega)),L)
         
         var result = [Double]()
         b.forEach { (array) in
@@ -272,7 +272,7 @@ extension LogProb where Self==Model{
         let omega = Matrix(om)
         let X = Matrix(X)
         
-        let b = mul(mul(mul(myInv(mul(mul(transpose(X), y: myInv(omega)),y: X)),y:transpose(X)),y:myInv(omega)),y: L)
+        let b = mul(mul(mul(myInv(mul(mul(transpose(X), myInv(omega)),X)),transpose(X)),myInv(omega)),L)
         
         var result = [Double]()
         b.forEach { (array) in

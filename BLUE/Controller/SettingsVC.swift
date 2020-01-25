@@ -147,7 +147,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
         }
         
         Purchases.shared.purchasePackage(product) {[weak self] (transaction, purchaserInfo, error, userCancelled) in
-            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true{
+            if (purchaserInfo?.nonConsumablePurchases.count ?? -1) > 0{
                 self?.purchaseInfo(title: "Succed!", subtitle: "Thank you for making a purchase!", success: true)
             }else{
                 self?.purchaseInfo(title: "Failed!", subtitle: "Unable to proceed your purchase", success: false)
@@ -159,7 +159,7 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
         showBlur()
         
         Purchases.shared.restoreTransactions { [weak self] (purchaserInfo, error) in
-            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true{
+            if (purchaserInfo?.nonConsumablePurchases.count ?? -1) > 0{
                 self?.purchaseInfo(title: "Succed!", subtitle: "Product restored!", success: true)
             }else{
                 self?.purchaseInfo(title: "Failed!", subtitle: "No products to be restored", success: false)

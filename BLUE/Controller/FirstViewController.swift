@@ -10,7 +10,6 @@ import UIKit
 
 import Surge
 import Tutti
-import SafariServices
 
 class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, ErrorScreenPlayable {
     @IBOutlet weak var newModel: UIButton!
@@ -36,9 +35,8 @@ class FirstViewController: UIViewController, Storage, PlayableLoadingScreen, Err
     }
 
     @IBAction func helpWebViewOpen(_ sender: Any) {
-        let url = "http://www.youtube.com/watch?v=y5FjYiNqNOg&list=PLFbS5e-2_vUNPRzsjWFqR46rJNTgVEWuL"
-        let safariVC = SFSafariViewController(url: URL(string: url)!)
-        present(safariVC, animated: true)
+        let url = URL(string: "https://www.youtube.com/watch?list=PLih71d5qYVgKBIaPXyreROl_fegGXgahP&v=Vb9Yj8_Vt2o&feature=emb_title")!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -2,7 +2,6 @@ ${PODS_ROOT}/Target Support Files/Pods-BLUE/Pods-BLUE-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/CSV.swift/CSV.framework
 ${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework
-${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework
 ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/Purchases/Purchases.framework
 ${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework

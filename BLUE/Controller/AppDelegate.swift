@@ -32,13 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-            if purchaserInfo?.entitlements.all["Premium"]?.isActive == true {
+            if (purchaserInfo?.nonConsumablePurchases.count ?? -1) > 0 {
                 self.adProvider.adsShouldBeVisible = false
             }
         }
         
         FirebaseApp.configure()
-        //GADMobileAds.configure(withApplicationID: "ca-app-pub-3085132668483251~3609700072")
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         GADMobileAds.disableAutomatedInAppPurchaseReporting()
         GADMobileAds.disableSDKCrashReporting()

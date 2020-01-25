@@ -275,7 +275,7 @@ extension OLSCalculable where Self==Model{
             tmpY.append(getOLSRegressionEquation())
             let Y = Matrix<Double>(tmpY)
 
-            let result = mul(X, y: Surge.transpose(Y))
+            let result = mul(X, Surge.transpose(Y))
             result.forEach({ (slice) in
                     returnTmp.append(Array(slice)[0])
             })
@@ -355,7 +355,7 @@ extension OLSCalculable where Self==Model{
         get{
             let X = Matrix<Double>(self.chosenX)
             let XT = transpose(X)
-            let matrix = mul((se*se), x: myInv(mul(XT, y: X)))
+            let matrix = mul((se*se), myInv(mul(XT, X)))
             var result = [Double]()
             var i = 0
             matrix.forEach { (row) in
@@ -391,7 +391,7 @@ extension OLSCalculable where Self==Model{
         get{
             var result = [Double]()
             let X = Matrix(self.chosenX)
-            let H = mul(X, y: mul(myInv(mul(transpose(X), y: X)),y : transpose(X)))
+            let H = mul(X, mul(myInv(mul(transpose(X), X)),transpose(X)))
             
             for i in 0..<self.n{
                 H.forEach { (slice) in
@@ -439,7 +439,7 @@ extension OLSCalculable where Self==Model{
         var equation = [Double]()
         let X = Matrix<Double>(self.chosenX)
         let Y = Matrix<Double>(self.chosenY)
-        let result = (mul((myInv(mul(Surge.transpose(X), y: X))), y: mul(Surge.transpose(X), y: Y)))
+        let result = (mul((myInv(mul(Surge.transpose(X), X))), mul(Surge.transpose(X), Y)))
         result.forEach({ (slice) in
             equation.append(Array(slice)[0])
         })

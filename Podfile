@@ -6,8 +6,7 @@ target 'BLUE' do
   use_frameworks!
 
   # Pods for BLUE
-    pod 'Surge', '~> 2.0.0'
-    pod 'KeychainSwift', '~> 19.0'
+    pod 'Surge'
     pod 'Charts'
     pod 'SpreadsheetView'
     pod 'SideMenu'

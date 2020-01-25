@@ -194,6 +194,7 @@ extension PlayableLoadingScreen{
         let animationView = AnimationView(animation: Animation.named("loading"))
         animationView.loopMode = .loop
         animationView.sizeToFit()
+        animationView.backgroundBehavior = .pauseAndRestore
         animationView.layer.cornerRadius = 18.0
         animationView.clipsToBounds = true
         animationView.backgroundColor = UIColor(red:0.24, green:0.33, blue:0.54, alpha:0.5)
@@ -202,8 +203,8 @@ extension PlayableLoadingScreen{
         animationView.frame = CGRect(x: mainView.bounds.midX, y: mainView.bounds.midY, width: 400, height: 400)
         animationView.center = CGPoint(x: mainView.bounds.midX, y: mainView.bounds.midY)
         mainView.isUserInteractionEnabled = false
-        //UIApplication.shared.beginIgnoringInteractionEvents()
         animationView.play()
+        //UIApplication.shared.beginIgnoringInteractionEvents()
         Dispatch.DispatchQueue.global(qos: .utility).async {
             tasksToDoAsync()
             DispatchQueue.main.async {
@@ -573,7 +574,7 @@ public func myInv(_ x : Matrix<Double>) -> Matrix<Double> {
         for i in 0..<x.rows{
             tmp[i][i] = 0.001
         }
-        let newX = add(x, y: Matrix(tmp))
+        let newX = add(x, Matrix(tmp))
         return myInv(newX)
     }else{
         dgetri_(&nc, &(results.grid), &lda, &ipiv, &work, &lwork, &error)

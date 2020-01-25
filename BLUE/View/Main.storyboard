@@ -1020,6 +1020,70 @@
             </objects>
             <point key="canvasLocation" x="2060.9375" y="1595.5078125"/>
         </scene>
+        <!--Legals View Controller-->
+        <scene sceneID="67V-Hs-lqY">
+            <objects>
+                <viewController id="IVU-91-Vy9" customClass="LegalsViewController" customModule="Econometrics_" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Wc-aB-ELt">
+                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UkW-4Q-hv1">
+                                <rect key="frame" x="302" y="934" width="108" height="30"/>
+                                <state key="normal" title="Icons by Icons8"/>
+                                <connections>
+                                    <action selector="iconsPressed:" destination="IVU-91-Vy9" eventType="touchUpInside" id="wn4-XK-LmN"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="Ne5-Kx-J7J">
+                                <rect key="frame" x="231" y="407" width="250" height="170"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYc-ZZ-dTZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.57787948850000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Privacy Policy">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="privacyPressed:" destination="IVU-91-Vy9" eventType="touchUpInside" id="pIU-tH-UxV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpL-u0-1BD">
+                                        <rect key="frame" x="0.0" y="110" width="250" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.57787948850000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Terms of Use">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="termsOfUsePressed:" destination="IVU-91-Vy9" eventType="touchUpInside" id="4HX-kC-3Kv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="5s1-9X-Ylf"/>
+                                    <constraint firstAttribute="width" constant="250" id="wtW-4c-r1h"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="UkW-4Q-hv1" firstAttribute="centerX" secondItem="cWy-bJ-9Xo" secondAttribute="centerX" id="NjP-yO-IBD"/>
+                            <constraint firstItem="Ne5-Kx-J7J" firstAttribute="centerX" secondItem="2Wc-aB-ELt" secondAttribute="centerX" id="fr4-9F-yXm"/>
+                            <constraint firstItem="Ne5-Kx-J7J" firstAttribute="centerY" secondItem="2Wc-aB-ELt" secondAttribute="centerY" id="p1b-lL-Oco"/>
+                            <constraint firstItem="cWy-bJ-9Xo" firstAttribute="bottom" secondItem="UkW-4Q-hv1" secondAttribute="bottom" constant="20" id="yO3-hA-cDy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cWy-bJ-9Xo"/>
+                    </view>
+                    <connections>
+                        <outlet property="iconsButton" destination="UkW-4Q-hv1" id="RzY-dA-FBd"/>
+                        <outlet property="privacyButton" destination="AYc-ZZ-dTZ" id="mff-Uh-crC"/>
+                        <outlet property="termsOfUseButton" destination="gpL-u0-1BD" id="qFq-d9-ehW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xeB-0C-Ld9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-248.4375" y="1361.71875"/>
+        </scene>
         <!--SettingsVC-->
         <scene sceneID="ErI-b3-8NY">
             <objects>
@@ -1270,6 +1334,13 @@
                                 </button>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MlH-bl-BS4">
+                            <rect key="frame" x="10" y="10" width="122" height="30"/>
+                            <state key="normal" title="Legal agreements"/>
+                            <connections>
+                                <segue destination="IVU-91-Vy9" kind="presentation" identifier="toLegals" id="4yT-ij-tK8"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
@@ -1289,7 +1360,9 @@
                         <constraint firstItem="jZz-rh-7uw" firstAttribute="bottom" secondItem="yZP-nd-ZWX" secondAttribute="bottom" id="S5z-DL-DCP"/>
                         <constraint firstItem="yeI-UR-Wst" firstAttribute="trailing" secondItem="ftN-X3-EDF" secondAttribute="trailing" constant="10" id="bcw-GV-K5y"/>
                         <constraint firstItem="yZP-nd-ZWX" firstAttribute="leading" secondItem="jZz-rh-7uw" secondAttribute="trailing" constant="5" id="brA-FT-h34"/>
+                        <constraint firstItem="MlH-bl-BS4" firstAttribute="leading" secondItem="yeI-UR-Wst" secondAttribute="leading" constant="10" id="dMf-Ph-HAp"/>
                         <constraint firstItem="R2U-oN-Tod" firstAttribute="trailing" secondItem="yeI-UR-Wst" secondAttribute="trailing" constant="-10" id="hRJ-kP-hnP"/>
+                        <constraint firstItem="MlH-bl-BS4" firstAttribute="top" secondItem="yeI-UR-Wst" secondAttribute="top" constant="10" id="mMl-Tx-nwl"/>
                         <constraint firstItem="YyB-9E-gwp" firstAttribute="centerX" secondItem="XJR-8d-bkC" secondAttribute="centerX" id="ttI-SP-nRm"/>
                         <constraint firstItem="YyB-9E-gwp" firstAttribute="top" secondItem="ftN-X3-EDF" secondAttribute="bottom" constant="40" id="uIN-Q5-vef"/>
                         <constraint firstItem="R2U-oN-Tod" firstAttribute="top" secondItem="YyB-9E-gwp" secondAttribute="bottom" constant="40" id="xaa-fI-dRM"/>

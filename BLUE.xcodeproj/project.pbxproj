@@ -30,6 +30,7 @@
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
+		F966F93923DC7DE8004251B1 /* LegalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F966F93823DC7DE8004251B1 /* LegalsViewController.swift */; };
 		F968AE6D221EBCFA00EF76DB /* IntroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F968AE6C221EBCFA00EF76DB /* IntroVC.swift */; };
 		F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F972F0E2220723DF001F3B3A /* Charts.storyboard */; };
 		F972F0E522072B67001F3B3A /* TableViewControllerSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */; };
@@ -85,6 +86,7 @@
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
+		F966F93823DC7DE8004251B1 /* LegalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalsViewController.swift; sourceTree = "<group>"; };
 		F968AE6C221EBCFA00EF76DB /* IntroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVC.swift; sourceTree = "<group>"; };
 		F972F0E2220723DF001F3B3A /* Charts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Charts.storyboard; sourceTree = "<group>"; };
 		F972F0E422072B67001F3B3A /* TableViewControllerSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerSorted.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				F941DD5421BD37F500CD93BF /* FirstViewController.swift */,
 				F9B68DA0221AD5D8008CB85E /* SettingsVC.swift */,
 				F90FACE921D1157100B1D238 /* Charts */,
+				F966F93823DC7DE8004251B1 /* LegalsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				F9AA8E512199B7A200562A1F /* AppDelegate.swift in Sources */,
 				F97E416B21BBF58300883010 /* ObservationsSpreedsheetView.swift in Sources */,
 				F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */,
+				F966F93923DC7DE8004251B1 /* LegalsViewController.swift in Sources */,
 				F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */,
 				F99B87F321B1F1EB00779422 /* OLS.swift in Sources */,
 				F9FC4BDE22060A270067A468 /* MatrixView.swift in Sources */,

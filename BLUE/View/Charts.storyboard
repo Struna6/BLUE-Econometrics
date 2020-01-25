@@ -29,10 +29,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected observation: -" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olL-AP-5fL">
-                                <rect key="frame" x="378" y="894" width="350" height="90"/>
+                                <rect key="frame" x="278" y="894" width="450" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="GHQ-if-f8z"/>
-                                    <constraint firstAttribute="width" constant="350" id="oNu-2Q-eCv"/>
+                                    <constraint firstAttribute="width" constant="450" id="oNu-2Q-eCv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <nil key="textColor"/>
