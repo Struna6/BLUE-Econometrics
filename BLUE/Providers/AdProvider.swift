@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class AdsProvider : NSObject{
-    var adsShouldBeVisible = false
+    var adsShouldBeVisible = true
     
     var fullScreenAd : GADInterstitial!{
         willSet{
@@ -36,8 +36,8 @@ class AdsProvider : NSObject{
     }
     
     weak var viewController : ViewController!
-    private var fullScreenAdID = "ca-app-pub-3940256099942544/1033173712"
-    private let bannerViewMapViewAdID = "ca-app-pub-3940256099942544/2934735716"
+    private var fullScreenAdID = "ca-app-pub-3774653118074483/4643188876"
+    private let bannerViewMapViewAdID = "ca-app-pub-3774653118074483/6224504485"
     
     func initiateAds(){
         guard adsShouldBeVisible else {return}
