@@ -340,9 +340,17 @@ extension TableViewControllerSorted : UITableViewDataSource, UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as UITableViewCell
+        
         if isShortParameters{
             let par = parametersCategorizedShort[indexPath.section][indexPath.row]
-            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+            let boldAttr: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)]
+            let text1 = NSAttributedString(string: par.name + " = ", attributes: boldAttr)
+            let text2 = NSAttributedString(string: String(format:"%.3f",Double(par.value)))
+            let text = NSMutableAttributedString()
+            text.append(text1)
+            text.append(text2)
+            cell.textLabel?.attributedText = text
+            //cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
             switch indexPath.section{
             case 0:
                 cell.imageView?.image = UIImage.init(named: "critical")
@@ -362,7 +370,14 @@ extension TableViewControllerSorted : UITableViewDataSource, UITableViewDelegate
         }
         else{
             let par = parametersCategorized[indexPath.section][indexPath.row]
-            cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
+            let boldAttr: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)]
+            let text1 = NSAttributedString(string: par.name + " = ", attributes: boldAttr)
+            let text2 = NSAttributedString(string: String(format:"%.3f",Double(par.value)))
+            let text = NSMutableAttributedString()
+            text.append(text1)
+            text.append(text2)
+            cell.textLabel?.attributedText = text
+            //cell.textLabel?.text = par.name + " = " + String(format:"%.3f",Double(par.value))
             switch indexPath.section{
             case 0:
                 cell.imageView?.image = UIImage.init(named: "critical")

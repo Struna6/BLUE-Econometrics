@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class AdsProvider : NSObject{
-    var adsShouldBeVisible = true
+    var adsShouldBeVisible = false
     
     var fullScreenAd : GADInterstitial!{
         willSet{
