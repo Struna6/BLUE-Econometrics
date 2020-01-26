@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1020309678380-arb96r4nlfqh9mldfftehbv9ptbqfjpr.apps.googleusercontent.com</string>
+	<string>808020309743-506f5amakl2obetmk8r09pjfqp872apc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1020309678380-arb96r4nlfqh9mldfftehbv9ptbqfjpr</string>
+	<string>com.googleusercontent.apps.808020309743-506f5amakl2obetmk8r09pjfqp872apc</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCb4FUUbFrXBa3W0Erq1i_oB46_b9i_u_Q</string>
+	<string>AIzaSyBqed3SGxlISwF_hhZ8GfGWvluCu0n11qU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1020309678380</string>
+	<string>808020309743</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.struna.BLUEApp</string>
+	<string>com.dodocode.EconometricsApp</string>
 	<key>PROJECT_ID</key>
-	<string>econometrics-15728</string>
+	<string>econometrics-17c4a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>econometrics-15728.appspot.com</string>
+	<string>econometrics-17c4a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1020309678380:ios:aa582f64f5fbd960996489</string>
+	<string>1:808020309743:ios:c55e165e590a2d723acd1a</string>
 	<key>DATABASE_URL</key>
-	<string>https://econometrics-15728.firebaseio.com</string>
+	<string>https://econometrics-17c4a.firebaseio.com</string>
 </dict>
 </plist>

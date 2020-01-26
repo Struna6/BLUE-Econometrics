@@ -10,6 +10,7 @@
 		66218F66FBBAEBC07819F0FF /* Pods_BLUE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC111CBD647C7FAD1D583672 /* Pods_BLUE.framework */; };
 		F90D8322221744A90068D58E /* LogProb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D8321221744A90068D58E /* LogProb.swift */; };
 		F90FACEB21D115AB00B1D238 /* RestsChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */; };
+		F914E5C323DDC97E00DF1CD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F914E5C223DDC97E00DF1CD5 /* GoogleService-Info.plist */; };
 		F916DB7621AAD28300E73E4E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F916DB7521AAD28300E73E4E /* ChartView.swift */; };
 		F9187752234A499A006363CC /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9187751234A499A006363CC /* HealthKit.framework */; };
 		F91FAEE023B8099E00797227 /* squereR.mov in Resources */ = {isa = PBXBuildFile; fileRef = F91FAED523B8099C00797227 /* squereR.mov */; };
@@ -26,7 +27,6 @@
 		F925853121A02A1600920E33 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853021A02A1600920E33 /* Observation.swift */; };
 		F925853321A02B4A00920E33 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F925853221A02B4A00920E33 /* Model.swift */; };
 		F92CB80823D4ABA900799C9C /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F92CB80723D4ABA900799C9C /* done.json */; };
-		F92CB80C23D4ABF900799C9C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */; };
 		F92D9B03221574B400544854 /* OtherEstimationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D9B02221574B400544854 /* OtherEstimationVC.swift */; };
 		F941DD5521BD37F500CD93BF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941DD5421BD37F500CD93BF /* FirstViewController.swift */; };
 		F94C39B721BC535600FB98EC /* SavingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C39B621BC535600FB98EC /* SavingService.swift */; };
@@ -66,6 +66,7 @@
 		C11274C3C9B3985703778622 /* Pods-BLUE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLUE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BLUE/Pods-BLUE.debug.xcconfig"; sourceTree = "<group>"; };
 		F90D8321221744A90068D58E /* LogProb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogProb.swift; sourceTree = "<group>"; };
 		F90FACEA21D115AB00B1D238 /* RestsChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestsChartsViewController.swift; sourceTree = "<group>"; };
+		F914E5C223DDC97E00DF1CD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F916DB7521AAD28300E73E4E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		F9187751234A499A006363CC /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		F91FAED523B8099C00797227 /* squereR.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = squereR.mov; sourceTree = "<group>"; };
@@ -82,7 +83,6 @@
 		F925853021A02A1600920E33 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		F925853221A02B4A00920E33 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F92CB80723D4ABA900799C9C /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = done.json; sourceTree = "<group>"; };
-		F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F92D9B02221574B400544854 /* OtherEstimationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEstimationVC.swift; sourceTree = "<group>"; };
 		F941DD5421BD37F500CD93BF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		F94C39B621BC535600FB98EC /* SavingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingService.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				F9F26F5A222B1DF700F17C83 /* Life expectancy.csv */,
 				F9F26F58222B178B00F17C83 /* City Riders Info.csv */,
 				F9F26F56222B137D00F17C83 /* USA GDP 2005-2018.csv */,
-				F92CB80B23D4ABF900799C9C /* GoogleService-Info.plist */,
+				F914E5C223DDC97E00DF1CD5 /* GoogleService-Info.plist */,
 				F9AA8E4F2199B7A200562A1F /* BLUE */,
 				F9AA8E4E2199B7A200562A1F /* Products */,
 				DD77AC8391F9F46FBCC908EA /* Pods */,
@@ -359,7 +359,7 @@
 				F972F0E3220723DF001F3B3A /* Charts.storyboard in Resources */,
 				F97E417121BC19E400883010 /* Main.storyboard in Resources */,
 				F91FAEE223B8099E00797227 /* weakF.mov in Resources */,
-				F92CB80C23D4ABF900799C9C /* GoogleService-Info.plist in Resources */,
+				F914E5C323DDC97E00DF1CD5 /* GoogleService-Info.plist in Resources */,
 				F9AA8E5E2199B7A400562A1F /* LaunchScreen.storyboard in Resources */,
 				F9FC2E7B21CED9D900A64599 /* Summary.storyboard in Resources */,
 				F91FAEE623B8099E00797227 /* Sargan.mov in Resources */,
