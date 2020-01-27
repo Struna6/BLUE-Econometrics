@@ -74,8 +74,10 @@ class SettingsVC: UIViewController, Storage, ErrorScreenPlayable {
             restoreButton.isHidden = true
         }else{
             if let product = (UIApplication.shared.delegate as? AppDelegate)?.offer{
-                let title = product.product.localizedTitle + " for " + product.localizedPriceString
+                let title = "Buy VIP for " + product.localizedPriceString
                 buyPremiumButton.setTitle(title, for: .normal)
+                buyPremiumButton.titleLabel?.numberOfLines = 0
+                buyPremiumButton.sizeToFit()
             }else{
                 buyPremiumButton.isEnabled = false
                 buyPremiumButton.backgroundColor = UIColor.gray

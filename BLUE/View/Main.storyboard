@@ -1286,8 +1286,8 @@
                                 <constraint firstAttribute="width" constant="35" id="ZYZ-iu-bNM"/>
                             </constraints>
                         </imageView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="55" translatesAutoresizingMaskIntoConstraints="NO" id="YyB-9E-gwp">
-                            <rect key="frame" x="144.5" y="288" width="411" height="116.5"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="YyB-9E-gwp">
+                            <rect key="frame" x="159.5" y="288" width="381" height="116.5"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BhG-1g-7aV">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="116.5"/>
@@ -1311,7 +1311,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umd-GK-8rv">
-                                    <rect key="frame" x="286" y="0.0" width="125" height="116.5"/>
+                                    <rect key="frame" x="256" y="0.0" width="125" height="116.5"/>
                                     <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="30"/>
                                     <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
@@ -1349,6 +1349,7 @@
                         <constraint firstItem="iuV-wY-lyz" firstAttribute="top" secondItem="rtX-cW-YSu" secondAttribute="bottom" constant="40" id="6a9-YL-SdR"/>
                         <constraint firstItem="ftN-X3-EDF" firstAttribute="centerX" secondItem="XJR-8d-bkC" secondAttribute="centerX" id="7fB-ua-kHX"/>
                         <constraint firstItem="yeI-UR-Wst" firstAttribute="bottom" secondItem="R2U-oN-Tod" secondAttribute="bottom" constant="10" id="DhJ-Nx-fAp"/>
+                        <constraint firstItem="YyB-9E-gwp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yeI-UR-Wst" secondAttribute="leading" constant="10" id="E5c-Zw-05t"/>
                         <constraint firstItem="yZP-nd-ZWX" firstAttribute="leading" secondItem="iuV-wY-lyz" secondAttribute="trailing" constant="2" id="EHe-6w-GEI"/>
                         <constraint firstItem="ftN-X3-EDF" firstAttribute="leading" secondItem="yeI-UR-Wst" secondAttribute="leading" constant="10" id="GUN-td-RcJ"/>
                         <constraint firstItem="yZP-nd-ZWX" firstAttribute="top" secondItem="rtX-cW-YSu" secondAttribute="bottom" constant="40" id="GVX-Rt-dIx"/>
@@ -1361,6 +1362,7 @@
                         <constraint firstItem="yeI-UR-Wst" firstAttribute="trailing" secondItem="ftN-X3-EDF" secondAttribute="trailing" constant="10" id="bcw-GV-K5y"/>
                         <constraint firstItem="yZP-nd-ZWX" firstAttribute="leading" secondItem="jZz-rh-7uw" secondAttribute="trailing" constant="5" id="brA-FT-h34"/>
                         <constraint firstItem="MlH-bl-BS4" firstAttribute="leading" secondItem="yeI-UR-Wst" secondAttribute="leading" constant="10" id="dMf-Ph-HAp"/>
+                        <constraint firstItem="yeI-UR-Wst" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YyB-9E-gwp" secondAttribute="trailing" constant="10" id="gOR-jK-X95"/>
                         <constraint firstItem="R2U-oN-Tod" firstAttribute="trailing" secondItem="yeI-UR-Wst" secondAttribute="trailing" constant="-10" id="hRJ-kP-hnP"/>
                         <constraint firstItem="MlH-bl-BS4" firstAttribute="top" secondItem="yeI-UR-Wst" secondAttribute="top" constant="10" id="mMl-Tx-nwl"/>
                         <constraint firstItem="YyB-9E-gwp" firstAttribute="centerX" secondItem="XJR-8d-bkC" secondAttribute="centerX" id="ttI-SP-nRm"/>
